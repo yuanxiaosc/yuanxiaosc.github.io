@@ -1,0 +1,161 @@
+Delivered-To: wangzichaochaochao@gmail.com
+Received: by 2002:a05:6504:1348:0:0:0:0 with SMTP id m8csp734555ltp;
+        Thu, 4 Oct 2018 01:40:32 -0700 (PDT)
+X-Received: by 2002:a62:b604:: with SMTP id j4-v6mr5657754pff.199.1538642191678;
+        Thu, 04 Oct 2018 01:36:31 -0700 (PDT)
+X-Google-Smtp-Source: ACcGV60om7FkmslcKlz+RnM015AfNzfYzvhWQ2jXk/txjasdQUGlDnBGS5QcqCoPsQG4aRMgngg0
+X-Received: by 2002:a62:b604:: with SMTP id j4-v6mr5657674pff.199.1538642190410;
+        Thu, 04 Oct 2018 01:36:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1538642190; cv=none;
+        d=google.com; s=arc-20160816;
+        b=dt7k+i7EtXaPavryJBxqsjBKqFE+ylTnyANMG/Y9xxQZd7ZHnqUrleVSI6wcN1Z2Yt
+         MBMe4CV/fp9VDX9zV0GDvapgUmFs4ffBBHRm8n0rM4SVzqYsxkt8+JqpQDfmcc+/P9R1
+         BrnfuLvGw7BCjuSJlkixnxHCMLAWD3IR+w6mm6JbdbJ7csODLns3olEdD0CGW6Tl4WMT
+         s0RjPpnByXC1lLxc9r2aoXD5NDP0d2egItFihwGmKjF/rH0T3un2TWFexogiOBxjBoXn
+         SBOI0I9SjsObnJmdmmsdvFb8BgtI1LYlvX26HIzeDvGZwtSK5aMs2Vi2WNE5K+vzWT7d
+         3aFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=message-id:date:to:from:subject:mime-version;
+        bh=GMyuQZWRU2ie1dHwaMrosNNL/hd9kdPBz8ms7pzgXYs=;
+        b=Ryj0tvJ2MryeyqwCWgrLJoIzXSHuS5aUojQBNIPywz9gXA0zcEH0732qqQCAoEn1yz
+         RN0YzFG8gP4fts6nbpGu1A81n5qdyfVsAasTYvl5UiKr2mHaXX4QDb/tSLzjp57hRGMo
+         XEbU7DTA1e4Hn/SA2UqMJr94gWtbahQE1M2BZAd529jAM/bs4J7Qu1qPyVtGqT3Sh0pd
+         XC3ihNqB9EUXBzeDd+Ni5+mGzeT7eCbwklFRnHu+9iH8cNJAC7nvSu/ZOBD3hNcEb3Qs
+         A3cAJnOEXzN0UPESiWZbpXuh0ATLThFqE/tsdULEedU8opnZt8fJbmM1TnpgpZjrJm8h
+         tfVA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=pass (google.com: domain of notice@datagrand.com designates 198.11.142.36 as permitted sender) smtp.mailfrom=notice@datagrand.com
+Return-Path: <notice@datagrand.com>
+Received: from mail142-36.mail.alibaba.com (mail142-36.mail.alibaba.com. [198.11.142.36])
+        by mx.google.com with ESMTPS id x24-v6si4295684pll.184.2018.10.04.01.36.28
+        for <wangzichaochaochao@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 Oct 2018 01:36:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of notice@datagrand.com designates 198.11.142.36 as permitted sender) client-ip=198.11.142.36;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of notice@datagrand.com designates 198.11.142.36 as permitted sender) smtp.mailfrom=notice@datagrand.com
+X-Alimail-AntiSpam:AC=AD;BC=0.7207184|0.1734991;BR=01201311R151b1;CH=blue;FP=0|0|0|0|0|-1|-1|-1;HT=e02c03305;MF=notice@datagrand.com;NM=1;PH=DS;RN=1;RT=1;SR=0;TI=SMTPD_---.CzH7G6H_1538642184;
+Received: from 10.44.10.128(mailfrom:notice@datagrand.com fp:SMTPD_---.CzH7G6H_1538642184)
+          by smtp.aliyun-inc.com(10.147.40.2);
+          Thu, 04 Oct 2018 16:36:25 +0800
+Content-Type: multipart/mixed; boundary="===============5198113929728300819=="
+MIME-Version: 1.0
+Subject: =?utf-8?b?5qyi6L+O5oKo5LiL6L296L6+6KeC5pWw5o2u5YC+5Yqb5omT6YCg55qE44CK?=
+ =?utf-8?b?5oqA5pyv5a6e6Le154m55YiK44CL?=
+From: =?utf-8?b?6L6+6KeC5pWw5o2u?= <notice@datagrand.com>
+To: wangzichaochaochao@gmail.com
+Date: Thu, 04 Oct 2018 16:36:24 +0800
+Message-ID: <20181004083624.541.7050@iZ25d04biq8Z>
+
+--===============5198113929728300819==
+Content-Type: multipart/alternative;
+ boundary="===============5169740131845960348=="
+MIME-Version: 1.0
+
+--===============5169740131845960348==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+
+--===============5169740131845960348==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html style="border: none; display: block; font-size: 14px; height: 100px; margin: 0; padding: 0; width: 100%;">
+<head style="border: none; margin: 0; padding: 0">
+  <meta name=viewport content="width=device-width" style="border: none; margin: 0; padding: 0">
+  <meta http-equiv=Content-Type content="text/html; charset=UTF-8" style="border: none; margin: 0; padding: 0">
+  <title style="border: none; margin: 0; padding: 0">欢迎您下载达观数据倾力打造的《技术实践特刊》</title></head>
+<body style="border: none; display: block; font-size: 14px; height: 100px; margin: 0; padding: 0; width: 100%">
+<table cellpadding=0 cellspacing=0
+       style="background-color: #F5FBFE; border: 1px solid #C0E7FC; border-collapse: collapse; border-spacing: 0; border-width: 1px; margin: 0 auto; max-width: 800px; padding: 0; max-width: 700px;">
+  <tbody style="border: none; margin: 0; padding: 0">
+  <tr style="border: none; margin: 0; padding: 0">
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+    <td style="border: none; margin: 0; padding: 0"><h1
+      style="border: none; color: #000000; font-size: 20px; font-weight: normal; height: 70px; line-height: 70px; margin: 0; padding: 0; text-align: center">
+      欢迎您下载达观数据倾力打造的《技术实践特刊》</h1></td>
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+  </tr>
+  <tr style="border: none; margin: 0; padding: 0">
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+    <td
+      style="background-color: #FFFFFF; border: 1px solid #C0E7FC; border-top: 2px solid #0070EF; margin: 0; padding: 30px">
+      <p
+        style="border: none; color: #000000; font-size: 15px; line-height: 2em; margin: 0; margin-bottom: 30px; padding: 0; text-indent: 0">
+        您好，<span style="border: none; color: #0070EF; margin: 0; padding: 0">王子超</span></p>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 10px; padding: 0; text-indent: 0">
+        感谢您对达观数据《技术实践特刊》的信任。
+      </p>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 20px; padding: 0; text-indent: 0">
+        此次电子刊集合达观数据内部核心三大产品个性化推荐引擎、垂直搜索引擎和文本挖掘引擎的技术实践总结，融合达观技术团队在服务华为、中兴、招行、平安、blued、丰趣海淘、京东云、爱卡汽车等不同行业上百家企业后的技术感悟，由达观数据CTO纪达麒领衔技术研究中心的科学家和架构师撰写而成，是国内第一本系统介绍NLP、深度学习等AI技术实践应用的电子刊。
+      </p>
+      <p style="border: none; color: #000000; font-size: 15px; line-height: 2em; margin: 0; margin-bottom: 10px;
+         padding: 0; text-indent: 0">
+        电子刊刊具体包括以下内容：
+      </p>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 10px; padding: 0; text-indent: 0">
+        【文本挖掘实践篇】
+      </p>
+      <ul>
+        <li>达观数据基于Deep Learning 的中文分词尝试</li>
+        <li>基于半监督学习技术的达观数据文本过滤系统</li>
+        <li>文本指纹算法和系统简述</li>
+        <li>达观数据如何打造一个中文NER系统</li>
+      </ul>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 10px; padding: 0; text-indent: 0">
+        【垂直搜索引擎实践篇】
+      </p>
+      <ul>
+        <li>搜索引擎之倒排索引解读</li>
+        <li>搜索引擎排序实践</li>
+        <li>搜索引擎的Query自动纠错技术和架构</li>
+        <li>达观数据智能问答技术研究</li>
+      </ul>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 10px; padding: 0; text-indent: 0">
+        【推荐系统实践篇】
+      </p>
+      <ul>
+        <li>推荐系统中的冷启动和探索利用问题探讨</li>
+        <li>如何基于用户历史行为进行精准个性化推荐</li>
+        <li>多模型融合推荐算法在达观数据的运用</li>
+        <li>个性化推荐系统的实践与优化</li>
+      </ul>
+      <p
+        style="border: none; color: #333333; line-height: 2em; margin: 0; margin-bottom: 40px; padding: 0; text-indent: 0">
+        此外，您可通过<a href="https://data.datagrand.com/signup/#/experience?source=banner"
+                  style="border: none; color: #0070EF; margin: 0; padding: 0; text-decoration: underline">「申请试用」</a>体验达观数据技术产品，我们会助力您提升运营指标和企业收益！
+      </p>
+      <a
+        href="https://pan.baidu.com/s/1GUwAwoVrLHu4xmK3CtcFfA"
+        style="background-color: #0070EF; text-decoration: none; border: none; color: #FFFFFF; display: inline-block; line-height: 2em; margin: 0; margin-bottom: 20px; margin-top: 50px; padding: 2px 10px; text-indent: 0; margin-right: 30px;">
+        下载电子刊</a>密码：cbk5
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+  </tr>
+  <tr style="border: none; margin: 0; padding: 0">
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+    <td style="border: none; margin: 0; padding: 30px 0">
+      <div style="border: none; float: right; margin: 0; padding: 0"><p
+        style="border: none; color: #333333; font-size: 12px; line-height: 2em; margin: 0; padding: 0; text-indent: 0; width: 100%">
+        来自：<a href=http://www.datagrand.com/" style="border: none; color: #0070EF; font-size: 12px; margin: 0; padding:
+              0; text-decoration: underline">达观数据</a></p>
+        <p
+          style="border: none; color: #333333; font-size: 12px; line-height: 2em; margin: 0; padding: 0; text-indent: 0; width: 100%">
+          日期： 2018-10-04</p></div>
+    </td>
+    <td style="border: none; margin: 0; min-width: 21px; padding: 0"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
+--===============5169740131845960348==--
+--===============5198113929728300819==--

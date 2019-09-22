@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BERT," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。  BERT 论文内容精要模型结构其中的">
+<meta name="keywords" content="BERT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BERT Pre-training of Deep Bidirectional Transformers for Language Understanding">
+<meta property="og:url" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。  BERT 论文内容精要模型结构其中的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a4.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a5.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a6.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a7.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a8.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b3.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b4.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a3.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/c1.gif">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/c2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/2_1_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/3_5_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/6_11_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/4_5_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/4_5_1.png">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/editor/21e689f8-f94a-4f59-869e-d9ebf159ea0f/640.jpeg">
+<meta property="og:image" content="https://image.jiqizhixin.com/uploads/editor/b69d3462-5c03-435f-bd16-f4119b388661/640.jpeg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-7734b2580b943573685b9477c2a9e9be_hd.jpg">
+<meta property="og:updated_time" content="2019-08-26T15:37:00.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BERT Pre-training of Deep Bidirectional Transformers for Language Understanding">
+<meta name="twitter:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。  BERT 论文内容精要模型结构其中的">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a4.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/"/>
+
+
+
+
+
+  <title>BERT Pre-training of Deep Bidirectional Transformers for Language Understanding | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/27/Bidirectional_Encoder_Representations_Transformers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">BERT Pre-training of Deep Bidirectional Transformers for Language Understanding</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-27T10:30:00+08:00">
+                2018-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/语言模型/" itemprop="url" rel="index">
+                    <span itemprop="name">语言模型</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。</p>
+</blockquote>
+<h1 id="BERT-论文内容精要"><a href="#BERT-论文内容精要" class="headerlink" title="BERT 论文内容精要"></a><a href="https://arxiv.org/abs/1810.04805v1" target="_blank" rel="noopener">BERT 论文内容精要</a></h1><h2 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h2><p>其中的主要模块 Transformer 来自 <a href="https://arxiv.org/abs/1706.03762v5" target="_blank" rel="noopener">Attention Is All You Need</a><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a4.png" alt=""></p>
+<h2 id="模型输入"><a href="#模型输入" class="headerlink" title="模型输入"></a>模型输入</h2><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a5.png" alt=""></p>
+<h2 id="预训练方法"><a href="#预训练方法" class="headerlink" title="预训练方法"></a>预训练方法</h2><p>遮蔽语言模型（完形填空）和预测下一句任务。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a6.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a7.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a8.png" alt=""></p>
+<h2 id="模型分析"><a href="#模型分析" class="headerlink" title="模型分析"></a>模型分析</h2><h3 id="Effect-of-Pre-training-Tasks"><a href="#Effect-of-Pre-training-Tasks" class="headerlink" title="Effect of Pre-training Tasks"></a>Effect of Pre-training Tasks</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b1.png" alt=""></p>
+<h3 id="Effect-of-Model-Size"><a href="#Effect-of-Model-Size" class="headerlink" title="Effect of Model Size"></a>Effect of Model Size</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b2.png" alt=""></p>
+<h3 id="Effect-of-Number-of-Training-Steps"><a href="#Effect-of-Number-of-Training-Steps" class="headerlink" title="Effect of Number of Training Steps"></a>Effect of Number of Training Steps</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b3.png" alt=""></p>
+<h3 id="Feature-based-Approach-with-BERT"><a href="#Feature-based-Approach-with-BERT" class="headerlink" title="Feature-based Approach with BERT"></a>Feature-based Approach with BERT</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/b4.png" alt=""></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Recent empirical improvements due to transfer learning with language models have demonstrated that rich, unsupervised pre-training is an integral part of many language understanding systems. Inparticular, these results enable even low-resource tasks to benefit from very deep unidirectional architectures.Our major contribution is further generalizing these findings to deep bidirectional architectures, allowing the same pre-trained model to successfully tackle a broad set of NLP tasks. While the empirical results are strong, in some cases surpassing human performance, important future work is to investigate the linguistic phenomena that may or may not be captured by BERT.</p>
+<hr>
+<h1 id="BERT-相关资源"><a href="#BERT-相关资源" class="headerlink" title="BERT 相关资源"></a>BERT 相关资源</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/1810.04805v1" target="_blank" rel="noopener">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></td>
+<td>原始论文</td>
+<td>20181011</td>
+</tr>
+<tr>
+<td><a href="https://www.reddit.com/r/MachineLearning/comments/9nfqxz/r_bert_pretraining_of_deep_bidirectional/" target="_blank" rel="noopener">Reddit 讨论</a></td>
+<td>作者讨论</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/codertimo/BERT-pytorch" target="_blank" rel="noopener">BERT-pytorch</a></td>
+<td>Google AI 2018 BERT pytorch implementation</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/46833276" target="_blank" rel="noopener">论文解读:BERT模型及fine-tuning</a></td>
+<td>习翔宇 论文解读</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-10-12-13" target="_blank" rel="noopener">最强NLP预训练模型！谷歌BERT横扫11项NLP任务记录</a></td>
+<td>论文浅析</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/46652512" target="_blank" rel="noopener">【NLP】Google BERT详解</a></td>
+<td>李入魔 解读</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.zhihu.com/question/298203515/answer/509923837" target="_blank" rel="noopener">如何评价 BERT 模型？</a></td>
+<td>解读论文思想点</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/46997268" target="_blank" rel="noopener">NLP突破性成果 BERT 模型详细解读</a></td>
+<td>章鱼小丸子 解读</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://www.sohu.com/a/270163827_651893" target="_blank" rel="noopener">谷歌最强 NLP 模型 BERT 解读</a></td>
+<td>AI科技评论</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-10-30-13" target="_blank" rel="noopener">预训练BERT，官方代码发布前他们是这样用TensorFlow解决的</a></td>
+<td>论文复现说明</td>
+<td>20181030</td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-11-01-9" target="_blank" rel="noopener">谷歌终于开源BERT代码：3 亿参数量，机器之心全面解读</a></td>
+<td></td>
+<td>20181101</td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-11-21-14" target="_blank" rel="noopener">为什么说 Bert 大力出奇迹？</a></td>
+<td></td>
+<td>20181121</td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/49271699" target="_blank" rel="noopener">从Word Embedding到Bert模型—自然语言处理中的预训练技术发展史</a></td>
+<td>张俊林</td>
+<td>20181111</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="BERT-进一步研究"><a href="#BERT-进一步研究" class="headerlink" title="BERT 进一步研究"></a>BERT 进一步研究</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-11-23-15" target="_blank" rel="noopener">BERT fine-tune 实践终极教程</a></td>
+<td>BERT在中文数据集上的fine tune全攻略</td>
+<td>20181123</td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/50952013" target="_blank" rel="noopener">BERT在极小数据下带来显著提升的开源实现</a></td>
+<td><a href="https://www.zhihu.com/people/zhang-jun-87-61/activities" target="_blank" rel="noopener">张俊</a></td>
+<td>20181127</td>
+</tr>
+<tr>
+<td><a href="https://github.com/kyzhouhzau/BERT-NER" target="_blank" rel="noopener">Use google BERT to do CoNLL-2003 NER !</a></td>
+<td><a href="https://github.com/kyzhouhzau" target="_blank" rel="noopener">kyzhouhzau</a></td>
+<td>201810</td>
+</tr>
+<tr>
+<td><a href="https://mc.ai/why-bert-has-3-embedding-layers-and-their-implementation-details/" target="_blank" rel="noopener">Why BERT has 3 Embedding Layers and Their Implementation Details</a></td>
+<td>详解BERT的嵌入层输入构成，包括词Token 、Segment 和 Position 嵌入</td>
+<td>20190219</td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/65470719" target="_blank" rel="noopener">Bert时代的创新：Bert应用模式比较及其它</a> 和 <a href="https://zhuanlan.zhihu.com/p/68446772" target="_blank" rel="noopener">Bert时代的创新（应用篇）：Bert在NLP各领域的应用进展</a></td>
+<td>张俊林，综述从BERT 诞生到20190609时的发展</td>
+<td>20190609</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="BERT-Pre-training-of-Deep-Bidirectional-Transformers-for-Language-Understanding"><a href="#BERT-Pre-training-of-Deep-Bidirectional-Transformers-for-Language-Understanding" class="headerlink" title="BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"></a><a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></h1><p>Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova<br>(Submitted on 11 Oct 2018)</p>
+<blockquote>
+<p>We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT representations can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications.<br>BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE benchmark to 80.4% (7.6% absolute improvement), MultiNLI accuracy to 86.7 (5.6% absolute improvement) and the SQuAD v1.1 question answering Test F1 to 93.2 (1.5% absolute improvement), outperforming human performance by 2.0%.<br>Comments:    13 pages</p>
+<p>摘要：本文介绍了一种新的语言表征模型 BERT，意为来自 Transformer 的双向编码器表征（Bidirectional Encoder Representations from Transformers）。与最近的语言表征模型（Peters et al., 2018; Radford et al., 2018）不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。因此，预训练的 BERT 表征可以仅用一个额外的输出层进行微调，进而为很多任务（如问答和语言推断任务）创建当前最优模型，无需对任务特定架构做出大量修改。</p>
+<p>BERT 的概念很简单，但实验效果很强大。它刷新了 11 个 NLP 任务的当前最优结果，包括将 GLUE 基准提升至 80.4%（7.6% 的绝对改进）、将 MultiNLI 的准确率提高到 86.7%（5.6% 的绝对改进），以及将 SQuAD v1.1 的问答测试 F1 得分提高至 93.2 分（提高 1.5 分）——比人类表现还高出 2 分。</p>
+</blockquote>
+<p>Subjects:    Computation and Language (cs.CL)<br>Cite as:    arXiv:1810.04805 [cs.CL]<br>     (or arXiv:1810.04805v1 [cs.CL] for this version)<br>Bibliographic data<br>Select data provider: Semantic Scholar [Disable Bibex(What is Bibex?)]<br>No data available yet<br>Submission history<br>From: Jacob Devlin [view email]<br>[v1] Thu, 11 Oct 2018 00:50:01 GMT (227kb,D)</p>
+<h1 id="Reddit-讨论"><a href="#Reddit-讨论" class="headerlink" title="Reddit 讨论"></a><a href="https://www.reddit.com/r/MachineLearning/comments/9nfqxz/r_bert_pretraining_of_deep_bidirectional/" target="_blank" rel="noopener">Reddit 讨论</a></h1><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a1.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a2.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/a3.png" alt=""></p>
+<h1 id="官方复现-google-research-bert"><a href="#官方复现-google-research-bert" class="headerlink" title="官方复现 google-research bert"></a><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">官方复现 google-research bert</a></h1><blockquote>
+<p>最近谷歌发布了基于双向 Transformer 的大规模预训练语言模型，该预训练模型能高效抽取文本信息并应用于各种 NLP 任务，该研究凭借预训练模型刷新了 11 项 NLP 任务的当前最优性能记录。如果这种预训练方式能经得起实践的检验，那么各种 NLP 任务只需要少量数据进行微调就能实现非常好的效果，BERT 也将成为一种名副其实的骨干网络。</p>
+</blockquote>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>BERT</strong>, or <strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from<br><strong>T</strong>ransformers, is a new method of pre-training language representations which<br>obtains state-of-the-art results on a wide array of Natural Language Processing<br>(NLP) tasks.</p>
+<p>Our academic paper which describes BERT in detail and provides full results on a<br>number of tasks can be found here:<br><a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">https://arxiv.org/abs/1810.04805</a>.</p>
+<p>To give a few numbers, here are the results on the<br><a href="https://rajpurkar.github.io/SQuAD-explorer/" target="_blank" rel="noopener">SQuAD v1.1</a> question answering<br>task:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>SQuAD v1.1 Leaderboard (Oct 8th 2018)</th>
+<th style="text-align:center">Test EM</th>
+<th style="text-align:center">Test F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1st Place Ensemble - BERT</td>
+<td style="text-align:center"><strong>87.4</strong></td>
+<td style="text-align:center"><strong>93.2</strong></td>
+</tr>
+<tr>
+<td>2nd Place Ensemble - nlnet</td>
+<td style="text-align:center">86.0</td>
+<td style="text-align:center">91.7</td>
+</tr>
+<tr>
+<td>1st Place Single Model - BERT</td>
+<td style="text-align:center"><strong>85.1</strong></td>
+<td style="text-align:center"><strong>91.8</strong></td>
+</tr>
+<tr>
+<td>2nd Place Single Model - nlnet</td>
+<td style="text-align:center">83.5</td>
+<td style="text-align:center">90.1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>And several natural language inference tasks:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th style="text-align:center">MultiNLI</th>
+<th style="text-align:center">Question NLI</th>
+<th style="text-align:center">SWAG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BERT</td>
+<td style="text-align:center"><strong>86.7</strong></td>
+<td style="text-align:center"><strong>91.1</strong></td>
+<td style="text-align:center"><strong>86.3</strong></td>
+</tr>
+<tr>
+<td>OpenAI GPT (Prev. SOTA)</td>
+<td style="text-align:center">82.2</td>
+<td style="text-align:center">88.1</td>
+<td style="text-align:center">75.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Plus many other tasks.</p>
+<p>Moreover, these results were all obtained with almost no task-specific neural<br>network architecture design.</p>
+<p>If you already know what BERT is and you just want to get started, you can<br><a href="#pre-trained-models">download the pre-trained models</a> and<br><a href="#fine-tuning-with-bert">run a state-of-the-art fine-tuning</a> in only a few<br>minutes.</p>
+<h1 id="复现-bert-language-understanding"><a href="#复现-bert-language-understanding" class="headerlink" title="复现 bert_language_understanding"></a><a href="https://github.com/brightmart/bert_language_understanding" target="_blank" rel="noopener">复现 bert_language_understanding</a></h1><blockquote>
+<p>Pre-training of Deep Bidirectional Transformers for Language Understanding</p>
+</blockquote>
+<h1 id="复现-BERT-keras"><a href="#复现-BERT-keras" class="headerlink" title="复现 BERT-keras"></a><a href="https://github.com/Separius/BERT-keras" target="_blank" rel="noopener">复现 BERT-keras</a></h1><blockquote>
+<p>Keras implementation of BERT(Bidirectional Encoder Representations from Transformers)</p>
+</blockquote>
+<h1 id="复现-pytorch-pretrained-BERT"><a href="#复现-pytorch-pretrained-BERT" class="headerlink" title="复现 pytorch-pretrained-BERT"></a><a href="https://github.com/huggingface/pytorch-pretrained-BERT" target="_blank" rel="noopener">复现 pytorch-pretrained-BERT</a></h1><blockquote>
+<p>PyTorch version of Google AI’s BERT model with script to load Google’s pre-trained models.</p>
+</blockquote>
+<h1 id="BERT的数据集-GLUE"><a href="#BERT的数据集-GLUE" class="headerlink" title="BERT的数据集 GLUE"></a><a href="https://arxiv.org/abs/1804.07461v2" target="_blank" rel="noopener">BERT的数据集 GLUE</a></h1><p>GLUE 来自论文 <a href="https://arxiv.org/abs/1804.07461v2" target="_blank" rel="noopener">GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding</a></p>
+<p>摘要</p>
+<blockquote>
+<p>For natural language understanding (NLU) technology to be maximally useful, both practically and as a scientific object of study, it must be general: it must be able to process language in a way that is not exclusively tailored to any one specific task or dataset. In pursuit of this objective, we introduce the General Language Understanding Evaluation benchmark (GLUE), a tool for evaluating and analyzing the performance of models across a diverse range of existing NLU tasks. GLUE is model-agnostic, but it incentivizes sharing knowledge across tasks because certain tasks have very limited training data. We further provide a hand-crafted diagnostic test suite that enables detailed linguistic analysis of NLU models. We evaluate baselines based on current methods for multi-task and transfer learning and find that they do not immediately give substantial improvements over the aggregate performance of training a separate model per task, indicating room for improvement in developing general and robust NLU systems.</p>
+</blockquote>
+<h1 id="BERT-在中文自然语言处理中应用"><a href="#BERT-在中文自然语言处理中应用" class="headerlink" title="BERT 在中文自然语言处理中应用"></a>BERT 在中文自然语言处理中应用</h1><p><a href="https://github.com/yumath/bertNER" target="_blank" rel="noopener">https://github.com/yumath/bertNER</a><br><a href="https://github.com/Hoiy/berserker" target="_blank" rel="noopener">https://github.com/Hoiy/berserker</a><br><a href="https://github.com/GhibliField/Multiclass-Text-Classification-using-BERT" target="_blank" rel="noopener">https://github.com/GhibliField/Multiclass-Text-Classification-using-BERT</a><br><a href="https://github.com/lonePatient/BERT-chinese-text-classification-pytorch" target="_blank" rel="noopener">https://github.com/lonePatient/BERT-chinese-text-classification-pytorch</a></p>
+<h1 id="解析BERT中的-Transformer-的注意力机制"><a href="#解析BERT中的-Transformer-的注意力机制" class="headerlink" title="解析BERT中的 Transformer 的注意力机制"></a>解析BERT中的 Transformer 的注意力机制</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://news.hexun.com/2019-01-21/195945015.html" target="_blank" rel="noopener">用可视化解构BERT，我们从上亿参数中提取出了6种直观模式</a></td>
+<td>通过图解BERT中的注意力权重分析BERT的学习模式</td>
+<td>20190121</td>
+</tr>
+<tr>
+<td><a href="https://towardsdatascience.com/deconstructing-bert-distilling-6-patterns-from-100-million-parameters-b49113672f77" target="_blank" rel="noopener">Deconstructing BERT: Distilling 6 Patterns from 100 Million Parameters</a></td>
+<td>用可视化解构BERT，我们从上亿参数中提取出了6种直观模式 原文</td>
+<td>20181219</td>
+</tr>
+<tr>
+<td><a href="https://towardsdatascience.com/deconstructing-bert-part-2-visualizing-the-inner-workings-of-attention-60a16d86b5c1" target="_blank" rel="noopener">Deconstructing BERT, Part 2: Visualizing the Inner Workings of Attention</a></td>
+<td>用可视化解构BERT，我们从上亿参数中提取出了6种直观模式 原文</td>
+<td>20190108</td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2019-03-05-7" target="_blank" rel="noopener">Attention isn’t all you need！BERT的力量之源远不止注意力</a></td>
+<td>本文尝试从自然语言理解的角度解释 BERT 的强大能力。作者指出Transformer不只有注意力（解析），还注重组合，而解析and组合正是自然语言理解的框架。</td>
+<td>20190305</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tensor2Tensor有一个很好的工具，可用于可视化Transformer 模型中的注意力模式。因此我修改了一下，直接用在BERT的一个pytorch版本上。修改后的界面如下所示。你可以直接在这个 <a href="https://colab.research.google.com/drive/1vlOJ1lhdujVjfH857hvYKIdKPTD9Kid8" target="_blank" rel="noopener">Colab notebook</a>里运行，或在 Github 上找到<a href="https://github.com/jessevig/bertviz" target="_blank" rel="noopener">源码</a>。<br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/c1.gif" alt=""></p>
+<p>一个新的可视化工具将展示BERT如何形成其独特的注意力模式。<br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/c2.png" alt=""></p>
+<h2 id="注意力解释"><a href="#注意力解释" class="headerlink" title="注意力解释"></a>注意力解释</h2><h3 id="2-1"><a href="#2-1" class="headerlink" title="2-1"></a>2-1</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/2_1_0.png" alt=""></p>
+<h3 id="3-5-6-11"><a href="#3-5-6-11" class="headerlink" title="3-5 6-11"></a>3-5 6-11</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/3_5_0.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/6_11_0.png" alt=""></p>
+<h3 id="4-5"><a href="#4-5" class="headerlink" title="4-5"></a>4-5</h3><p><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/4_5_0.png" alt=""><br><img src="/2018/11/27/Bidirectional_Encoder_Representations_Transformers/4_5_1.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>层数</th>
+<th>注意力头</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>关注句中下一个词语</td>
+</tr>
+<tr>
+<td>3</td>
+<td>5</td>
+<td>关注句中上一个词语</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+<td>关注句中短语结构</td>
+</tr>
+<tr>
+<td>6</td>
+<td>11</td>
+<td>关注句中上一个词语</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>意外的是，我们发现了一个似乎在真正执行共指消解的注意力头（第六层的注意力头 #0）。此外，正如文章《Understanding BERT Part 2: BERT Specifics》中提到的，一些注意力头似乎为每个单词提供全局上下文（第 0 层的注意力头 #0）。<br><img src="https://image.jiqizhixin.com/uploads/editor/21e689f8-f94a-4f59-869e-d9ebf159ea0f/640.jpeg" alt=""><br>第六层的注意力头 <code>#0</code> 中发生的共指消解。</p>
+<p><img src="https://image.jiqizhixin.com/uploads/editor/b69d3462-5c03-435f-bd16-f4119b388661/640.jpeg" alt=""><br>每个单词都会关注该句中所有其它的单词。这可能为每个单词创建一个粗略的上下文语境。</p>
+<h2 id="后BERT时代：15个预训练模型对比分析与关键点探索"><a href="#后BERT时代：15个预训练模型对比分析与关键点探索" class="headerlink" title="后BERT时代：15个预训练模型对比分析与关键点探索"></a>后BERT时代：15个预训练模型对比分析与关键点探索</h2><p>参见 <a href="https://zhuanlan.zhihu.com/p/76912493" target="_blank" rel="noopener">nlp中的预训练语言模型总结(单向模型、BERT系列模型、XLNet)</a></p>
+<p><img src="https://pic3.zhimg.com/80/v2-7734b2580b943573685b9477c2a9e9be_hd.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BERT/" rel="tag"># BERT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/Efficient Estimation of Word Representations in Vector Space/" rel="next" title="Efficient Estimation of Word Representations in Vector Space">
+                <i class="fa fa-chevron-left"></i> Efficient Estimation of Word Representations in Vector Space
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/27/Universal Transformers/" rel="prev" title="待读Universal Transformers">
+                待读Universal Transformers <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-论文内容精要"><span class="nav-number">1.</span> <span class="nav-text">BERT 论文内容精要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构"><span class="nav-number">1.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型输入"><span class="nav-number">1.2.</span> <span class="nav-text">模型输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预训练方法"><span class="nav-number">1.3.</span> <span class="nav-text">预训练方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">1.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型分析"><span class="nav-number">1.5.</span> <span class="nav-text">模型分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Pre-training-Tasks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Effect of Pre-training Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Model-Size"><span class="nav-number">1.5.2.</span> <span class="nav-text">Effect of Model Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Number-of-Training-Steps"><span class="nav-number">1.5.3.</span> <span class="nav-text">Effect of Number of Training Steps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature-based-Approach-with-BERT"><span class="nav-number">1.5.4.</span> <span class="nav-text">Feature-based Approach with BERT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">1.6.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-相关资源"><span class="nav-number">2.</span> <span class="nav-text">BERT 相关资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-进一步研究"><span class="nav-number">3.</span> <span class="nav-text">BERT 进一步研究</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-Pre-training-of-Deep-Bidirectional-Transformers-for-Language-Understanding"><span class="nav-number">4.</span> <span class="nav-text">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reddit-讨论"><span class="nav-number">5.</span> <span class="nav-text">Reddit 讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方复现-google-research-bert"><span class="nav-number">6.</span> <span class="nav-text">官方复现 google-research bert</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">6.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-bert-language-understanding"><span class="nav-number">7.</span> <span class="nav-text">复现 bert_language_understanding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-BERT-keras"><span class="nav-number">8.</span> <span class="nav-text">复现 BERT-keras</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-pytorch-pretrained-BERT"><span class="nav-number">9.</span> <span class="nav-text">复现 pytorch-pretrained-BERT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT的数据集-GLUE"><span class="nav-number">10.</span> <span class="nav-text">BERT的数据集 GLUE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-在中文自然语言处理中应用"><span class="nav-number">11.</span> <span class="nav-text">BERT 在中文自然语言处理中应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析BERT中的-Transformer-的注意力机制"><span class="nav-number">12.</span> <span class="nav-text">解析BERT中的 Transformer 的注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力解释"><span class="nav-number">12.1.</span> <span class="nav-text">注意力解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1"><span class="nav-number">12.1.1.</span> <span class="nav-text">2-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-6-11"><span class="nav-number">12.1.2.</span> <span class="nav-text">3-5 6-11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5"><span class="nav-number">12.1.3.</span> <span class="nav-text">4-5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后BERT时代：15个预训练模型对比分析与关键点探索"><span class="nav-number">12.2.</span> <span class="nav-text">后BERT时代：15个预训练模型对比分析与关键点探索</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

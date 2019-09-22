@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="分类," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="视频分类理论和实践研究    标题 内容 时间     基于视觉的视频分类入门  20180408   爱奇艺“多模态视频人物识别”课程分享学习总结  20181005   Five video classification methods implemented in Keras and TensorFlow 对应的代码 five-video-classification-methods 201">
+<meta name="keywords" content="分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="短视频分类技术">
+<meta property="og:url" content="http://yoursite.com/2019/07/11/短视频分类技术/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="视频分类理论和实践研究    标题 内容 时间     基于视觉的视频分类入门  20180408   爱奇艺“多模态视频人物识别”课程分享学习总结  20181005   Five video classification methods implemented in Keras and TensorFlow 对应的代码 five-video-classification-methods 201">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/07/11/短视频分类技术/2019_aiqiyi_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/11/短视频分类技术/2019_aiqiyi_2.png">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfd9e00b31.png?imageView2/2/w/740">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfda672cae.png?imageView2/2/w/740">
+<meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfdaa9b90d.png?imageView2/2/w/740">
+<meta property="og:updated_time" content="2019-07-16T08:50:38.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="短视频分类技术">
+<meta name="twitter:description" content="视频分类理论和实践研究    标题 内容 时间     基于视觉的视频分类入门  20180408   爱奇艺“多模态视频人物识别”课程分享学习总结  20181005   Five video classification methods implemented in Keras and TensorFlow 对应的代码 five-video-classification-methods 201">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/11/短视频分类技术/2019_aiqiyi_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/11/短视频分类技术/"/>
+
+
+
+
+
+  <title>短视频分类技术 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/11/短视频分类技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">短视频分类技术</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T22:00:00+08:00">
+                2019-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/" itemprop="url" rel="index">
+                    <span itemprop="name">TF</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/商业应用案例/" itemprop="url" rel="index">
+                    <span itemprop="name">商业应用案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/11/短视频分类技术/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/11/短视频分类技术/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="视频分类理论和实践研究"><a href="#视频分类理论和实践研究" class="headerlink" title="视频分类理论和实践研究"></a>视频分类理论和实践研究</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>内容</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/28179049" target="_blank" rel="noopener">基于视觉的视频分类入门</a></td>
+<td></td>
+<td>20180408</td>
+</tr>
+<tr>
+<td><a href="https://blog.csdn.net/sgfmby1994/article/details/82933747" target="_blank" rel="noopener">爱奇艺“多模态视频人物识别”课程分享学习总结</a></td>
+<td></td>
+<td>20181005</td>
+</tr>
+<tr>
+<td><a href="https://blog.coast.ai/five-video-classification-methods-implemented-in-keras-and-tensorflow-99cad29cc0b5" target="_blank" rel="noopener">Five video classification methods implemented in Keras and TensorFlow</a></td>
+<td>对应的代码 <a href="https://github.com/harvitronix/five-video-classification-methods" target="_blank" rel="noopener">five-video-classification-methods</a></td>
+<td>20190504</td>
+</tr>
+<tr>
+<td><a href="https://github.com/HHTseng/video-classification" target="_blank" rel="noopener">HHTseng/video-classification</a></td>
+<td>Tutorial for video classification/ action recognition using 3D CNN/ CNN+RNN on UCF101</td>
+<td>20190601</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="论文和数据集资源"><a href="#论文和数据集资源" class="headerlink" title="论文和数据集资源"></a>论文和数据集资源</h2><ul>
+<li><a href="https://arxiv.org/abs/1811.07548v1" target="_blank" rel="noopener">iQIYI-VID: A Large Dataset for Multi-modal Person Identification</a></li>
+</ul>
+<h2 id="2019-爱奇艺短视频分类技术解析"><a href="#2019-爱奇艺短视频分类技术解析" class="headerlink" title="2019 爱奇艺短视频分类技术解析"></a><a href="https://www.jiqizhixin.com/articles/2019-06-12-6" target="_blank" rel="noopener">2019 爱奇艺短视频分类技术解析</a></h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>近年来，短视频领域一直广受关注，且发展迅速。每天有大量UGC短视频被生产、分发和消费，为生产系统带来了巨大的压力，其中的难点之一就是为每个短视频快速、准确地打上标签。为了解决人工编辑的时效和积压问题，自动化标签技术成为各大内容领域公司都非常关注的关键课题。短视频大规模层次分类作为内容理解技术的一个重要方向，为爱奇艺的短视频智能分发业务提供着强力支持，其输出被称为“类型标签”。</p>
+<h3 id="技术难点"><a href="#技术难点" class="headerlink" title="技术难点"></a>技术难点</h3><p>分类体系复杂。短视频分类体系是一棵人工精心制定的层次结构，体系和规则都比较复杂：层级最少有3级，最多有5级，总计近800个有效类别，类别间有互斥和共同出现的需求。</p>
+<p><img src="/2019/07/11/短视频分类技术/2019_aiqiyi_1.png" alt=""><br>需要文本、图像、生态信息等多模态特征综合判断。短视频具有标题、描述、封面图、视频、音频等媒体信息。同时，一个短视频也不一定是独立存在的，它可能来自一个影视、综艺片段，它的上传者可能是一个垂直领域的内容贡献者，所以，关联正片、视频来源、上传者等信息对分类也可能有帮助。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>短视频分类可以分为特征表示(Feature Representation) 和层次分类(Hierarchical Classification) 两个模块，前者基于多模态特征建模短视频的整体表达（在我们的模型中通过Feature Representation和Representation Fusion两个子网络级联建模完成），后者基于前者完成分类任务。我们模型的整体结构如下图：<br><img src="/2019/07/11/短视频分类技术/2019_aiqiyi_2.png" alt=""></p>
+<h2 id="PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><a href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍" class="headerlink" title="PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍"></a><a href="https://www.leiphone.com/news/201811/yhkoD7Ty8WRaCBqe.html" target="_blank" rel="noopener">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</a></h2><h4 id="视频解码"><a href="#视频解码" class="headerlink" title="视频解码"></a>视频解码</h4><p>因为时间是一个很重要的因素，而视频解码又是一个很费时间的过程，所以如何设计解码模块是本次竞赛中的一个关键。我们采用了多线程软解提取关键帧的方法。</p>
+<p>主流的视频编码方式中，每个视频主要包含三种图片帧，分别叫做：Intra-coded frame（I 帧），Predictive frame（P 帧）和 Bi-Predictive frame（B 帧）。其中 I 帧是一张完整的图片。P 帧记录了与之前的帧的差别，所以在解码 P 帧时必须要参考之前的图片帧。而 B 帧不仅需要参考之前的图片帧，还需要参考之后的图片帧才能完整解码。图片 4 阐明了这三个概念 [2]。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfd9e00b31.png?imageView2/2/w/740" alt=""><br>显而易见，P 帧和 B 帧的解码是相对较慢的，而直接解码 I 帧则可以获得更快的速度。同时，由于我们需要解码不止一帧，所以我们采用了多线程的方式，每一个线程负责解码一个关键帧。整个解码过程使用 FFmpeg 实现。</p>
+<h3 id="模型设计"><a href="#模型设计" class="headerlink" title="模型设计"></a>模型设计</h3><p>解决了解码问题后，接下来的问题在于如何用所得的多帧来进行分类。</p>
+<h4 id="主流方法"><a href="#主流方法" class="headerlink" title="主流方法"></a>主流方法</h4><p>目前主流的视频分类的方法有三大类：基于 LSTM 的方法，基于 3D 卷积的方法和基于双流的方法。图片 5 展示了这三种框架的大体结构 [3]。</p>
+<ol>
+<li>基于 LSTM 的方法将视频的每一帧用卷积网络提取出每一帧的特征，然后将每一个特征作为一个时间点，依次输入到 LSTM 中。由于 LSTM 并不限制序列的长度，所以这种方法可以处理任意长度的视频。但同时，因为 LSTM 本身有梯度消失和爆炸的问题，往往难以训练出令人满意的效果。而且，由于 LSTM 需要一帧一帧得进行输入，所以速度也比不上其他的方法。</li>
+<li>基于 3D 卷积的方法将原始的 2D 卷积核扩展到 3D。类似于 2D 卷积在空间维度的作用方式，它可以在时间维度自底向上地提取特征。基于 3D 卷积的方法往往能得到不错的分类精度。但是，由于卷积核由 2D 扩展到了 3D，其参数量也成倍得增加了，所以网络的速度也会相应下降。</li>
+<li>基于双流网络的方法会将网络分成两支。其中一支使用 2D 卷积网络来对稀疏采样的图片帧进行分类，另一支会提取采样点周围帧的光流场信息，然后使用一个光流网络来对其进行分类。两支网络的结果会进行融合从而得到最终的类标。基于双流的方法可以很好地利用已有的 2D 卷积网络来进行预训练，同时光流又可以建模运动信息，所以精度往往也很高。但是由于光流的提取过程很慢，所以整体上制约了这一方法的速度。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfda672cae.png?imageView2/2/w/740" alt=""><br>综上所述，主流的方法都不太适用于短视频实时分类的任务，所以我们特别设计了一个适用于短视频实时分类的框架。</li>
+</ol>
+<h4 id="我们的方法"><a href="#我们的方法" class="headerlink" title="我们的方法"></a>我们的方法</h4><p>图片 4 展示了我们的解决方案的整体框架：给定一个视频，我们首先会从中稀疏采样固定数量的图片帧，然后将这些帧组成一个 batch，送入到一个 BaseNet 中。这个 BaseNet 是在已有的 2D 卷积网络基础上优化改进得到的，具有较强的特征提取能力。BaseNet 输出的高层的特征往往具有很强的语义信息，但是却没有时间上的融合。所以我们特别设计了一个基于帧间注意力机制的融合模型，将 BaseNet 提取的不同帧的特征作为一个输入送入融合模型中，最终由融合模型得到预测的结果。由于融合模型比较小，推理速度很快，而且参数量较少，也比较容易训练。整个模型在 mxnet 上进行构建和训练。基于这样的设计，我们的模型可以得到很快的推理速度，同时又不会损失太多精度。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfdaa9b90d.png?imageView2/2/w/740" alt=""></p>
+<h2 id="2019-重新认识快手：人工智能的从-0-到-1"><a href="#2019-重新认识快手：人工智能的从-0-到-1" class="headerlink" title="2019 重新认识快手：人工智能的从 0 到 1"></a><a href="https://www.jiqizhixin.com/articles/2019-07-09-6" target="_blank" rel="noopener">2019 重新认识快手：人工智能的从 0 到 1</a></h2><h3 id="多模态理解的挑战"><a href="#多模态理解的挑战" class="headerlink" title="多模态理解的挑战"></a>多模态理解的挑战</h3><p>过去几年，单模态内容理解能力在学术界还不够成熟，加上学术界对视频理解没有强烈的研究需求，导致始终没有形成一套针对视频理解的求解方案。在工业界，即使是全球最大的视频平台 YouTube，也因为其视频带有丰富的文本信息—标题、简介、标签，可以一定程度上绕开视频理解。</p>
+<p>但快手不同。作为一款移动互联网时代兴起的短视频应用，快手给用户提供轻便新颖的拍视频体验，用户喜欢拍完就传，不爱文字编辑，描述视频的文字信息严重缺失。快手又需要理解内容来做推荐算法，视频理解成了一个绕不开的坎。李岩说，快手是较早对视频内容分析产生强烈刚需的公司。</p>
+<p>复杂的应用场景和多元的用户分布给 MMU 带来了另一个维度的挑战。负责视频理解方向的朝旭是 MMU 组的老员工，他给机器之心举了一个例子：快手上有很多景色的视频内容，有些景色很美、有空灵感的画面犹如「仙境」，那么快手的标签里就需要描述「仙境」这类景色；但是在学术界的数据集里面，你是不会看到这种「诡异」的标签。</p>
+<p>「<strong>这不再是一个具体的分类算法问题，而是说你怎么去定义一个合理的标签体系</strong>。」</p>
+<p>语音组最直观的问题是方言口音。MMU 语音组的月朗介绍说，快手用户的地域分布结构和中国移动互联网的人群分布结构基本一致：一线城市人口占比只有 7% 左右，另外 93% 的人都生活在非一线城市，特别是许多小镇青年、或者是三四线以下的人们说话，都带有很强的口音，这就需要快手收集特定方言区域的语音和文本数据。</p>
+<p>音乐组面临的一个难题是给用户唱歌打分。传统的歌唱打分是将用户所唱的歌曲和原唱音频做对比，匹配度越高分数越高。但在快手，许多用户是来自偏远地区的少数民族，他们所唱的民歌山歌在快手的检索库里根本找不到。</p>
+<p>「我们现在要求解的不是 1+1 等于 2 的这个问题，而是你在算 1+1 的时候，你发现连纸和笔都没有，」朝旭说。</p>
+<p>经过两年的摸索，MMU 组基于多模态技术，逐渐形成了两大业务体系：信息分发和人机交互。前者利用多模态实现精准地视频内容理解，后者利用多模态来辅助人们更好地记录生活。</p>
+<p>为了更好地理解这两个方向，我们各举一例：冷启动项目属于内容分发，指的是在用户在刚打开快手 app 时，除了内容和视频中的人物，算法无法获得任何行为数据，因为用户打开快手的一个页面是「发现」而非「关注」，所以快手在冷启动阶段就要提供个性化的内容推荐。MMU 组在 2018 年参与了优化冷启动的项目。</p>
+<p>人机交互上，视频配乐是一个典型的多模态理解场景。MMU 音乐组的水寒告诉机器之心，快手需要首先理解视频，包括人脸识别、年龄性别、动作时间地点场景的识别，然后对音乐的风格情感、节奏、主题、以及适合度做场景理解，这个过程涉及到多部门之间的协作，包括视频理解方面、人脸识别、自然语言处理、视频检索、音乐检索、以及最后的推荐算法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/分类/" rel="tag"># 分类</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding/" rel="next" title="XLNet Generalized Autoregressive Pretraining for Language Understanding">
+                <i class="fa fa-chevron-left"></i> XLNet Generalized Autoregressive Pretraining for Language Understanding
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/" rel="prev" title="使用TensorFlow自动分类NAVER购物产品类别">
+                使用TensorFlow自动分类NAVER购物产品类别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#视频分类理论和实践研究"><span class="nav-number">1.</span> <span class="nav-text">视频分类理论和实践研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文和数据集资源"><span class="nav-number">2.</span> <span class="nav-text">论文和数据集资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-爱奇艺短视频分类技术解析"><span class="nav-number">3.</span> <span class="nav-text">2019 爱奇艺短视频分类技术解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术难点"><span class="nav-number">3.2.</span> <span class="nav-text">技术难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">3.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><span class="nav-number">4.</span> <span class="nav-text">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视频解码"><span class="nav-number">4.0.1.</span> <span class="nav-text">视频解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型设计"><span class="nav-number">4.1.</span> <span class="nav-text">模型设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主流方法"><span class="nav-number">4.1.1.</span> <span class="nav-text">主流方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们的方法"><span class="nav-number">4.1.2.</span> <span class="nav-text">我们的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-重新认识快手：人工智能的从-0-到-1"><span class="nav-number">5.</span> <span class="nav-text">2019 重新认识快手：人工智能的从 0 到 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多模态理解的挑战"><span class="nav-number">5.1.</span> <span class="nav-text">多模态理解的挑战</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

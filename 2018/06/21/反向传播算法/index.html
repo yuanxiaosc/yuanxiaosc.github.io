@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,反向传播算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失">
+<meta name="keywords" content="深度学习,反向传播算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反向传播算法">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/反向传播算法/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_8.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_7.png">
+<meta property="og:updated_time" content="2019-09-20T00:50:24.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反向传播算法">
+<meta name="twitter:description" content="反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/21/反向传播算法/one_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/21/反向传播算法/"/>
+
+
+
+
+
+  <title>反向传播算法 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/反向传播算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">反向传播算法</h1>
+        
+
+        <div class="post-meta">
+		  
+            <i class="fa fa-thumb-tack"></i>
+            <font color=7D26CD>置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T10:22:42+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/21/反向传播算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/21/反向传播算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失函数值相对于每个参数的偏导数。</p>
+<p>喜欢研究代码的朋友可以查看我的GitHub <a href="https://github.com/yuanxiaosc/Theoretical-Proof-of-Neural-Network-Model-and-Implementation-Based-on-Numpy/blob/master/Code/DNN/hans_on_feedforward_neural_network.py" target="_blank" rel="noopener">基于Numpy的反向传播算法代码实现</a></p>
+<h2 id="反向传播概述"><a href="#反向传播概述" class="headerlink" title="反向传播概述"></a>反向传播概述</h2><p>反向传播算法最初在 1970 年代被提及，但是人们直到 David Rumelhart、Geoffrey Hinton 和 Ronald Williams 的著名的 1986 年的论文中才认识到这个算法的重要性。</p>
+<p>反向传播的核心是一个对代价函数 $C$ 关于任何权重 $w$ 和 偏置 $b$ 的偏导数 $\partial{C}/\partial{w}$ 的表达式。</p>
+<p>这个表达式告诉我们在改变权重和偏置时，代价函数变化的快慢。</p>
+<h2 id="关于代价函数的两个假设"><a href="#关于代价函数的两个假设" class="headerlink" title="关于代价函数的两个假设"></a>关于代价函数的两个假设</h2><ol>
+<li><p>代价函数可以被写成在每一个训练样本 $x$ 上的代价函数 $C_x$ 的均值 $C=\frac{1}{n}\sum_{x}C_x$。</p>
+</li>
+<li><p>代价函数可以写成神经网络输出的函数。</p>
+</li>
+</ol>
+<p>需要假设1的原因是，反向传播实际上是对一个独立的训练样本计算了 $\partial{C_x}/\partial{w}$ 和 $\partial{C_x}/\partial{b}$。然后通过在所有训练样本上进行平均化获得 $\partial{C}/\partial{w}$ 和 $\partial{C}/\partial{w}$ 。</p>
+<p>需要假设2的原因是，要把代价函数与神经网络输出联系起来，进而与神经网络的参数联系起来。</p>
+<h2 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h2><p><img src="/2018/06/21/反向传播算法/one_1.png" alt=""></p>
+<blockquote>
+<p>$W_{jk}^{l}$ 是从 $l-1$ 层的第 $k$ 个神经元到 $l$ 层的第 $j$ 个神经元的权重。</p>
+<p>$b_j^l$ 是第 $l$ 层的第 $j$ 个神经元的偏置。</p>
+<p>$a_j^l$ 是第 $l$ 层的第 $j$ 个神经元的激活值。</p>
+<p>$\sigma$ 是激活函数。</p>
+</blockquote>
+<p>把上面的符号向量化</p>
+<blockquote>
+<p>$W^{l}$ 是权重矩阵，第 $j$ 行 $k$ 列的元素是 $W_{jk}^{l}$。</p>
+</blockquote>
+<p>例如第二层与第三层之间的权重矩阵是</p>
+<script type="math/tex; mode=display">
+    w^3 = { \left[
+     \begin{matrix}
+       w_{11}^3 & w_{12}^3 & w_{13}^3 & w_{14}^3\\
+       w_{21}^3 & w_{22}^3 & w_{23}^3 & w_{24}^3
+      \end{matrix}
+      \right] }</script><blockquote>
+<p>$b^l$ 是偏置向量。第 $j$ 行的元素是 $b_j^l$。</p>
+</blockquote>
+<p>例如第二层的偏置向量是</p>
+<script type="math/tex; mode=display">
+    b^2 = { \left[
+     \begin{matrix}
+       b_{1}^2  \\
+       \\
+       b_{2}^2\\
+       \\
+       b_{3}^2\\
+       \\
+       b_{4}^2
+      \end{matrix}
+      \right] }</script><p>有了这些表示 $l$ 层的第 $j$ 个神经元的激活值 $a_j^l$ 就和 $l-1$ 层的激活值通过方程关联起来了</p>
+<script type="math/tex; mode=display">a^{l}_j = \sigma\left( \sum_k w^{l}_{jk} a^{l-1}_k + b^l_j \right)</script><p>把上面式子向量化</p>
+<script type="math/tex; mode=display">a^{l} = \sigma(w^l a^{l-1}+b^l)</script><p>例如第三层的激活向量是</p>
+<script type="math/tex; mode=display">
+ { \left[
+ \begin{matrix}
+   a_{1}^3  \\
+   \\
+   a_{2}^3 \\
+  \end{matrix}
+  \right] }
+  =\sigma\left(
+  { \left[
+   \begin{matrix}
+     w_{11}^3 & w_{12}^3 & w_{13}^3 & w_{14}^3\\
+     w_{21}^3 & w_{22}^3 & w_{23}^3 & w_{24}^3
+    \end{matrix}
+    \right] }
+    { \left[
+    \begin{matrix}
+      a_{1}^2  \\
+      \\
+      a_{2}^2 \\
+      \\
+      a_{3}^2  \\
+      \\
+      a_{4}^2 \\
+     \end{matrix}
+     \right] }+
+     { \left[
+      \begin{matrix}
+        b_{1}^3  \\
+        \\
+        b_{2}^3 \\
+       \end{matrix}
+       \right] }\right)</script><blockquote>
+<p>$a^{l}$ 是激活向量。第 $j$ 行的元素是 $a_j^l$。</p>
+</blockquote>
+<p>定义</p>
+<script type="math/tex; mode=display">z^l \equiv w^l a^{l-1}+b^l</script><p>则 $a^l =\sigma(z^l)$</p>
+<blockquote>
+<p>$z^l$ 表示第第 $l$ 层的带权输入。第 $j$ 个元素是 $z_j^l$。</p>
+</blockquote>
+<script type="math/tex; mode=display">z^l_j=\sum_k w^l_{jk} a^{l-1}_k+b^l_j</script><blockquote>
+<p>$z_j^l$ 是第 $l$ 层的第 $j$ 个神经元的带权输入。</p>
+</blockquote>
+<p>反向传播的核心是一个对代价函数 $C$ 关于任何权重 $w$ 和 偏置 $b$ 的偏导数 $\partial{C}/\partial{w}$ 的表达式。为了计算这些值，引入一个中间量 $\delta_j^l$ ,表示在 $l$ 层的第 $j$ 个神经元的误差。</p>
+<p>定义</p>
+<script type="math/tex; mode=display">\delta^l_j \equiv \frac{\partial C}{\partial z^l_j}.</script><p>$\delta^l$ 是误差向量，$\delta^l$ 的第 $j$ 个元素是 $\delta_j^l$。</p>
+<h2 id="反向传播的四个基本方程"><a href="#反向传播的四个基本方程" class="headerlink" title="反向传播的四个基本方程"></a>反向传播的四个基本方程</h2><p><img src="/2018/06/21/反向传播算法/one_2.png" alt=""></p>
+<p>$\nabla_a$ 是求梯度运算符，$\nabla_a C$ 结果是一个向量，其元素是偏导数 $\partial C / \partial a^L_j$。</p>
+<p>$\odot$ 是按元素乘积的运算符，$ {(s \odot t)}_j = s_j t_j $ ，例如</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c} 1 \\ 2 \end{array}\right]
+  \odot \left[\begin{array}{c} 3 \\ 4\end{array} \right]
+= \left[ \begin{array}{c} 1 * 3 \\ 2 * 4 \end{array} \right]
+= \left[ \begin{array}{c} 3 \\ 8 \end{array} \right].</script><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>计算公式</th>
+<th>维度变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\delta^L =\nabla_a C\odot \dfrac{\partial f^{(L)}}{\partial z^L} $</td>
+<td>$(d^L, 1) = (d^L, 1) * (d^L, 1)$</td>
+</tr>
+<tr>
+<td>$\delta^{(l)} =({(w^{(l+1)})}^T\delta^{(l+1)})\odot \sigma’(z^l) $</td>
+<td>$(d^l, 1) = {({d}^{l+1}, {d}^{l})}^T (d^{l+1}, 1) * (d^l, 1)$</td>
+</tr>
+<tr>
+<td>$\dfrac{\partial C}{\partial b^{(l)}} =\delta^{(l)}$</td>
+<td>$(d^l, 1) = (d^l, 1)$</td>
+</tr>
+<tr>
+<td>$\dfrac{\partial C}{\partial w^l} = \delta^l (a^{l-1})^T $</td>
+<td>$(d^l, d^{l-1}) = (d^l,1) {(d^{l-1}, 1)}^T$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="反向传播算法"><a href="#反向传播算法" class="headerlink" title="反向传播算法"></a>反向传播算法</h2><p><img src="/2018/06/21/反向传播算法/one_3.png" alt=""></p>
+<p>正如我们上面所讲的，反向传播算法对一个训练样本计算代价函数的梯度，$C=C_x$。在实践中，通常将反向传播算法和诸如随机梯度下降这样的学习算法进行组合使用，我们会对许多训练样本计算对应的梯度。特别地，给定一个大小为 m 的小批量数据，下面的算法在这个小批量数据的基础上应用梯度下降学习算法：</p>
+<p><img src="/2018/06/21/反向传播算法/one_4.png" alt=""></p>
+<p>反向传播算法与小批量随机梯度下降算法结合的一个示意代码，完整代码参看 <a href="https://github.com/MichalDanielDobrzanski/DeepLearningPython35/blob/master/network.py" target="_blank" rel="noopener">network.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return a tuple ``(nabla_b, nabla_w)`` representing the</span></span><br><span class="line"><span class="string">        gradient for the cost function C_x.  ``nabla_b`` and</span></span><br><span class="line"><span class="string">        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar</span></span><br><span class="line"><span class="string">        to ``self.biases`` and ``self.weights``."""</span></span><br><span class="line">        nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">        nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">        <span class="comment"># feedforward</span></span><br><span class="line">        activation = x</span><br><span class="line">        activations = [x] <span class="comment"># list to store all the activations, layer by layer</span></span><br><span class="line">        zs = [] <span class="comment"># list to store all the z vectors, layer by layer</span></span><br><span class="line">        <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">            z = np.dot(w, activation)+b</span><br><span class="line">            zs.append(z)</span><br><span class="line">            activation = sigmoid(z)</span><br><span class="line">            activations.append(activation)</span><br><span class="line">        <span class="comment"># backward pass</span></span><br><span class="line">        delta = self.cost_derivative(activations[<span class="number">-1</span>], y) * \</span><br><span class="line">            sigmoid_prime(zs[<span class="number">-1</span>])</span><br><span class="line">        nabla_b[<span class="number">-1</span>] = delta</span><br><span class="line">        nabla_w[<span class="number">-1</span>] = np.dot(delta, activations[<span class="number">-2</span>].transpose())</span><br><span class="line">        <span class="comment"># Note that the variable l in the loop below is used a little</span></span><br><span class="line">        <span class="comment"># differently to the notation in Chapter 2 of the book.  Here,</span></span><br><span class="line">        <span class="comment"># l = 1 means the last layer of neurons, l = 2 is the</span></span><br><span class="line">        <span class="comment"># second-last layer, and so on.  It's a renumbering of the</span></span><br><span class="line">        <span class="comment"># scheme in the book, used here to take advantage of the fact</span></span><br><span class="line">        <span class="comment"># that Python can use negative indices in lists.</span></span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> range(<span class="number">2</span>, self.num_layers):</span><br><span class="line">            z = zs[-l]</span><br><span class="line">            sp = sigmoid_prime(z)</span><br><span class="line">            delta = np.dot(self.weights[-l+<span class="number">1</span>].transpose(), delta) * sp</span><br><span class="line">            nabla_b[-l] = delta</span><br><span class="line">            nabla_w[-l] = np.dot(delta, activations[-l<span class="number">-1</span>].transpose())</span><br><span class="line">        <span class="keyword">return</span> (nabla_b, nabla_w)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cost_derivative</span><span class="params">(self, output_activations, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the vector of partial derivatives \partial C_x /</span></span><br><span class="line"><span class="string">        \partial a for the output activations."""</span></span><br><span class="line">        <span class="keyword">return</span> (output_activations-y)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid_prime</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""Derivative of the sigmoid function."""</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(z)*(<span class="number">1</span>-sigmoid(z))</span><br></pre></td></tr></table></figure>
+<h2 id="四个基本方程的证明"><a href="#四个基本方程的证明" class="headerlink" title="四个基本方程的证明"></a>四个基本方程的证明</h2><p><img src="/2018/06/21/反向传播算法/one_2.png" alt=""></p>
+<p>我们现在证明这四个基本的方程（BP）-（BP4）。所有的这些都是多元微积分的链式法则的推论。</p>
+<h3 id="证明-delta-L-nabla-a-C-odot-sigma’-z-L"><a href="#证明-delta-L-nabla-a-C-odot-sigma’-z-L" class="headerlink" title="证明$\delta^L = \nabla_a C \odot \sigma’(z^L)$"></a>证明$\delta^L = \nabla_a C \odot \sigma’(z^L)$</h3><p>从方程（BP1）开始，它给出了误差 $\delta^l$ 的表达式。根据定义</p>
+<script type="math/tex; mode=display">\delta^l_j \equiv \frac{\partial C}{\partial z^l_j}.</script><p>根据关于代价函数的两个假设2 “代价函数可以写成神经网络输出的函数”，应用链式法测可知可先对神经网络输出求偏导${\partial C}/{\partial a^L_k}$再对带权输出求偏导${\partial a^L_k}/{\partial z^L_j}$。</p>
+<script type="math/tex; mode=display">
+  \delta^L_j = \sum_k \frac{\partial C}{\partial a^L_k} \frac{\partial a^L_k}{\partial z^L_j},</script><p>看起来上面式子很复杂，但是由于第 $k$ 个神经元的输出激活值 $a_k^l$ 只依赖于 当下标 $k=j$ 时第 $j$ 个神经元的输入权重 $z_j^l$。所有当 $k\neq {j}$ 时 $\partial a^L_k / \partial z^L_j$ 消失了。结果我们可以简化上一个式子为</p>
+<script type="math/tex; mode=display">
+  \delta^L_j = \frac{\partial C}{\partial a^L_j} \frac{\partial a^L_j}{\partial z^L_j}.</script><p>又因为 $a^L_j = \sigma(z^L_j)$ 所以 $\frac{\partial a^L_j}{\partial z^L_j}$ 可以写成 $\sigma’(z^L_j)$，方程变为</p>
+<script type="math/tex; mode=display">
+\delta^L_j = \frac{\partial C}{\partial a^L_j} \sigma'(z^L_j)</script><p>这就是分量形式的（BP1），再根据$\nabla_a$ 是求梯度运算符，$\nabla_a C$ 结果是一个向量，其元素是偏导数 $\partial C / \partial a^L_j$。方程可以写成向量形式</p>
+<script type="math/tex; mode=display">
+\delta^L ={\nabla_a {C}} \odot {\sigma'(z^L)}</script><p>（BP1） 得到证明。</p>
+<h3 id="证明-delta-l-w-l-1-T-delta-l-1-odot-sigma’-z-l"><a href="#证明-delta-l-w-l-1-T-delta-l-1-odot-sigma’-z-l" class="headerlink" title="证明 $ \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma’(z^l)$"></a>证明 $ \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma’(z^l)$</h3><p>证明（BP2），它个给出以下一层误差 $\delta^{l+1}$ 的形式表示误差 $\delta^l$。为此，要以 $\delta^l_j = \partial C / \partial z^l_j$的形式重写 $\delta^{l+1}_k = \partial C / \partial z^{l+1}_k$,$\delta^{l+1}$ 和 $\delta^l$ 通过 $z_k^{l+1}$ 和 $z_j^l$ 联系起来，应用链式法测</p>
+<p><img src="/2018/06/21/反向传播算法/one_5.png" alt=""></p>
+<p>根据 $z_k^{l+1}$ 的定义有</p>
+<script type="math/tex; mode=display">
+ z^{l+1}_k = \sum_j w^{l+1}_{kj} a^l_j +b^{l+1}_k = \sum_j w^{l+1}_{kj} \sigma(z^l_j) +b^{l+1}_k</script><p>$z_k^{l+1}$ 对 $z_j^{l}$ 做偏微分，得到</p>
+<script type="math/tex; mode=display">
+\frac{\partial z^{l+1}_k}{\partial z^l_j} = w^{l+1}_{kj} \sigma'(z^l_j)</script><p>注意虽然$z^{l+1}$ 和 $z^{l}$ 所在的两层神经元连接错综复杂，但两层之间任意一对神经元（同一层内不连接）只有一条连接，即 $z_k^{l+1}$ 和 $z_j^{l}$ 之间只通过 $w_{kj}^{l+1}$ 连接。所以$z_k^{l+1}$ 对 $z_j^{l}$ 做偏微分的结果很简单，只是 $ w^{l+1}_{kj} \sigma’(z^l_j)$。把这个结果带入 $\delta_j^l$ 中</p>
+<script type="math/tex; mode=display">
+\delta^l_j = \sum_k w^{l+1}_{kj}  \delta^{l+1}_k \sigma'(z^l_j)</script><p>这正是以分量形式写的(BP2)。</p>
+<p>写成向量形式</p>
+<script type="math/tex; mode=display">
+ \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)</script><p>举例</p>
+<script type="math/tex; mode=display">
+{ \left[
+ \begin{matrix}
+   \delta_{1}^l  \\
+   \\
+   \delta_{2}^l \\
+   \\
+   ...
+   \\
+  \delta_{j}^l
+  \end{matrix}
+  \right] }
+  = { \left[
+     \begin{matrix}
+       w_{11}^{l+1} & w_{21}^{l+1} & w_{31}^{l+1} & ... &w_{k1}^{l+1} \\
+       \\
+       w_{12}^{l+1} & w_{22}^{l+1} & w_{32}^{l+1} & ... & w_{k2}^{l+1} \\
+       \\
+       ...
+       \\
+       w_{j1}^{l+1} & w_{j2}^{l+1} & w_{j1}^{l+1} & ... & w_{kj}^{l+1}
+      \end{matrix}
+      \right] }
+   { \left[
+   \begin{matrix}
+     \delta_{1}^{l+1}  \\
+     \\
+     \delta_{2}^{l+1} \\
+     \\
+     \delta_{3}^{l+1} \\
+     \\
+     ...
+     \\
+    \delta_{k}^{l+1}
+    \end{matrix}
+    \right] }
+    \odot
+    { \left[
+    \begin{matrix}
+      \sigma'(z_1^l)  \\
+      \\
+      \sigma'(z_2^l) \\
+      \\
+      \sigma'(z_3^l) \\
+      \\
+      ...
+      \\
+     \sigma'(z_k^l)
+     \end{matrix}
+     \right] }</script><p>（BP2） 得到证明。</p>
+<h3 id="证明-frac-partial-C-partial-b-l-j-delta-l-j"><a href="#证明-frac-partial-C-partial-b-l-j-delta-l-j" class="headerlink" title="证明 $\frac{\partial C}{\partial b^l_j} =\delta^l_j.$"></a>证明 $\frac{\partial C}{\partial b^l_j} =\delta^l_j.$</h3><p>根据 $z_j^l$ 定义</p>
+<script type="math/tex; mode=display">z^l_j=\sum_k w^l_{jk} a^{l-1}_k+b^l_j</script><p>和 $\delta_j^l$ 定义</p>
+<script type="math/tex; mode=display">\delta^l_j \equiv \frac{\partial C}{\partial z^l_j}.</script><p>因此</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^l_j} = \frac{\partial C}{\partial z^l_j}\frac{\partial z^l_j}{\partial b^l_j}</script><p>又因为</p>
+<script type="math/tex; mode=display">
+\frac{\partial z^l_j}{\partial b^l_j} = 1</script><p>所以</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^l_j} = \frac{\partial C}{\partial z^l_j}\frac{\partial z^l_j}{\partial b^l_j} = \frac{\partial C}{\partial z^l_j}\cdot 1= \frac{\partial C}{\partial z^l_j}=\delta^l_j</script><p>即</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^l_j} =\delta^l_j</script><p>写成向量形式</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^l} =\delta^l</script><p>（BP3） 得到证明。</p>
+<h3 id="证明-frac-partial-C-partial-w-l-jk-a-l-1-k-delta-l-j"><a href="#证明-frac-partial-C-partial-w-l-jk-a-l-1-k-delta-l-j" class="headerlink" title="证明 $\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j$"></a>证明 $\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j$</h3><p>根据 $z_j^l$ 定义</p>
+<script type="math/tex; mode=display">z^l_j=\sum_k w^l_{jk} a^{l-1}_k+b^l_j</script><p>和 $\delta_j^l$ 定义</p>
+<script type="math/tex; mode=display">\delta^l_j \equiv \frac{\partial C}{\partial z^l_j}.</script><p>又因为</p>
+<script type="math/tex; mode=display">
+\frac{\partial z^l_j}{\partial w^l_{jk}} = a_k^{l-1}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l_{jk}} = \frac{\partial C}{\partial z^l_j}\frac{\partial z^l_j}{\partial w^l_{jk}} = \delta^l_j a_k^{l-1}</script><p>把式子向量化</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l} = \delta^l (a^{l-1})^T</script><p>举例</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l} = { \left[
+ \begin{matrix}
+   \delta_{1}^l  \\
+   \\
+   \delta_{2}^l \\
+   \\
+   ...
+   \\
+  \delta_{j}^l
+  \end{matrix}
+  \right] }{ \left[
+     \begin{matrix}
+       a_{1}^{l-1} & a_{2}^{l-1} & ... &a_{k}^{l-1}
+      \end{matrix}
+      \right] }</script><p>（BP4） 得到证明。</p>
+<p>一个直观的图：</p>
+<p><img src="/2018/06/21/反向传播算法/one_8.png" alt=""></p>
+<p>到此关于反向传播的四个方程已经全部证明完毕。</p>
+<p>其他学者反向传播四个方程的证明（他写的更简明扼要些）：<a href="https://blog.csdn.net/hoho1151191150/article/details/79537246" target="_blank" rel="noopener">CSDN: oio328Loio</a></p>
+<h2 id="矩阵形式反向传播算法"><a href="#矩阵形式反向传播算法" class="headerlink" title="矩阵形式反向传播算法"></a>矩阵形式反向传播算法</h2><p>正如我们上面所讲的，反向传播算法对一个训练样本计算代价函数的梯度，$C=C_x$。在实践中，通常将反向传播算法和诸如随机梯度下降这样的学习算法进行组合使用，我们会对许多训练样本计算对应的梯度。特别地，给定一个大小为 m 的小批量数据，下面的算法在这个小批量数据的基础上应用梯度下降学习算法：</p>
+<p><img src="/2018/06/21/反向传播算法/one_4.png" alt=""></p>
+<p>根据上面的小批量数据的符号定义，为了方便用矩阵表示，下面新增了一些符号。</p>
+<p>$z^{v,l}$ 表示神经网络第 $l$ 层的小批量样本中的第 $v$ 个样本的带权输入向量，用矩阵 $Z^l$ 来表示就是</p>
+<script type="math/tex; mode=display">
+  Z^l = { \left[
+     \begin{matrix}
+       {(z^{1,l})}^T  \\
+       \\
+       {(z^{2,l})}^T\\
+       \\
+       ...\\
+       \\
+       {(z^{m,l})}^T
+      \end{matrix}
+      \right] }</script><p>$a^{v,l}$ 表示神经网络第 $l$ 层的小批量样本中的第 $v$ 个样本的激活向量，用矩阵 $A^l$ 来表示就是</p>
+<script type="math/tex; mode=display">
+  A^l = { \left[
+     \begin{matrix}
+       {(a^{1,l})}^T  \\
+       \\
+       {(a^{2,l})}^T\\
+       \\
+       ...\\
+       \\
+       {(a^{m,l})}^T
+      \end{matrix}
+      \right] }</script><p>$\delta^{v,l}$ 表示神经网络第 $l$ 层的小批量样本中的第 $v$ 个样本的误差向量，用矩阵 $\Delta^l$ 来表示就是</p>
+<script type="math/tex; mode=display">
+  \delta^l = { \left[
+     \begin{matrix}
+       {(\delta^{1,l})}^T  \\
+       \\
+       {(\delta^{2,l})}^T\\
+       \\
+       ...\\
+       \\
+       {(\delta^{m,l})}^T
+      \end{matrix}
+      \right] }</script><hr>
+<script type="math/tex; mode=display">\delta^L =\nabla_a C\odot \frac{\partial f^{(L)}}{\partial z^L}</script><p>的矩阵形式是，</p>
+<script type="math/tex; mode=display">\Delta^L =\nabla_{A^L} C\odot \frac{\partial f^{(L)}}{\partial Z^L}</script><hr>
+<script type="math/tex; mode=display">\delta^{l}=({(w^{l+1})}^T\delta^{l+1})\odot \sigma'(z^l)</script><p>的矩阵形式是，</p>
+<script type="math/tex; mode=display">\Delta^{l}=(\Delta^{l+1}w^{l+1})\odot \sigma'(Z^l)</script><hr>
+<script type="math/tex; mode=display">\frac{\partial C}{\partial b^{(l)}}=\delta^{(l)}</script><p>的矩阵形式是，</p>
+<script type="math/tex; mode=display">\frac{\partial C}{\partial b^{(l)}}=\frac{1}{m}{(sum(\Delta^l, axis=0))}^T</script><hr>
+<script type="math/tex; mode=display">\frac{\partial C}{\partial w^l} = \delta^l (a^{l-1})^T</script><p>的矩阵形式是，</p>
+<script type="math/tex; mode=display">\frac{\partial C}{\partial w^{(l)}}=\frac{1}{m}{(\Delta^l)}^TA^{l-1}</script><p>归纳一下，可以得到矩阵形式的反向传播算法：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>计算公式</th>
+<th>维度变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\Delta^L =\nabla_{A^L} C\odot \dfrac{\partial f^{(L)}}{\partial Z^L}$</td>
+<td>$(m, d^L) = (m, d^L) * (m, d^L)$</td>
+</tr>
+<tr>
+<td>$\Delta^{l} =(\Delta^{l+1}W^{l+1})\odot \sigma’(Z^l)$</td>
+<td>$(m, {d}^l) = (m, {d}^{l+1}) ({d}^{l+1}, {d}^l)$</td>
+</tr>
+<tr>
+<td>$\dfrac{\partial C}{\partial b^{(l)}} =\dfrac{1}{m}{(sum(\Delta^l, axis=0))}^T$</td>
+<td>$(d^l, 1) = {(1, d^l)}^T$</td>
+</tr>
+<tr>
+<td>$\dfrac{\partial C}{\partial w^{(l)}} =\dfrac{1}{m}{(\Delta^l)}^TA^{l-1} $</td>
+<td>$(d^{l}, d^{l-1}) = {(m, d^l)}^T(m, d^{l-1})$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="反向传播：全局观"><a href="#反向传播：全局观" class="headerlink" title="反向传播：全局观"></a>反向传播：全局观</h2><p><img src="/2018/06/21/反向传播算法/one_6.png" alt=""></p>
+<p>如上图所示，假设我们对 $w_{jk}^l$ 做一点微小的扰动 $\Delta w_{jk}^l$, 这个扰动会沿着神经网络最终影响到代价函数 $C$, 代价函数的 $\Delta C$ 改变和  $\Delta w_{jk}^l$ 按照下面公式联系起来</p>
+<script type="math/tex; mode=display">
+ \Delta C \approx \frac{\partial C}{\partial w^l_{jk}} \Delta w^l_{jk}</script><p>可以想象影响代价函数的一条路径是</p>
+<script type="math/tex; mode=display">
+\Delta C \approx \frac{\partial C}{\partial a^L_m}
+  \frac{\partial a^L_m}{\partial a^{L-1}_n}
+  \frac{\partial a^{L-1}_n}{\partial a^{L-2}_p} \ldots
+  \frac{\partial a^{l+1}_q}{\partial a^l_j}
+  \frac{\partial a^l_j}{\partial w^l_{jk}} \Delta w^l_{jk}</script><p>为了计算 $C$ 的全部改变，我们需要对所有可能的路径进行求和，即</p>
+<script type="math/tex; mode=display">
+\Delta C \approx \sum_{mnp\ldots q} \frac{\partial C}{\partial a^L_m}
+  \frac{\partial a^L_m}{\partial a^{L-1}_n}
+  \frac{\partial a^{L-1}_n}{\partial a^{L-2}_p} \ldots
+  \frac{\partial a^{l+1}_q}{\partial a^l_j}
+  \frac{\partial a^l_j}{\partial w^l_{jk}} \Delta w^l_{jk}</script><p>因为</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l_{jk}}=\frac{\Delta C}{\Delta w^l_{jk}}</script><p>根据上面的三个式子可知</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l_{jk}} = \sum_{mnp\ldots q} \frac{\partial C}{\partial a^L_m}
+  \frac{\partial a^L_m}{\partial a^{L-1}_n}
+  \frac{\partial a^{L-1}_n}{\partial a^{L-2}_p} \ldots
+  \frac{\partial a^{l+1}_q}{\partial a^l_j}
+  \frac{\partial a^l_j}{\partial w^l_{jk}}</script><p>上面的公式看起来复杂，这里有一个相当好的直觉上的解释。我们用这个公式计算 $C$ 关于网络中一个权重的变化率。而这个公式告诉我们的是：两个神经元之间的连接其实是关联于一个变化率因子，这仅仅是一个神经元的激活值相对于其他神经元的激活值的偏导数。路径的变化率因子就是这条路径上众多因子的乘积。整个变化率 $\partial C / \partial w^l_{jk}$ 就是对于所有可能从初始权重到最终输出的代价函数的路径的变化率因子的和。针对某一路径，这个过程解释如下，</p>
+<p><img src="/2018/06/21/反向传播算法/one_7.png" alt=""></p>
+<p>如果用矩阵运算对上面式子所有的情况求和，然后尽可能化简，最后你会发现，自己就是在做反向传播！可以将反向传播想象成一种计算所有可能路径变化率求和的方式。或者，换句话说，反向传播就是一种巧妙地追踪权重和偏置微小变化的传播，抵达输出层影响代价函数的技术。</p>
+<p>如果你尝试用上面的思路来证明反向传播，会比本文的反向传播四个方程证明复杂许多，因为按上面的思路来证明有许多可以简化的地方。其中可以添加一个巧妙的步骤，上面方程的偏导对象是类似 $a_q^{l+1}$ 的激活值。巧妙之处是改用加权输入，例如 $z_q^{l+1}$ ，作为中间变量。如果没想到这个主意，而是继续使用激活值 $a_q^{l+1}$ ，你得到的证明最后会比前文给出的证明稍稍复杂些。</p>
+<p><strong>其实最早的证明的出现也不是太过神秘的事情。因为那只是对简化证明的艰辛工作的积累！</strong></p>
+<h2 id="发展分析"><a href="#发展分析" class="headerlink" title="发展分析"></a>发展分析</h2><p>瓶颈<br>BP神经网络无论在网络理论还是在性能方面已比较成熟。其突出优点就是具有很强的非线性映射能力和柔性的网络结构。网络的中间层数、各层的神经元个数可根据具体情况任意设定，并且随着结构的差异其性能也有所不同。但是BP神经网络也存在以下的一些主要缺陷。</p>
+<ul>
+<li>学习速度慢，即使是一个简单的问题，一般也需要几百次甚至上千次的学习才能收敛。</li>
+<li>容易陷入局部极小值。</li>
+<li>网络层数、神经元个数的选择没有相应的理论指导。<br>网络推广能力有限。</li>
+<li>可解释性瓶颈，对网络输出结果不具备可靠的数学可解释性</li>
+<li>神经网络对推理，规划等人工智能领域的其他问题还没有特别有效的办法。另外由于其参数数量巨大，对高计算性能硬件的依赖大，难以部署在轻量级低功耗硬件上，如嵌入式设备等</li>
+<li>反向传播算法缺乏仿生学方面的理论依据，显然生物神经网络中并不存在反向传播这样的数学算法</li>
+</ul>
+<p>未来发展方向<br>BP网络主要用于以下四个方面。</p>
+<ol>
+<li>函数逼近：用输入向量和相应的输出向量训练一个网络逼近一个函数。</li>
+<li>模式识别：用一个待定的输出向量将它与输入向量联系起来。</li>
+<li>分类：把输入向量所定义的合适方式进行分类。</li>
+<li>数据压缩：减少输出向量维数以便于传输或存储。</li>
+</ol>
+<p>除此之外，在神经网络的可解释性研究方面，向低功耗硬件迁移，以及在认知计算，规划推理等方面和其他传统技术进行结合探索</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen. CHAPTER 2 How the backpropagation algorithm works[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap2.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap2.html</a>, 2018-06-21.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL]. <a href="https://github.com/zhanggyb/nndl/blob/master/chap2.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap2.tex</a>, 2018-06-21.</p>
+<p>[3] oio328Loio. 神经网络学习（三）反向（BP）传播算法（1）[DB/OL]. <a href="https://blog.csdn.net/hoho1151191150/article/details/79537246" target="_blank" rel="noopener">https://blog.csdn.net/hoho1151191150/article/details/79537246</a>, 2018-06-25.</p>
+<p>[4] 机器之心. 反向传播算法 [DB/OL]. <a href="https://www.jiqizhixin.com/graph/technologies/7332347c-8073-4783-bfc1-1698a6257db3" target="_blank" rel="noopener">https://www.jiqizhixin.com/graph/technologies/7332347c-8073-4783-bfc1-1698a6257db3</a>, 2019-08-04.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/反向传播算法/" rel="tag"># 反向传播算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/20/贝叶斯估计、最大似然估计、最大后验估计三者的区别/" rel="next" title="贝叶斯估计、最大似然估计、最大后验估计三者的区别">
+                <i class="fa fa-chevron-left"></i> 贝叶斯估计、最大似然估计、最大后验估计三者的区别
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/21/改进神经网络的学习方法——交叉熵/" rel="prev" title="改进神经网络的学习方法——交叉熵">
+                改进神经网络的学习方法——交叉熵 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播概述"><span class="nav-number">1.</span> <span class="nav-text">反向传播概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于代价函数的两个假设"><span class="nav-number">2.</span> <span class="nav-text">关于代价函数的两个假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#符号定义"><span class="nav-number">3.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播的四个基本方程"><span class="nav-number">4.</span> <span class="nav-text">反向传播的四个基本方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播算法"><span class="nav-number">5.</span> <span class="nav-text">反向传播算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四个基本方程的证明"><span class="nav-number">6.</span> <span class="nav-text">四个基本方程的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-delta-L-nabla-a-C-odot-sigma’-z-L"><span class="nav-number">6.1.</span> <span class="nav-text">证明$\delta^L = \nabla_a C \odot \sigma’(z^L)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-delta-l-w-l-1-T-delta-l-1-odot-sigma’-z-l"><span class="nav-number">6.2.</span> <span class="nav-text">证明 $ \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma’(z^l)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-frac-partial-C-partial-b-l-j-delta-l-j"><span class="nav-number">6.3.</span> <span class="nav-text">证明 $\frac{\partial C}{\partial b^l_j} =\delta^l_j.$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-frac-partial-C-partial-w-l-jk-a-l-1-k-delta-l-j"><span class="nav-number">6.4.</span> <span class="nav-text">证明 $\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#矩阵形式反向传播算法"><span class="nav-number">7.</span> <span class="nav-text">矩阵形式反向传播算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反向传播：全局观"><span class="nav-number">8.</span> <span class="nav-text">反向传播：全局观</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发展分析"><span class="nav-number">9.</span> <span class="nav-text">发展分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">10.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

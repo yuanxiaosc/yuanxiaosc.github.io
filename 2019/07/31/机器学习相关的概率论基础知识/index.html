@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="结合 《可视化统计概率入门书》 学习概率论  注意重点利用该书的目录结构顺序和可视化效果学习，但不可全信该书，该书的中文翻译有少许错误存在，多查资料！  该书籍介绍 书籍首页 GitHub   概率论概率论是研究随机现象数量规律的数学分支。随机现象是相对于决定性现象而言的。在一定条件下必然发生某一结果的现象称为决定性现象。例如在标准大气压下，纯水加热到100℃时水必然会沸腾等。随机现象则是指在基本">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习相关的概率论基础知识">
+<meta property="og:url" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="结合 《可视化统计概率入门书》 学习概率论  注意重点利用该书的目录结构顺序和可视化效果学习，但不可全信该书，该书的中文翻译有少许错误存在，多查资料！  该书籍介绍 书籍首页 GitHub   概率论概率论是研究随机现象数量规律的数学分支。随机现象是相对于决定性现象而言的。在一定条件下必然发生某一结果的现象称为决定性现象。例如在标准大气压下，纯水加热到100℃时水必然会沸腾等。随机现象则是指在基本">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/分布函数定义.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/分布函数的性质.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/离散性随机变量的分布函数.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/连续性随机变量的分布函数.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/联合分布函数.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/12.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/13.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/14.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/15.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/2.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/3.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/4.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/5.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/6.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/7.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/8.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/9.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/10.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/11.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/wasserstein距离.png">
+<meta property="og:updated_time" content="2019-08-09T01:52:05.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习相关的概率论基础知识">
+<meta name="twitter:description" content="结合 《可视化统计概率入门书》 学习概率论  注意重点利用该书的目录结构顺序和可视化效果学习，但不可全信该书，该书的中文翻译有少许错误存在，多查资料！  该书籍介绍 书籍首页 GitHub   概率论概率论是研究随机现象数量规律的数学分支。随机现象是相对于决定性现象而言的。在一定条件下必然发生某一结果的现象称为决定性现象。例如在标准大气压下，纯水加热到100℃时水必然会沸腾等。随机现象则是指在基本">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/分布函数定义.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/"/>
+
+
+
+
+
+  <title>机器学习相关的概率论基础知识 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/31/机器学习相关的概率论基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">机器学习相关的概率论基础知识</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-31T15:30:00+08:00">
+                2019-07-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/" itemprop="url" rel="index">
+                    <span itemprop="name">数学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/31/机器学习相关的概率论基础知识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/31/机器学习相关的概率论基础知识/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>结合 <a href="https://seeing-theory.brown.edu/cn.html#firstPage" target="_blank" rel="noopener">《可视化统计概率入门书》</a> 学习概率论</p>
+<blockquote>
+<p>注意重点利用该书的目录结构顺序和可视化效果学习，但不可全信该书，该书的中文翻译有少许错误存在，多查资料！</p>
+<ul>
+<li><a href="https://www.jiqizhixin.com/articles/2018-12-29-14" target="_blank" rel="noopener">该书籍介绍</a></li>
+<li><a href="https://seeing-theory.brown.edu/cn.html#firstPage" target="_blank" rel="noopener">书籍首页</a></li>
+<li><a href="https://github.com/seeingtheory/Seeing-Theory" target="_blank" rel="noopener">GitHub</a></li>
+</ul>
+</blockquote>
+<h3 id="概率论"><a href="#概率论" class="headerlink" title="概率论"></a><a href="https://baike.baidu.com/item/%E6%A6%82%E7%8E%87%E8%AE%BA/829122" target="_blank" rel="noopener">概率论</a></h3><p>概率论是研究随机现象数量规律的数学分支。随机现象是相对于决定性现象而言的。在一定条件下必然发生某一结果的现象称为决定性现象。例如在标准大气压下，纯水加热到100℃时水必然会沸腾等。随机现象则是指在基本条件不变的情况下，每一次试验或观察前，不能肯定会出现哪种结果，呈现出偶然性。例如，掷一硬币，可能出现正面或反面。随机现象的实现和对它的观察称为随机试验。随机试验的每一可能结果称为一个基本事件，一个或一组基本事件统称随机事件，或简称事件。典型的随机试验有掷骰子、扔硬币、抽扑克牌以及轮盘游戏等。<br>事件的概率是衡量该事件发生的可能性的量度。虽然在一次随机试验中某个事件的发生是带有偶然性的，但那些可在相同条件下大量重复的随机试验却往往呈现出明显的数量规律。</p>
+<h3 id="概率"><a href="#概率" class="headerlink" title="概率"></a><a href="https://baike.baidu.com/item/%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">概率</a></h3><p>概率亦称“或然率”。它反映随机事件出现的可能性大小的量度。</p>
+<h3 id="随机事件"><a href="#随机事件" class="headerlink" title="随机事件"></a><a href="https://baike.baidu.com/item/%E9%9A%8F%E6%9C%BA%E4%BA%8B%E4%BB%B6/130872" target="_blank" rel="noopener">随机事件</a></h3><p>随机事件是在随机试验中，可能出现也可能不出现，而在大量重复试验中具有某种规律性的事件叫做随机事件(简称事件)。随机事件通常用大写英文字母A、B、C等表示。随机试验中的每一个可能出现的试验结果称为这个试验的一个样本点，记作ωi。全体样本点组成的集合称为这个试验的样本空间，记作Ω．即Ω={ω1，ω2，…，ωn，…}。仅含一个样本点的随机事件称为基本事件，含有多个样本点的随机事件称为复合事件。</p>
+<h3 id="随机变量"><a href="#随机变量" class="headerlink" title="随机变量"></a><a href="https://baike.baidu.com/item/随机变量/" target="_blank" rel="noopener">随机变量</a></h3><p>一个随机试验的可能结果（称为基本事件）的全体组成一个基本空间Ω 。 随机变量X是定义在基本空间Ω上的取值为实数的函数，即基本空间Ω中每一个点，也就是每个基本事件都有实轴上的点与之对应。例如，随机投掷一枚硬币 ，可能的结果有正面朝上 ，反面朝上两种 ，若定义X为投掷一枚硬币时正面朝上的次数 ， 则X为一随机变量，当正面朝上时，X取值1；当反面朝上时，X取值0。又如，掷一颗骰子 ，它的所有可能结果是出现1点、2点、3点、4点、5点和6点 ，若定义X为掷一颗骰子时出现的点数，则X为一随机变量，出现1，2，3，4，5，6点时X分别取值1，2，3，4，5，6。</p>
+<h3 id="概率分布函数"><a href="#概率分布函数" class="headerlink" title="概率分布函数"></a><a href="https://baike.baidu.com/item/%E6%A6%82%E7%8E%87%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">概率分布函数</a></h3><p>在实际问题中，常常要研究一个随机变量ξ取值小于某一数值x的概率，这概率是x的函数，称这种函数为随机变量ξ的分布函数，简称分布函数，记作F(x)，即F(x)=P(ξ&lt;x) (-∞&lt;x&lt;+∞)。</p>
+<h3 id="数学期望"><a href="#数学期望" class="headerlink" title="数学期望"></a><a href="https://baike.baidu.com/item/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B" target="_blank" rel="noopener">数学期望</a></h3><p>在概率论和统计学中，数学期望(mean)（或均值，亦简称期望）是试验中每次可能结果的概率乘以其结果的总和，是最基本的数学特征之一。它反映随机变量平均取值的大小。</p>
+<h3 id="标准差"><a href="#标准差" class="headerlink" title="标准差"></a><a href="https://baike.baidu.com/item/%E6%A0%87%E5%87%86%E5%B7%AE" target="_blank" rel="noopener">标准差</a></h3><p>标准差（Standard Deviation） ，中文环境中又常称均方差，是离均差平方的算术平均数的平方根，用σ表示。标准差是方差的算术平方根。标准差能反映一个数据集的离散程度。</p>
+<h3 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a><a href="https://baike.baidu.com/item/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">条件概率</a></h3><p>条件概率是指事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为：P（A|B），读作“在B的条件下A的概率”。</p>
+<h3 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a><a href="https://baike.baidu.com/item/%E4%B8%AD%E5%BF%83%E6%9E%81%E9%99%90%E5%AE%9A%E7%90%86" target="_blank" rel="noopener">中心极限定理</a></h3><p>中心极限定理，是指概率论中讨论随机变量序列部分和分布渐近于正态分布的一类定理。这组定理是数理统计学和误差分析的理论基础，指出了大量随机变量近似服从正态分布的条件。它是概率论中最重要的一类定理，有广泛的实际应用背景。在自然界与生产中，一些现象受到许多相互独立的随机因素的影响，如果每个因素所产生的影响都很微小时，总的影响可以看作是服从正态分布的。中心极限定理就是从数学上证明了这一现象。最早的中心极限定理是讨论重点，伯努利试验中，事件A出现的次数渐近于正态分布的问题。</p>
+<h3 id="统计推断"><a href="#统计推断" class="headerlink" title="统计推断"></a><a href="https://baike.baidu.com/item/%E7%BB%9F%E8%AE%A1%E6%8E%A8%E6%96%AD" target="_blank" rel="noopener">统计推断</a></h3><p>统计推断是通过样本推断总体的统计方法。总体是通过总体分布的数量特征即参数 (如期望和方差) 来反映的。因此，统计推断包括： 对总体的未知参数进行估计;对关于参数的假设进行检查; 对总体进行预测预报等。科学的统计推断所使用的样本，通常通过随机抽样方法得到。统计推断的理论和方法论基础，是概率论和数理统计学。<br>统计推断：频率学派<br>频率学派通过观察数据来确定背后的概率分布。<br>统计推断：贝叶斯学派<br>贝叶斯学派的思想是用数据来更新特定假设的概率。</p>
+<hr>
+<h2 id="分布函数"><a href="#分布函数" class="headerlink" title="分布函数"></a><a href="https://baike.baidu.com/item/%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0/2439796" target="_blank" rel="noopener">分布函数</a></h2><p>分布函数（英文Cumulative Distribution Function, 简称CDF），是概率统计中重要的函数，正是通过它，可用数学分析的方法来研究随机变量。分布函数是随机变量最重要的概率特征，分布函数可以完整地描述随机变量的统计规律，并且决定随机变量的一切其他概率特征。<br><img src="/2019/07/31/机器学习相关的概率论基础知识/分布函数定义.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/分布函数的性质.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/离散性随机变量的分布函数.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/连续性随机变量的分布函数.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/联合分布函数.png" alt=""></p>
+<h2 id="概率密度函数"><a href="#概率密度函数" class="headerlink" title="概率密度函数"></a><a href="https://baike.baidu.com/item/%E6%A6%82%E7%8E%87%E5%AF%86%E5%BA%A6%E5%87%BD%E6%95%B0/5021996" target="_blank" rel="noopener">概率密度函数</a></h2><p>在数学中，连续型随机变量的概率密度函数（在不至于混淆时可以简称为密度函数）是一个描述这个随机变量的输出值，在某个确定的取值点附近的可能性的函数。而随机变量的取值落在某个区域之内的概率则为概率密度函数在这个区域上的积分。当概率密度函数存在的时候，累积分布函数是概率密度函数的积分。概率密度函数一般以小写标记。</p>
+<h2 id="离散型数学期望和连续型数学期望"><a href="#离散型数学期望和连续型数学期望" class="headerlink" title="离散型数学期望和连续型数学期望"></a>离散型数学期望和连续型数学期望</h2><p><img src="/2019/07/31/机器学习相关的概率论基础知识/12.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/13.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/14.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/15.png" alt=""></p>
+<h2 id="似然函数"><a href="#似然函数" class="headerlink" title="似然函数"></a>似然函数</h2><p>似然函数 $P(X|\theta)$ 表达了在不同的参数 $\theta$ 下，观测数据出现的可能性的大小。注意，似然函数不是参数 $\theta$ 的概率分布，并且似然函数关于参数 $\theta$ 的积分并不（一定）等于1。</p>
+<h3 id="似然与概率的区别"><a href="#似然与概率的区别" class="headerlink" title="似然与概率的区别"></a>似然与概率的区别</h3><p><img src="/2019/07/31/机器学习相关的概率论基础知识/1.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/2.png" alt=""></p>
+<p><strong>补充：</strong><br>L($\theta$|x)=f(x|$\theta$)这个等式表示的是对于事件发生的两种角度的看法。其实等式两遍都是表示的这个事件发生的概率或者说可能性。再给定一个样本x后，我们去想这个样本出现的可能性到底是多大。统计学的观点始终是认为样本的出现是基于一个分布的。那么我们去假设这个分布为f，里面有参数 $\theta$。对于不同的$\theta$，样本的分布不一样。f(x|$\theta$)表示的就是在给定参数$\theta$的情况下，x出现的可能性多大。L($\theta$|x)表示的是在给定样本x的时候，哪个参数$\theta$使得x出现的可能性多大。所以其实这个等式要表示的核心意思都是在给一个$\theta$和一个样本x的时候，整个事件发生的可能性多大。</p>
+<h3 id="似然与概率的联系"><a href="#似然与概率的联系" class="headerlink" title="似然与概率的联系"></a>似然与概率的联系</h3><p><img src="/2019/07/31/机器学习相关的概率论基础知识/3.png" alt=""></p>
+<hr>
+<p><img src="/2019/07/31/机器学习相关的概率论基础知识/4.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/5.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/6.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/7.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/8.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/9.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/10.png" alt=""><br><img src="/2019/07/31/机器学习相关的概率论基础知识/11.png" alt=""></p>
+<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p><a href="https://www.matongxue.com/madocs/447.html" target="_blank" rel="noopener">如何通俗地理解“最大似然估计法”?</a></p>
+<h2 id="共轭先验分布"><a href="#共轭先验分布" class="headerlink" title="共轭先验分布"></a><a href="https://baike.baidu.com/item/%E5%85%B1%E8%BD%AD%E5%85%88%E9%AA%8C%E5%88%86%E5%B8%83/15696678" target="_blank" rel="noopener">共轭先验分布</a></h2><p>在贝叶斯统计中，如果后验分布与先验分布属于同类，则先验分布与后验分布被称为共轭分布，而先验分布被称为似然函数的共轭先验。比如，高斯分布家族在高斯似然函数下与其自身共轭(自共轭)。这个概念，以及”共轭先验”这个说法，由霍华德·拉法拉和罗伯特·施莱弗尔在他们关于贝叶斯决策理论的工作中提出。类似的概念也曾由乔治·阿尔弗雷德·巴纳德独立提出。</p>
+<p>具体地说，就是给定贝叶斯公式 $p(\theta|x)=\dfrac{p(x|\theta)p(\theta)}{\int p(x|\theta’)d(\theta’)}$，假定似然函数 $p(x|\theta)$ 是已知的，问题就是选取什么样的先验分布 $p(\theta)$ 会让后验分布与先验分布具有相同的数学形式。</p>
+<p>共轭先验的好处主要在于代数上的方便性，可以直接给出后验分布的封闭形式，否则的话只能数值计算。共轭先验也有助于获得关于似然函数如何更新先验分布的直观印象。<br>所有指数家族的分布都有共轭先验。</p>
+<h2 id="中心极限定理-1"><a href="#中心极限定理-1" class="headerlink" title="中心极限定理"></a>中心极限定理</h2><p><a href="https://zhuanlan.zhihu.com/p/25241653" target="_blank" rel="noopener">中心极限定理通俗介绍</a><br><a href="https://www.zhihu.com/question/22913867/answer/250046834" target="_blank" rel="noopener">怎样理解和区分中心极限定理与大数定律？</a></p>
+<ol>
+<li>样本的平均值约等于总体的平均值。</li>
+<li>不管总体是什么分布，任意一个总体的样本平均值都会围绕在总体的整体平均值周围，并且呈正态分布。</li>
+</ol>
+<hr>
+<h1 id="信息论"><a href="#信息论" class="headerlink" title="信息论"></a>信息论</h1><h2 id="概率分布度量函数基本概念"><a href="#概率分布度量函数基本概念" class="headerlink" title="概率分布度量函数基本概念"></a>概率分布度量函数基本概念</h2><p>自信息：符合分布 P 的某一事件 x 出现，传达这条信息所需的最小信息长度为自信息，表达式为：</p>
+<script type="math/tex; mode=display">I(x)=log\frac{1}{p(x)}</script><p>熵：从分布 P 中随机抽选一个事件，传达这条信息所需的最优平均信息长度为香农熵，表达式为：</p>
+<script type="math/tex; mode=display">H(P)=\sum_xP(x)log{\frac{1}{P(x)}}</script><p>交叉熵：用分布 P 的最佳信息传递方式来传递分布 Q 中随机抽选的一个事件，所需的平均信息长度为交叉熵，表达式为：</p>
+<script type="math/tex; mode=display">H_p(Q)=\sum_xQ(x)log\frac{1}{P(x)}</script><p>KL 散度，用分布 P 的最佳信息传递方式来传达分布 Q，比用分布 Q 自己的最佳信息传递方式来传达分布 Q，平均多耗费的信息长度为 KL 散度，表达为 $D_p(Q)$ 或 $KL(Q||P)$，KL 散度衡量了两个分布之间的差异。</p>
+<script type="math/tex; mode=display">D_p(Q)=KL(Q||P)=\sum_xQ(x)log\frac{1}{P(x)}-\sum_xQ(x)log\frac{1}{Q(x)}=\sum_xQ(x)log\frac{Q(x)}{P(x)}</script><p>$D_p(Q)$ 或 $KL(Q||P)$ 涉及两个分布：</p>
+<ul>
+<li>要传达的信息来自哪个分布，答案是 Q</li>
+<li>信息传递的方式由哪个分布决定，答案是 P</li>
+</ul>
+<h3 id="KL-散度概念解读"><a href="#KL-散度概念解读" class="headerlink" title="KL 散度概念解读"></a><a href="https://www.jiqizhixin.com/articles/0224" target="_blank" rel="noopener">KL 散度概念解读</a></h3><p>由 KL 散度的公式可知，分布 Q 里可能性越大的事件，对 $D_P(Q)$ 影响力越大。如果想让 $D_P(Q)$ 尽量小，就要优先关注分布 Q 里的常见事件（假设为 x），确保它们在分布 P 里不是特别罕见。</p>
+<p>因为一旦事件 x 在分布 P 里罕见，意味着在设计分布 P 的信息传递方式时，没有着重优化传递 x 的成本，传达事件 x 所需的成本，log(1/P(x)) 会特别大。所以，当这一套传递方式被用于传达分布 Q 的时候，我们会发现，传达常见事件需要的成本特别大，整体成本也就特别大。</p>
+<p>类似地，想让 $D_Q(P)$ 特别小，就要优先考虑分布 P 里那些常见的事件们了。这时，分布 Q 里的常见事件，就不再是我们的关注重点。</p>
+<h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a><a href="https://baike.baidu.com/item/%E4%BF%A1%E6%81%AF%E7%86%B5" target="_blank" rel="noopener">信息熵</a></h2><p><strong>熵是传输一个随机变量状态值所需的比特位的下界</strong>。</p>
+<p>信息论之父 C. E. Shannon 在 1948 年发表的论文“通信的数学理论（ A Mathematical Theory of Communication ）”中， Shannon 指出，任何信息都存在冗余，冗余大小与信息中每个符号（数字、字母或单词）的出现概率或者说不确定性有关。<br>Shannon 借鉴了热力学的概念，把信息中排除了冗余后的平均信息量称为“信息熵”，并给出了计算信息熵的数学表达式。</p>
+<h3 id="信息熵基本内容"><a href="#信息熵基本内容" class="headerlink" title="信息熵基本内容"></a>信息熵基本内容</h3><p>通常，一个信源发送出什么符号是不确定的，衡量它可以根据其出现的概率来度量。概率大，出现机会多，不确定性小；反之就大。<br>不确定性函数 f 是概率 P 的单调递降函数；两个独立符号所产生的不确定性应等于各自不确定性之和，即f（P1，P2）=f（P1）+ f（P2），这称为可加性。同时满足这两个条件的函数f是对数函数，即 $f(P)=log(\dfrac{1}{p})=-log(p)$。</p>
+<p>在信源中，考虑的不是某一单个符号发生的不确定性，而是要考虑这个信源所有可能发生情况的平均不确定性。若信源符号有n种取值：U1…Ui…Un，对应概率为：P1…Pi…Pn，且各种符号的出现彼此独立。这时，信源的平均不确定性应当为单个符号不确定性-logPi的统计平均值（E），可称为信息熵，即 $H(U)=E[-logp_i]=-\sum_{i=1}^N p_ilogp_i$，式中对数一般取2为底，单位为比特。</p>
+<p>当所有的 $p(x_i)$ 值都相等，且值为 $p(x_i)=\dfrac{1}{N}$ 时，熵取得最大值。$H(U) = log(N)$。</p>
+<h2 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a><a href="https://baike.baidu.com/item/%E4%BA%A4%E5%8F%89%E7%86%B5/8983241" target="_blank" rel="noopener">交叉熵</a></h2><p>交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，<strong>主要用于度量两个概率分布间的差异性信息</strong>。语言模型的性能通常用交叉熵和复杂度（perplexity）来衡量。交叉熵的意义是用该模型对文本识别的难度，或者从压缩的角度来看，每个词平均要用几个位来编码。复杂度的意义是用该模型表示这一文本平均的分支数，其倒数可视为每个词的平均概率。</p>
+<h3 id="交叉熵的介绍"><a href="#交叉熵的介绍" class="headerlink" title="交叉熵的介绍"></a>交叉熵的介绍</h3><p>在信息论中，交叉熵是表示两个概率分布p,q，其中p表示真实分布，q表示非真实分布，在相同的一组事件中，其中，用非真实分布q来表示某个事件发生所需要的平均比特数。从这个定义中，我们很难理解交叉熵的定义。下面举个例子来描述一下：<br>假设现在有一个样本集中两个概率分布p,q，其中p为真实分布，q为非真实分布。假如，按照真实分布p来衡量识别一个样本所需要的编码长度的期望为：</p>
+<script type="math/tex; mode=display">H(p)=\sum_i{p(i)}log(\dfrac{1}{p(i)})</script><p>但是，如果采用错误的分布q来表示来自真实分布p的平均编码长度，则应该是：</p>
+<script type="math/tex; mode=display">H(p,q)=\sum_i{p(i)}log(\dfrac{1}{q(i)})</script><p>此时就将H(p,q)称之为交叉熵。交叉熵的计算方式如下：</p>
+<p>对于离散变量采用以下的方式计算：$H(p,q)=\sum_x p(x)log(\dfrac{1}{q(x)})$</p>
+<p>对于连续变量采用以下的方式计算：$-\int _XP(x)logQ(x)dx=E_p[-logQ]$</p>
+<blockquote>
+<p>注意：<script type="math/tex">E_{x\sim p(x)}[f(x)]=\int{f(x)p(x)}dx \approx \dfrac{1}{n}\sum_{i=1}^nf(x_i), x_i \sim p(x)</script></p>
+</blockquote>
+<h3 id="交叉熵的应用"><a href="#交叉熵的应用" class="headerlink" title="交叉熵的应用"></a>交叉熵的应用</h3><ol>
+<li>交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学习速率降低的问题，因为学习速率可以被输出的误差所控制。</li>
+<li>在特征工程中，可以用来衡量两个随机变量之间的相似度。</li>
+<li>在语言模型中（NLP）中，由于真实的分布p是未知的，在语言模型中，模型是通过训练集得到的，交叉熵就是衡量这个模型在测试集上的正确率。</li>
+</ol>
+<h2 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a><a href="https://baike.baidu.com/item/%E7%9B%B8%E5%AF%B9%E7%86%B5" target="_blank" rel="noopener">相对熵</a></h2><p><strong>相对熵，又称KL散度( Kullback–Leibler divergence)，是描述两个概率分布P和Q差异的一种方法。它是非对称的</strong>，这意味着D(P||Q) ≠ D(Q||P)。特别的，在信息论中，D(P||Q)表示当用概率分布Q来拟合真实分布P时，产生的信息损耗，其中P表示真实分布，Q表示P的拟合分布。<br>有人将KL散度称为KL距离，但事实上，KL散度并不满足距离的概念，因为：(1)KL散度不是对称的；(2)KL散度不满足三角不等式。</p>
+<h3 id="相对熵的定义"><a href="#相对熵的定义" class="headerlink" title="相对熵的定义"></a>相对熵的定义</h3><p>对熵（relative entropy）又称为KL散度（Kullback–Leibler divergence，简称KLD），信息散度（information divergence）。<br>设 $P(x)$ 和 $Q(x)$ 是两个取值的两个离散概率分布，则 $P$ 对 $Q$ 的相对熵为：</p>
+<script type="math/tex; mode=display">D(P||Q)=\sum P(x)log(\dfrac{P(x)}{Q(x)})</script><p>对于连续的随机变量，定义为：</p>
+<script type="math/tex; mode=display">D(P||Q)=\int P(x)log(\dfrac{P(x)}{Q(x)})dx</script><p>相对熵是两个概率分布 $P(x)$ 和 $Q(x)$ 差别的非对称性的度量。</p>
+<h3 id="相对熵物理意义"><a href="#相对熵物理意义" class="headerlink" title="相对熵物理意义"></a>相对熵物理意义</h3><p>相对熵是用来度量使用基于 $Q$ 的编码来编码来自 $P$ 的样本平均所需的额外的比特个数。 典型情况下，$P$ 表示数据的真实分布，$Q$ 表示数据的理论分布，模型分布，或 $P$ 的近似分布。<br>根据shannon的信息论，给定一个字符集的概率分布，我们可以设计一种编码，使得表示该字符集组成的字符串平均需要的比特数最少。假设这个字符集是 $X$ ，对 $x \in X$  ，其出现概率为 $P$，那么其最优编码平均需要的比特数等于这个字符集的熵：</p>
+<script type="math/tex; mode=display">H(p)=\sum_{x \in X}{P(x)}log(\dfrac{1}{P(x)})</script><p>在同样的字符集上，假设存在另一个概率分布 $Q$，如果用概率分布 $P$ 的最优编码（即字符  $x$ 的编码长度等于  $log(\dfrac{1}{p(x)})$），来为符合分布 $Q$ 的字符编码，那么表示这些字符就会比理想情况多用一些比特数。<strong>相对熵就是用来衡量这种情况下平均每个字符多用的比特数，因此可以用来衡量两个分布的距离</strong>，即：</p>
+<script type="math/tex; mode=display">D_{KL}(P||Q)=-\sum_{x \in X}{P(x)}log(\dfrac{1}{P(x)}) + \sum_{x \in X}{P(x)}log(\dfrac{1}{Q(x)})=\sum_{x\in X} P(x)log(\dfrac{P(x)}{Q(x)})</script><h3 id="相对熵的性质"><a href="#相对熵的性质" class="headerlink" title="相对熵的性质"></a>相对熵的性质</h3><p>相对熵（KL散度）有两个主要的性质，如下：<br>（1）不对称性<br>尽管KL散度从直观上是个度量或距离函数，但它并不是一个真正的度量或者距离，因为它不具有对称性，即<br>（2）非负性<br>相对熵的值为非负值，即  ，证明可用吉布斯不等式。</p>
+<blockquote>
+<p>吉布斯不等式<br>若 $\sum_{i=1}^{n}p_i=\sum_{i=1}^{n}q_i=1$，且 $p_i, q_i \in (0,1]$，则有：<br>$-\sum_{i=1}^{n}p_ilog(p_i)\leq -\sum_{i=1}^{n}p_ilog(q_i)$，等号当且仅当 $\forall i, p_i=q_i$</p>
+</blockquote>
+<h3 id="相对熵的应用"><a href="#相对熵的应用" class="headerlink" title="相对熵的应用"></a>相对熵的应用</h3><p>相对熵可以衡量两个随机分布之间的距离，当两个随机分布相同时，它们的相对熵为零，当两个随机分布的差别增大时，它们的相对熵也会增大。所以相对熵（KL散度）可以用于比较文本的相似度，先统计出词的频率，然后计算相对熵。另外，在多指标系统评估中，指标权重分配 [2]  是一个重点和难点，也通过相对熵可以处理。</p>
+<h2 id="JS散度（Jensen–Shannon-divergence）"><a href="#JS散度（Jensen–Shannon-divergence）" class="headerlink" title="JS散度（Jensen–Shannon divergence）"></a><a href="https://en.wikipedia.org/wiki/Jensen%E2%80%93Shannon_divergence" target="_blank" rel="noopener">JS散度（Jensen–Shannon divergence）</a></h2><p>JS散度度量了两个概率分布的相似度，基于KL散度的变体，解决了KL散度非对称的问题。一般地，JS散度是对称的，其取值是0到1之间。定义如下：</p>
+<script type="math/tex; mode=display">JSD(P_1||P_2)=\dfrac{1}{2}KL(P_1||\dfrac{P_1+P_2}{2})+\dfrac{1}{2}KL(P_2||\dfrac{P_1+P_2}{2})</script><p>KL散度和JS散度度量的时候有一个问题：如果两个分配P,Q离得很远，完全没有重叠的时候，那么KL散度值是没有意义的，而JS散度值是一个常数。这在学习算法中是比较致命的，这就意味这这一点的梯度为0。梯度消失了。</p>
+<h2 id="Wasserstein距离"><a href="#Wasserstein距离" class="headerlink" title="Wasserstein距离"></a>Wasserstein距离</h2><p><img src="/2019/07/31/机器学习相关的概率论基础知识/wasserstein距离.png" alt=""></p>
+<h2 id="切比雪夫定理"><a href="#切比雪夫定理" class="headerlink" title="切比雪夫定理"></a>切比雪夫定理</h2><p><a href="https://baike.baidu.com/item/切比雪夫定理/3647561" target="_blank" rel="noopener">切比雪夫定理 百度百科</a><br><a href="https://www.zhihu.com/question/27821324/answer/248693398" target="_blank" rel="noopener">切比雪夫不等式到底是个什么概念?</a></p>
+<p>切比雪夫不等式：</p>
+<script type="math/tex; mode=display">P(|X - \mu| \ge k \sigma) \le \dfrac{1}{k^2}</script><p>其中 $K &gt; 0$， $\mu$是期望，$\sigma$ 是标注差。</p>
+<p>切比雪夫不等式可以用来做异常检测。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/22/基于Python实现的排序算法/" rel="next" title="基于Python实现的排序算法">
+                <i class="fa fa-chevron-left"></i> 基于Python实现的排序算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/01/深度学习中的计算题/" rel="prev" title="深度学习中的计算题">
+                深度学习中的计算题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概率论"><span class="nav-number">1.</span> <span class="nav-text">概率论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率"><span class="nav-number">2.</span> <span class="nav-text">概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机事件"><span class="nav-number">3.</span> <span class="nav-text">随机事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机变量"><span class="nav-number">4.</span> <span class="nav-text">随机变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率分布函数"><span class="nav-number">5.</span> <span class="nav-text">概率分布函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学期望"><span class="nav-number">6.</span> <span class="nav-text">数学期望</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准差"><span class="nav-number">7.</span> <span class="nav-text">标准差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件概率"><span class="nav-number">8.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中心极限定理"><span class="nav-number">9.</span> <span class="nav-text">中心极限定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#统计推断"><span class="nav-number">10.</span> <span class="nav-text">统计推断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分布函数"><span class="nav-number"></span> <span class="nav-text">分布函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率密度函数"><span class="nav-number"></span> <span class="nav-text">概率密度函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离散型数学期望和连续型数学期望"><span class="nav-number"></span> <span class="nav-text">离散型数学期望和连续型数学期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#似然函数"><span class="nav-number"></span> <span class="nav-text">似然函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#似然与概率的区别"><span class="nav-number">1.</span> <span class="nav-text">似然与概率的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#似然与概率的联系"><span class="nav-number">2.</span> <span class="nav-text">似然与概率的联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计"><span class="nav-number"></span> <span class="nav-text">最大似然估计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共轭先验分布"><span class="nav-number"></span> <span class="nav-text">共轭先验分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中心极限定理-1"><span class="nav-number"></span> <span class="nav-text">中心极限定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信息论"><span class="nav-number"></span> <span class="nav-text">信息论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概率分布度量函数基本概念"><span class="nav-number"></span> <span class="nav-text">概率分布度量函数基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#KL-散度概念解读"><span class="nav-number">1.</span> <span class="nav-text">KL 散度概念解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信息熵"><span class="nav-number"></span> <span class="nav-text">信息熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信息熵基本内容"><span class="nav-number">1.</span> <span class="nav-text">信息熵基本内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵"><span class="nav-number"></span> <span class="nav-text">交叉熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵的介绍"><span class="nav-number">1.</span> <span class="nav-text">交叉熵的介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵的应用"><span class="nav-number">2.</span> <span class="nav-text">交叉熵的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相对熵"><span class="nav-number"></span> <span class="nav-text">相对熵</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相对熵的定义"><span class="nav-number">1.</span> <span class="nav-text">相对熵的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对熵物理意义"><span class="nav-number">2.</span> <span class="nav-text">相对熵物理意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对熵的性质"><span class="nav-number">3.</span> <span class="nav-text">相对熵的性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对熵的应用"><span class="nav-number">4.</span> <span class="nav-text">相对熵的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS散度（Jensen–Shannon-divergence）"><span class="nav-number"></span> <span class="nav-text">JS散度（Jensen–Shannon divergence）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wasserstein距离"><span class="nav-number"></span> <span class="nav-text">Wasserstein距离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切比雪夫定理"><span class="nav-number"></span> <span class="nav-text">切比雪夫定理</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

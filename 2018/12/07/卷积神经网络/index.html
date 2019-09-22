@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Convolutional Neural NetworksCIFAR-10 CNNIn this example, we will download the CIFAR-10 images and build a CNN model with dropout and regularization. CIFAR is composed ot 50k train and 10k test images">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络 Convolutional Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2018/12/07/卷积神经网络/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Convolutional Neural NetworksCIFAR-10 CNNIn this example, we will download the CIFAR-10 images and build a CNN model with dropout and regularization. CIFAR is composed ot 50k train and 10k test images">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/12/07/卷积神经网络/output_33_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/07/卷积神经网络/output_33_1.png">
+<meta property="og:updated_time" content="2018-12-07T06:59:13.619Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络 Convolutional Neural Networks">
+<meta name="twitter:description" content="Convolutional Neural NetworksCIFAR-10 CNNIn this example, we will download the CIFAR-10 images and build a CNN model with dropout and regularization. CIFAR is composed ot 50k train and 10k test images">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/07/卷积神经网络/output_33_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/07/卷积神经网络/"/>
+
+
+
+
+
+  <title>卷积神经网络 Convolutional Neural Networks | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/07/卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">卷积神经网络 Convolutional Neural Networks</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-07T15:00:15+08:00">
+                2018-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/卷积神经网络/" itemprop="url" rel="index">
+                    <span itemprop="name">卷积神经网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/07/卷积神经网络/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/07/卷积神经网络/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Convolutional-Neural-Networks"><a href="#Convolutional-Neural-Networks" class="headerlink" title="Convolutional Neural Networks"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/08_Convolutional_Neural_Networks" target="_blank" rel="noopener">Convolutional Neural Networks</a></h1><h2 id="CIFAR-10-CNN"><a href="#CIFAR-10-CNN" class="headerlink" title="CIFAR-10 CNN"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/08_Convolutional_Neural_Networks/03_CNN_CIFAR10" target="_blank" rel="noopener">CIFAR-10 CNN</a></h2><p>In this example, we will download the CIFAR-10 images and build a CNN model with dropout and regularization.</p>
+<p>CIFAR is composed ot 50k train and 10k test images that are 32x32.</p>
+<p>We start by loading the necessary libaries and resetting any default computational graph that already exists.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> tarfile</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> six.moves <span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Next, start a new graph session and set the default parameters.</p>
+<p>List of defaults:</p>
+<ul>
+<li><code>batch_size</code>: this is how many cifar examples to train on in one batch.</li>
+<li><code>data_dir</code>: where to store data (check if data exists here, as to not have to download every time).</li>
+<li><code>output_every</code>: output training accuracy/loss statistics every X generations/epochs.</li>
+<li><code>eval_every</code>: output test accuracy/loss statistics every X generations/epochs.</li>
+<li><code>image_height</code>: standardize images to this height.</li>
+<li><code>image_width</code>: standardize images to this width.</li>
+<li><code>crop_height</code>: random internal crop before training on image - height.</li>
+<li><code>crop_width</code>: random internal crop before training on image - width.</li>
+<li><code>num_channels</code>: number of color channels of image (greyscale = 1, color = 3).</li>
+<li><code>num_targets</code>: number of different target categories. CIFAR-10 has 10.</li>
+<li><code>extract_folder</code>: folder to extract downloaded images to.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start a graph session</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set model parameters</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">data_dir = <span class="string">'temp'</span></span><br><span class="line">output_every = <span class="number">50</span></span><br><span class="line">generations = <span class="number">20000</span></span><br><span class="line">eval_every = <span class="number">500</span></span><br><span class="line">image_height = <span class="number">32</span></span><br><span class="line">image_width = <span class="number">32</span></span><br><span class="line">crop_height = <span class="number">24</span></span><br><span class="line">crop_width = <span class="number">24</span></span><br><span class="line">num_channels = <span class="number">3</span></span><br><span class="line">num_targets = <span class="number">10</span></span><br><span class="line">extract_folder = <span class="string">'cifar-10-batches-bin'</span></span><br></pre></td></tr></table></figure>
+<p>Set the learning rate, learning rate decay parameters, and extract some of the image-model parameters.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Exponential Learning Rate Decay Params</span></span><br><span class="line">learning_rate = <span class="number">0.1</span></span><br><span class="line">lr_decay = <span class="number">0.1</span></span><br><span class="line">num_gens_to_wait = <span class="number">250.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Extract model parameters</span></span><br><span class="line">image_vec_length = image_height * image_width * num_channels</span><br><span class="line">record_length = <span class="number">1</span> + image_vec_length <span class="comment"># ( + 1 for the 0-9 label)</span></span><br></pre></td></tr></table></figure>
+<p>Load the CIFAR-10 data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load data</span></span><br><span class="line">data_dir = <span class="string">'temp'</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(data_dir):</span><br><span class="line">    os.makedirs(data_dir)</span><br><span class="line">cifar10_url = <span class="string">'http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if file exists, otherwise download it</span></span><br><span class="line">data_file = os.path.join(data_dir, <span class="string">'cifar-10-binary.tar.gz'</span>)</span><br><span class="line"><span class="keyword">if</span> os.path.isfile(data_file):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># Download file</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">progress</span><span class="params">(block_num, block_size, total_size)</span>:</span></span><br><span class="line">        progress_info = [cifar10_url, float(block_num * block_size) / float(total_size) * <span class="number">100.0</span>]</span><br><span class="line">        print(<span class="string">'\r Downloading &#123;&#125; - &#123;:.2f&#125;%'</span>.format(*progress_info), end=<span class="string">""</span>)</span><br><span class="line">    filepath, _ = urllib.request.urlretrieve(cifar10_url, data_file, progress)</span><br><span class="line">    <span class="comment"># Extract file</span></span><br><span class="line">    tarfile.open(filepath, <span class="string">'r:gz'</span>).extractall(data_dir)</span><br></pre></td></tr></table></figure>
+<pre><code> Downloading http://www.cs.toronto.edu/~kriz/cifar-10-binary.tar.gz - 100.00%
+</code></pre><p>Next, we define a reading function that will load (and optionally distort the images slightly) for training.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define CIFAR reader</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_cifar_files</span><span class="params">(filename_queue, distort_images = True)</span>:</span></span><br><span class="line">    reader = tf.FixedLengthRecordReader(record_bytes=record_length)</span><br><span class="line">    key, record_string = reader.read(filename_queue)</span><br><span class="line">    record_bytes = tf.decode_raw(record_string, tf.uint8)</span><br><span class="line">    image_label = tf.cast(tf.slice(record_bytes, [<span class="number">0</span>], [<span class="number">1</span>]), tf.int32)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Extract image</span></span><br><span class="line">    image_extracted = tf.reshape(tf.slice(record_bytes, [<span class="number">1</span>], [image_vec_length]),</span><br><span class="line">                                 [num_channels, image_height, image_width])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Reshape image</span></span><br><span class="line">    image_uint8image = tf.transpose(image_extracted, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>])</span><br><span class="line">    reshaped_image = tf.cast(image_uint8image, tf.float32)</span><br><span class="line">    <span class="comment"># Randomly Crop image</span></span><br><span class="line">    final_image = tf.image.resize_image_with_crop_or_pad(reshaped_image, crop_width, crop_height)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> distort_images:</span><br><span class="line">        <span class="comment"># Randomly flip the image horizontally, change the brightness and contrast</span></span><br><span class="line">        final_image = tf.image.random_flip_left_right(final_image)</span><br><span class="line">        final_image = tf.image.random_brightness(final_image,max_delta=<span class="number">63</span>)</span><br><span class="line">        final_image = tf.image.random_contrast(final_image,lower=<span class="number">0.2</span>, upper=<span class="number">1.8</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Normalize whitening</span></span><br><span class="line">    final_image = tf.image.per_image_standardization(final_image)</span><br><span class="line">    <span class="keyword">return</span> final_image, image_label</span><br></pre></td></tr></table></figure>
+<p>Use the above loading function in our image pipeline function below.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a CIFAR image pipeline from reader</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input_pipeline</span><span class="params">(batch_size, train_logical=True)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> train_logical:</span><br><span class="line">        files = [os.path.join(data_dir, extract_folder, <span class="string">'data_batch_&#123;&#125;.bin'</span>.format(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">6</span>)]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        files = [os.path.join(data_dir, extract_folder, <span class="string">'test_batch.bin'</span>)]</span><br><span class="line">    filename_queue = tf.train.string_input_producer(files)</span><br><span class="line">    image, label = read_cifar_files(filename_queue)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># min_after_dequeue defines how big a buffer we will randomly sample</span></span><br><span class="line">    <span class="comment">#   from -- bigger means better shuffling but slower start up and more</span></span><br><span class="line">    <span class="comment">#   memory used.</span></span><br><span class="line">    <span class="comment"># capacity must be larger than min_after_dequeue and the amount larger</span></span><br><span class="line">    <span class="comment">#   determines the maximum we will prefetch.  Recommendation:</span></span><br><span class="line">    <span class="comment">#   min_after_dequeue + (num_threads + a small safety margin) * batch_size</span></span><br><span class="line">    min_after_dequeue = <span class="number">5000</span></span><br><span class="line">    capacity = min_after_dequeue + <span class="number">3</span> * batch_size</span><br><span class="line">    example_batch, label_batch = tf.train.shuffle_batch([image, label],</span><br><span class="line">                                                        batch_size=batch_size,</span><br><span class="line">                                                        capacity=capacity,</span><br><span class="line">                                                        min_after_dequeue=min_after_dequeue)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> example_batch, label_batch</span><br></pre></td></tr></table></figure>
+<p>Create a function that returns our CIFAR-10 model architecture so that we can use it both for training and testing.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define the model architecture, this will return logits from images</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cifar_cnn_model</span><span class="params">(input_images, batch_size, train_logical=True)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">truncated_normal_var</span><span class="params">(name, shape, dtype)</span>:</span></span><br><span class="line">        <span class="keyword">return</span>(tf.get_variable(name=name, shape=shape, dtype=dtype, initializer=tf.truncated_normal_initializer(stddev=<span class="number">0.05</span>)))</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">zero_var</span><span class="params">(name, shape, dtype)</span>:</span></span><br><span class="line">        <span class="keyword">return</span>(tf.get_variable(name=name, shape=shape, dtype=dtype, initializer=tf.constant_initializer(<span class="number">0.0</span>)))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># First Convolutional Layer</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'conv1'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># Conv_kernel is 5x5 for all 3 colors and we will create 64 features</span></span><br><span class="line">        conv1_kernel = truncated_normal_var(name=<span class="string">'conv_kernel1'</span>, shape=[<span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">64</span>], dtype=tf.float32)</span><br><span class="line">        <span class="comment"># We convolve across the image with a stride size of 1</span></span><br><span class="line">        conv1 = tf.nn.conv2d(input_images, conv1_kernel, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line">        <span class="comment"># Initialize and add the bias term</span></span><br><span class="line">        conv1_bias = zero_var(name=<span class="string">'conv_bias1'</span>, shape=[<span class="number">64</span>], dtype=tf.float32)</span><br><span class="line">        conv1_add_bias = tf.nn.bias_add(conv1, conv1_bias)</span><br><span class="line">        <span class="comment"># ReLU element wise</span></span><br><span class="line">        relu_conv1 = tf.nn.relu(conv1_add_bias)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Max Pooling</span></span><br><span class="line">    pool1 = tf.nn.max_pool(relu_conv1, ksize=[<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>], strides=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>],padding=<span class="string">'SAME'</span>, name=<span class="string">'pool_layer1'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Local Response Normalization (parameters from paper)</span></span><br><span class="line">    <span class="comment"># paper: http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks</span></span><br><span class="line">    norm1 = tf.nn.lrn(pool1, depth_radius=<span class="number">5</span>, bias=<span class="number">2.0</span>, alpha=<span class="number">1e-3</span>, beta=<span class="number">0.75</span>, name=<span class="string">'norm1'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Second Convolutional Layer</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'conv2'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># Conv kernel is 5x5, across all prior 64 features and we create 64 more features</span></span><br><span class="line">        conv2_kernel = truncated_normal_var(name=<span class="string">'conv_kernel2'</span>, shape=[<span class="number">5</span>, <span class="number">5</span>, <span class="number">64</span>, <span class="number">64</span>], dtype=tf.float32)</span><br><span class="line">        <span class="comment"># Convolve filter across prior output with stride size of 1</span></span><br><span class="line">        conv2 = tf.nn.conv2d(norm1, conv2_kernel, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line">        <span class="comment"># Initialize and add the bias</span></span><br><span class="line">        conv2_bias = zero_var(name=<span class="string">'conv_bias2'</span>, shape=[<span class="number">64</span>], dtype=tf.float32)</span><br><span class="line">        conv2_add_bias = tf.nn.bias_add(conv2, conv2_bias)</span><br><span class="line">        <span class="comment"># ReLU element wise</span></span><br><span class="line">        relu_conv2 = tf.nn.relu(conv2_add_bias)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Max Pooling</span></span><br><span class="line">    pool2 = tf.nn.max_pool(relu_conv2, ksize=[<span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>], strides=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>, name=<span class="string">'pool_layer2'</span>)    </span><br><span class="line"></span><br><span class="line">     <span class="comment"># Local Response Normalization (parameters from paper)</span></span><br><span class="line">    norm2 = tf.nn.lrn(pool2, depth_radius=<span class="number">5</span>, bias=<span class="number">2.0</span>, alpha=<span class="number">1e-3</span>, beta=<span class="number">0.75</span>, name=<span class="string">'norm2'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Reshape output into a single matrix for multiplication for the fully connected layers</span></span><br><span class="line">    reshaped_output = tf.reshape(norm2, [batch_size, <span class="number">-1</span>])</span><br><span class="line">    reshaped_dim = reshaped_output.get_shape()[<span class="number">1</span>].value</span><br><span class="line"></span><br><span class="line">    <span class="comment"># First Fully Connected Layer</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'full1'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># Fully connected layer will have 384 outputs.</span></span><br><span class="line">        full_weight1 = truncated_normal_var(name=<span class="string">'full_mult1'</span>, shape=[reshaped_dim, <span class="number">384</span>], dtype=tf.float32)</span><br><span class="line">        full_bias1 = zero_var(name=<span class="string">'full_bias1'</span>, shape=[<span class="number">384</span>], dtype=tf.float32)</span><br><span class="line">        full_layer1 = tf.nn.relu(tf.add(tf.matmul(reshaped_output, full_weight1), full_bias1))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Second Fully Connected Layer</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'full2'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># Second fully connected layer has 192 outputs.</span></span><br><span class="line">        full_weight2 = truncated_normal_var(name=<span class="string">'full_mult2'</span>, shape=[<span class="number">384</span>, <span class="number">192</span>], dtype=tf.float32)</span><br><span class="line">        full_bias2 = zero_var(name=<span class="string">'full_bias2'</span>, shape=[<span class="number">192</span>], dtype=tf.float32)</span><br><span class="line">        full_layer2 = tf.nn.relu(tf.add(tf.matmul(full_layer1, full_weight2), full_bias2))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Final Fully Connected Layer -&gt; 10 categories for output (num_targets)</span></span><br><span class="line">    <span class="keyword">with</span> tf.variable_scope(<span class="string">'full3'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">        <span class="comment"># Final fully connected layer has 10 (num_targets) outputs.</span></span><br><span class="line">        full_weight3 = truncated_normal_var(name=<span class="string">'full_mult3'</span>, shape=[<span class="number">192</span>, num_targets], dtype=tf.float32)</span><br><span class="line">        full_bias3 =  zero_var(name=<span class="string">'full_bias3'</span>, shape=[num_targets], dtype=tf.float32)</span><br><span class="line">        final_output = tf.add(tf.matmul(full_layer2, full_weight3), full_bias3)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> final_output</span><br></pre></td></tr></table></figure>
+<p>Define our loss function.  Our loss will be the average cross entropy loss (categorical loss).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Loss function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cifar_loss</span><span class="params">(logits, targets)</span>:</span></span><br><span class="line">    <span class="comment"># Get rid of extra dimensions and cast targets into integers</span></span><br><span class="line">    targets = tf.squeeze(tf.cast(targets, tf.int32))</span><br><span class="line">    <span class="comment"># Calculate cross entropy from logits and targets</span></span><br><span class="line">    cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=targets)</span><br><span class="line">    <span class="comment"># Take the average loss across batch size</span></span><br><span class="line">    cross_entropy_mean = tf.reduce_mean(cross_entropy, name=<span class="string">'cross_entropy'</span>)</span><br><span class="line">    <span class="keyword">return</span> cross_entropy_mean</span><br></pre></td></tr></table></figure>
+<p>Define our training step.  Here we will use exponential decay of the learning rate, declare the optimizer and tell the training step to minimize the loss.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Train step</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_step</span><span class="params">(loss_value, generation_num)</span>:</span></span><br><span class="line">    <span class="comment"># Our learning rate is an exponential decay after we wait a fair number of generations</span></span><br><span class="line">    model_learning_rate = tf.train.exponential_decay(learning_rate, generation_num,</span><br><span class="line">                                                     num_gens_to_wait, lr_decay, staircase=<span class="keyword">True</span>)</span><br><span class="line">    <span class="comment"># Create optimizer</span></span><br><span class="line">    my_optimizer = tf.train.GradientDescentOptimizer(model_learning_rate)</span><br><span class="line">    <span class="comment"># Initialize train step</span></span><br><span class="line">    train_step = my_optimizer.minimize(loss_value)</span><br><span class="line">    <span class="keyword">return</span> train_step</span><br></pre></td></tr></table></figure>
+<p>Create an accuracy function that takes in the predicted logits from the model and the actual targets and returns the accuracy for recording statistics on the train/test sets.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Accuracy function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">accuracy_of_batch</span><span class="params">(logits, targets)</span>:</span></span><br><span class="line">    <span class="comment"># Make sure targets are integers and drop extra dimensions</span></span><br><span class="line">    targets = tf.squeeze(tf.cast(targets, tf.int32))</span><br><span class="line">    <span class="comment"># Get predicted values by finding which logit is the greatest</span></span><br><span class="line">    batch_predictions = tf.cast(tf.argmax(logits, <span class="number">1</span>), tf.int32)</span><br><span class="line">    <span class="comment"># Check if they are equal across the batch</span></span><br><span class="line">    predicted_correctly = tf.equal(batch_predictions, targets)</span><br><span class="line">    <span class="comment"># Average the 1's and 0's (True's and False's) across the batch size</span></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(predicted_correctly, tf.float32))</span><br><span class="line">    <span class="keyword">return</span> accuracy</span><br></pre></td></tr></table></figure>
+<p>Now that we have all our functions we need, let’s use them to create</p>
+<ol>
+<li><p>our data pipeline</p>
+</li>
+<li><p>our model</p>
+</li>
+<li><p>the evaluations/accuracy/training operations.</p>
+</li>
+</ol>
+<p>First our data pipeline:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get data</span></span><br><span class="line">print(<span class="string">'Getting/Transforming Data.'</span>)</span><br><span class="line"><span class="comment"># Initialize the data pipeline</span></span><br><span class="line">images, targets = input_pipeline(batch_size, train_logical=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># Get batch test images and targets from pipline</span></span><br><span class="line">test_images, test_targets = input_pipeline(batch_size, train_logical=<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Getting/Transforming Data.
+</code></pre><p>Create our model.</p>
+<p>Note: Be careful not to accidentally run the following model-creation code twice without resetting the computational graph.  If you do, you will end up with variable-sharing errors.  If that is the case, re-run the whole script.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare Model</span></span><br><span class="line">print(<span class="string">'Creating the CIFAR10 Model.'</span>)</span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(<span class="string">'model_definition'</span>) <span class="keyword">as</span> scope:</span><br><span class="line">    <span class="comment"># Declare the training network model</span></span><br><span class="line">    model_output = cifar_cnn_model(images, batch_size)</span><br><span class="line">    <span class="comment"># This is very important!!!  We must set the scope to REUSE the variables,</span></span><br><span class="line">    <span class="comment">#  otherwise, when we set the test network model, it will create new random</span></span><br><span class="line">    <span class="comment">#  variables.  Otherwise we get random evaluations on the test batches.</span></span><br><span class="line">    scope.reuse_variables()</span><br><span class="line">    test_output = cifar_cnn_model(test_images, batch_size)</span><br><span class="line">print(<span class="string">'Done.'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Creating the CIFAR10 Model.
+Done.
+</code></pre><p>Loss and accuracy functions:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare loss function</span></span><br><span class="line">print(<span class="string">'Declare Loss Function.'</span>)</span><br><span class="line">loss = cifar_loss(model_output, targets)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create accuracy function</span></span><br><span class="line">accuracy = accuracy_of_batch(test_output, test_targets)</span><br></pre></td></tr></table></figure>
+<pre><code>Declare Loss Function.
+</code></pre><p>Next, create the training operations and initialize our model variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create training operations</span></span><br><span class="line">print(<span class="string">'Creating the Training Operation.'</span>)</span><br><span class="line">generation_num = tf.Variable(<span class="number">0</span>, trainable=<span class="keyword">False</span>)</span><br><span class="line">train_op = train_step(loss, generation_num)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize Variables</span></span><br><span class="line">print(<span class="string">'Initializing the Variables.'</span>)</span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<pre><code>Creating the Training Operation.
+Initializing the Variables.
+</code></pre><p>Now, we initialize our data queue.  This is an operation that will feed data into our model. Because of this _no placeholders are necessary_!!</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize queue (This queue will feed into the model, so no placeholders necessary)</span></span><br><span class="line">tf.train.start_queue_runners(sess=sess)</span><br></pre></td></tr></table></figure>
+<pre><code>[&lt;Thread(QueueRunnerThread-input_producer-input_producer/input_producer_EnqueueMany, started daemon 140554214045440)&gt;,
+ &lt;Thread(QueueRunnerThread-shuffle_batch/random_shuffle_queue-shuffle_batch/random_shuffle_queue_enqueue, started daemon 140554205652736)&gt;,
+ &lt;Thread(QueueRunnerThread-input_producer_1-input_producer_1/input_producer_1_EnqueueMany, started daemon 140554176296704)&gt;,
+ &lt;Thread(QueueRunnerThread-shuffle_batch_1/random_shuffle_queue-shuffle_batch_1/random_shuffle_queue_enqueue, started daemon 140553878501120)&gt;]
+</code></pre><p>Training our CIFAR-10 model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Train CIFAR Model</span></span><br><span class="line">print(<span class="string">'Starting Training'</span>)</span><br><span class="line">train_loss = []</span><br><span class="line">test_accuracy = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(generations):</span><br><span class="line">    _, loss_value = sess.run([train_op, loss])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) % output_every == <span class="number">0</span>:</span><br><span class="line">        train_loss.append(loss_value)</span><br><span class="line">        output = <span class="string">'Generation &#123;&#125;: Loss = &#123;:.5f&#125;'</span>.format((i+<span class="number">1</span>), loss_value)</span><br><span class="line">        print(output)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) % eval_every == <span class="number">0</span>:</span><br><span class="line">        [temp_accuracy] = sess.run([accuracy])</span><br><span class="line">        test_accuracy.append(temp_accuracy)</span><br><span class="line">        acc_output = <span class="string">' --- Test Accuracy = &#123;:.2f&#125;%.'</span>.format(<span class="number">100.</span>*temp_accuracy)</span><br><span class="line">        print(acc_output)</span><br></pre></td></tr></table></figure>
+<pre><code>Starting Training
+Generation 50: Loss = 2.22219
+...
+Generation 19950: Loss = 0.02510
+Generation 20000: Loss = 0.02570
+ --- Test Accuracy = 80.47%.
+</code></pre><p>Plot the loss and accuracy.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Print loss and accuracy</span></span><br><span class="line"><span class="comment"># Matlotlib code to plot the loss and accuracies</span></span><br><span class="line">eval_indices = range(<span class="number">0</span>, generations, eval_every)</span><br><span class="line">output_indices = range(<span class="number">0</span>, generations, output_every)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(output_indices, train_loss, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Softmax Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Softmax Loss'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot accuracy over time</span></span><br><span class="line">plt.plot(eval_indices, test_accuracy, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Test Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/12/07/卷积神经网络/output_33_0.png" alt="png"><br><img src="/2018/12/07/卷积神经网络/output_33_1.png" alt="png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/" rel="next" title="TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用">
+                <i class="fa fa-chevron-left"></i> TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/10/Bag_of_Tricks_for_Image_Classification_with_Convolutional_Neural_Networks/" rel="prev" title="Bag of Tricks for Image Classification with Convolutional Neural Networks">
+                Bag of Tricks for Image Classification with Convolutional Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Convolutional-Neural-Networks"><span class="nav-number">1.</span> <span class="nav-text">Convolutional Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CIFAR-10-CNN"><span class="nav-number">1.1.</span> <span class="nav-text">CIFAR-10 CNN</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

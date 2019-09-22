@@ -1,0 +1,1450 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="神经网络Neural Network（人工）神经网络是一种起源于 20 世纪 50 年代的监督式机器学习模型，那时候研究者构想了「感知器（perceptron）」的想法。这一领域的研究者通常被称为「联结主义者（Connectionist）」，因为这种模型模拟了人脑的功能。神经网络模型通常是通过反向传播算法应用梯度下降训练的。目前神经网络有两大主要类型，它们是前馈神经网络（主要是卷积神经网络-CNN">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络 Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2018/11/24/神经网络/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="神经网络Neural Network（人工）神经网络是一种起源于 20 世纪 50 年代的监督式机器学习模型，那时候研究者构想了「感知器（perceptron）」的想法。这一领域的研究者通常被称为「联结主义者（Connectionist）」，因为这种模型模拟了人脑的功能。神经网络模型通常是通过反向传播算法应用梯度下降训练的。目前神经网络有两大主要类型，它们是前馈神经网络（主要是卷积神经网络-CNN">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/output_7_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/04_nn_layout.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/output_11_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/output_15_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/output_9_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/output_9_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/08_tictactoe_layout.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/神经网络/08_tic_tac_toe_architecture.png">
+<meta property="og:updated_time" content="2018-11-28T00:51:57.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络 Neural Networks">
+<meta name="twitter:description" content="神经网络Neural Network（人工）神经网络是一种起源于 20 世纪 50 年代的监督式机器学习模型，那时候研究者构想了「感知器（perceptron）」的想法。这一领域的研究者通常被称为「联结主义者（Connectionist）」，因为这种模型模拟了人脑的功能。神经网络模型通常是通过反向传播算法应用梯度下降训练的。目前神经网络有两大主要类型，它们是前馈神经网络（主要是卷积神经网络-CNN">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/24/神经网络/output_7_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/24/神经网络/"/>
+
+
+
+
+
+  <title>神经网络 Neural Networks | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/24/神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">神经网络 Neural Networks</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-24T11:30:15+08:00">
+                2018-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/神经网络/" itemprop="url" rel="index">
+                    <span itemprop="name">神经网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/24/神经网络/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/24/神经网络/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a><a href="https://www.jiqizhixin.com/technologies/72b0bcc0-d8f9-4edd-919f-fa7c2560388c" target="_blank" rel="noopener">神经网络</a></h1><p>Neural Network<br>（人工）神经网络是一种起源于 20 世纪 50 年代的监督式机器学习模型，那时候研究者构想了「感知器（perceptron）」的想法。这一领域的研究者通常被称为「联结主义者（Connectionist）」，因为这种模型模拟了人脑的功能。神经网络模型通常是通过反向传播算法应用梯度下降训练的。目前神经网络有两大主要类型，它们是前馈神经网络（主要是卷积神经网络-CNN）和循环神经网络（RNN），其中 RNN 又包含长短期记忆（LSTM）、门控循环单元（GRU）等子类。深度学习（deep learning）是一种主要应用于神经网络技术以帮助其取得更好结果的技术。尽管神经网络主要用于监督学习，但也有一些为无监督学习设计的变体，如自动编码器（AutoEncoder）和生成对抗网络（GAN）。</p>
+<h1 id="Introduction-to-Neural-Networks"><a href="#Introduction-to-Neural-Networks" class="headerlink" title="Introduction to Neural Networks"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks" target="_blank" rel="noopener">Introduction to Neural Networks</a></h1><p>There are more resources for learning about neural networks that are more in depth and detailed. Here are some following resources:</p>
+<ul>
+<li>The seminal paper describing back propagation is Efficient Back Prop by Yann LeCun et. al. The PDF is located here: <a href="http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf" target="_blank" rel="noopener">http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf</a></li>
+<li>CS231, Convolutional Neural Networks for Visual Recognition, by Stanford University, class resources available here: <a href="http://cs231n.stanford.edu/" target="_blank" rel="noopener">http://cs231n.stanford.edu/</a></li>
+<li>CS224d, Deep Learning for Natural Language Processing, by Stanford University, class resources available here: <a href="http://cs224d.stanford.edu/" target="_blank" rel="noopener">http://cs224d.stanford.edu/</a></li>
+<li>Deep Learning, a book by the MIT Press. Goodfellow, et. al. 2016. Located: <a href="http://www.deeplearningbook.org" target="_blank" rel="noopener">http://www.deeplearningbook.org</a></li>
+<li>There is an online book called Neural Networks and Deep Learning by Michael Nielsen, located here: <a href="http://neuralnetworksanddeeplearning.com/" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/</a></li>
+<li>For a more pragmatic approach and introduction to neural networks, Andrej Karpathy has written a great summary and JavaScript examples called A Hacker’s Guide to Neural Networks. The write up is located here: <a href="http://karpathy.github.io/neuralnets/" target="_blank" rel="noopener">http://karpathy.github.io/neuralnets/</a></li>
+<li>Another site that summarizes some good notes on deep learning is called Deep Learning for Beginners by Ian Goodfellow, Yoshua Bengio, and Aaron Courville. This web page can be found here: <a href="http://randomekek.github.io/deep/deeplearning.html" target="_blank" rel="noopener">http://randomekek.github.io/deep/deeplearning.html</a></li>
+</ul>
+<h2 id="Implementing-Gates"><a href="#Implementing-Gates" class="headerlink" title="Implementing Gates"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/02_Implementing_an_Operational_Gate" target="_blank" rel="noopener">Implementing Gates</a></h2><p>This function shows how to implement various gates in TensorFlow.</p>
+<p>One gate will be one operation with a variable and a placeholder. We will ask TensorFlow<br>to change the variable based on our loss function</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p><strong>Gate 1</strong></p>
+<p>Create a multiplication gate:  $f(x) = a * x$<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a --</span><br><span class="line">    |</span><br><span class="line">    |---- (multiply) --&gt; output</span><br><span class="line">    |</span><br><span class="line">x --</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start Graph Session</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line">a = tf.Variable(tf.constant(<span class="number">4.</span>))</span><br><span class="line">x_val = <span class="number">5.</span></span><br><span class="line">x_data = tf.placeholder(dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">multiplication = tf.multiply(a, x_data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the loss function as the difference between</span></span><br><span class="line"><span class="comment"># the output and a target value, 50.</span></span><br><span class="line">loss = tf.square(tf.subtract(multiplication, <span class="number">50.</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run loop across gate</span></span><br><span class="line">print(<span class="string">'Optimizing a Multiplication Gate Output to 50.'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: x_val&#125;)</span><br><span class="line">    a_val = sess.run(a)</span><br><span class="line">    mult_output = sess.run(multiplication, feed_dict=&#123;x_data: x_val&#125;)</span><br><span class="line">    print(str(a_val) + <span class="string">' * '</span> + str(x_val) + <span class="string">' = '</span> + str(mult_output))</span><br></pre></td></tr></table></figure>
+<pre><code>Optimizing a Multiplication Gate Output to 50.
+7.0 * 5.0 = 35.0
+8.5 * 5.0 = 42.5
+9.25 * 5.0 = 46.25
+9.625 * 5.0 = 48.125
+9.8125 * 5.0 = 49.0625
+9.90625 * 5.0 = 49.53125
+9.953125 * 5.0 = 49.765625
+9.9765625 * 5.0 = 49.882812
+9.988281 * 5.0 = 49.941406
+9.994141 * 5.0 = 49.970703
+</code></pre><p><strong>Gate 2</strong></p>
+<p>Create a nested gate: $f(x) = a * x + b$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a --</span><br><span class="line">    |</span><br><span class="line">    |-- (multiply)--</span><br><span class="line">    |               |</span><br><span class="line">x --                |-- (add) --&gt; output</span><br><span class="line">                    |</span><br><span class="line">                b --</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start a New Graph Session</span></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line">a = tf.Variable(tf.constant(<span class="number">1.</span>))</span><br><span class="line">b = tf.Variable(tf.constant(<span class="number">1.</span>))</span><br><span class="line">x_val = <span class="number">5.</span></span><br><span class="line">x_data = tf.placeholder(dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">two_gate = tf.add(tf.multiply(a, x_data), b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the loss function as the difference between</span></span><br><span class="line"><span class="comment"># the output and a target value, 50.</span></span><br><span class="line">loss = tf.square(tf.subtract(two_gate, <span class="number">50.</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run loop across gate</span></span><br><span class="line">print(<span class="string">'\nOptimizing Two Gate Output to 50.'</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: x_val&#125;)</span><br><span class="line">    a_val, b_val = (sess.run(a), sess.run(b))</span><br><span class="line">    two_gate_output = sess.run(two_gate, feed_dict=&#123;x_data: x_val&#125;)</span><br><span class="line">    print(str(a_val) + <span class="string">' * '</span> + str(x_val) + <span class="string">' + '</span> + str(b_val) + <span class="string">' = '</span> + str(two_gate_output))</span><br></pre></td></tr></table></figure>
+<pre><code>Optimizing Two Gate Output to 50.
+5.4 * 5.0 + 1.88 = 28.88
+7.512 * 5.0 + 2.3024 = 39.8624
+8.52576 * 5.0 + 2.5051522 = 45.133953
+9.012364 * 5.0 + 2.6024733 = 47.664295
+9.2459345 * 5.0 + 2.6491873 = 48.87886
+9.358048 * 5.0 + 2.67161 = 49.461853
+9.411863 * 5.0 + 2.682373 = 49.74169
+9.437695 * 5.0 + 2.687539 = 49.87601
+9.450093 * 5.0 + 2.690019 = 49.940483
+9.456045 * 5.0 + 2.6912093 = 49.971436
+</code></pre><hr>
+<h2 id="Combining-Gates-and-Activation-Functions"><a href="#Combining-Gates-and-Activation-Functions" class="headerlink" title="Combining Gates and Activation Functions"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/03_Working_with_Activation_Functions" target="_blank" rel="noopener">Combining Gates and Activation Functions</a></h2><p>This function shows how to implement various gates with activation functions in TensorFlow.</p>
+<p>This function is an extension of the prior gates, but with various activation functions.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start Graph Session</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line">tf.set_random_seed(<span class="number">5</span>)</span><br><span class="line">np.random.seed(<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">a1 = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b1 = tf.Variable(tf.random_uniform(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">a2 = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b2 = tf.Variable(tf.random_uniform(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">x = np.random.normal(<span class="number">2</span>, <span class="number">0.1</span>, <span class="number">500</span>)</span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">sigmoid_activation = tf.sigmoid(tf.add(tf.matmul(x_data, a1), b1))</span><br><span class="line"></span><br><span class="line">relu_activation = tf.nn.relu(tf.add(tf.matmul(x_data, a2), b2))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare the loss function as the difference between</span></span><br><span class="line"><span class="comment"># the output and a target value, 0.75.</span></span><br><span class="line">loss1 = tf.reduce_mean(tf.square(tf.subtract(sigmoid_activation, <span class="number">0.75</span>)))</span><br><span class="line">loss2 = tf.reduce_mean(tf.square(tf.subtract(relu_activation, <span class="number">0.75</span>)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step_sigmoid = my_opt.minimize(loss1)</span><br><span class="line">train_step_relu = my_opt.minimize(loss2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run loop across gate</span></span><br><span class="line">print(<span class="string">'\nOptimizing Sigmoid AND Relu Output to 0.75'</span>)</span><br><span class="line">loss_vec_sigmoid = []</span><br><span class="line">loss_vec_relu = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    rand_indices = np.random.choice(len(x), size=batch_size)</span><br><span class="line">    x_vals = np.transpose([x[rand_indices]])</span><br><span class="line">    sess.run(train_step_sigmoid, feed_dict=&#123;x_data: x_vals&#125;)</span><br><span class="line">    sess.run(train_step_relu, feed_dict=&#123;x_data: x_vals&#125;)</span><br><span class="line"></span><br><span class="line">    loss_vec_sigmoid.append(sess.run(loss1, feed_dict=&#123;x_data: x_vals&#125;))</span><br><span class="line">    loss_vec_relu.append(sess.run(loss2, feed_dict=&#123;x_data: x_vals&#125;))    </span><br><span class="line"></span><br><span class="line">    sigmoid_output = np.mean(sess.run(sigmoid_activation, feed_dict=&#123;x_data: x_vals&#125;))</span><br><span class="line">    relu_output = np.mean(sess.run(relu_activation, feed_dict=&#123;x_data: x_vals&#125;))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> i%<span class="number">50</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'sigmoid = '</span> + str(np.mean(sigmoid_output)) + <span class="string">' relu = '</span> + str(np.mean(relu_output)))</span><br></pre></td></tr></table></figure>
+<pre><code>Optimizing Sigmoid AND Relu Output to 0.75
+sigmoid = 0.12655208 relu = 2.0227606
+sigmoid = 0.17863758 relu = 0.7530296
+sigmoid = 0.24769811 relu = 0.7492897
+sigmoid = 0.3446748 relu = 0.7499546
+sigmoid = 0.4400661 relu = 0.7539999
+sigmoid = 0.5236898 relu = 0.754772
+sigmoid = 0.58373857 relu = 0.7508698
+sigmoid = 0.62733483 relu = 0.7470234
+sigmoid = 0.6549499 relu = 0.75180537
+sigmoid = 0.67452586 relu = 0.75470716
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the loss</span></span><br><span class="line">plt.plot(loss_vec_sigmoid, <span class="string">'k-'</span>, label=<span class="string">'Sigmoid Activation'</span>)</span><br><span class="line">plt.plot(loss_vec_relu, <span class="string">'r--'</span>, label=<span class="string">'Relu Activation'</span>)</span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">1.0</span>])</span><br><span class="line">plt.title(<span class="string">'Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/神经网络/output_7_0.png" alt="png"></p>
+<hr>
+<h2 id="Implementing-a-one-layer-Neural-Network"><a href="#Implementing-a-one-layer-Neural-Network" class="headerlink" title="Implementing a one-layer Neural Network"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks" target="_blank" rel="noopener">Implementing a one-layer Neural Network</a></h2><p><strong>Model</strong></p>
+<p>The model will have one hidden layer.  If the hidden layer has 10 nodes, then the model will look like the following:</p>
+<p><img src="/2018/11/24/神经网络/04_nn_layout.png" alt="One Hidden Layer Network" title="One Hidden Layer Network"></p>
+<p>We will use the ReLU activation functions.</p>
+<p>For the loss function, we will use the average MSE across the batch.<br>We will illustrate how to create a one hidden layer NN</p>
+<p>We will use the iris data for this exercise</p>
+<p>We will build a one-hidden layer neural network  to predict the fourth attribute, Petal Width from the other three (Sepal length, Sepal width, Petal length).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([x[<span class="number">0</span>:<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([x[<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create graph session</span></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make results reproducible</span></span><br><span class="line">seed = <span class="number">2</span></span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line">np.random.seed(seed)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Split data into train/test = 80%/20%</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Normalize by column (min-max norm)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize_cols</span><span class="params">(m)</span>:</span></span><br><span class="line">    col_max = m.max(axis=<span class="number">0</span>)</span><br><span class="line">    col_min = m.min(axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> (m-col_min) / (col_max - col_min)</span><br><span class="line"></span><br><span class="line">x_vals_train = np.nan_to_num(normalize_cols(x_vals_train))</span><br><span class="line">x_vals_test = np.nan_to_num(normalize_cols(x_vals_test))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">3</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create variables for both NN layers</span></span><br><span class="line">hidden_layer_nodes = <span class="number">10</span></span><br><span class="line">A1 = tf.Variable(tf.random_normal(shape=[<span class="number">3</span>,hidden_layer_nodes])) <span class="comment"># inputs -&gt; hidden nodes</span></span><br><span class="line">b1 = tf.Variable(tf.random_normal(shape=[hidden_layer_nodes]))   <span class="comment"># one biases for each hidden node</span></span><br><span class="line">A2 = tf.Variable(tf.random_normal(shape=[hidden_layer_nodes,<span class="number">1</span>])) <span class="comment"># hidden inputs -&gt; 1 output</span></span><br><span class="line">b2 = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>]))   <span class="comment"># 1 bias for the output</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">hidden_output = tf.nn.relu(tf.add(tf.matmul(x_data, A1), b1))</span><br><span class="line">final_output = tf.nn.relu(tf.add(tf.matmul(hidden_output, A2), b2))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare loss function (MSE)</span></span><br><span class="line">loss = tf.reduce_mean(tf.square(y_target - final_output))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.005</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">test_loss = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = x_vals_train[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(np.sqrt(temp_loss))</span><br><span class="line"></span><br><span class="line">    test_temp_loss = sess.run(loss, feed_dict=&#123;x_data: x_vals_test, y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_loss.append(np.sqrt(test_temp_loss))</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">50</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Generation: '</span> + str(i+<span class="number">1</span>) + <span class="string">'. Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Generation: 50. Loss = 0.5279015
+Generation: 100. Loss = 0.22871476
+Generation: 150. Loss = 0.17977345
+Generation: 200. Loss = 0.10849865
+Generation: 250. Loss = 0.24002916
+Generation: 300. Loss = 0.15323998
+Generation: 350. Loss = 0.1659011
+Generation: 400. Loss = 0.09752482
+Generation: 450. Loss = 0.121614255
+Generation: 500. Loss = 0.1300937
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot loss (MSE) over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>, label=<span class="string">'Train Loss'</span>)</span><br><span class="line">plt.plot(test_loss, <span class="string">'r--'</span>, label=<span class="string">'Test Loss'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss (MSE) per Generation'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/神经网络/output_11_0.png" alt="png"></p>
+<hr>
+<h2 id="Implementing-Different-Layers"><a href="#Implementing-Different-Layers" class="headerlink" title="Implementing Different Layers"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/05_Implementing_Different_Layers" target="_blank" rel="noopener">Implementing Different Layers</a></h2><p>We will illustrate how to use different types of layers in TensorFlow</p>
+<p>The layers of interest are:</p>
+<ol>
+<li>Convolutional Layer</li>
+<li>Activation Layer</li>
+<li>Max-Pool Layer</li>
+<li>Fully Connected Layer</li>
+</ol>
+<p>We will generate two different data sets for this script, a 1-D data set (row of data) and a 2-D data set (similar to picture)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#---------------------------------------------------|</span><br><span class="line">#-------------------1D-data-------------------------|</span><br><span class="line">#---------------------------------------------------|</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create graph session</span></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># parameters for the run</span></span><br><span class="line">data_size = <span class="number">25</span></span><br><span class="line">conv_size = <span class="number">5</span></span><br><span class="line">maxpool_size = <span class="number">5</span></span><br><span class="line">stride_size = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ensure reproducibility</span></span><br><span class="line">seed=<span class="number">13</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate 1D data</span></span><br><span class="line">data_1d = np.random.normal(size=data_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Placeholder</span></span><br><span class="line">x_input_1d = tf.placeholder(dtype=tf.float32, shape=[data_size])</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Convolution--------</span></span><br><span class="line"><span class="comment"># both [batch#, width, height, channels] and [batch#, height, width, channels] are correct.Nut (input, filter, strides, padding) dimensional relations should keep correspondence.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_layer_1d</span><span class="params">(input_1d, my_filter,stride)</span>:</span></span><br><span class="line">    <span class="comment"># TensorFlow's 'conv2d()' function only works with 4D arrays:</span></span><br><span class="line">    <span class="comment"># [batch#, width, height, channels], we have 1 batch, and</span></span><br><span class="line">    <span class="comment"># width = 1, but height = the length of the input, and 1 channel.</span></span><br><span class="line">    <span class="comment"># So next we create the 4D array by inserting dimension 1's.</span></span><br><span class="line">    input_2d = tf.expand_dims(input_1d, <span class="number">0</span>)</span><br><span class="line">    input_3d = tf.expand_dims(input_2d, <span class="number">0</span>)</span><br><span class="line">    input_4d = tf.expand_dims(input_3d, <span class="number">3</span>)</span><br><span class="line">    <span class="comment"># Perform convolution with stride = 1, if we wanted to increase the stride,</span></span><br><span class="line">    <span class="comment"># to say '2', then strides=[1,1,2,1]</span></span><br><span class="line">    convolution_output = tf.nn.conv2d(input_4d, filter=my_filter, strides=[<span class="number">1</span>,<span class="number">1</span>,stride,<span class="number">1</span>], padding=<span class="string">"VALID"</span>)</span><br><span class="line">    <span class="comment"># Get rid of extra dimensions</span></span><br><span class="line">    conv_output_1d = tf.squeeze(convolution_output)</span><br><span class="line">    <span class="keyword">return</span>(conv_output_1d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create filter for convolution.</span></span><br><span class="line">my_filter = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,conv_size,<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"><span class="comment"># Create convolution layer</span></span><br><span class="line">my_convolution_output = conv_layer_1d(x_input_1d, my_filter,stride=stride_size)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Activation--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(input_1d)</span>:</span></span><br><span class="line">    <span class="keyword">return</span>(tf.nn.relu(input_1d))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create activation layer</span></span><br><span class="line">my_activation_output = activation(my_convolution_output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Max Pool--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool</span><span class="params">(input_1d, width,stride)</span>:</span></span><br><span class="line">    <span class="comment"># Just like 'conv2d()' above, max_pool() works with 4D arrays.</span></span><br><span class="line">    <span class="comment"># [batch_size=1, width=1, height=num_input, channels=1]</span></span><br><span class="line">    input_2d = tf.expand_dims(input_1d, <span class="number">0</span>)</span><br><span class="line">    input_3d = tf.expand_dims(input_2d, <span class="number">0</span>)</span><br><span class="line">    input_4d = tf.expand_dims(input_3d, <span class="number">3</span>)</span><br><span class="line">    <span class="comment"># Perform the max pooling with strides = [1,1,1,1]</span></span><br><span class="line">    <span class="comment"># If we wanted to increase the stride on our data dimension, say by</span></span><br><span class="line">    <span class="comment"># a factor of '2', we put strides = [1, 1, 2, 1]</span></span><br><span class="line">    <span class="comment"># We will also need to specify the width of the max-window ('width')</span></span><br><span class="line">    pool_output = tf.nn.max_pool(input_4d, ksize=[<span class="number">1</span>, <span class="number">1</span>, width, <span class="number">1</span>],</span><br><span class="line">                                 strides=[<span class="number">1</span>, <span class="number">1</span>, stride, <span class="number">1</span>],</span><br><span class="line">                                 padding=<span class="string">'VALID'</span>)</span><br><span class="line">    <span class="comment"># Get rid of extra dimensions</span></span><br><span class="line">    pool_output_1d = tf.squeeze(pool_output)</span><br><span class="line">    <span class="keyword">return</span>(pool_output_1d)</span><br><span class="line"></span><br><span class="line">my_maxpool_output = max_pool(my_activation_output, width=maxpool_size,stride=stride_size)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Fully Connected--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fully_connected</span><span class="params">(input_layer, num_outputs)</span>:</span></span><br><span class="line">    <span class="comment"># First we find the needed shape of the multiplication weight matrix:</span></span><br><span class="line">    <span class="comment"># The dimension will be (length of input) by (num_outputs)</span></span><br><span class="line">    weight_shape = tf.squeeze(tf.stack([tf.shape(input_layer),[num_outputs]]))</span><br><span class="line">    <span class="comment"># Initialize such weight</span></span><br><span class="line">    weight = tf.random_normal(weight_shape, stddev=<span class="number">0.1</span>)</span><br><span class="line">    <span class="comment"># Initialize the bias</span></span><br><span class="line">    bias = tf.random_normal(shape=[num_outputs])</span><br><span class="line">    <span class="comment"># Make the 1D input array into a 2D array for matrix multiplication</span></span><br><span class="line">    input_layer_2d = tf.expand_dims(input_layer, <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># Perform the matrix multiplication and add the bias</span></span><br><span class="line">    full_output = tf.add(tf.matmul(input_layer_2d, weight), bias)</span><br><span class="line">    <span class="comment"># Get rid of extra dimensions</span></span><br><span class="line">    full_output_1d = tf.squeeze(full_output)</span><br><span class="line">    <span class="keyword">return</span>(full_output_1d)</span><br><span class="line"></span><br><span class="line">my_full_output = fully_connected(my_maxpool_output, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run graph</span></span><br><span class="line"><span class="comment"># Initialize Variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line">feed_dict = &#123;x_input_1d: data_1d&#125;</span><br><span class="line"></span><br><span class="line">print(<span class="string">'&gt;&gt;&gt;&gt; 1D Data &lt;&lt;&lt;&lt;'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convolution Output</span></span><br><span class="line">print(<span class="string">'Input = array of length %d'</span> % (x_input_1d.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'Convolution w/ filter, length = %d, stride size = %d, results in an array of length %d:'</span> %</span><br><span class="line">      (conv_size,stride_size,my_convolution_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(sess.run(my_convolution_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Activation Output</span></span><br><span class="line">print(<span class="string">'\nInput = above array of length %d'</span> % (my_convolution_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'ReLU element wise returns an array of length %d:'</span> % (my_activation_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(sess.run(my_activation_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Max Pool Output</span></span><br><span class="line">print(<span class="string">'\nInput = above array of length %d'</span> % (my_activation_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'MaxPool, window length = %d, stride size = %d, results in the array of length %d'</span> %</span><br><span class="line">     (maxpool_size,stride_size,my_maxpool_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(sess.run(my_maxpool_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fully Connected Output</span></span><br><span class="line">print(<span class="string">'\nInput = above array of length %d'</span> % (my_maxpool_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">'Fully connected layer on all 4 rows with %d outputs:'</span> %</span><br><span class="line">      (my_full_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(sess.run(my_full_output, feed_dict=feed_dict))</span><br></pre></td></tr></table></figure>
+<pre><code>&gt;&gt;&gt;&gt; 1D Data &lt;&lt;&lt;&lt;
+Input = array of length 25
+Convolution w/ filter, length = 5, stride size = 1, results in an array of length 21:
+[-2.63576341 -1.11550486 -0.95571411 -1.69670296 -0.35699379  0.62266493
+  4.43316031  2.01364899  1.33044648 -2.30629659 -0.82916248 -2.63594174
+  0.76669347 -2.46465087 -2.2855041   1.49780679  1.6960566   1.48557389
+ -2.79799461  1.18149185  1.42146575]
+
+Input = above array of length 21
+ReLU element wise returns an array of length 21:
+[ 0.          0.          0.          0.          0.          0.62266493
+  4.43316031  2.01364899  1.33044648  0.          0.          0.
+  0.76669347  0.          0.          1.49780679  1.6960566   1.48557389
+  0.          1.18149185  1.42146575]
+
+Input = above array of length 21
+MaxPool, window length = 5, stride size = 1, results in the array of length 17
+[ 0.          0.62266493  4.43316031  4.43316031  4.43316031  4.43316031
+  4.43316031  2.01364899  1.33044648  0.76669347  0.76669347  1.49780679
+  1.6960566   1.6960566   1.6960566   1.6960566   1.6960566 ]
+
+Input = above array of length 17
+Fully connected layer on all 4 rows with 5 outputs:
+[ 1.71536076 -0.72340977 -1.22485089 -2.5412786  -0.16338301]
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#---------------------------------------------------|</span><br><span class="line">#-------------------2D-data-------------------------|</span><br><span class="line">#---------------------------------------------------|</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Reset Graph</span></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># parameters for the run</span></span><br><span class="line">row_size = <span class="number">10</span></span><br><span class="line">col_size = <span class="number">10</span></span><br><span class="line">conv_size = <span class="number">2</span></span><br><span class="line">conv_stride_size = <span class="number">2</span></span><br><span class="line">maxpool_size = <span class="number">2</span></span><br><span class="line">maxpool_stride_size = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ensure reproducibility</span></span><br><span class="line">seed=<span class="number">13</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Generate 2D data</span></span><br><span class="line">data_size = [row_size,col_size]</span><br><span class="line">data_2d = np.random.normal(size=data_size)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Placeholder--------</span></span><br><span class="line">x_input_2d = tf.placeholder(dtype=tf.float32, shape=data_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convolution</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_layer_2d</span><span class="params">(input_2d, my_filter,stride_size)</span>:</span></span><br><span class="line">    <span class="comment"># TensorFlow's 'conv2d()' function only works with 4D arrays:</span></span><br><span class="line">    <span class="comment"># [batch#, width, height, channels], we have 1 batch, and</span></span><br><span class="line">    <span class="comment"># 1 channel, but we do have width AND height this time.</span></span><br><span class="line">    <span class="comment"># So next we create the 4D array by inserting dimension 1's.</span></span><br><span class="line">    input_3d = tf.expand_dims(input_2d, <span class="number">0</span>)</span><br><span class="line">    input_4d = tf.expand_dims(input_3d, <span class="number">3</span>)</span><br><span class="line">    <span class="comment"># Note the stride difference below!</span></span><br><span class="line">    convolution_output = tf.nn.conv2d(input_4d, filter=my_filter,</span><br><span class="line">                                      strides=[<span class="number">1</span>,stride_size,stride_size,<span class="number">1</span>], padding=<span class="string">"VALID"</span>)</span><br><span class="line">    <span class="comment"># Get rid of unnecessary dimensions</span></span><br><span class="line">    conv_output_2d = tf.squeeze(convolution_output)</span><br><span class="line">    <span class="keyword">return</span>(conv_output_2d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Convolutional Filter</span></span><br><span class="line">my_filter = tf.Variable(tf.random_normal(shape=[conv_size,conv_size,<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"><span class="comment"># Create Convolutional Layer</span></span><br><span class="line">my_convolution_output = conv_layer_2d(x_input_2d, my_filter,stride_size=conv_stride_size)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Activation--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">activation</span><span class="params">(input_1d)</span>:</span></span><br><span class="line">    <span class="keyword">return</span>(tf.nn.relu(input_1d))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Activation Layer</span></span><br><span class="line">my_activation_output = activation(my_convolution_output)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Max Pool--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool</span><span class="params">(input_2d, width, height,stride)</span>:</span></span><br><span class="line">    <span class="comment"># Just like 'conv2d()' above, max_pool() works with 4D arrays.</span></span><br><span class="line">    <span class="comment"># [batch_size=1, width=given, height=given, channels=1]</span></span><br><span class="line">    input_3d = tf.expand_dims(input_2d, <span class="number">0</span>)</span><br><span class="line">    input_4d = tf.expand_dims(input_3d, <span class="number">3</span>)</span><br><span class="line">    <span class="comment"># Perform the max pooling with strides = [1,1,1,1]</span></span><br><span class="line">    <span class="comment"># If we wanted to increase the stride on our data dimension, say by</span></span><br><span class="line">    <span class="comment"># a factor of '2', we put strides = [1, 2, 2, 1]</span></span><br><span class="line">    pool_output = tf.nn.max_pool(input_4d, ksize=[<span class="number">1</span>, height, width, <span class="number">1</span>],</span><br><span class="line">                                 strides=[<span class="number">1</span>, stride, stride, <span class="number">1</span>],</span><br><span class="line">                                 padding=<span class="string">'VALID'</span>)</span><br><span class="line">    <span class="comment"># Get rid of unnecessary dimensions</span></span><br><span class="line">    pool_output_2d = tf.squeeze(pool_output)</span><br><span class="line">    <span class="keyword">return</span>(pool_output_2d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Max-Pool Layer</span></span><br><span class="line">my_maxpool_output = max_pool(my_activation_output,</span><br><span class="line">                             width=maxpool_size, height=maxpool_size,stride=maxpool_stride_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Fully Connected--------</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fully_connected</span><span class="params">(input_layer, num_outputs)</span>:</span></span><br><span class="line">    <span class="comment"># In order to connect our whole W byH 2d array, we first flatten it out to</span></span><br><span class="line">    <span class="comment"># a W times H 1D array.</span></span><br><span class="line">    flat_input = tf.reshape(input_layer, [<span class="number">-1</span>])</span><br><span class="line">    <span class="comment"># We then find out how long it is, and create an array for the shape of</span></span><br><span class="line">    <span class="comment"># the multiplication weight = (WxH) by (num_outputs)</span></span><br><span class="line">    weight_shape = tf.squeeze(tf.stack([tf.shape(flat_input),[num_outputs]]))</span><br><span class="line">    <span class="comment"># Initialize the weight</span></span><br><span class="line">    weight = tf.random_normal(weight_shape, stddev=<span class="number">0.1</span>)</span><br><span class="line">    <span class="comment"># Initialize the bias</span></span><br><span class="line">    bias = tf.random_normal(shape=[num_outputs])</span><br><span class="line">    <span class="comment"># Now make the flat 1D array into a 2D array for multiplication</span></span><br><span class="line">    input_2d = tf.expand_dims(flat_input, <span class="number">0</span>)</span><br><span class="line">    <span class="comment"># Multiply and add the bias</span></span><br><span class="line">    full_output = tf.add(tf.matmul(input_2d, weight), bias)</span><br><span class="line">    <span class="comment"># Get rid of extra dimension</span></span><br><span class="line">    full_output_2d = tf.squeeze(full_output)</span><br><span class="line">    <span class="keyword">return</span>(full_output_2d)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Fully Connected Layer</span></span><br><span class="line">my_full_output = fully_connected(my_maxpool_output, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run graph</span></span><br><span class="line"><span class="comment"># Initialize Variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line">feed_dict = &#123;x_input_2d: data_2d&#125;</span><br><span class="line"></span><br><span class="line">print(<span class="string">'&gt;&gt;&gt;&gt; 2D Data &lt;&lt;&lt;&lt;'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convolution Output</span></span><br><span class="line">print(<span class="string">'Input = %s array'</span> % (x_input_2d.shape.as_list()))</span><br><span class="line">print(<span class="string">'%s Convolution, stride size = [%d, %d] , results in the %s array'</span> %</span><br><span class="line">      (my_filter.get_shape().as_list()[:<span class="number">2</span>],conv_stride_size,conv_stride_size,my_convolution_output.shape.as_list()))</span><br><span class="line">print(sess.run(my_convolution_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Activation Output</span></span><br><span class="line">print(<span class="string">'\nInput = the above %s array'</span> % (my_convolution_output.shape.as_list()))</span><br><span class="line">print(<span class="string">'ReLU element wise returns the %s array'</span> % (my_activation_output.shape.as_list()))</span><br><span class="line">print(sess.run(my_activation_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Max Pool Output</span></span><br><span class="line">print(<span class="string">'\nInput = the above %s array'</span> % (my_activation_output.shape.as_list()))</span><br><span class="line">print(<span class="string">'MaxPool, stride size = [%d, %d], results in %s array'</span> %</span><br><span class="line">      (maxpool_stride_size,maxpool_stride_size,my_maxpool_output.shape.as_list()))</span><br><span class="line">print(sess.run(my_maxpool_output, feed_dict=feed_dict))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fully Connected Output</span></span><br><span class="line">print(<span class="string">'\nInput = the above %s array'</span> % (my_maxpool_output.shape.as_list()))</span><br><span class="line">print(<span class="string">'Fully connected layer on all %d rows results in %s outputs:'</span> %</span><br><span class="line">      (my_maxpool_output.shape.as_list()[<span class="number">0</span>],my_full_output.shape.as_list()[<span class="number">0</span>]))</span><br><span class="line">print(sess.run(my_full_output, feed_dict=feed_dict))</span><br></pre></td></tr></table></figure>
+<pre><code>&gt;&gt;&gt;&gt; 2D Data &lt;&lt;&lt;&lt;
+Input = [10, 10] array
+[2, 2] Convolution, stride size = [2, 2] , results in the [5, 5] array
+[[ 0.14431179  0.7278337   1.5114917  -1.2809976   1.7843919 ]
+ [-2.5450306   0.76156765 -0.51650006  0.7713109   0.37542343]
+ [ 0.4934591   0.01592223  0.38653135 -1.4799767   0.6952765 ]
+ [-0.34617192 -2.5318975  -0.9525758  -1.4357065   0.6625736 ]
+ [-1.9854026   0.34398788  2.5376048  -0.8678482  -0.3100495 ]]
+
+Input = the above [5, 5] array
+ReLU element wise returns the [5, 5] array
+[[0.14431179 0.7278337  1.5114917  0.         1.7843919 ]
+ [0.         0.76156765 0.         0.7713109  0.37542343]
+ [0.4934591  0.01592223 0.38653135 0.         0.6952765 ]
+ [0.         0.         0.         0.         0.6625736 ]
+ [0.         0.34398788 2.5376048  0.         0.        ]]
+
+Input = the above [5, 5] array
+MaxPool, stride size = [1, 1], results in [4, 4] array
+[[0.76156765 1.5114917  1.5114917  1.7843919 ]
+ [0.76156765 0.76156765 0.7713109  0.7713109 ]
+ [0.4934591  0.38653135 0.38653135 0.6952765 ]
+ [0.34398788 2.5376048  2.5376048  0.6625736 ]]
+
+Input = the above [4, 4] array
+Fully connected layer on all 4 rows results in 5 outputs:
+[ 0.08245847 -0.16351229 -0.55429065 -0.24322605 -0.99900764]
+</code></pre><hr>
+<h2 id="Using-a-Multiple-Layer-Network"><a href="#Using-a-Multiple-Layer-Network" class="headerlink" title="Using a Multiple Layer Network"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/06_Using_Multiple_Layers" target="_blank" rel="noopener">Using a Multiple Layer Network</a></h2><p>We will illustrate how to use a Multiple Layer Network in TensorFlow</p>
+<p><strong>Low Birthrate data:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#Columns    Variable                                      Abbreviation</span><br><span class="line">#---------------------------------------------------------------------</span><br><span class="line"># Low Birth Weight (0 = Birth Weight &gt;= 2500g,            LOW</span><br><span class="line">#                          1 = Birth Weight &lt; 2500g)</span><br><span class="line"># Age of the Mother in Years                              AGE</span><br><span class="line"># Weight in Pounds at the Last Menstrual Period           LWT</span><br><span class="line"># Race (1 = White, 2 = Black, 3 = Other)                  RACE</span><br><span class="line"># Smoking Status During Pregnancy (1 = Yes, 0 = No)       SMOKE</span><br><span class="line"># History of Premature Labor (0 = None  1 = One, etc.)    PTL</span><br><span class="line"># History of Hypertension (1 = Yes, 0 = No)               HT</span><br><span class="line"># Presence of Uterine Irritability (1 = Yes, 0 = No)      UI</span><br><span class="line"># Birth Weight in Grams                                   BWT</span><br><span class="line">#---------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<p>The multiple neural network layer we will create will be composed of three fully connected hidden layers, with node sizes 50, 25, and 5</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br></pre></td></tr></table></figure>
+<p><strong>Obtain the data</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># name of data file</span></span><br><span class="line">birth_weight_file = <span class="string">'birth_weight.csv'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># download data and create data file if file does not exist in current directory</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(birth_weight_file):</span><br><span class="line">    birthdata_url = <span class="string">'https://github.com/nfmcclure/tensorflow_cookbook/raw/master/01_Introduction/07_Working_with_Data_Sources/birthweight_data/birthweight.dat'</span></span><br><span class="line">    birth_file = requests.get(birthdata_url)</span><br><span class="line">    birth_data = birth_file.text.split(<span class="string">'\r\n'</span>)</span><br><span class="line">    birth_header = birth_data[<span class="number">0</span>].split(<span class="string">'\t'</span>)</span><br><span class="line">    birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> y.split(<span class="string">'\t'</span>) <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> birth_data[<span class="number">1</span>:] <span class="keyword">if</span> len(y)&gt;=<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">with</span> open(birth_weight_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        writer = csv.writer(f)</span><br><span class="line">        writer.writerows([birth_header])</span><br><span class="line">        writer.writerows(birth_data)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># read birth weight data into memory</span></span><br><span class="line">birth_data = []</span><br><span class="line"><span class="keyword">with</span> open(birth_weight_file, newline=<span class="string">''</span>) <span class="keyword">as</span> csvfile:</span><br><span class="line">    csv_reader = csv.reader(csvfile)</span><br><span class="line">    birth_header = next(csv_reader)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> csv_reader:</span><br><span class="line">        birth_data.append(row)</span><br><span class="line"></span><br><span class="line">birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> row] <span class="keyword">for</span> row <span class="keyword">in</span> birth_data]</span><br><span class="line"></span><br><span class="line">birth_data = [data <span class="keyword">for</span> data <span class="keyword">in</span> birth_data <span class="keyword">if</span> len(data)==<span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Extract y-target (birth weight)</span></span><br><span class="line">y_vals = np.array([x[<span class="number">8</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Filter for features of interest</span></span><br><span class="line">cols_of_interest = [<span class="string">'AGE'</span>, <span class="string">'LWT'</span>, <span class="string">'RACE'</span>, <span class="string">'SMOKE'</span>, <span class="string">'PTL'</span>, <span class="string">'HT'</span>, <span class="string">'UI'</span>]</span><br><span class="line">x_vals = np.array([[x[ix] <span class="keyword">for</span> ix, feature <span class="keyword">in</span> enumerate(birth_header) <span class="keyword">if</span> feature <span class="keyword">in</span> cols_of_interest] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br></pre></td></tr></table></figure>
+<p><strong>Train model</strong></p>
+<p>Here we reset any graph in memory and then start to create our graph and vectors.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reset the graph for new run</span></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create graph session</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># set batch size for training</span></span><br><span class="line">batch_size = <span class="number">150</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make results reproducible</span></span><br><span class="line">seed = <span class="number">3</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into train/test = 80%/20%</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<p>Now we scale our dataset by the min/max of the _training set_.  We start by recording the mins and maxs of the training set. (We use this on scaling the test set, and evaluation set later on).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Record training column max and min for scaling of non-training data</span></span><br><span class="line">train_max = np.max(x_vals_train, axis=<span class="number">0</span>)</span><br><span class="line">train_min = np.min(x_vals_train, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize by column (min-max norm to be between 0 and 1)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize_cols</span><span class="params">(mat, max_vals, min_vals)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (mat - min_vals) / (max_vals - min_vals)</span><br><span class="line"></span><br><span class="line">x_vals_train = np.nan_to_num(normalize_cols(x_vals_train, train_max, train_min))</span><br><span class="line">x_vals_test = np.nan_to_num(normalize_cols(x_vals_test, train_max, train_min))</span><br></pre></td></tr></table></figure>
+<p>Next, we define our varibles, bias, and placeholders.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define Variable Functions (weights and bias)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_weight</span><span class="params">(shape, st_dev)</span>:</span></span><br><span class="line">    weight = tf.Variable(tf.random_normal(shape, stddev=st_dev))</span><br><span class="line">    <span class="keyword">return</span>(weight)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_bias</span><span class="params">(shape, st_dev)</span>:</span></span><br><span class="line">    bias = tf.Variable(tf.random_normal(shape, stddev=st_dev))</span><br><span class="line">    <span class="keyword">return</span>(bias)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create Placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">7</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<p>Now we define our model!  We start with a function that creates a fully connected later according to our variable specifications.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a fully connected layer:</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fully_connected</span><span class="params">(input_layer, weights, biases)</span>:</span></span><br><span class="line">    layer = tf.add(tf.matmul(input_layer, weights), biases)</span><br><span class="line">    <span class="keyword">return</span>(tf.nn.relu(layer))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Create the first layer (50 hidden nodes)--------</span></span><br><span class="line">weight_1 = init_weight(shape=[<span class="number">7</span>, <span class="number">25</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">bias_1 = init_bias(shape=[<span class="number">25</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">layer_1 = fully_connected(x_data, weight_1, bias_1)</span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Create second layer (25 hidden nodes)--------</span></span><br><span class="line">weight_2 = init_weight(shape=[<span class="number">25</span>, <span class="number">10</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">bias_2 = init_bias(shape=[<span class="number">10</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">layer_2 = fully_connected(layer_1, weight_2, bias_2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Create third layer (5 hidden nodes)--------</span></span><br><span class="line">weight_3 = init_weight(shape=[<span class="number">10</span>, <span class="number">3</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">bias_3 = init_bias(shape=[<span class="number">3</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">layer_3 = fully_connected(layer_2, weight_3, bias_3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#--------Create output layer (1 output value)--------</span></span><br><span class="line">weight_4 = init_weight(shape=[<span class="number">3</span>, <span class="number">1</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">bias_4 = init_bias(shape=[<span class="number">1</span>], st_dev=<span class="number">10.0</span>)</span><br><span class="line">final_output = fully_connected(layer_3, weight_4, bias_4)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare loss function (L1)</span></span><br><span class="line">loss = tf.reduce_mean(tf.abs(y_target - final_output))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.AdamOptimizer(<span class="number">0.025</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure>
+<p>Now we initialize all the variables and start the training loop.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize Variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">test_loss = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = x_vals_train[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    test_temp_loss = sess.run(loss, feed_dict=&#123;x_data: x_vals_test, y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_loss.append(test_temp_loss)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) % <span class="number">25</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Generation: '</span> + str(i+<span class="number">1</span>) + <span class="string">'. Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Generation: 25. Loss = 15990.672
+Generation: 50. Loss = 4621.7314
+Generation: 75. Loss = 2795.2063
+Generation: 100. Loss = 2217.2898
+Generation: 125. Loss = 2295.6526
+Generation: 150. Loss = 2047.0446
+Generation: 175. Loss = 1915.7665
+Generation: 200. Loss = 1732.4609
+Generation: 225. Loss = 1684.7881
+Generation: 250. Loss = 1576.6495
+Generation: 275. Loss = 1579.0376
+Generation: 300. Loss = 1456.1991
+Generation: 325. Loss = 1521.6523
+Generation: 350. Loss = 1294.7655
+Generation: 375. Loss = 1507.561
+Generation: 400. Loss = 1221.8282
+Generation: 425. Loss = 1636.6687
+Generation: 450. Loss = 1306.686
+Generation: 475. Loss = 1564.3484
+Generation: 500. Loss = 1360.876
+</code></pre><p>Here is code that will plot the loss by generation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot loss (MSE) over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>, label=<span class="string">'Train Loss'</span>)</span><br><span class="line">plt.plot(test_loss, <span class="string">'r--'</span>, label=<span class="string">'Test Loss'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss (MSE) per Generation'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/神经网络/output_15_0.png" alt="png"></p>
+<p>Here is how to calculate the model accuracy:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Model Accuracy</span></span><br><span class="line">actuals = np.array([x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line">test_actuals = actuals[test_indices]</span><br><span class="line">train_actuals = actuals[train_indices]</span><br><span class="line">test_preds = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> sess.run(final_output, feed_dict=&#123;x_data: x_vals_test&#125;)]</span><br><span class="line">train_preds = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> sess.run(final_output, feed_dict=&#123;x_data: x_vals_train&#125;)]</span><br><span class="line">test_preds = np.array([<span class="number">1.0</span> <span class="keyword">if</span> x &lt; <span class="number">2500.0</span> <span class="keyword">else</span> <span class="number">0.0</span> <span class="keyword">for</span> x <span class="keyword">in</span> test_preds])</span><br><span class="line">train_preds = np.array([<span class="number">1.0</span> <span class="keyword">if</span> x &lt; <span class="number">2500.0</span> <span class="keyword">else</span> <span class="number">0.0</span> <span class="keyword">for</span> x <span class="keyword">in</span> train_preds])</span><br><span class="line"><span class="comment"># Print out accuracies</span></span><br><span class="line">test_acc = np.mean([x == y <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(test_preds, test_actuals)])</span><br><span class="line">train_acc = np.mean([x == y <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(train_preds, train_actuals)])</span><br><span class="line">print(<span class="string">'On predicting the category of low birthweight from regression output (&lt;2500g):'</span>)</span><br><span class="line">print(<span class="string">'Test Accuracy: &#123;&#125;'</span>.format(test_acc))</span><br><span class="line">print(<span class="string">'Train Accuracy: &#123;&#125;'</span>.format(train_acc))</span><br></pre></td></tr></table></figure>
+<pre><code>On predicting the category of low birthweight from regression output (&lt;2500g):
+Test Accuracy: 0.5
+Train Accuracy: 0.6225165562913907
+</code></pre><p><strong>Evaluate new points on the model</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Need new vectors of 'AGE', 'LWT', 'RACE', 'SMOKE', 'PTL', 'HT', 'UI'</span></span><br><span class="line">new_data = np.array([[<span class="number">35</span>, <span class="number">185</span>, <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>],</span><br><span class="line">                     [<span class="number">18</span>, <span class="number">160</span>, <span class="number">0.</span>, <span class="number">1.</span>, <span class="number">0.</span>, <span class="number">0.</span>, <span class="number">1.</span>]])</span><br><span class="line">new_data_scaled = np.nan_to_num(normalize_cols(new_data, train_max, train_min))</span><br><span class="line">new_logits = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> sess.run(final_output, feed_dict=&#123;x_data: new_data_scaled&#125;)]</span><br><span class="line">new_preds = np.array([<span class="number">1.0</span> <span class="keyword">if</span> x &lt; <span class="number">2500.0</span> <span class="keyword">else</span> <span class="number">0.0</span> <span class="keyword">for</span> x <span class="keyword">in</span> new_logits])</span><br><span class="line"></span><br><span class="line">print(<span class="string">'New Data Predictions: &#123;&#125;'</span>.format(new_preds))</span><br></pre></td></tr></table></figure>
+<pre><code>New Data Predictions: [1. 1.]
+</code></pre><hr>
+<h2 id="Improving-Linear-Regression-with-Neural-Networks-Logistic-Regression"><a href="#Improving-Linear-Regression-with-Neural-Networks-Logistic-Regression" class="headerlink" title="Improving Linear Regression with Neural Networks (Logistic Regression)"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/07_Improving_Linear_Regression" target="_blank" rel="noopener">Improving Linear Regression with Neural Networks (Logistic Regression)</a></h2><p>This function shows how to use TensorFlow to solve logistic regression with a multiple layer neural network</p>
+<script type="math/tex; mode=display">
+\textbf{y} = sigmoid(\textbf{A}_{3} \times sigmoid(\textbf{A}_{2} \times sigmoid(\textbf{A}_{1} \times \textbf{x} + \textbf{b}_{1}) + \textbf{b}_{2}) + \textbf{b}_{3})</script><p>We will use the low birth weight data, specifically:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">y = 0 or 1 = low birth weight</span><br><span class="line">x = demographic and medical history data</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line"><span class="comment"># reset computational graph</span></span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p><strong>Obtain and prepare data for modeling</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># name of data file</span></span><br><span class="line">birth_weight_file = <span class="string">'birth_weight.csv'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># download data and create data file if file does not exist in current directory</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(birth_weight_file):</span><br><span class="line">    birthdata_url = <span class="string">'https://github.com/nfmcclure/tensorflow_cookbook/raw/master/01_Introduction/07_Working_with_Data_Sources/birthweight_data/birthweight.dat'</span></span><br><span class="line">    birth_file = requests.get(birthdata_url)</span><br><span class="line">    birth_data = birth_file.text.split(<span class="string">'\r\n'</span>)</span><br><span class="line">    birth_header = birth_data[<span class="number">0</span>].split(<span class="string">'\t'</span>)</span><br><span class="line">    birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> y.split(<span class="string">'\t'</span>) <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> birth_data[<span class="number">1</span>:] <span class="keyword">if</span> len(y)&gt;=<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">with</span> open(birth_weight_file, <span class="string">"w"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        writer = csv.writer(f)</span><br><span class="line">        writer.writerows(birth_data)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># read birth weight data into memory</span></span><br><span class="line">birth_data = []</span><br><span class="line"><span class="keyword">with</span> open(birth_weight_file, newline=<span class="string">''</span>) <span class="keyword">as</span> csvfile:</span><br><span class="line">     csv_reader = csv.reader(csvfile)</span><br><span class="line">     birth_header = next(csv_reader)</span><br><span class="line">     <span class="keyword">for</span> row <span class="keyword">in</span> csv_reader:</span><br><span class="line">         birth_data.append(row)</span><br><span class="line"></span><br><span class="line">birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> row] <span class="keyword">for</span> row <span class="keyword">in</span> birth_data]</span><br><span class="line">birth_data = [data <span class="keyword">for</span> data <span class="keyword">in</span> birth_data <span class="keyword">if</span> len(data)==<span class="number">9</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pull out target variable</span></span><br><span class="line">y_vals = np.array([x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line"><span class="comment"># Pull out predictor variables (not id, not target, and not birthweight)</span></span><br><span class="line">x_vals = np.array([x[<span class="number">1</span>:<span class="number">8</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line"></span><br><span class="line"><span class="comment"># set for reproducible results</span></span><br><span class="line">seed = <span class="number">99</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">90</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into train/test = 80%/20%</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize by column (min-max norm)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize_cols</span><span class="params">(m)</span>:</span></span><br><span class="line">    col_max = m.max(axis=<span class="number">0</span>)</span><br><span class="line">    col_min = m.min(axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> (m-col_min) / (col_max - col_min)</span><br><span class="line"></span><br><span class="line">x_vals_train = np.nan_to_num(normalize_cols(x_vals_train))</span><br><span class="line">x_vals_test = np.nan_to_num(normalize_cols(x_vals_test))</span><br></pre></td></tr></table></figure>
+<p><strong>Define Tensorflow computational graph</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create graph</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">7</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variable definition</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_variable</span><span class="params">(shape)</span>:</span></span><br><span class="line">    <span class="keyword">return</span>(tf.Variable(tf.random_normal(shape=shape)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a logistic layer definition</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logistic</span><span class="params">(input_layer, multiplication_weight, bias_weight, activation = True)</span>:</span></span><br><span class="line">    linear_layer = tf.add(tf.matmul(input_layer, multiplication_weight), bias_weight)</span><br><span class="line">    <span class="comment"># We separate the activation at the end because the loss function will</span></span><br><span class="line">    <span class="comment"># implement the last sigmoid necessary</span></span><br><span class="line">    <span class="keyword">if</span> activation:</span><br><span class="line">        <span class="keyword">return</span>(tf.nn.sigmoid(linear_layer))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span>(linear_layer)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># First logistic layer (7 inputs to 14 hidden nodes)</span></span><br><span class="line">A1 = init_variable(shape=[<span class="number">7</span>,<span class="number">14</span>])</span><br><span class="line">b1 = init_variable(shape=[<span class="number">14</span>])</span><br><span class="line">logistic_layer1 = logistic(x_data, A1, b1)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Second logistic layer (14 hidden inputs to 5 hidden nodes)</span></span><br><span class="line">A2 = init_variable(shape=[<span class="number">14</span>,<span class="number">5</span>])</span><br><span class="line">b2 = init_variable(shape=[<span class="number">5</span>])</span><br><span class="line">logistic_layer2 = logistic(logistic_layer1, A2, b2)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Final output layer (5 hidden nodes to 1 output)</span></span><br><span class="line">A3 = init_variable(shape=[<span class="number">5</span>,<span class="number">1</span>])</span><br><span class="line">b3 = init_variable(shape=[<span class="number">1</span>])</span><br><span class="line">final_output = logistic(logistic_layer2, A3, b3, activation=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare loss function (Cross Entropy loss)</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=final_output, labels=y_target))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.AdamOptimizer(learning_rate = <span class="number">0.002</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure>
+<p><strong>Train model</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actual Prediction</span></span><br><span class="line">prediction = tf.round(tf.nn.sigmoid(final_output))</span><br><span class="line">predictions_correct = tf.cast(tf.equal(prediction, y_target), tf.float32)</span><br><span class="line">accuracy = tf.reduce_mean(predictions_correct)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">train_acc = []</span><br><span class="line">test_acc = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = x_vals_train[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line">    temp_acc_train = sess.run(accuracy, feed_dict=&#123;x_data: x_vals_train, y_target: np.transpose([y_vals_train])&#125;)</span><br><span class="line">    train_acc.append(temp_acc_train)</span><br><span class="line">    temp_acc_test = sess.run(accuracy, feed_dict=&#123;x_data: x_vals_test, y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_acc.append(temp_acc_test)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">150</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Loss = 0.68008155
+Loss = 0.54981357
+Loss = 0.54257077
+Loss = 0.55420905
+Loss = 0.52513915
+Loss = 0.5386876
+Loss = 0.5331423
+Loss = 0.4861947
+Loss = 0.58909637
+Loss = 0.5264541
+</code></pre><p><strong>Display model performance</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Cross Entropy Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Cross Entropy Loss'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot train and test accuracy</span></span><br><span class="line">plt.plot(train_acc, <span class="string">'k-'</span>, label=<span class="string">'Train Set Accuracy'</span>)</span><br><span class="line">plt.plot(test_acc, <span class="string">'r--'</span>, label=<span class="string">'Test Set Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Train and Test Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/神经网络/output_9_0.png" alt="png"><br><img src="/2018/11/24/神经网络/output_9_1.png" alt="png"></p>
+<h2 id="Learning-to-Play-Tic-Tac-Toe"><a href="#Learning-to-Play-Tic-Tac-Toe" class="headerlink" title="Learning to Play Tic-Tac-Toe"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/06_Neural_Networks/08_Learning_Tic_Tac_Toe" target="_blank" rel="noopener">Learning to Play Tic-Tac-Toe</a></h2><p><strong>Tic-Tac-Toe Game</strong><br><img src="/2018/11/24/神经网络/08_tictactoe_layout.png" alt="TicTacToeIndexing" title="TicTacToeIndexing"></p>
+<p><strong>Model</strong><br><img src="/2018/11/24/神经网络/08_tic_tac_toe_architecture.png" alt="TicTacToe Architecture" title="TicTacToe Architecture"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/24/线性回归/" rel="next" title="线性回归 Linear_Regression">
+                <i class="fa fa-chevron-left"></i> 线性回归 Linear_Regression
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/25/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction-to-Neural-Networks"><span class="nav-number">2.</span> <span class="nav-text">Introduction to Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-Gates"><span class="nav-number">2.1.</span> <span class="nav-text">Implementing Gates</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Combining-Gates-and-Activation-Functions"><span class="nav-number">2.2.</span> <span class="nav-text">Combining Gates and Activation Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-a-one-layer-Neural-Network"><span class="nav-number">2.3.</span> <span class="nav-text">Implementing a one-layer Neural Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-Different-Layers"><span class="nav-number">2.4.</span> <span class="nav-text">Implementing Different Layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-a-Multiple-Layer-Network"><span class="nav-number">2.5.</span> <span class="nav-text">Using a Multiple Layer Network</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Improving-Linear-Regression-with-Neural-Networks-Logistic-Regression"><span class="nav-number">2.6.</span> <span class="nav-text">Improving Linear Regression with Neural Networks (Logistic Regression)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-to-Play-Tic-Tac-Toe"><span class="nav-number">2.7.</span> <span class="nav-text">Learning to Play Tic-Tac-Toe</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

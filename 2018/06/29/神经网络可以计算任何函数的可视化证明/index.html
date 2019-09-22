@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：CHAPTER 4 A visual proof that neural nets can compute any function  神经网络的一个最显著的事实就是它可以计算任何的函数。不管这个函数是什么样的，总会确保有一个神经网络能够对任何可能的输入 $x$，其值 $f(x)$ （或者某个足够准确的近似）是网络的输出。 表明神经网络拥有一种普遍性。不论我们想要计算什么样的函数，我们">
+<meta name="keywords" content="深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络可以计算任何函数的可视化证明">
+<meta property="og:url" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 4 A visual proof that neural nets can compute any function  神经网络的一个最显著的事实就是它可以计算任何的函数。不管这个函数是什么样的，总会确保有一个神经网络能够对任何可能的输入 $x$，其值 $f(x)$ （或者某个足够准确的近似）是网络的输出。 表明神经网络拥有一种普遍性。不论我们想要计算什么样的函数，我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/11.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/12.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/13.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/14.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/15.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/16.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/19.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/17.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/18.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/20.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/21.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/21.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/23.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/24.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/25.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/26.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/27.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/28.png">
+<meta property="og:updated_time" content="2019-08-04T14:58:25.576Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络可以计算任何函数的可视化证明">
+<meta name="twitter:description" content="原文链接：CHAPTER 4 A visual proof that neural nets can compute any function  神经网络的一个最显著的事实就是它可以计算任何的函数。不管这个函数是什么样的，总会确保有一个神经网络能够对任何可能的输入 $x$，其值 $f(x)$ （或者某个足够准确的近似）是网络的输出。 表明神经网络拥有一种普遍性。不论我们想要计算什么样的函数，我们">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/"/>
+
+
+
+
+
+  <title>神经网络可以计算任何函数的可视化证明 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/神经网络可以计算任何函数的可视化证明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">神经网络可以计算任何函数的可视化证明</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T09:00:00+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/29/神经网络可以计算任何函数的可视化证明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/29/神经网络可以计算任何函数的可视化证明/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap4.html" target="_blank" rel="noopener">CHAPTER 4 A visual proof that neural nets can compute any function</a></p>
+</blockquote>
+<p>神经网络的一个最显著的事实就是它可以计算任何的函数。不管这个函数是什么样的，总会确保有一个神经网络能够对任何可能的输入 $x$，其值 $f(x)$ （或者某个足够准确的近似）是网络的输出。 <strong>表明神经网络拥有一种普遍性。不论我们想要计算什么样的函数，我们都确信存在一个神经网络可以计算它。</strong> 而且，这个普遍性定理甚至在我们限制了神经网络只在输入层和输出层之间存在一个中间层的情况下成立。所以即使是很简单的网络架构都极其强大。普遍性定理在使用神经网络的人群中是众所周知的。但是它为何正确却不被广泛地理解。现有的大多数的解释都具有很强的技术性。</p>
+<p>如果你是数学家，这个证明应该不大难理解，但对于大多数人还是很困难的。这不得不算是一种遗憾，因为这个普遍性背后的原理其实是简单而美妙的。在这一章，我给出这个普遍性定理的简单且大部分为可视化的解释。我们会一步步深入背后的思想。你会理解为何神经网络可以计算任何的函数。你会理解到这个结论的一些局限。并且你还会理解这些结论如何和深度神经网络关联的。</p>
+<p>神经网络拥有强大的算法来学习函数。学习算法和普遍性的结合是一种有趣的混合。直到现在，本书一直是着重谈学习算法。到了本章，我们来看看普遍性，看看它究竟意味着什么。</p>
+<h2 id="两个预先声明"><a href="#两个预先声明" class="headerlink" title="两个预先声明"></a>两个预先声明</h2><p>在解释为何普遍性定理成立前，我想要提下关于非正式的表述“神经网络可以计算任何函数”的两个预先声明。</p>
+<p>第一点，这句话不是说一个网络可以被用来准确地计算任何函数。而是说，我们可以获得尽可能好的一个近似。通过增加隐藏元的数量，我们可以提升近似的精度。为了让这个表述更加准确，假设我们给定一个需要按照目标精度 $\epsilon &gt; 0$ 的函数 $f(x)$。通过使用足够多的隐藏神经元使得神经网络的输出 $g(x)$ 对所有的 $x$，满足 $|g(x) - f(x)| &lt; \epsilon$ 从而实现近似计算。换言之，近似对每个可能的输入都是限制在目标准确度范围内的。</p>
+<p>第二点，就是可以按照上面的方式近似的函数类其实是连续函数。如果函数不是连续的，也就是会有突然、极陡的跳跃，那么一般来说无法使用一个神经网络进行近似。这并不意外，因为神经网络计算的就是输入的连续函数。然而，即使那些我们真的想要计算的函数是不连续的，一般来说连续的近似其实也足够的好了。如果这样的话，我们就可以用神经网络来近似了。实践中，这通常不是一个严重的限制。</p>
+<p>总结一下，<strong>更加准确的关于普遍性定理的表述是包含一个隐藏层的神经网络可以被用来按照任意给定的精度来近似任何连续函数</strong>。</p>
+<h2 id="本章可视化证明的说明"><a href="#本章可视化证明的说明" class="headerlink" title="本章可视化证明的说明"></a>本章可视化证明的说明</h2><ol>
+<li><p>我们会使用了两个隐藏层的网络来证明这个结果的弱化版本。然后我将简要介绍如何通过一些微调把这个解释适应于只使用一个隐藏层的网络的证明。</p>
+</li>
+<li><p>我们使用 S 型神经元作为神经网络的激活函数，在后面我们可以推广到其它激活函数。</p>
+</li>
+</ol>
+<h2 id="证明的理论准备"><a href="#证明的理论准备" class="headerlink" title="证明的理论准备"></a>证明的理论准备</h2><p> S 型神经元作为神经网络的激活函数非常普遍，但是为了方便我们的证明，我们对 S 型神经元做一点点处理，把它变成阶跃函数（感知器）。实际上处理阶跃函数比一般的 S 型函数更加容易。原因是在输出层我们把所有隐藏神经元的贡献值加在一起。分析一串阶跃函数的和是容易的，相反，思考把一串 S 形状的曲线加起来是什么则要更困难些。所以假设我们的隐藏神经元输出阶跃函数会使事情更容易。更具体些，我们把权重 $w$ 固定在一个大的值，然后通过修改偏置设置阶跃函数的位置。当然，把输出作为一个阶跃函数处理只是一个近似，但是它是一个非常好的近似，现在我们把它看作是精确的。稍后我会再讨论偏离这种近似的影响。关于  S 型神经元和感知器的关系分析见 <a href="https://yuanxiaosc.github.io/2018/06/17/使用神经网络识别手写数字——感知器/" target="_blank" rel="noopener">使用神经网络识别手写数字——感知器</a>。</p>
+<h3 id="S-型函数变阶跃函数过程"><a href="#S-型函数变阶跃函数过程" class="headerlink" title="S 型函数变阶跃函数过程"></a>S 型函数变阶跃函数过程</h3><p> S 型神经元的代数形式是，</p>
+<script type="math/tex; mode=display">\sigma(z) \equiv \frac{1}{1+e^{-z}}</script><p>其中，$z = w \cdot x+b$</p>
+<p>S 型神经元的函数图形是，</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/1.png" alt=""></p>
+<p>$x$ 取何值时阶跃会发生呢？换种方式，阶跃的位置如何取决于权重和偏置？</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/3.png" alt=""></p>
+<ol>
+<li>因为 $z = w \cdot x+b$ 是一个直线方程， $w$ 是直线的斜率， $b$ 是直线的截距，直线与 $x$ 轴的交点是 $(-b/w, 0)$，令 $s=-b/w$。</li>
+<li>假设 $z \equiv w \cdot x + b$ 是一个很大的正数。那么 $e^{-z} \approx 0$ 而 $\sigma(z) \approx 1$。即，当 $z = w \cdot x+b$ 很大并且为正， S 型神经元的输出近似为 $1$，正好和感知器一样。相反地，假设 $z = w \cdot x+b$ 是一个很大的负数。那么$e^{-z} \rightarrow \infty$，$\sigma(z) \approx 0$。所以当 $z = w \cdot x +b$ 是一个很大的负数。</li>
+</ol>
+<p>根据上面两点可以知道，当 $|w|$ 的值很大时，$x$ 就能直接决定 S 型神经元的函数结果为零还是为一，根据第一点还可以知道 $s=-b/w$ 就是阶跃的分界点。当 $x&gt;s$ 时 S 型函数取 1，当 $x&lt;s$时 S 型函数取 0。注意，$s=-b/w$ 时我们将在后文修补阶跃函数中讨论。</p>
+<p> S 型神经元的函数变成阶跃函数图形是：</p>
+<p> <img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/2.png" alt=""></p>
+<p> 下面的证明中，我们总是让 $|w|$ 的值很大，也就是说我们将一直使用变成阶跃函数的 S 型神经元。并且用 $s$ 表示阶跃函数阶跃的位置。这将用仅仅一个参数 $s$ 来极大简化我们描述隐藏神经元的方式，这就是阶跃位置，$s =-b/w$。</p>
+<p> <img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/4.png" alt=""></p>
+<h2 id="一个输入和一个输出的普遍性"><a href="#一个输入和一个输出的普遍性" class="headerlink" title="一个输入和一个输出的普遍性"></a>一个输入和一个输出的普遍性</h2><p>目前为止我们专注于仅仅从顶部隐藏神经元输出。让我们看看整个网络的行为。尤其，我们假设隐藏神经元在计算以阶跃点 $s_1$ （顶部神经元）和 $s_2$ （底部神经元）参数化的节约函数。它们各自有输出权重 $w_1$ 和 $w_2$。是这样的网络：</p>
+<p> <img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/5.png" alt=""></p>
+<p> 右边的绘图是隐藏层的加权输出 $w_1 a_1 + w_2 a_2$。这里 $a_1$ 和 $a_2$ 各自是顶部和底部神经元的输出。这些输出由 $a$ 表示，是因为它们通常被称为神经元的激活值。注意，注意整个网络的输出是 $\sigma(w_1 a_1+w_2 a_2 + b)$，其中 $b$ 是隐藏层的偏置。很明显，这不同于隐藏层加权后的输出，也就是我们这里的绘图。我们现在打算专注于隐藏层的加权输出，不一会就会考虑如何把它关联到整个网络的输出。</p>
+<p> 思考增加和减少每一个输出权重。注意，这如何调整从各自的隐藏神经元的贡献值。当一个权重是 0 时会发生什么？</p>
+<p> 最后，试着设置 $w_1$ 为 $0.8$，$w_2$ 为 $-0.8$。你得到一个“凸起”的函数，它从点 $s_1$ 开始，到点 $s_2$ 结束，高为 $0.8$。例如，加权后的输出可能看起来像这样：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/6.png" alt=""></p>
+<p>当然，我们可以调整为任意的凸起高度。让我们用一个参数，$h$，来表示高度。为了减少混乱我也会移除“$s_1 = \ldots$”和“$w_1 = \ldots$”的标记。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/7.png" alt=""></p>
+<p>试着将 $h$ 值改大或改小，看看凸起的高度如何改变。试着把高度值改为负数，观察发生了什么。并且试着改变阶跃点来看看如何改变凸起的形状。我们可以用凸起制作的技巧来得到两个凸起，通过把两对隐藏神经元一起填充进同一个网络：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/8.png" alt=""></p>
+<p>这里我抑制了权重，只是简单地在每对隐藏神经元上写了 $h$ 的值。试着增加和减少两个 $h$ 值，观察它如何改变图形。通过修改节点来移动凸起。更普遍地，我们可以利用这个思想来取得我们想要的任何高度的峰值。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/9.png" alt=""></p>
+<p>其实到这里我们可以说已经证明了神经网络在一个输入和一个输出上的普遍性，因为从微积分的观点来看，只需要增加“凸起”的个数，众多“凸起”合在一起的图形就可更加接近需要近似的函数图形。无限多个“凸起”就能无限逼近于目标函数。一个示意的例子如下，</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/10.png" alt=""></p>
+<p>让我快速总结一下那是如何工作的。</p>
+<p>第一层的权重都有一些大的，恒定的值，比如：$w = 1000$。</p>
+<p>隐藏神经元上的偏置只是 $b = -w s$。例如，对于第二个隐藏神经元 $s = 0.2$ 变成了 $b = -1000 \times 0.2 = -200$。</p>
+<p>最后一层的权重由 $h$ 值决定。例如，我们上面已经选择的第一个 $h$，$h = -0.5$，意味着顶部两个隐藏神经元的相应的输出权重是 $-0.5$ 和 $0.5$。如此等等，确定整个层的输出权重。</p>
+<p>最后，输出神经元的偏置为 $0$。</p>
+<p>这是所有要做的事情：现在我们有了一个可以很好计算我们原始目标函数的神经网络的完整的描述。而且我们理解如何通过提高隐层神经元的数目来提高近似的质量。</p>
+<p>在本质上，我们使用我们的单层神经网络来建立一个函数的查找表。我们将能够建立这个思想，以提供普遍性的一般性证明。</p>
+<h2 id="多个输入变量的普遍性"><a href="#多个输入变量的普遍性" class="headerlink" title="多个输入变量的普遍性"></a>多个输入变量的普遍性</h2><p>让我们把结果扩展到有很多个输入变量的情况下。这听上去挺复杂，但是所有我们需要的概念都可以在两个输入的情况下被理解。所以让我们处理两个输入的情况。我们从考虑当一个神经元有两个输入会发生什么开始：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/11.png" alt=""></p>
+<p>这里，我们有输入 $x$ 和 $y$，分别对应于权重 $w_1$ 和 $w_2$，以及一个神经元上的偏置 $b$。让我们把权重 $w_2$ 设置为 $0$，然后反复琢磨第一个权重 $w_1$ 和偏置 $b$，看看他们如何影响神经元的输出：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/12.png" alt=""></p>
+<p>正如我们前面讨论的那样，随着输入权重变大，输出接近一个阶跃函数。不同的是，现在的阶跃函数是在三个维度。也如以前一样，我们可以通过改变偏置的位置来移动阶跃点的位置。阶跃点的实际位置是 $s_x \equiv -b / w_1$。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/13.png" alt=""></p>
+<p>我们可以用我们刚刚构造的阶跃函数来计算一个三维的凹凸函数。为此，我们使用两个神经元，每个计算一个$x$ 方向的阶跃函数。然后我们用相应的权重 $h$ 和 $-h$ 将这两个阶跃函数混合，这里 $h$ 是凸起的期望高度。所有这些在下面图示中说明：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/14.png" alt=""></p>
+<p>试着改变高度 $h$ 的值。观察它如何和网络中的权重关联。并看看它如何改变右边凹凸函数的高度。</p>
+<p>我们已经解决了如何制造一个 $x$ 方向的凹凸函数。当然，我们可以很容易地制造一个$y$ 方向的凹凸函数，通过使用 $y$ 方向的两个阶跃函数。回想一下，我们通过使 $y$输入的权重变大，$x$ 输入的权重为 $0$ 来这样做。这是结果：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/15.png" alt=""></p>
+<p>这看上去和前面的网络一模一样！唯一的明显改变的是在我们的隐藏神经元上现在标记有一个小的 $y$。那提醒我们它们在产生 $y$ 方向的阶跃函数，不是 $x$ 方向的，并且 $y$上输入的权重变得非常大，$x$ 上的输入为 $0$，而不是相反。正如前面，我决定不去明确显示它，以避免图形杂乱。</p>
+<p>让我们考虑当我们叠加两个凹凸函数时会发生什么，一个沿 $x$ 方向，另一个沿 $y$ 方向，两者都有高度 $h$：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/16.png" alt=""></p>
+<p>为了简化图形，我丢掉了权重为 $0$ 的连接。现在，我在隐藏神经元上留下了 $x$ 和 $y$的标记，来提醒你凹凸函数在哪个方向上被计算。后面我们甚至为丢掉这些标记，因为它们已经由输入变量说明了。试着改变参数 $h$。正如你能看到，这引起输出权重的变化，以及 $x$ 和 $y$ 上凹凸函数的高度。</p>
+<p>我们构建的有点像是一个塔型函数，如果我们能构建这样的塔型函数，那么我们能使用它们来近似任意的函数。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/19.png" alt=""></p>
+<p>如果我们选择适当的阈值，比如，$3h/2$，这是高原的高度和中央塔的高度中间的值 ——我们可以把高原下降到零，并且依旧矗立着塔。</p>
+<p>你能明白怎么做吗？试着用下面的网络做实验来解决。请注意， <strong>我们现在正在绘制整个网络的输出，而不是只从隐藏层的加权输出。这意味着我们增加了一个偏置项到隐藏层的加权输出，并应用 S 型函数。</strong> 你能找到 $h$ 和 $b$ 的值，能产生一个塔型吗？这有点难，所以如果你想了一会儿还是困住，这是有两个提示：（1）为了让输出神经元显示正确的行为，我们需要输入的权重（所有 $h$ 或 $-h$）变得很大；（2）$b$ 的值决定了阈值的大小。</p>
+<p>这是它看起来的样子，我们使用 $h = 10$：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/17.png" alt=""></p>
+<p>甚至对于这个相对适中的 $h$ 值，我们得到了一个相当好的塔型函数。当然，我们可以通过更进一步增加 $h$ 并保持偏置$b = -3h/2$ 来使它如我们所希望的那样。</p>
+<p>让我们尝试将两个这样的网络组合在一起，来计算两个不同的塔型函数。为了使这两个子网络更清楚，我把它们放在如下所示的分开的方形区域：每个方块计算一个塔型函数，使用上面描述的技术。图上显示了第二个隐藏层的加权输出，即，它是一个加权组合的塔型函数。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/18.png" alt=""></p>
+<p>尤其你能看到通过修改最终层的权重能改变输出塔型的高度。同样的想法可以用在计算我们想要的任意多的塔型。我们也可以让它们变得任意细，任意高。通过使第二个隐藏层的加权输出为 $\sigma^{-1} \circ f$ 的近似，我们可以确保网络的输出可以是任意期望函数 $f$ 的近似。</p>
+<p>让我们试试三个变量 $x_1, x_2, x_3$。下面的网络可以用来计算一个四维的塔型函数：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/20.png" alt=""></p>
+<p>这里，$x_1, x_2, x_3$ 表示网络的输入。$s_1, t_1$ 等等是神经元的阶跃点~——~即，第一层中所有的权重是很大的，而偏置被设置为给出阶跃点 $s_1, t_1, s_2, \ldots$。第二层中的权重交替设置为 $+h, -h$，其中 $h$ 是一个非常大的数。输出偏置为 $-5h/2$。</p>
+<p>这个网络计算这样一个函数，当三个条件满足时：$x_1$ 在 $s_1$ 和 $t_1$ 之间；$x_2$在$s_2$ 和 $t_2$ 之间；$x_3$ 在 $s_3$ 和 $t_3$ 之间，输出为 $1$。其它情况网络输出为 $0$。即，这个塔型在输入空间的一个小的区域输出为 $1$，其它情况输出 $0$。</p>
+<p>通过组合许多个这样的网络我们能得到任意多的塔型，如此可近似一个任意的三元函数。对于 $m$ 维可用完全相同的思想。唯一需要改变的是将输出偏置设为 $(-m+1/2)h$，为了得到正确的夹在中间的行为来弄平高原。</p>
+<p>好了，所以现在我们知道如何用神经网络来近似一个多元的实值函数。对于 $f(x_1,\ldots, x_m) \in R^n$ 的向量函数怎么样？当然，这样一个函数可以被视为 $n$ 个单独的实值函数： $f^1(x_1, \ldots, x_m)$， $f^2(x_1, \ldots, x_m)$ 等等。所以我们创建一个网络来近似 $f^1$，另一个来近似 $f^2$，如此等等。然后简单地把这些网络都组合起来。 所以这也很容易应付。</p>
+<p><strong>思考</strong></p>
+<p>我们已经看到如何使用具有两个隐藏层的网络来近似一个任意函数。你能否找到一个证明，证明只有一个隐藏层是可行的？作为一个提示，试着在只有两个输入变量的情况下工作，并证明：（a）可以得到一个不仅仅在 $x$ 和 $y$ 方向，而是在一个任意方向上的阶跃函数；（b）可以通过累加许多的源自（a）的结构，近似出一个塔型的函数，其形状是圆的，而不是方的；（c）使用这些圆形塔，可以近似一个任意函数。对于（c）可以使用本章稍后的一些思想。</p>
+<h2 id="S-型神经元的延伸"><a href="#S-型神经元的延伸" class="headerlink" title="S 型神经元的延伸"></a>S 型神经元的延伸</h2><p>我们已经证明了由 S 型神经元构成的网络可以计算任何函数。回想下在一个 S 型神经元中，<br>输入$x_1, x_2, \ldots$ 导致输出 $\sigma(\sum_j w_j x_j + b)$，这里 $w_j$ 是权重，<br>$b$ 是偏置，而 $\sigma$ 是 S 型函数：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/21.png" alt=""></p>
+<p>如果我们考虑一个不同类型的神经元，它使用其它激活函数，比如如下的 $s(z)$，会怎样？</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/21.png" alt=""></p>
+<p>更确切地说，我们假定如果神经元有输入 $x_1, x_2, \ldots$，权重 $w_1, w_2, \ldots$和偏置 $b$，那么输出为 $s(\sum_j w_j x_j + b)$。我们可以使用这个激活函数来得到一个阶跃函数，正如用 S 型函数做过的一样。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/23.png" alt=""></p>
+<p>正如使用 S 型函数的时候，这导致激活函数收缩，并最终变成一个阶跃函数的很好的近似。试着改变偏置，然后你能看到我们可以设置我们想要的阶跃位置。所以我们能使用所有和前面相同的技巧来计算任何期望的函数。</p>
+<p>$s(z)$ 需要什么样的性质来满足这样的结果呢？我们确实需要假定 $s(z)$ 在 $z\rightarrow -\infty$ 和 $z \rightarrow \infty$ 时是定义明确的。这两个界限是在我们的阶跃函数上取的两个值。我们也需要假定这两个界限彼此不同。如果它们不是这样，就没有阶跃，只是一个简单的平坦图形！但是如果激活函数 $s(z)$ 满足这些性质，基于这样一个激活函数的神经元可普遍用于计算。</p>
+<p><strong>问题</strong></p>
+<ul>
+<li>在本书前面我们遇到过其它类型的称为修正线性单元的神经元。解释为什么这样的神经元不满足刚刚给出的普遍性的条件。找到一个普遍性的证明，证明修正线性单元可普遍用于计算。</li>
+<li>假设我们考虑线性神经元，即具有激活函数 $s(z) = z$ 的神经元。解释为什么线性神经元不满足刚刚给出的普遍性的条件。证明这样的神经元不能用于通用计算。</li>
+</ul>
+<h2 id="修补阶跃函数"><a href="#修补阶跃函数" class="headerlink" title="修补阶跃函数"></a>修补阶跃函数</h2><p>目前为止，我们假定神经元可以准确生成阶跃函数。这是一个非常好的近似，但也仅仅是近似。实际上，会有一个很窄的故障窗口，如下图说明，在这里函数会表现得和阶跃函数非常不同。</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/24.png" alt=""></p>
+<p>在这些故障窗口中我给出的普遍性的解释会失败。</p>
+<p>现在，它不是一个很严重的故障。通过使得输入到神经元的权重为一个足够大的值，我们能把这些故障窗口变得任意小。当然，我们可以把故障窗口窄过我在上面显示的~——~窄得我们的眼睛都看不到。所以也许我们可以不用过于担心这个问题。</p>
+<p>尽管如此，有一些方法解决问题是很好的。</p>
+<p>实际上，这个问题很容易解决。让我们看看只有一个输入和一个输出的神经网络如何修补其计算函数。同样的想法也可以解决有更多输入和输出的问题。</p>
+<p>特别地，假设我们想要我们的网络计算函数 $f$。和以前一样，我们试着设计我们的网络，使得隐藏神经元的加权输出是 $\sigma^{-1} \circ f(x)$：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/25.png" alt=""></p>
+<p>如果我们要使用前面描述的技术做到这一点，我们会使用隐藏神经元产生一系列的凹凸函数：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/26.png" alt=""></p>
+<p>再说一下，我夸大了图上的故障窗口大小，好让它们更容易看到。很明显如果我们把所有这些凹凸函数加起来，我们最终会得到一个合理的 $\sigma^{-1} \circ f(x)$ 的近似，除了那些故障窗口。</p>
+<p>假设我们使用一系列隐藏神经元来计算我们最初的目标函数的一半，即 $\sigma^{-1} \circ f(x) / 2$，而不是使用刚刚描述的近似。当然，这看上去就像上一个图像的缩小的版本：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/27.png" alt=""></p>
+<p>并且假设我们使用另一系列隐藏神经元来计算一个 $\sigma^{-1} \circ f(x) / 2$ 的近似，<br>但是用将凹凸图形偏移一半宽度：</p>
+<p><img src="/2018/06/29/神经网络可以计算任何函数的可视化证明/28.png" alt=""></p>
+<p>现在我们有两个不同的 $\sigma^{-1} \circ f(x) / 2$ 的近似。如果我们把这两个近似图形加起来，我们会得到一个 $\sigma^{-1} \circ f(x)$ 的整体近似。这个整体的近似仍然在一些小窗口的地方有故障。但是问题比以前要小很多。原因是在一个近似中的故障窗口的点，不会在另一个的故障窗口中。所以在这些窗口中，近似会有 $2$ 倍的因素更好。</p>
+<p>我们甚至能通过加入大量的，用 $M$ 表示，重叠的近似 $\sigma^{-1} \circ f(x) / M$来做得更好。假设故障窗口已经足够窄了，其中的点只会在一个故障窗口中。并且假设我们使用一个 $M$ 足够大的重叠近似，结果会是一个非常好的整体近似。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>我们已经讨论的对于普遍性的解释当然不是如何使用神经网络计算的切实可行的用法！其更像是 NAND 门或者其它类似的普遍性证明。因为这个原因，我主要专注于让解释更清晰和易于理解，而不是过于挖掘细节。然而，你可以发现如果你能改进这个解释是个很有趣和有教益的练习。</p>
+<p>尽管这个结果并不能直接用于解释网络，它还是是很重要的，因为它解开了是否使用一个神经网络可以计算任意特定函数的问题。对这个问题的答案总是“是”。所以需要问的正确问题，并不是是否任意函数可计算，而是计算函数的好的方法是什么。</p>
+<p>我们建立的对于普遍性的解释只使用了两个隐藏层来计算一个任意的函数。而且，正如我们已经讨论过的，只使用单个的隐藏层来取得相同的结果是可能的。鉴于此，你可能想知道为什么我们会对深度网络感兴趣，即具有很多隐藏层的网络。我们不能简单地把这些网络用浅层的、单个隐藏层的网络替换吗？</p>
+<p>尽管在原理上这是可能的，使用深度网络仍然有实际的原因。正如在<a href="https://yuanxiaosc.github.io/2018/06/17/使用神经网络识别手写数字——感知器/" target="_blank" rel="noopener">第一章</a>中表明过，深度网络有一个分级结构，使其尤其适用于学习分级的知识，这看上去可用于解决现实世界的问题。但是更具体地，当攻克诸如图像识别的问题，使用一个不仅能理解单独的像素，还能理解越来越复杂的概念的系统是有帮助的，这里说的复杂的概念，可以从图像的边缘信息到简单的几何形状，以及所有复杂的、多物体场景的方式。在后面的章节中，我们将看到在学习这样的分级知识时，深度网络要比浅层网络做得更好。总结一下： <strong>普遍性告诉我们神经网络能计算任何函数；而实际经验依据提示深度网络最能适用于学习能够解决许多现实世界问题的函数。</strong></p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen. CHAPTER 4 A visual proof that neural nets can compute any function[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap4.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap4.html</a>, 2018-06-29.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL].<a href="https://github.com/zhanggyb/nndl/blob/master/chap4.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap4.tex</a>, 2018-06-29.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/" rel="next" title="改进神经网络的学习方法——如何选择神经网络的超参数">
+                <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——如何选择神经网络的超参数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/" rel="prev" title="二分类、多分类、多标签和多输出问题解析">
+                二分类、多分类、多标签和多输出问题解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#两个预先声明"><span class="nav-number">1.</span> <span class="nav-text">两个预先声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本章可视化证明的说明"><span class="nav-number">2.</span> <span class="nav-text">本章可视化证明的说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证明的理论准备"><span class="nav-number">3.</span> <span class="nav-text">证明的理论准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#S-型函数变阶跃函数过程"><span class="nav-number">3.1.</span> <span class="nav-text">S 型函数变阶跃函数过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个输入和一个输出的普遍性"><span class="nav-number">4.</span> <span class="nav-text">一个输入和一个输出的普遍性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多个输入变量的普遍性"><span class="nav-number">5.</span> <span class="nav-text">多个输入变量的普遍性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S-型神经元的延伸"><span class="nav-number">6.</span> <span class="nav-text">S 型神经元的延伸</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修补阶跃函数"><span class="nav-number">7.</span> <span class="nav-text">修补阶跃函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">8.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

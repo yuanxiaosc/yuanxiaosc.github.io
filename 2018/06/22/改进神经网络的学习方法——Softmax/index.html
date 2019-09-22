@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,Softmax," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  Softmax 前言我们大多数情况会使用交叉熵来解决学习缓慢的问题。但是，我希望简要介绍一下另一种解决这个问题的方法，基于 softmax 神经元层。在人工神经网络（ANN）中，softmax 通常被用作输出层的激活函数。这不仅是因为它的效果好，而且因为它使得 ANN 的输出值更易于理">
+<meta name="keywords" content="深度学习,Softmax">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改进神经网络的学习方法——Softmax">
+<meta property="og:url" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  Softmax 前言我们大多数情况会使用交叉熵来解决学习缓慢的问题。但是，我希望简要介绍一下另一种解决这个问题的方法，基于 softmax 神经元层。在人工神经网络（ANN）中，softmax 通常被用作输出层的激活函数。这不仅是因为它的效果好，而且因为它使得 ANN 的输出值更易于理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/反向传播算法_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/2.png">
+<meta property="og:updated_time" content="2019-08-04T14:00:10.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改进神经网络的学习方法——Softmax">
+<meta name="twitter:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  Softmax 前言我们大多数情况会使用交叉熵来解决学习缓慢的问题。但是，我希望简要介绍一下另一种解决这个问题的方法，基于 softmax 神经元层。在人工神经网络（ANN）中，softmax 通常被用作输出层的激活函数。这不仅是因为它的效果好，而且因为它使得 ANN 的输出值更易于理">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/"/>
+
+
+
+
+
+  <title>改进神经网络的学习方法——Softmax | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/22/改进神经网络的学习方法——Softmax/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">改进神经网络的学习方法——Softmax</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-22T19:31:15+08:00">
+                2018-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/22/改进神经网络的学习方法——Softmax/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/22/改进神经网络的学习方法——Softmax/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote>
+<h2 id="Softmax-前言"><a href="#Softmax-前言" class="headerlink" title="Softmax 前言"></a>Softmax 前言</h2><p>我们大多数情况会使用交叉熵来解决学习缓慢的问题。但是，我希望简要介绍一下另一种解决这个问题的方法，基于 softmax 神经元层。在人工神经网络（ANN）中，softmax 通常被用作输出层的激活函数。这不仅是因为它的效果好，而且因为它使得 ANN 的输出值更易于理解。同时，softmax 配合 log 似然代价函数，其训练效果也要比采用二次代价函数的方式好。</p>
+<h2 id="Softmax-函数性质"><a href="#Softmax-函数性质" class="headerlink" title="Softmax 函数性质"></a>Softmax 函数性质</h2><p><img src="/2018/06/22/改进神经网络的学习方法——Softmax/3.png" alt=""></p>
+<p>softmax的函数公式如下：</p>
+<script type="math/tex; mode=display">
+a^L_j = \frac{e^{z^L_j}}{\sum_k e^{z^L_k}},</script><p>在公式中的指数确保了所有的输出激活值是正数。然后方程中分母的求和又保证了 softmax 的输出和为 $1$。这个特定的形式确保输出激活值形成一个概率分布的自然的方式。你可以将其想象成一种重新调节 $z^L_j$ 的方法，然后将这个结果整合起来构成一个概率分布。</p>
+<p>softmax函数最明显的特点在于：它把每个神经元的输入占当前层所有神经元输入之和的比值，当作该神经元的输出。这使得输出更容易被解释：神经元的输出值越大，则该神经元对应的类别是真实类别的可能性更高。</p>
+<p><strong>softmax 的单调性</strong></p>
+<p>证明如果 $j=k$ 则 $\partial a^L_j / \partial z^L_k$ 为正，$j \neq k$ 时为负。结果是，增加 $z^L_j$ 会提高对应的输出激活值 $a^L_j$ 并降低其他所有输出激活值。单调性证明见后文。</p>
+<p><strong>softmax的非局部性</strong></p>
+<p>softmax 层的一个好处是输出 $a^L_j$ 是对应带权输入 $a^L_j = \sigma(z^L_j)$ 的函数。由于分母求和所有的 $e^{z^L_k}$ 所以计算式子中计算每一个 $a_j^L$ 都与其他 $a_j^L$ 紧密相关。深入理解就是对于 softmax 层来说：任何特定的输出激活值 $a^L_j$ 依赖所有的带权输入。</p>
+<p><strong>逆转softmax层</strong></p>
+<p>假设我们有一个使用 softmax 输出层的神经网络，然后激活值 $a^L_j$ 已知。容易证明对应带权输入的形式为 $z^L_j = \ln a^L_j + C$，其中常量 $C$ 是独立于 $j$ 的。</p>
+<h2 id="Softmax-解决学习缓慢问题"><a href="#Softmax-解决学习缓慢问题" class="headerlink" title="Softmax 解决学习缓慢问题"></a>Softmax 解决学习缓慢问题</h2><p>我们现在已经对Softmax神经元层有了一定的认识。但是我们还没有看到一个Softmax层会怎么样解决学习缓慢问题。为了理解这点，让我们先定义一个对数似然函数。我们使用 $x$ 表示网络的训练输入，$y$ 表示对应的目标输出。然后关联这个训练输入的代价函数就是</p>
+<script type="math/tex; mode=display">
+  C \equiv -\ln a^L_y</script><p>所以，如果我们训练的是 MNIST 图像，输入为 $7$ 的图像，那么对应的对数似然代价就是 $-\ln a_7^L$。看看这个直觉上的含义，想想当网络表现很好的时候，也就是确认输入为 $7$ 的时候。这时，他会估计一个对应的概率 $a_7^L$ 跟$1$ 非常接近，所以代价 $-\ln a_7^L$ 就会很小。反之，如果网络的表现糟糕时，概率$a_7^L$ 就变得很小，代价 $-\ln a_7^L$ 随之增大。所以对数似然代价函数也是满足我们期待的代价函数的条件的。</p>
+<p>那关于学习缓慢问题呢？为了分析它，回想一下学习缓慢的关键就是量 $\partial C /<br>\partial w^L_{jk}$ 和 $\partial C / \partial b^L_j$ 的变化情况。这里我不会显式地给出详细的推导，但是通过一点代数运算你会得</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b^L_j} = a^L_j-y_j</script><script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w^L_{jk}} = a^{L-1}_k (a^L_j-y_j)</script><p>证明见 <a href="https://github.com/yuanxiaosc/Theoretical-Proof-of-Neural-Network-Model-and-Implementation-Based-on-Numpy/blob/master/%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F%E7%9A%84Softmax%E5%A4%9A%E5%88%86%E7%B1%BB%E6%A8%A1%E5%9E%8B.md" target="_blank" rel="noopener">矩阵形式的Softmax多分类模型</a></p>
+<p>这些方程其实和我们前面对交叉熵得到的类似。而且，正如前面的分析，这些表达式确保我们不会遇到学习缓慢的问题。事实上，把一个具有对数似然代价的 softmax 输出层，看作与一个具有交叉熵代价的 S 型输出层非常相似，这是很有用的。</p>
+<p><strong>有了这样的相似性，你应该使用一个具有交叉熵代价的 S 型输出层，还是一个具有对数似然代价的Softmax输出层呢？实际上，在很多应用场景中，这两种方式的效果都不错。作为一种通用的视角，Softmax加上对数似然的组合更加适用于那些需要将输出激活值解释为概率的场景</strong>。那并不总是一个需要关注的问题，但是在诸如 MNIST 这种有着不重叠的分类问题上确实很有用。</p>
+<h2 id="数学形式证明-Softmax-有效性"><a href="#数学形式证明-Softmax-有效性" class="headerlink" title="数学形式证明 Softmax 有效性"></a>数学形式证明 Softmax 有效性</h2><p>softmax的函数公式如下：</p>
+<script type="math/tex; mode=display">
+a^L_j = \frac{e^{z^L_j}}{\sum_k e^{z^L_k}},</script><p>softmax在的求导结果比较特别，分为两种情况。</p>
+<p><img src="/2018/06/22/改进神经网络的学习方法——Softmax/4.png" alt=""><br><img src="/2018/06/22/改进神经网络的学习方法——Softmax/5.png" alt=""><br><img src="/2018/06/22/改进神经网络的学习方法——Softmax/1.png" alt=""></p>
+<p>上文讲到，<strong>二次代价函数在训练ANN时可能会导致训练速度变慢的问题。那就是，初始的输出值离真实值越远，训练速度就越慢。这个问题可以通过采用交叉熵代价函数来解决。其实，这个问题也可以采用另外一种方法解决，那就是采用 softmax 激活函数，并采用log似然代价函数（log-likelihood cost function）来解决</strong>。</p>
+<p>log似然代价函数的公式为：</p>
+<script type="math/tex; mode=display">
+C = - \sum_i y_i log a_i</script><p><strong>注意这种情况：</strong><br>其中，表示第 $a_k$ 个神经元的输出值，$y_k$ 表示第 k 个神经元对应的真实值，取值为 0 或 1 。由于 $y_k$ 取值为 0 或 1 ，对于每一个样本， $y_1,y_2,..,y_k$ 只会有一个取 1 其余的都取值为0， 所以对数似然函数求和符号可以去掉，化简为</p>
+<script type="math/tex; mode=display">
+  C \equiv -\ln a^L_j</script><p> 为了检验 softmax 和这个代价函数也可以解决上述所说的训练速度变慢问题，接下来的重点就是推导ANN的权重 w 和偏置 b 的梯度公式。</p>
+<p> 先求损失函数对偏置b的偏导数：</p>
+<p>当 $i=j$ 时，带入 上面的结果$\frac{\partial a^L_j}{\partial z^L_i}=a_j^L(1-a_j^L)$</p>
+<script type="math/tex; mode=display">
+ \begin{aligned}
+ \frac{\partial C}{\partial b_{j}^L} &= \frac{\partial C}{\partial a^L_j} \frac{\partial a^L_j}{\partial z^L_i}
+    \\
+   &= - \frac{1}{a^L_j} [a_j^L(1-a_j^L)] \\
+ &= a_j^L -1
+ \end{aligned}</script><p> 当 $i\not= j$ 时，带入 上面的结果$\frac{\partial a^L_j}{\partial z^L_i}=-a_j^La_i^L$</p>
+<script type="math/tex; mode=display">
+ \begin{aligned}
+ \frac{\partial C}{\partial b_{j}^L} &= \frac{\partial C}{\partial a^L_j} \frac{\partial a^L_j}{\partial z^L_i}
+    \\
+   &= - \frac{1}{a^L_j} (-a_j^La_i^L) \\
+ &= a_i^L
+ \end{aligned}</script><p>根据反向传播的四个方程，具体分析见<a href="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/#more" target="_blank" rel="noopener">《反向传播算法》</a></p>
+<p><img src="/2018/06/22/改进神经网络的学习方法——Softmax/反向传播算法_1.png" alt=""></p>
+<p>可以知道，$\frac{\partial C}{\partial b^l_j} =\delta^l_j$ 和 $\frac{\partial C}{\partial w^l_{jk}} = a^{l-1}_k \delta^l_j$</p>
+<p>所以,当 $i=j$ 时，</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L_{jk}}  =  a^{L-1}_k (a^L_j-1)</script><p>当 $i\not= j$ 时，</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L_{jk}}  =  a^{L-1}_k a_i</script><p><strong>举个例子</strong><br>通过若干层的计算，最后得到的某个训练样本的向量的分数是[ 2, 3, 4 ],那么经过softmax函数作用后概率分别就是=[e^2/(e^2+e^3+e^4),e^3/(e^2+e^3+e^4),e^4/(e^2+e^3+e^4)] = [0.0903,0.2447,0.665],如果这个样本正确的分类是第二个的话，那么计算出来的偏导（实际上这个偏导就是 $\delta^L$ 或者说是 $\partial C/\partial b^L$ ）就是[0.0903,0.2447-1,0.665]=[0.0903,-0.7553,0.665]，是不是非常简单！然后再根据这个进行back propagation就可以了</p>
+<hr>
+<p>注意！当 $y_j$ 取值不为 0 或 1，而是区间 [0,1] 的一个实数值时，上面的式子只需稍稍做点修改，只需把下面式子中 $\frac{\partial C}{\partial a^L_j}$ 的结果从 $\frac{1}{a^L_j}$ 改为 $\frac{y_i}{a^L_j}$ 即可，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial C}{\partial b_{j}^L} &= \frac{\partial C}{\partial a^L_j} \frac{\partial a^L_j}{\partial z^L_i}
+   \\
+  &= - \frac{1}{a^L_j} [a_j^L(1-a_j^L)] \\
+&= a_j^L -1
+\end{aligned}</script><p>其它的求导过程也要做相应调整。所以在有的地方会看到这样的公式，</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b^L_j} = a^L_j-y_j</script><script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w^L_{jk}} = a^{L-1}_k (a^L_j-y_j)</script><p>两者都是正确的，只是因为前提不一样，所以结论也有差异。</p>
+<h2 id="交叉熵与对数似然的关系"><a href="#交叉熵与对数似然的关系" class="headerlink" title="交叉熵与对数似然的关系"></a>交叉熵与对数似然的关系</h2><p><strong>结论</strong>：交叉熵和最大似然的loss函数是一致的，在样本所属分类是唯一的情况下。</p>
+<p><strong>两者能够和谐统一的关键点是：</strong></p>
+<p>样本所属类别是唯一的，样本一定是某一类的，似然的思想是抽样样本的概率最大化，所以每一个样本只能处于一个固定的状态。这就使得每个样本的概率形式可以写成一个综合的形式，而综合的形式呢刚好可以在log下拆分成交叉熵的样子。在多类下，若样本所属类别是唯一的，最大似然的loss与交叉熵的loss仍然是一致的。</p>
+<p><strong>论证：</strong></p>
+<p><strong>二项分布</strong></p>
+<p>二项分布也叫 0-1 分布，如随机变量 x 服从二项分布，关于参数 μ（0≤μ≤1），其值取 1 和取 0 的概率如下：</p>
+<script type="math/tex; mode=display">
+p(x=1|\mu)=\mu</script><script type="math/tex; mode=display">
+p(x=0|\mu)=1-\mu</script><p>则在 x 上的概率分布为：</p>
+<script type="math/tex; mode=display">\text{Bern}(x|\mu)=\mu^x(1-\mu)^{1-x}</script><p><strong>服从二项分布的样本集的对数似然函数</strong></p>
+<p>给定样本集 D={x1,x2,…,xB} 是对随机变量 x 的观测值，假定样本集从二项分布 p(x|μ) 中独立（p(x1,x2,…,xN)=∏ip(xi)）采样得来，则当前样本集关于 μ 的似然函数为：</p>
+<script type="math/tex; mode=display">p(\mathcal D|\mu)=\prod_{n=1}^Np(x_n|\mu)=\prod_{n=1}^N\mu^{x_n}\left(1-\mu\right)^{1-x_n}</script><p>从频率学派的观点来说，通过最大似然函数的取值，可以估计参数 μ，最大化似然函数，等价于最大化其对数形式：</p>
+<p><img src="/2018/06/22/改进神经网络的学习方法——Softmax/2.png" alt=""></p>
+<p>求其关于 μ 的导数，解得 μ 的最大似然解为：</p>
+<script type="math/tex; mode=display">\mu_{ML}=\frac1N\sum_{n=1}^Nx_n</script><p>这里我们仅关注：</p>
+<script type="math/tex; mode=display">\ln P(\mathcal D|\mu)=\sum_{n=1}^Nx_n\ln \mu+(1-x_n)\ln(1-\mu)</script><p><strong>交叉熵损失函数</strong></p>
+<script type="math/tex; mode=display">L_H(\mathbf x,\mathbf z)=-\sum_{n=1}^Nx_n\log z_n+(1-x_n)\log(1-z_n)</script><p>x  表示原始信号，z 表示重构信号。（损失函数的目标是最小化，似然函数则是最大化，二者仅相差一个符号）。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen.CHAPTER 3 Improving the way neural networks learn[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap3.html</a>, 2018-06-22.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL].<a href="https://github.com/zhanggyb/nndl/blob/master/chap3.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap3.tex</a>, 2018-06-22.</p>
+<p>[3] __鸿. softmax的log似然代价函数（公式求导）[DB/OL]. <a href="https://blog.csdn.net/u014313009/article/details/51045303" target="_blank" rel="noopener">https://blog.csdn.net/u014313009/article/details/51045303</a>. 2018-06-22.</p>
+<p>[4] 忆臻HIT_NLP. 手打例子一步一步带你看懂softmax函数以及相关求导过程[DB/OL]. <a href="https://www.jianshu.com/p/ffa51250ba2e" target="_blank" rel="noopener">https://www.jianshu.com/p/ffa51250ba2e</a>. 2018-06-22.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/Softmax/" rel="tag"># Softmax</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/21/改进神经网络的学习方法——交叉熵/" rel="next" title="改进神经网络的学习方法——交叉熵">
+                <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——交叉熵
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/24/改进神经网络的学习方法——正则化/" rel="prev" title="改进神经网络的学习方法——正则化">
+                改进神经网络的学习方法——正则化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax-前言"><span class="nav-number">1.</span> <span class="nav-text">Softmax 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax-函数性质"><span class="nav-number">2.</span> <span class="nav-text">Softmax 函数性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Softmax-解决学习缓慢问题"><span class="nav-number">3.</span> <span class="nav-text">Softmax 解决学习缓慢问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学形式证明-Softmax-有效性"><span class="nav-number">4.</span> <span class="nav-text">数学形式证明 Softmax 有效性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵与对数似然的关系"><span class="nav-number">5.</span> <span class="nav-text">交叉熵与对数似然的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

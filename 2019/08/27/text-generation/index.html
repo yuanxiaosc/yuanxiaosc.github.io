@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="文本生成," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="The first part of this resource pool summarizes the resources used to solve text generation tasks using the language model GPT2, including papers, code, demo demos, and hands-on tutorials. The second">
+<meta name="keywords" content="文本生成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用语言模型GPT2来解决文本生成任务">
+<meta property="og:url" content="http://yoursite.com/2019/08/27/text-generation/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="The first part of this resource pool summarizes the resources used to solve text generation tasks using the language model GPT2, including papers, code, demo demos, and hands-on tutorials. The second">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/gpt2-sizes-hyperparameters-3.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/GPT-2_Explorer.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/gpt-2-simple.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/grover_demo.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/Transformer_decoder_MT.jpeg">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/wikipedia-summarization.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/decoder-only-summarization.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/27/text-generation/BERT_more.jpg">
+<meta property="og:updated_time" content="2019-08-27T06:30:11.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用语言模型GPT2来解决文本生成任务">
+<meta name="twitter:description" content="The first part of this resource pool summarizes the resources used to solve text generation tasks using the language model GPT2, including papers, code, demo demos, and hands-on tutorials. The second">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/27/text-generation/gpt2-sizes-hyperparameters-3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/27/text-generation/"/>
+
+
+
+
+
+  <title>使用语言模型GPT2来解决文本生成任务 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/text-generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用语言模型GPT2来解决文本生成任务</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-27T08:30:00+08:00">
+                2019-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/27/text-generation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/08/27/text-generation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>The first part of this resource pool summarizes the resources used to solve text generation tasks using the language model GPT2, including papers, code, demo demos, and hands-on tutorials. The second part shows the application of GPT2 in the text generation tasks of machine translation, automatic summary generation, migration learning and music generation. Finally, the 15 major language models based on Transformer between 2018 and 2019 are compared.</p>
+<p>本资源汇第一部分汇总了使用语言模型GPT2来解决文本生成任务的资源，包括论文、代码、展示demo和动手教程。第二部展示了GPT2在机器翻译、自动摘要生成、迁移学习和音乐生成这些文本生成任务上的应用。最后对比了2018-2019年间重要的基于Transformer的15个语言模型</p>
+<p><img src="/2019/08/27/text-generation/gpt2-sizes-hyperparameters-3.png" alt=""></p>
+<h2 id="GPT-2"><a href="#GPT-2" class="headerlink" title="GPT-2"></a>GPT-2</h2><p>GPT-2 is a large transformer-based language model released by OpenAI in February 2019. It contains 1.5 billion parameters and is trained on a 8 million web dataset. According to reports, the model is a direct extension of the GPT model, training on more than 10 times the amount of data, the parameter amount is also 10 times more. In terms of performance, the model is capable of producing coherent text paragraphs and achieves SOTA performance on many language modeling benchmarks. Moreover, the model can perform preliminary reading comprehension, machine translation, question and answer and automatic summarization without task-specific training.</p>
+<p>GPT-2是OpenAI于2019年2月发布的基于 transformer 的大型语言模型，包含 15 亿参数、在一个 800 万网页数据集上训练而成。据介绍，该模型是对 GPT 模型的直接扩展，在超出 10 倍的数据量上进行训练，参数量也多出了 10 倍。在性能方面，该模型能够生产连贯的文本段落，在许多语言建模基准上取得了 SOTA 表现。而且该模型在没有任务特定训练的情况下，能够做到初步的阅读理解、机器翻译、问答和自动摘要。</p>
+<ul>
+<li>主页 OpenAI Homepage : <a href="https://openai.com/blog/better-language-models/" target="_blank" rel="noopener">Better Language Models and Their Implications</a></li>
+<li>代码 Code : <a href="https://github.com/openai/gpt-2" target="_blank" rel="noopener">gpt-2</a></li>
+<li>论文 OpenAI 2019 Paper : <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf" target="_blank" rel="noopener">Language Models are Unsupervised Multitask Learners</a></li>
+</ul>
+<h3 id="GPT-2-Demo"><a href="#GPT-2-Demo" class="headerlink" title="GPT-2 Demo"></a>GPT-2 Demo</h3><p>GPT-2_Explorer Demo It can give the next ten words of the possibility ranking and their corresponding probabilities according to the currently input text. You can select one of the words, then see the list of the next possible word, and so on, and finally complete one. Article.</p>
+<p>GPT-2_Explorer Demo 它可以根据当前输入的文本给出可能性排名前十的下一个单词及其对应概率，你可以选择其中一个单词，然后看到下一个可能单词的列表，如此往复，最终完成一篇文章。</p>
+<p><img src="/2019/08/27/text-generation/GPT-2_Explorer.png" alt=""></p>
+<p><a href="https://gpt2.apps.allenai.org/?text=Joel%20is" target="_blank" rel="noopener">点击体验 Click to GPT-2 Explorer Demo</a></p>
+<h3 id="GPT-2-elevant-articles"><a href="#GPT-2-elevant-articles" class="headerlink" title="GPT-2 elevant articles"></a>GPT-2 elevant articles</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/56865533" target="_blank" rel="noopener">效果惊人的GPT 2.0模型：它告诉了我们什么 张俊林</a></li>
+<li><a href="http://www.sohu.com/a/336262203_129720" target="_blank" rel="noopener">完全图解GPT-2：看完这篇就够了（一）</a> <a href="https://www.jiqizhixin.com/articles/2019-08-26-12" target="_blank" rel="noopener">完全图解GPT-2：看完这篇就够了（二）</a></li>
+<li><a href="https://jalammar.github.io/illustrated-gpt2/" target="_blank" rel="noopener">The Illustrated GPT-2 (Visualizing Transformer Language Models)</a></li>
+</ul>
+<h3 id="hands-on-GPT-2"><a href="#hands-on-GPT-2" class="headerlink" title="hands-on GPT-2"></a>hands-on GPT-2</h3><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/56869079" target="_blank" rel="noopener">GPT-2 试用总结及感想</a></li>
+</ul>
+<hr>
+<h2 id="GPT-2-simple"><a href="#GPT-2-simple" class="headerlink" title="GPT-2-simple"></a>GPT-2-simple</h2><p>GPT-2-simple Python package to easily retrain OpenAI’s GPT-2 text-generating model on new texts.</p>
+<p>GPT-2-simple Python包可以轻松地在新文本上重新训练OpenAI的GPT-2文本生成模型。</p>
+<ul>
+<li>代码 Code : <a href="https://github.com/minimaxir/gpt-2-simple" target="_blank" rel="noopener">gpt-2-simple</a></li>
+</ul>
+<h3 id="GPT-2-simple-Demo"><a href="#GPT-2-simple-Demo" class="headerlink" title="GPT-2-simple Demo"></a>GPT-2-simple Demo</h3><p>GPT-2-simple Demo Writes a follow-up story based on the current input text.<br>GPT-2-simple Demo 根据当前输入文本编写后续的故事。</p>
+<p><img src="/2019/08/27/text-generation/gpt-2-simple.png" alt=""></p>
+<p><a href="https://www.thisstorydoesnotexist.com/" target="_blank" rel="noopener">点击体验 Click to gpt-2-simple Demo</a></p>
+<hr>
+<h2 id="grover-OpenGPT-2"><a href="#grover-OpenGPT-2" class="headerlink" title="grover: OpenGPT-2"></a>grover: OpenGPT-2</h2><p>Grover is a model for Neural Fake News — both generation and detection.<br>Grover是神经虚假新闻的模型 - 生成和检测。</p>
+<ul>
+<li>项目主页 Project Home : <a href="https://rowanzellers.com/grover/" target="_blank" rel="noopener">Grover: A State-of-the-Art Defense against Neural Fake News</a></li>
+<li>代码 Code : <a href="https://github.com/rowanz/grover" target="_blank" rel="noopener">grover</a></li>
+<li>论文 2019 Paper : <a href="https://arxiv.org/abs/1905.12616" target="_blank" rel="noopener">Defending Against Neural Fake News</a></li>
+</ul>
+<h3 id="grover-demo"><a href="#grover-demo" class="headerlink" title="grover demo"></a>grover demo</h3><p>Generate articles based on information such as title, author, and more. Grover can also detect if text is generated by the machine.</p>
+<p>根据标题、作者等信息生成文章。grover 还可以检测文本是否由机器生成。</p>
+<p><img src="/2019/08/27/text-generation/grover_demo.png" alt=""></p>
+<p><a href="https://grover.allenai.org" target="_blank" rel="noopener">点击体验 Click to GROVER</a></p>
+<h3 id="grover-elevant-articles"><a href="#grover-elevant-articles" class="headerlink" title="grover elevant articles"></a>grover elevant articles</h3><ul>
+<li><a href="https://medium.com/@vanya_cohen/opengpt-2-we-replicated-gpt-2-because-you-can-too-45e34e6d36dc" target="_blank" rel="noopener">OpenGPT-2: We Replicated GPT-2 Because You Can Too</a></li>
+<li><a href="https://medium.com/ai2-blog/counteracting-neural-disinformation-with-grover-6cf6690d463b" target="_blank" rel="noopener">Counteracting neural disinformation with Grover</a></li>
+<li><a href="https://www.jiqizhixin.com/articles/2019-08-24" target="_blank" rel="noopener">15亿参数的GPT-2被两个CS硕士复制出来了，没有语言建模经验，花了5万美元</a></li>
+</ul>
+<hr>
+<h2 id="语言建模之外-Beyond-Language-Modeling"><a href="#语言建模之外-Beyond-Language-Modeling" class="headerlink" title="语言建模之外 Beyond Language Modeling"></a>语言建模之外 Beyond Language Modeling</h2><p><a href="https://jalammar.github.io/illustrated-gpt2/" target="_blank" rel="noopener">Click to read the English version</a></p>
+<p>只包含解码器的 transformer （比如GPT2）不断地表现出在语言建模之外的应用前景。在许多应用程序中，这类模型已经取得了成功：机器翻译、自动摘要生成、迁移学习和音乐生成。让我们一起来回顾一下其中的一些应用。</p>
+<h3 id="机器翻译"><a href="#机器翻译" class="headerlink" title="机器翻译"></a>机器翻译</h3><p>进行翻译时，模型不需要编码器。同样的任务可以通过一个只有解码器的 transformer 来解决：</p>
+<p><img src="/2019/08/27/text-generation/Transformer_decoder_MT.jpeg" alt=""></p>
+<h3 id="自动摘要生成"><a href="#自动摘要生成" class="headerlink" title="自动摘要生成"></a>自动摘要生成</h3><p>这是第一个训练只包含解码器的 transformer 的任务。也就是说，该模型被训练来阅读维基百科的文章（没有目录前的开头部分），然后生成摘要。文章实际的开头部分被用作训练数据集的标签：</p>
+<p><img src="/2019/08/27/text-generation/wikipedia-summarization.png" alt=""></p>
+<p>论文使用维基百科的文章对模型进行了训练，训练好的模型能够生成文章的摘要：</p>
+<p><img src="/2019/08/27/text-generation/decoder-only-summarization.png" alt=""></p>
+<h3 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h3><p>在论文 <a href="https://arxiv.org/abs/1905.08836" target="_blank" rel="noopener">Sample Efficient Text Summarization Using a Single Pre-Trained Transformer</a>中，首先使用只包含解码器的 transformer 在语言建模任务中进行预训练，然后通过调优来完成摘要生成任务。结果表明，在数据有限的情况下，该方案比预训练好的编码器-解码器 transformer 得到了更好的效果。<br>GPT2 的论文也展示了对语言建模模型进行预训练后取得的摘要生成效果。</p>
+<h3 id="音乐生成"><a href="#音乐生成" class="headerlink" title="音乐生成"></a>音乐生成</h3><p>音乐 <a href="https://magenta.tensorflow.org/music-transformer" target="_blank" rel="noopener">transformer</a> 采用了只包含解码器的 transformer 来生成具有丰富节奏和动感的音乐。和语言建模相似，「音乐建模」就是让模型以一种无监督的方式学习音乐，然后让它输出样本（我们此前称之为「随机工作」）。</p>
+<hr>
+<h2 id="了解更多基于-Transformer-的模型"><a href="#了解更多基于-Transformer-的模型" class="headerlink" title="了解更多基于 Transformer 的模型"></a>了解更多基于 Transformer 的模型</h2><p>GPT2只是基于 Transformer 的模型的沧海一粟，2018-2019年的15个重要的基于Transformer 的模型的对比可以参见 <a href="https://zhuanlan.zhihu.com/p/76912493" target="_blank" rel="noopener">后BERT时代：15个预训练模型对比分析与关键点探索</a></p>
+<p><img src="/2019/08/27/text-generation/BERT_more.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/文本生成/" rel="tag"># 文本生成</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/18/中文文本纠错/" rel="next" title="中文文本纠错">
+                <i class="fa fa-chevron-left"></i> 中文文本纠错
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/29/数据结构算法题解/" rel="prev" title="数据结构与算法题解">
+                数据结构与算法题解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GPT-2"><span class="nav-number">1.</span> <span class="nav-text">GPT-2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GPT-2-Demo"><span class="nav-number">1.1.</span> <span class="nav-text">GPT-2 Demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GPT-2-elevant-articles"><span class="nav-number">1.2.</span> <span class="nav-text">GPT-2 elevant articles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hands-on-GPT-2"><span class="nav-number">1.3.</span> <span class="nav-text">hands-on GPT-2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPT-2-simple"><span class="nav-number">2.</span> <span class="nav-text">GPT-2-simple</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GPT-2-simple-Demo"><span class="nav-number">2.1.</span> <span class="nav-text">GPT-2-simple Demo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grover-OpenGPT-2"><span class="nav-number">3.</span> <span class="nav-text">grover: OpenGPT-2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grover-demo"><span class="nav-number">3.1.</span> <span class="nav-text">grover demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#grover-elevant-articles"><span class="nav-number">3.2.</span> <span class="nav-text">grover elevant articles</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语言建模之外-Beyond-Language-Modeling"><span class="nav-number">4.</span> <span class="nav-text">语言建模之外 Beyond Language Modeling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#机器翻译"><span class="nav-number">4.1.</span> <span class="nav-text">机器翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动摘要生成"><span class="nav-number">4.2.</span> <span class="nav-text">自动摘要生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移学习"><span class="nav-number">4.3.</span> <span class="nav-text">迁移学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#音乐生成"><span class="nav-number">4.4.</span> <span class="nav-text">音乐生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解更多基于-Transformer-的模型"><span class="nav-number">5.</span> <span class="nav-text">了解更多基于 Transformer 的模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

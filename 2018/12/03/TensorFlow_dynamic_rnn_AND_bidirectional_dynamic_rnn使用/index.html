@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorFlow," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="dynamic_rnn 源码 https://github.com/tensorflow/tensorflow/blob/9590c4c32dd4346ea5c35673336f5912c6072bf2/tensorflow/contrib/recurrent/python/ops/functional_rnn.py lstm_dynamic_rnn1234567import tensorflo">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用">
+<meta property="og:url" content="http://yoursite.com/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="dynamic_rnn 源码 https://github.com/tensorflow/tensorflow/blob/9590c4c32dd4346ea5c35673336f5912c6072bf2/tensorflow/contrib/recurrent/python/ops/functional_rnn.py lstm_dynamic_rnn1234567import tensorflo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-03T12:43:23.245Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用">
+<meta name="twitter:description" content="dynamic_rnn 源码 https://github.com/tensorflow/tensorflow/blob/9590c4c32dd4346ea5c35673336f5912c6072bf2/tensorflow/contrib/recurrent/python/ops/functional_rnn.py lstm_dynamic_rnn1234567import tensorflo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/"/>
+
+
+
+
+
+  <title>TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-03T20:27:00+08:00">
+                2018-12-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/" itemprop="url" rel="index">
+                    <span itemprop="name">TF</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/TensorFlow-Function-Usage/" itemprop="url" rel="index">
+                    <span itemprop="name">TensorFlow Function Usage</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/03/TensorFlow_dynamic_rnn_AND_bidirectional_dynamic_rnn使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> dynamic_rnn 源码 <a href="https://github.com/tensorflow/tensorflow/blob/9590c4c32dd4346ea5c35673336f5912c6072bf2/tensorflow/contrib/recurrent/python/ops/functional_rnn.py" target="_blank" rel="noopener">https://github.com/tensorflow/tensorflow/blob/9590c4c32dd4346ea5c35673336f5912c6072bf2/tensorflow/contrib/recurrent/python/ops/functional_rnn.py</a></p>
+<h3 id="lstm-dynamic-rnn"><a href="#lstm-dynamic-rnn" class="headerlink" title="lstm_dynamic_rnn"></a>lstm_dynamic_rnn</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code>&#39;1.12.0&#39;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lstm_cell = tf.nn.rnn_cell.LSTMCell(num_units=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output, state = tf.nn.dynamic_rnn(cell=lstm_cell, inputs=inputs_tensor, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;rnn/transpose_1:0&#39; shape=(3, 4, 6) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state</span><br></pre></td></tr></table></figure>
+<pre><code>LSTMStateTuple(c=&lt;tf.Tensor &#39;rnn/while/Exit_3:0&#39; shape=(3, 6) dtype=float32&gt;, h=&lt;tf.Tensor &#39;rnn/while/Exit_4:0&#39; shape=(3, 6) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(output)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[[ 0.08616676,  0.00701726,  0.02770402,  0.06492911,
+          0.0510945 ,  0.00969434],
+        [ 0.1320394 ,  0.00555411,  0.00191859,  0.08497527,
+          0.07742812,  0.05351048],
+        [ 0.22318284,  0.00047223,  0.00479356, -0.07421347,
+          0.10626906,  0.04756515],
+        [ 0.2620672 ,  0.00858223, -0.00066401, -0.05911936,
+          0.12364249,  0.03462988]],
+
+       [[ 0.06325776, -0.01175407,  0.04182662,  0.02187428,
+          0.07014529, -0.01354775],
+        [ 0.1437409 ,  0.01115061,  0.03309705,  0.00872881,
+          0.1256691 , -0.01869454],
+        [ 0.1477679 ,  0.0219029 , -0.00088758, -0.04972449,
+          0.10450882, -0.00912069],
+        [ 0.24747844, -0.02095445,  0.08351423, -0.00707687,
+          0.0659603 , -0.01971625]],
+
+       [[ 0.08307187,  0.00345412,  0.02962245,  0.06890179,
+          0.03142677,  0.01744366],
+        [ 0.1346873 , -0.05403996,  0.08703925, -0.00265777,
+          0.04009543, -0.0071087 ],
+        [ 0.14429979, -0.04602255,  0.04806704, -0.01820353,
+          0.09431574,  0.00280121],
+        [ 0.22852188, -0.05865859,  0.04669214, -0.07948805,
+          0.06424228,  0.03090438]]], dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(state.h)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 0.2620672 ,  0.00858223, -0.00066401, -0.05911936,  0.12364249,
+         0.03462988],
+       [ 0.24747844, -0.02095445,  0.08351423, -0.00707687,  0.0659603 ,
+        -0.01971625],
+       [ 0.22852188, -0.05865859,  0.04669214, -0.07948805,  0.06424228,
+         0.03090438]], dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(state.c)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 0.5363698 ,  0.02536838, -0.00174306, -0.0865218 ,  0.2190451 ,
+         0.06242979],
+       [ 0.45945585, -0.04819317,  0.1650849 , -0.01152224,  0.12156412,
+        -0.03720763],
+       [ 0.40406716, -0.15820494,  0.11020815, -0.12061047,  0.11127482,
+         0.0575163 ]], dtype=float32)
+</code></pre><h3 id="gru-dynamic-rnn"><a href="#gru-dynamic-rnn" class="headerlink" title="gru_dynamic_rnn"></a>gru_dynamic_rnn</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code>&#39;1.12.0&#39;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gru_cell = tf.nn.rnn_cell.GRUCell(num_units=<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output, state = tf.nn.dynamic_rnn(cell=gru_cell, inputs=inputs_tensor, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;rnn/transpose_1:0&#39; shape=(3, 4, 6) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">state</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;rnn/while/Exit_3:0&#39; shape=(3, 6) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(output)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[[ 0.10332259, -0.11011579,  0.02266729,  0.0007517 ,
+          0.03512604,  0.04907914],
+        [ 0.20385078, -0.23856235,  0.1248817 , -0.08083571,
+          0.11375216,  0.1124958 ],
+        [ 0.3623113 , -0.32147223,  0.0005917 ,  0.05736844,
+          0.19632787,  0.17149314],
+        [ 0.3957892 , -0.25175768,  0.13963164, -0.01752499,
+          0.19986765,  0.20010342]],
+
+       [[ 0.09015381, -0.01318468,  0.04039504,  0.00195809,
+         -0.03166562, -0.00577726],
+        [ 0.1832312 , -0.00861337,  0.07086013, -0.05410649,
+         -0.11791474, -0.12356216],
+        [ 0.262054  , -0.21013457,  0.05953048,  0.00513211,
+          0.00651281, -0.02495475],
+        [ 0.37156823, -0.19515839,  0.18966836, -0.04400685,
+          0.0111442 , -0.03699975]],
+
+       [[ 0.11565635, -0.11679434, -0.06442562,  0.05251991,
+         -0.01245365, -0.00727599],
+        [ 0.17201838, -0.24277222, -0.07361332, -0.03645991,
+          0.10429659, -0.00199607],
+        [ 0.26178688, -0.21496084, -0.05825588, -0.05373647,
+          0.09104574, -0.04549351],
+        [ 0.3539365 , -0.20948091, -0.02887814, -0.00197285,
+          0.06114171, -0.05429474]]], dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(state)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[ 0.3957892 , -0.25175768,  0.13963164, -0.01752499,  0.19986765,
+         0.20010342],
+       [ 0.37156823, -0.19515839,  0.18966836, -0.04400685,  0.0111442 ,
+        -0.03699975],
+       [ 0.3539365 , -0.20948091, -0.02887814, -0.00197285,  0.06114171,
+        -0.05429474]], dtype=float32)
+</code></pre><h3 id="Multi-lstm-dynamic-rnn"><a href="#Multi-lstm-dynamic-rnn" class="headerlink" title="Multi_lstm_dynamic_rnn"></a>Multi_lstm_dynamic_rnn</h3> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code> &#39;1.12.0&#39;
+</code></pre> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lstm_cell_units_list = [<span class="number">32</span>,<span class="number">16</span>,<span class="number">8</span>]</span><br><span class="line">lstm_cells = [tf.nn.rnn_cell.LSTMCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> lstm_cell_units_list]</span><br><span class="line">multi_lstm_cells = tf.nn.rnn_cell.MultiRNNCell(lstm_cells)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs, states = tf.nn.dynamic_rnn(cell=multi_lstm_cells, inputs=inputs_tensor, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs</span><br></pre></td></tr></table></figure>
+<pre><code> &lt;tf.Tensor &#39;rnn/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;
+</code></pre> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states</span><br></pre></td></tr></table></figure>
+<pre><code> (LSTMStateTuple(c=&lt;tf.Tensor &#39;rnn/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;, h=&lt;tf.Tensor &#39;rnn/while/Exit_4:0&#39; shape=(3, 32) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;rnn/while/Exit_5:0&#39; shape=(3, 16) dtype=float32&gt;, h=&lt;tf.Tensor &#39;rnn/while/Exit_6:0&#39; shape=(3, 16) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;rnn/while/Exit_7:0&#39; shape=(3, 8) dtype=float32&gt;, h=&lt;tf.Tensor &#39;rnn/while/Exit_8:0&#39; shape=(3, 8) dtype=float32&gt;))
+</code></pre> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(outputs)</span><br></pre></td></tr></table></figure>
+<pre><code> array([[[-1.61404535e-03, -5.39962610e-04,  5.39611437e-06,
+           2.28725166e-05,  9.44484840e-04, -4.58947802e-03,
+           1.46846834e-03, -7.76402245e-04],
+         [-3.09936469e-03, -4.27109393e-04,  1.62538933e-03,
+          -3.19648359e-04,  1.73521251e-03, -1.22727510e-02,
+           4.70003067e-03, -2.35606125e-03],
+         [-2.51045800e-03, -7.78585789e-04,  2.94276653e-03,
+           7.99274276e-05,  2.68396758e-03, -2.12856531e-02,
+           9.49617289e-03, -2.14548036e-03],
+         [ 1.16307237e-04, -4.06709267e-04,  4.33099223e-03,
+           1.24737364e-03,  3.62196262e-03, -3.07264701e-02,
+           1.57848410e-02, -7.23684439e-04]],
+
+        [[-3.23332497e-05,  2.67408788e-04,  7.24235782e-04,
+          -2.50815327e-04,  2.83148460e-04, -2.27145315e-03,
+           1.13080570e-03, -1.57606765e-03],
+         [ 2.05371980e-04, -1.17544514e-04,  7.81793962e-04,
+           1.08315377e-04,  1.33984850e-03, -7.61773949e-03,
+           3.80030414e-03, -2.82652606e-03],
+         [ 8.20874877e-04, -1.12650392e-03, -8.80288571e-05,
+           1.86283619e-03,  2.56655412e-03, -1.47406263e-02,
+           7.87232257e-03, -2.76046596e-03],
+         [ 2.21824460e-03, -2.74996134e-03, -1.48778886e-03,
+           5.04738186e-03,  3.63758323e-03, -2.35401765e-02,
+           1.35801937e-02, -2.54129106e-03]],
+
+        [[-8.64092377e-04, -3.04833520e-04, -1.56841183e-04,
+          -1.28708722e-04,  9.67342989e-04, -2.75324681e-03,
+           8.15562380e-04, -6.81574922e-04],
+         [-2.73647415e-03, -1.36391085e-03, -5.19481488e-04,
+          -4.36288465e-05,  2.77121575e-03, -9.15816333e-03,
+           2.90221907e-03, -5.05329692e-04],
+         [-3.75988754e-03, -3.24360654e-03, -1.28453283e-03,
+           4.84427328e-05,  5.25222160e-03, -1.69832408e-02,
+           5.55129535e-03, -2.57142878e-04],
+         [-4.63895453e-03, -5.13906591e-03, -1.28147972e-03,
+           4.88204561e-04,  7.37427827e-03, -2.69612260e-02,
+           9.37340409e-03, -1.25891145e-03]]], dtype=float32)
+</code></pre> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">2</span>].h)</span><br></pre></td></tr></table></figure>
+<pre><code> array([[ 0.00011631, -0.00040671,  0.00433099,  0.00124737,  0.00362196,
+         -0.03072647,  0.01578484, -0.00072368],
+        [ 0.00221824, -0.00274996, -0.00148779,  0.00504738,  0.00363758,
+         -0.02354018,  0.01358019, -0.00254129],
+        [-0.00463895, -0.00513907, -0.00128148,  0.0004882 ,  0.00737428,
+         -0.02696123,  0.0093734 , -0.00125891]], dtype=float32)
+</code></pre> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">2</span>].c)</span><br></pre></td></tr></table></figure>
+<pre><code> array([[ 0.00022726, -0.00082744,  0.00844097,  0.00248186,  0.00721051,
+         -0.06110654,  0.03194349, -0.00143018],
+        [ 0.00437538, -0.00561603, -0.00291193,  0.01000925,  0.00718385,
+         -0.04696855,  0.02727731, -0.00508054],
+        [-0.00914405, -0.01050362, -0.00249997,  0.00097318,  0.01467903,
+         -0.05430028,  0.01892203, -0.00251437]], dtype=float32)
+</code></pre><h2 id="Multi-gru-dynamic-rnn"><a href="#Multi-gru-dynamic-rnn" class="headerlink" title="Multi_gru_dynamic_rnn"></a>Multi_gru_dynamic_rnn</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code>&#39;1.12.0&#39;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gru_cell_units_list = [<span class="number">32</span>,<span class="number">16</span>,<span class="number">8</span>]</span><br><span class="line">gru_cells = [tf.nn.rnn_cell.GRUCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> gru_cell_units_list]</span><br><span class="line">multi_gru_cells = tf.nn.rnn_cell.MultiRNNCell(gru_cells)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs, states = tf.nn.dynamic_rnn(cell=multi_gru_cells, inputs=inputs_tensor, dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;rnn/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor &#39;rnn/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;rnn/while/Exit_4:0&#39; shape=(3, 16) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;rnn/while/Exit_5:0&#39; shape=(3, 8) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(outputs)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[[-3.0689167e-03,  4.7762650e-03, -5.6350869e-03,  7.3930359e-04,
+          2.7776770e-03,  1.6547712e-03,  4.0468639e-03, -1.6071725e-03],
+        [-9.6203415e-03,  1.0396119e-02, -1.2028635e-02, -7.5696781e-04,
+          9.5890947e-03,  3.0168635e-03,  9.1733877e-03, -6.7313079e-04],
+        [-1.6855957e-02,  2.2866743e-02, -2.2569295e-02, -3.3538719e-03,
+          2.0547308e-02, -3.6199810e-05,  1.4878229e-02,  8.4475791e-03],
+        [-2.5817569e-02,  4.0700834e-02, -3.5192616e-02, -8.7473392e-03,
+          3.5584368e-02, -9.0519777e-03,  2.4247481e-02,  2.3476347e-02]],
+
+       [[-3.0218370e-03,  6.4162901e-03, -6.9783311e-03,  3.8428712e-04,
+          5.0610453e-03, -6.1881670e-04,  3.7080410e-04,  5.2686040e-03],
+        [-1.0377670e-02,  1.5972832e-02, -1.6679505e-02, -9.3015225e-04,
+          1.7201036e-02, -1.5078825e-03,  1.3457731e-03,  1.2340306e-02],
+        [-2.2288060e-02,  2.7055936e-02, -2.7431497e-02, -4.4479482e-03,
+          3.2678001e-02, -2.9535883e-03,  7.6549058e-03,  1.8373087e-02],
+        [-3.6172852e-02,  4.3594681e-02, -4.2179834e-02, -3.7945234e-03,
+          4.7429617e-02, -2.6138786e-03,  1.7336009e-02,  2.5696296e-02]],
+
+       [[-7.6424627e-04,  7.8961477e-03, -7.1330541e-03,  1.9744530e-03,
+          4.7649448e-03, -3.9919489e-04, -1.7578194e-04,  3.7013867e-03],
+        [-1.6916599e-03,  2.1197245e-02, -1.7833594e-02,  1.4740386e-03,
+          1.3453390e-02, -5.6854654e-03,  1.9273567e-03,  1.2227280e-02],
+        [-5.0865025e-03,  3.9313547e-02, -3.0530766e-02, -3.3563119e-05,
+          2.9243957e-02, -1.4064199e-02,  4.2982912e-03,  2.5105122e-02],
+        [-1.1633213e-02,  6.1902620e-02, -4.5463178e-02, -2.4870001e-03,
+          5.1334824e-02, -2.5908694e-02,  7.0450706e-03,  4.3221094e-02]]],
+      dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>array([[-0.02581757,  0.04070083, -0.03519262, -0.00874734,  0.03558437,
+        -0.00905198,  0.02424748,  0.02347635],
+       [-0.03617285,  0.04359468, -0.04217983, -0.00379452,  0.04742962,
+        -0.00261388,  0.01733601,  0.0256963 ],
+       [-0.01163321,  0.06190262, -0.04546318, -0.002487  ,  0.05133482,
+        -0.02590869,  0.00704507,  0.04322109]], dtype=float32)
+</code></pre><h3 id="Multi-lstm-bidirectional-dynamic-rnn"><a href="#Multi-lstm-bidirectional-dynamic-rnn" class="headerlink" title="Multi_lstm_bidirectional_dynamic_rnn"></a>Multi_lstm_bidirectional_dynamic_rnn</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code>&#39;1.12.0&#39;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cell_fw_units_list = [<span class="number">32</span>,<span class="number">16</span>,<span class="number">8</span>]</span><br><span class="line">cell_bw_units_list = [<span class="number">33</span>,<span class="number">17</span>,<span class="number">9</span>]</span><br><span class="line">cell_fw = [tf.nn.rnn_cell.LSTMCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> cell_fw_units_list]</span><br><span class="line">cell_bw = [tf.nn.rnn_cell.LSTMCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> cell_bw_units_list]</span><br><span class="line">lstm_forward = tf.nn.rnn_cell.MultiRNNCell(cells=cell_fw)</span><br><span class="line">lstm_backword = tf.nn.rnn_cell.MultiRNNCell(cells=cell_bw)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outputs, states = tf.nn.bidirectional_dynamic_rnn(</span><br><span class="line">        cell_fw=lstm_forward,cell_bw=lstm_backword,inputs=inputs_tensor,dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;ReverseV2:0&#39; shape=(3, 4, 9) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states</span><br></pre></td></tr></table></figure>
+<pre><code>((LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_4:0&#39; shape=(3, 32) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_5:0&#39; shape=(3, 16) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_6:0&#39; shape=(3, 16) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_7:0&#39; shape=(3, 8) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_8:0&#39; shape=(3, 8) dtype=float32&gt;)),
+ (LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_3:0&#39; shape=(3, 33) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_4:0&#39; shape=(3, 33) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_5:0&#39; shape=(3, 17) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_6:0&#39; shape=(3, 17) dtype=float32&gt;),
+  LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_7:0&#39; shape=(3, 9) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_8:0&#39; shape=(3, 9) dtype=float32&gt;)))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;ReverseV2:0&#39; shape=(3, 4, 9) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>(LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_4:0&#39; shape=(3, 32) dtype=float32&gt;),
+ LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_5:0&#39; shape=(3, 16) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_6:0&#39; shape=(3, 16) dtype=float32&gt;),
+ LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_7:0&#39; shape=(3, 8) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_8:0&#39; shape=(3, 8) dtype=float32&gt;))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>(LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_3:0&#39; shape=(3, 33) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_4:0&#39; shape=(3, 33) dtype=float32&gt;),
+ LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_5:0&#39; shape=(3, 17) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_6:0&#39; shape=(3, 17) dtype=float32&gt;),
+ LSTMStateTuple(c=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_7:0&#39; shape=(3, 9) dtype=float32&gt;, h=&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_8:0&#39; shape=(3, 9) dtype=float32&gt;))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(outputs[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>array([[[-0.00076688, -0.00200841, -0.00236855,  0.00039911,
+         -0.00145523, -0.00153653, -0.00134254,  0.00106617],
+        [-0.00454114, -0.00330769, -0.00736781,  0.00173002,
+         -0.0032972 , -0.00345388, -0.00293425,  0.00292132],
+        [-0.01027342, -0.00316362, -0.01381279,  0.00462259,
+         -0.00577486, -0.00438865, -0.00475066,  0.00504041],
+        [-0.01815201, -0.00150841, -0.0213333 ,  0.00920272,
+         -0.00753702, -0.0049286 , -0.00753725,  0.00764989]],
+
+       [[-0.00051021, -0.00109504, -0.00235562,  0.00033509,
+         -0.00184875, -0.00063042, -0.00011131,  0.00110563],
+        [-0.00254402, -0.00287243, -0.00706615,  0.00204808,
+         -0.00484681, -0.00206984, -0.0014233 ,  0.00308458],
+        [-0.00708036, -0.00366582, -0.01411008,  0.00544437,
+         -0.0080783 , -0.0034703 , -0.00328208,  0.00583236],
+        [-0.01305352, -0.00295205, -0.02222473,  0.01060574,
+         -0.01145888, -0.00383543, -0.0055557 ,  0.0088768 ]],
+
+       [[-0.00123942,  0.00074371, -0.00094162,  0.00037477,
+         -0.00032651,  0.0001554 ,  0.00046975,  0.00046324],
+        [-0.00429494,  0.00162228, -0.00351843,  0.00242352,
+         -0.00078484, -0.00083089, -0.00064292,  0.00222571],
+        [-0.00847503,  0.00332979, -0.00786664,  0.00663501,
+         -0.00156324, -0.00165966, -0.00228085,  0.00515618],
+        [-0.01371686,  0.00522377, -0.01415662,  0.01267656,
+         -0.00229844, -0.00248059, -0.00501328,  0.00901466]]],
+      dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">0</span>][<span class="number">2</span>].h)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[-0.01815201, -0.00150841, -0.0213333 ,  0.00920272, -0.00753702,
+        -0.0049286 , -0.00753725,  0.00764989],
+       [-0.01305352, -0.00295205, -0.02222473,  0.01060574, -0.01145888,
+        -0.00383543, -0.0055557 ,  0.0088768 ],
+       [-0.01371686,  0.00522377, -0.01415662,  0.01267656, -0.00229844,
+        -0.00248059, -0.00501328,  0.00901466]], dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">0</span>][<span class="number">2</span>].c)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[-0.03619757, -0.00299038, -0.04237926,  0.01859355, -0.01471011,
+        -0.00991257, -0.01535283,  0.01467649],
+       [-0.02600891, -0.00582871, -0.04436516,  0.02145906, -0.0222083 ,
+        -0.00767388, -0.01128497,  0.01682222],
+       [-0.02723665,  0.0103671 , -0.0282324 ,  0.02551894, -0.00446999,
+        -0.00497827, -0.01015829,  0.01708832]], dtype=float32)
+</code></pre><h3 id="Multi-gru-bidirectional-dynamic-rnn"><a href="#Multi-gru-bidirectional-dynamic-rnn" class="headerlink" title="Multi_gru_bidirectional_dynamic_rnn"></a>Multi_gru_bidirectional_dynamic_rnn</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line">tf.__version__</span><br></pre></td></tr></table></figure>
+<pre><code>&#39;1.12.0&#39;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inputs_tensor = tf.constant(np.random.random(size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cell_fw_units_list = [<span class="number">32</span>,<span class="number">16</span>,<span class="number">8</span>]</span><br><span class="line">cell_bw_units_list = [<span class="number">33</span>,<span class="number">17</span>,<span class="number">9</span>]</span><br><span class="line">cell_fw = [tf.nn.rnn_cell.GRUCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> cell_fw_units_list]</span><br><span class="line">cell_bw = [tf.nn.rnn_cell.GRUCell(num_units=unit) <span class="keyword">for</span> unit <span class="keyword">in</span> cell_bw_units_list]</span><br><span class="line">gru_forward = tf.nn.rnn_cell.MultiRNNCell(cells=cell_fw)</span><br><span class="line">gru_backword = tf.nn.rnn_cell.MultiRNNCell(cells=cell_bw)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">outputs, states = tf.nn.bidirectional_dynamic_rnn(</span><br><span class="line">        cell_fw=lstm_forward,cell_bw=lstm_backword,inputs=inputs_tensor,dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;ReverseV2:0&#39; shape=(3, 4, 9) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states</span><br></pre></td></tr></table></figure>
+<pre><code>((&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;,
+  &lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_4:0&#39; shape=(3, 16) dtype=float32&gt;,
+  &lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_5:0&#39; shape=(3, 8) dtype=float32&gt;),
+ (&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_3:0&#39; shape=(3, 33) dtype=float32&gt;,
+  &lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_4:0&#39; shape=(3, 17) dtype=float32&gt;,
+  &lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_5:0&#39; shape=(3, 9) dtype=float32&gt;))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/transpose_1:0&#39; shape=(3, 4, 8) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">outputs[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;ReverseV2:0&#39; shape=(3, 4, 9) dtype=float32&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_3:0&#39; shape=(3, 32) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_4:0&#39; shape=(3, 16) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;bidirectional_rnn/fw/fw/while/Exit_5:0&#39; shape=(3, 8) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">states[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_3:0&#39; shape=(3, 33) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_4:0&#39; shape=(3, 17) dtype=float32&gt;,
+ &lt;tf.Tensor &#39;bidirectional_rnn/bw/bw/while/Exit_5:0&#39; shape=(3, 9) dtype=float32&gt;)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(outputs[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>array([[[-6.90058898e-03, -2.82262132e-04,  2.41189310e-03,
+         -1.32219959e-03, -1.17578653e-04, -1.02065690e-03,
+         -3.85798234e-03, -6.75282069e-03],
+        [-1.89461559e-02, -1.18712685e-03,  8.09784234e-03,
+         -5.38685592e-04, -2.89135100e-03, -5.51631721e-03,
+         -1.24855377e-02, -1.74822416e-02],
+        [-3.18835154e-02, -3.26077780e-03,  1.75229590e-02,
+          2.73799687e-03, -9.39253345e-03, -1.30872596e-02,
+         -2.38550343e-02, -3.05617414e-02],
+        [-4.67147976e-02, -6.17155526e-03,  2.97614653e-02,
+          6.51888642e-03, -1.87356286e-02, -2.50062142e-02,
+         -3.67445275e-02, -4.68713641e-02]],
+
+       [[-8.41161050e-03, -2.88979820e-04,  3.92245734e-03,
+          2.17063329e-03, -5.09262085e-04, -2.77552451e-03,
+         -5.37689496e-03, -3.95025592e-03],
+        [-2.47462429e-02, -1.29592582e-03,  1.10453246e-02,
+          8.48548859e-03, -2.65943818e-03, -1.01975258e-02,
+         -1.82780307e-02, -1.22013604e-02],
+        [-3.99502814e-02, -3.65575845e-03,  1.86709110e-02,
+          1.63780842e-02, -8.04547779e-03, -2.07924694e-02,
+         -3.48701701e-02, -2.20657662e-02],
+        [-5.38205951e-02, -7.08078314e-03,  2.95224246e-02,
+          2.77038664e-02, -1.74766369e-02, -3.49066183e-02,
+         -5.22553027e-02, -3.21215130e-02]],
+
+       [[-4.29279124e-03, -1.64932735e-05,  5.42476214e-03,
+          4.06091474e-03, -3.88002302e-03, -1.09710405e-03,
+         -2.73891282e-03, -1.10962777e-03],
+        [-1.24491388e-02, -5.43807575e-04,  1.43955573e-02,
+          8.08995403e-03, -1.06180515e-02, -3.86995194e-03,
+         -8.71607196e-03, -7.86763430e-03],
+        [-2.33881716e-02, -1.67222926e-03,  2.73847207e-02,
+          1.45246573e-02, -2.10378524e-02, -1.14183174e-02,
+         -1.76941082e-02, -1.70471650e-02],
+        [-3.55363414e-02, -3.23894341e-03,  4.07814831e-02,
+          2.15009488e-02, -3.38361487e-02, -2.32368447e-02,
+         -3.00667081e-02, -2.97910050e-02]]], dtype=float32)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess.run(states[<span class="number">0</span>][<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>array([[-0.0467148 , -0.00617156,  0.02976147,  0.00651889, -0.01873563,
+        -0.02500621, -0.03674453, -0.04687136],
+       [-0.0538206 , -0.00708078,  0.02952242,  0.02770387, -0.01747664,
+        -0.03490662, -0.0522553 , -0.03212151],
+       [-0.03553634, -0.00323894,  0.04078148,  0.02150095, -0.03383615,
+        -0.02323684, -0.03006671, -0.029791  ]], dtype=float32)
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/02/bidirectional_functional_rnn/" rel="next" title="bidirectional_functional_rnn">
+                <i class="fa fa-chevron-left"></i> bidirectional_functional_rnn
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/07/卷积神经网络/" rel="prev" title="卷积神经网络 Convolutional Neural Networks">
+                卷积神经网络 Convolutional Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#lstm-dynamic-rnn"><span class="nav-number">1.</span> <span class="nav-text">lstm_dynamic_rnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gru-dynamic-rnn"><span class="nav-number">2.</span> <span class="nav-text">gru_dynamic_rnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-lstm-dynamic-rnn"><span class="nav-number">3.</span> <span class="nav-text">Multi_lstm_dynamic_rnn</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-gru-dynamic-rnn"><span class="nav-number"></span> <span class="nav-text">Multi_gru_dynamic_rnn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-lstm-bidirectional-dynamic-rnn"><span class="nav-number">1.</span> <span class="nav-text">Multi_lstm_bidirectional_dynamic_rnn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-gru-bidirectional-dynamic-rnn"><span class="nav-number">2.</span> <span class="nav-text">Multi_gru_bidirectional_dynamic_rnn</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

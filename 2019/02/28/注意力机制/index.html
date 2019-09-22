@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="注意力机制,Attention Mechanism," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在">
+<meta name="keywords" content="注意力机制,Attention Mechanism">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注意力机制">
+<meta property="og:url" content="http://yoursite.com/2019/02/28/注意力机制/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/b1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/b2.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/c3.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/c2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/attention.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/attention_code.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/e1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/a1.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/a2.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/d1.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/a3.png">
+<meta property="og:image" content="http://yoursite.com/2019/02/28/注意力机制/a4.png">
+<meta property="og:updated_time" content="2019-02-28T03:05:30.580Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注意力机制">
+<meta name="twitter:description" content="Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在">
+<meta name="twitter:image" content="http://yoursite.com/2019/02/28/注意力机制/b1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/28/注意力机制/"/>
+
+
+
+
+
+  <title>注意力机制 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/28/注意力机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">注意力机制</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-28T16:12:10+08:00">
+                2019-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/28/注意力机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/28/注意力机制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在机器翻译、语音识别应用中，为句子中的每个词赋予不同的权重，使神经网络模型的学习变得更加灵活（soft），同时Attention本身可以做为一种对齐关系，解释翻译输入/输出句子之间的对齐关系，解释模型到底学到了什么知识，为我们打开深度学习的黑箱，提供了一个窗口。</p>
+<p><strong>注意，随着研究的深入，注意力的概念已经发生了变化，上述内容只是注意力中的一种而已。</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/31547842" target="_blank" rel="noopener">模型汇总24 - 深度学习中Attention Mechanism详细介绍：原理、分类及应用</a></td>
+<td>首推 知乎</td>
+<td>2017</td>
+</tr>
+<tr>
+<td><a href="https://www.zhihu.com/question/68482809/answer/264632289" target="_blank" rel="noopener">目前主流的attention方法都有哪些？</a></td>
+<td>attention机制详解 知乎</td>
+<td>2017</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tensorflow/nmt" target="_blank" rel="noopener">Neural Machine Translation (seq2seq) Tutorial</a></td>
+<td>GitHub 以机器翻译为例讲解注意力机制</td>
+<td>长期更新</td>
+</tr>
+<tr>
+<td><a href="https://www.jianshu.com/p/c6b4c7810ee6" target="_blank" rel="noopener">Attention_Network_With_Keras 注意力模型的代码的实现与分析</a></td>
+<td>代码解析 简书</td>
+<td>20180617</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Choco31415/Attention_Network_With_Keras" target="_blank" rel="noopener">Attention_Network_With_Keras</a></td>
+<td>代码实现 GitHub</td>
+<td>2018</td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-10-08-12" target="_blank" rel="noopener">各种注意力机制窥探深度学习在NLP中的神威</a></td>
+<td>综述 机器之心</td>
+<td>20181008</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/1808.08946.pdf" target="_blank" rel="noopener">Why Self-Attention? A Targeted Evaluation of Neural Machine Translation Architectures</a></td>
+<td><a href="https://www.jiqizhixin.com/articles/2018-09-17-5" target="_blank" rel="noopener">为什么使用自注意力机制？</a> 实验结果证明：1）自注意力网络和 CNN 在建模长距离主谓一致时性能并不优于 RNN；2）自注意力网络在词义消歧方面显著优于 RNN 和 CNN。</td>
+<td>20180827</td>
+</tr>
+<tr>
+<td><a href="https://plmsmile.github.io/2018/03/25/33-attention-summary/" target="_blank" rel="noopener">各种注意力总结</a></td>
+<td>本文主要是总结：注意力机制、注意力机制的变体、论文中常见的注意力</td>
+<td>20180325</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><a href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉" class="headerlink" title="以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉"></a>以<a href="https://arxiv.org/abs/1406.1078" target="_blank" rel="noopener">2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》</a>抛砖引玉</h1><p>要介绍Attention Mechanism结构和原理，首先需要介绍下Seq2Seq模型的结构。基于RNN的Seq2Seq模型主要由两篇论文介绍，只是采用了不同的RNN模型。Ilya Sutskever等人与2014年在论文<a href="http://cn.arxiv.org/abs/1409.3215" target="_blank" rel="noopener">《Sequence to Sequence Learning with Neural Networks》</a>中使用LSTM来搭建Seq2Seq模型。随后，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》提出了基于GRU的Seq2Seq模型。两篇文章所提出的Seq2Seq模型，想要解决的主要问题是，如何把机器翻译中，变长的输入X映射到一个变长输出Y的问题，其主要结构如图所示。</p>
+<p><img src="/2019/02/28/注意力机制/b1.jpg" alt=""><br><strong>传统的Seq2Seq结构</strong></p>
+<p>其中，Encoder把一个变成的输入序列x1，x2，x3….xt编码成一个固定长度隐向量（背景向量，或上下文向量context）c，c有两个作用：1、做为初始向量初始化Decoder的模型，做为decoder模型预测y1的初始向量。2、做为背景向量，指导y序列中每一个step的y的产出。Decoder主要基于背景向量c和上一步的输出yt-1解码得到该时刻t的输出yt，直到碰到结束标志（$<eos>$）为止。</eos></p>
+<p>如上文所述，传统的Seq2Seq模型对输入序列X缺乏区分度，因此，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》中，引入了Attention Mechanism来解决这个问题，他们提出的模型结构如图所示。</p>
+<p><img src="/2019/02/28/注意力机制/b2.jpg" alt=""><br><strong>Attention Mechanism模块图解</strong></p>
+<p><img src="/2019/02/28/注意力机制/c3.png" alt=""><br><img src="/2019/02/28/注意力机制/c2.png" alt=""></p>
+<h1 id="以Attention-Network-With-Keras-为例讲解一种Attention实现代码"><a href="#以Attention-Network-With-Keras-为例讲解一种Attention实现代码" class="headerlink" title="以Attention_Network_With_Keras 为例讲解一种Attention实现代码"></a>以<a href="https://github.com/Choco31415/Attention_Network_With_Keras" target="_blank" rel="noopener">Attention_Network_With_Keras</a> 为例讲解一种Attention实现代码</h1><h2 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Tx = <span class="number">50</span> <span class="comment"># Max x sequence length</span></span><br><span class="line">Ty = <span class="number">5</span> <span class="comment"># y sequence length</span></span><br><span class="line">X, Y, Xoh, Yoh = preprocess_data(dataset, human_vocab, machine_vocab, Tx, Ty)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data 80-20 between training and test</span></span><br><span class="line">train_size = int(<span class="number">0.8</span>*m)</span><br><span class="line">Xoh_train = Xoh[:train_size]</span><br><span class="line">Yoh_train = Yoh[:train_size]</span><br><span class="line">Xoh_test = Xoh[train_size:]</span><br><span class="line">Yoh_test = Yoh[train_size:]</span><br></pre></td></tr></table></figure>
+<p>To be careful, let’s check that the code works:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span></span><br><span class="line">print(<span class="string">"Input data point "</span> + str(i) + <span class="string">"."</span>)</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The data input is: "</span> + str(dataset[i][<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">"The data output is: "</span> + str(dataset[i][<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The tokenized input is:"</span> + str(X[i]))</span><br><span class="line">print(<span class="string">"The tokenized output is: "</span> + str(Y[i]))</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The one-hot input is:"</span>, Xoh[i])</span><br><span class="line">print(<span class="string">"The one-hot output is:"</span>, Yoh[i])</span><br></pre></td></tr></table></figure>
+<pre><code>Input data point 5.
+
+The data input is: 23 min after 20 p.m.
+The data output is: 20:23
+
+The tokenized input is:[ 5  6  0 25 22 26  0 14 19 32 18 30  0  5  3  0 28  2 25  2 40 40 40 40
+ 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
+ 40 40]
+The tokenized output is: [ 2  0 10  2  3]
+
+The one-hot input is: [[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [1. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 1.]
+ [0. 0. 0. ... 0. 0. 1.]
+ [0. 0. 0. ... 0. 0. 1.]]
+The one-hot output is: [[0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
+ [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
+ [0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]]
+</code></pre><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>Our next goal is to define our model. The important part will be defining the attention mechanism and then making sure to apply that correctly.</p>
+<p>Define some model metadata:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layer1_size = <span class="number">32</span></span><br><span class="line">layer2_size = <span class="number">128</span> <span class="comment"># Attention layer</span></span><br></pre></td></tr></table></figure>
+<p>The next two code snippets defined the attention mechanism. This is split into two arcs:</p>
+<ul>
+<li>Calculating context</li>
+<li>Creating an attention layer</li>
+</ul>
+<p>As a refresher, an attention network pays attention to certain parts of the input at each output time step. _attention_ denotes which inputs are most relevant to the current output step. An input step will have attention weight ~1 if it is relevant, and ~0 otherwise. The _context_ is the “summary of the input”.</p>
+<p>The requirements are thus. The attention matrix should have shape $(T_x)$ and sum to 1. Additionally, the context should be calculated in the same manner for each time step. Beyond that, there is some flexibility. This notebook calculates both this way:</p>
+<script type="math/tex; mode=display">
+attention = Softmax(Dense(Dense(x, y_{t-1})))</script><p><br></p>
+<script type="math/tex; mode=display">
+context = \sum_{i=1}^{m} ( attention_i * x_i )</script><p>For safety, $y_0$ is defined as $\vec{0}$.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define part of the attention layer gloablly so as to</span></span><br><span class="line"><span class="comment"># share the same layers for each attention step.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> K.softmax(x, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">at_repeat = RepeatVector(Tx)</span><br><span class="line">at_concatenate = Concatenate(axis=<span class="number">-1</span>)</span><br><span class="line">at_dense1 = Dense(<span class="number">8</span>, activation=<span class="string">"tanh"</span>)</span><br><span class="line">at_dense2 = Dense(<span class="number">1</span>, activation=<span class="string">"relu"</span>)</span><br><span class="line">at_softmax = Activation(softmax, name=<span class="string">'attention_weights'</span>)</span><br><span class="line">at_dot = Dot(axes=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">one_step_of_attention</span><span class="params">(h_prev, a)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Get the context.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Input:</span></span><br><span class="line"><span class="string">    h_prev - Previous hidden state of a RNN layer (m, n_h)</span></span><br><span class="line"><span class="string">    a - Input data, possibly processed (m, Tx, n_a)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    context - Current context (m, Tx, n_a)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Repeat vector to match a's dimensions</span></span><br><span class="line">    h_repeat = at_repeat(h_prev)</span><br><span class="line">    <span class="comment"># Calculate attention weights</span></span><br><span class="line">    i = at_concatenate([a, h_repeat])</span><br><span class="line">    i = at_dense1(i)</span><br><span class="line">    i = at_dense2(i)</span><br><span class="line">    attention = at_softmax(i)</span><br><span class="line">    <span class="comment"># Calculate the context</span></span><br><span class="line">    context = at_dot([attention, a])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attention_layer</span><span class="params">(X, n_h, Ty)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Creates an attention layer.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Input:</span></span><br><span class="line"><span class="string">    X - Layer input (m, Tx, x_vocab_size)</span></span><br><span class="line"><span class="string">    n_h - Size of LSTM hidden layer</span></span><br><span class="line"><span class="string">    Ty - Timesteps in output sequence</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    output - The output of the attention layer (m, Tx, n_h)</span></span><br><span class="line"><span class="string">    """</span>    </span><br><span class="line">    <span class="comment"># Define the default state for the LSTM layer</span></span><br><span class="line">    h = Lambda(<span class="keyword">lambda</span> X: K.zeros(shape=(K.shape(X)[<span class="number">0</span>], n_h)), name=<span class="string">'h_attention_layer'</span>)(X)</span><br><span class="line">    c = Lambda(<span class="keyword">lambda</span> X: K.zeros(shape=(K.shape(X)[<span class="number">0</span>], n_h)), name=<span class="string">'c_attention_layer'</span>)(X)</span><br><span class="line">    <span class="comment"># Messy, but the alternative is using more Input()</span></span><br><span class="line"></span><br><span class="line">    at_LSTM = LSTM(n_h, return_state=<span class="keyword">True</span>, name=<span class="string">'at_LSTM_attention_layer'</span>)</span><br><span class="line"></span><br><span class="line">    output = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run attention step and RNN for each output time step</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(Ty):</span><br><span class="line">        context = one_step_of_attention(h, X)</span><br><span class="line"></span><br><span class="line">        h, _, c = at_LSTM(context, initial_state=[h, c])</span><br><span class="line"></span><br><span class="line">        output.append(h)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+<p>The sample model is organized as follows:</p>
+<ol>
+<li>BiLSTM</li>
+<li>Attention Layer<ul>
+<li>Outputs Ty lists of activations.</li>
+</ul>
+</li>
+<li>Dense<ul>
+<li>Necessary to convert attention layer’s output to the correct y dimensions</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">layer3 = Dense(machine_vocab_size, activation=softmax)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_model</span><span class="params">(Tx, Ty, layer1_size, layer2_size, x_vocab_size, y_vocab_size)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Creates a model.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    input:</span></span><br><span class="line"><span class="string">    Tx - Number of x timesteps</span></span><br><span class="line"><span class="string">    Ty - Number of y timesteps</span></span><br><span class="line"><span class="string">    size_layer1 - Number of neurons in BiLSTM</span></span><br><span class="line"><span class="string">    size_layer2 - Number of neurons in attention LSTM hidden layer</span></span><br><span class="line"><span class="string">    x_vocab_size - Number of possible token types for x</span></span><br><span class="line"><span class="string">    y_vocab_size - Number of possible token types for y</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    model - A Keras Model.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create layers one by one</span></span><br><span class="line">    X = Input(shape=(Tx, x_vocab_size), name=<span class="string">'X_Input'</span>)</span><br><span class="line"></span><br><span class="line">    a1 = Bidirectional(LSTM(layer1_size, return_sequences=<span class="keyword">True</span>), merge_mode=<span class="string">'concat'</span>, name=<span class="string">'Bid_LSTM'</span>)(X)</span><br><span class="line"></span><br><span class="line">    a2 = attention_layer(a1, layer2_size, Ty)</span><br><span class="line"></span><br><span class="line">    a3 = [layer3(timestep) <span class="keyword">for</span> timestep <span class="keyword">in</span> a2]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create Keras model</span></span><br><span class="line">    model = Model(inputs=[X], outputs=a3)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<p>The steps from here on out are for creating the model and training it. Simple as that.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Obtain a model instance</span></span><br><span class="line">model = get_model(Tx, Ty, layer1_size, layer2_size, human_vocab_size, machine_vocab_size)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_model(model, to_file=<span class="string">'Attention_tutorial_model_copy.png'</span>, show_shapes=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="模型结构及说明"><a href="#模型结构及说明" class="headerlink" title="模型结构及说明"></a>模型结构及说明</h2><p><img src="/2019/02/28/注意力机制/attention.png" alt=""></p>
+<p><img src="/2019/02/28/注意力机制/attention_code.png" alt=""></p>
+<h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>The final training loss should be in the range of 0.02 to 0.5</p>
+<p>The test loss should be at a similar level.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Evaluate the test performance</span></span><br><span class="line">outputs_test = list(Yoh_test.swapaxes(<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">score = model.evaluate(Xoh_test, outputs_test)</span><br><span class="line">print(<span class="string">'Test loss: '</span>, score[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+<pre><code>2000/2000 [==============================] - 2s 1ms/step
+Test loss:  0.4966005325317383
+</code></pre><p>Now that we’ve created this beautiful model, let’s see how it does in action.</p>
+<p>The below code finds a random example and runs it through our model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Let's visually check model output.</span></span><br><span class="line"><span class="keyword">import</span> random <span class="keyword">as</span> random</span><br><span class="line"></span><br><span class="line">i = random.randint(<span class="number">0</span>, m)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_prediction</span><span class="params">(model, x)</span>:</span></span><br><span class="line">    prediction = model.predict(x)</span><br><span class="line">    max_prediction = [y.argmax() <span class="keyword">for</span> y <span class="keyword">in</span> prediction]</span><br><span class="line">    str_prediction = <span class="string">""</span>.join(ids_to_keys(max_prediction, machine_vocab))</span><br><span class="line">    <span class="keyword">return</span> (max_prediction, str_prediction)</span><br><span class="line"></span><br><span class="line">max_prediction, str_prediction = get_prediction(model, Xoh[i:i+<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Input: "</span> + str(dataset[i][<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">"Tokenized: "</span> + str(X[i]))</span><br><span class="line">print(<span class="string">"Prediction: "</span> + str(max_prediction))</span><br><span class="line">print(<span class="string">"Prediction text: "</span> + str(str_prediction))</span><br></pre></td></tr></table></figure>
+<pre><code>Input: 13.09
+Tokenized: [ 4  6  2  3 12 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
+ 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
+ 40 40]
+Prediction: [1, 3, 10, 0, 9]
+Prediction text: 13:09
+</code></pre><p>Last but not least, all introductions to Attention networks require a little tour.</p>
+<p>The below graph shows what inputs the model was focusing on when writing each individual letter.</p>
+<h2 id="注意力机制图"><a href="#注意力机制图" class="headerlink" title="注意力机制图"></a>注意力机制图</h2><p><img src="/2019/02/28/注意力机制/e1.png" alt=""></p>
+<h1 id="注意力机制精要"><a href="#注意力机制精要" class="headerlink" title="注意力机制精要"></a>注意力机制精要</h1><p><img src="/2019/02/28/注意力机制/a1.png" alt=""><br><strong>全局注意力机制</strong></p>
+<p><img src="/2019/02/28/注意力机制/a2.png" alt=""><br><strong>局部注意力机制</strong></p>
+<p><img src="/2019/02/28/注意力机制/d1.jpg" alt=""><br><strong>自注意力机制</strong><br><img src="/2019/02/28/注意力机制/a3.png" alt=""></p>
+<p>隐藏向量 $h_t$ 首先会传递到全连接层。然后校准系数 $a_t$ 会对比全连接层的输出 $u_t$ 和可训练上下文向量 u（随机初始化），并通过 Softmax 归一化而得出。注意力向量 s 最后可以为所有隐藏向量的加权和。上下文向量可以解释为在平均上表征的最优单词。但模型面临新的样本时，它会使用这一知识以决定哪一个词需要更加注意。在训练中，模型会通过反向传播更新上下文向量，即它会调整内部表征以确定最优词是什么。</p>
+<blockquote>
+<p>Self Attention与传统的Attention机制非常的不同：传统的Attention是基于source端和target端的隐变量（hidden state）计算Attention的，得到的结果是源端的每个词与目标端每个词之间的依赖关系。但Self Attention不同，它分别在source端和target端进行，仅与source input或者target input自身相关的Self Attention，捕捉source端或target端自身的词与词之间的依赖关系；然后再把source端的得到的self Attention加入到target端得到的Attention中，捕捉source端和target端词与词之间的依赖关系。因此，self Attention Attention比传统的Attention mechanism效果要好，主要原因之一是，传统的Attention机制忽略了源端或目标端句子中词与词之间的依赖关系，相对比，self Attention可以不仅可以得到源端与目标端词与词之间的依赖关系，同时还可以有效获取源端或目标端自身词与词之间的依赖关系</p>
+</blockquote>
+<p><img src="/2019/02/28/注意力机制/a4.png" alt=""><br><strong>层级注意力机制</strong></p>
+<p>在该架构中，自注意力机制共使用了两次：在词层面与在句子层面。该方法因为两个原因而非常重要，首先是它匹配文档的自然层级结构（词——句子——文档）。其次在计算文档编码的过程中，它允许模型首先确定哪些单词在句子中是非常重要的，然后再确定哪个句子在文档中是非常重要的。</p>
+<h1 id="可视化神经机器翻译模型"><a href="#可视化神经机器翻译模型" class="headerlink" title="可视化神经机器翻译模型"></a>可视化神经机器翻译模型</h1><p><a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/" target="_blank" rel="noopener">Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/注意力机制/" rel="tag"># 注意力机制</a>
+          
+            <a href="/tags/Attention-Mechanism/" rel="tag"># Attention Mechanism</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/21/jupyter/" rel="next" title="jupyter">
+                <i class="fa fa-chevron-left"></i> jupyter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/01/神经机器翻译/" rel="prev" title="神经机器翻译 | Neural Machine Translation">
+                神经机器翻译 | Neural Machine Translation <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><span class="nav-number">1.</span> <span class="nav-text">以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以Attention-Network-With-Keras-为例讲解一种Attention实现代码"><span class="nav-number">2.</span> <span class="nav-text">以Attention_Network_With_Keras 为例讲解一种Attention实现代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分代码"><span class="nav-number">2.1.</span> <span class="nav-text">部分代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构及说明"><span class="nav-number">2.3.</span> <span class="nav-text">模型结构及说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型评估"><span class="nav-number">2.4.</span> <span class="nav-text">模型评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">2.5.</span> <span class="nav-text">Evaluation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力机制图"><span class="nav-number">2.6.</span> <span class="nav-text">注意力机制图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意力机制精要"><span class="nav-number">3.</span> <span class="nav-text">注意力机制精要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可视化神经机器翻译模型"><span class="nav-number">4.</span> <span class="nav-text">可视化神经机器翻译模型</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

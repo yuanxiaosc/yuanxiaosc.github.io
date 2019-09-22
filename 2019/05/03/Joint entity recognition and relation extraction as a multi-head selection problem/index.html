@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="论文,实体识别,关系抽取," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Joint entity recognition and relation extraction as a multi-head selection problemAbstract  State-of-the-art models for joint entity recognition and relation extraction strongly rely on external natur">
+<meta name="keywords" content="论文,实体识别,关系抽取">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Joint entity recognition and relation extraction as a multi-head selection problem">
+<meta property="og:url" content="http://yoursite.com/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Joint entity recognition and relation extraction as a multi-head selection problemAbstract  State-of-the-art models for joint entity recognition and relation extraction strongly rely on external natur">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/03/Joint%20entity%20recognition%20and%20relation%20extraction%20as%20a%20multi-head%20selection%20problem/model-2018Bekoulis.png">
+<meta property="og:updated_time" content="2019-05-05T14:20:27.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Joint entity recognition and relation extraction as a multi-head selection problem">
+<meta name="twitter:description" content="Joint entity recognition and relation extraction as a multi-head selection problemAbstract  State-of-the-art models for joint entity recognition and relation extraction strongly rely on external natur">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/03/Joint%20entity%20recognition%20and%20relation%20extraction%20as%20a%20multi-head%20selection%20problem/model-2018Bekoulis.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/"/>
+
+
+
+
+
+  <title>Joint entity recognition and relation extraction as a multi-head selection problem | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Joint entity recognition and relation extraction as a multi-head selection problem</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-03T15:30:00+08:00">
+                2019-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/信息抽取/" itemprop="url" rel="index">
+                    <span itemprop="name">信息抽取</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Joint-entity-recognition-and-relation-extraction-as-a-multi-head-selection-problem"><a href="#Joint-entity-recognition-and-relation-extraction-as-a-multi-head-selection-problem" class="headerlink" title="Joint entity recognition and relation extraction as a multi-head selection problem"></a><a href="https://arxiv.org/abs/1804.07847" target="_blank" rel="noopener">Joint entity recognition and relation extraction as a multi-head selection problem</a></h3><p><strong>Abstract</strong></p>
+<blockquote>
+<p>State-of-the-art models for joint entity recognition and relation extraction strongly rely on external natural language processing (NLP) tools such as POS (part-of-speech) taggers and dependency parsers. Thus, the performance of such joint models depends on the quality of the features obtained from these NLP tools. However, these features are not always accurate for various languages and contexts. In this paper, we propose a joint neural model which performs entity recognition and relation extraction simultaneously, without the need of any manually extracted features or the use of any external tool. Specifically, we model the entity recognition task using a CRF (Conditional Random Fields) layer and the relation extraction task as a multi-head selection problem (i.e., potentially identify multiple relations for each entity). We present an extensive experimental setup, to demonstrate the effectiveness of our method using datasets from various contexts (i.e., news, biomedical, real estate) and languages (i.e., English, Dutch). Our model outperforms the previous neural models that use automatically extracted features, while it performs within a reasonable margin of feature-based neural models, or even beats them.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>用于联合实体识别和关系提取的最先进模型强烈依赖于外部自然语言处理（NLP）工具，例如POS（词性）标记器和依赖性解析器。因此，这种联合模型的性能取决于从这些NLP工具获得的特征的质量。但是，对于各种语言和上下文，这些功能并不总是准确的。在本文中，我们提出了一个联合神经模型，它同时执行实体识别和关系提取，无需任何手动提取的功能或使用任何外部工具。具体地，我们使用CRF（条件随机场）层和关系提取任务将实体识别任务建模为多头选择问题（即，潜在地识别每个实体的多个关系）。我们提出了一个广泛的实验设置，以证明我们的方法使用来自各种环境（即新闻，生物医学，房地产）和语言（即英语，荷兰语）的数据集的有效性。我们的模型优于以前使用自动提取特征的神经模型，同时它在基于特征的神经模型的合理范围内执行，甚至胜过它们。</p>
+</blockquote>
+<p><img src="/2019/05/03/Joint entity recognition and relation extraction as a multi-head selection problem/model-2018Bekoulis.png" alt=""></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/1804.07847" target="_blank" rel="noopener">Joint entity recognition and relation extraction as a multi-head selection problem</a></td>
+<td>论文原文</td>
+<td>2018</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bekou/multihead_joint_entity_relation_extraction" target="_blank" rel="noopener">multihead_joint_entity_relation_extraction</a></td>
+<td>论文实现</td>
+<td>20190429</td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/46507254" target="_blank" rel="noopener">对抗训练多头选择的实体识别和关系抽取的联合模型</a></td>
+<td>论文解析</td>
+<td>20181005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="数据处理流程"><a href="#数据处理流程" class="headerlink" title="数据处理流程"></a>数据处理流程</h3><h4 id="1-train-txt"><a href="#1-train-txt" class="headerlink" title="1 train.txt"></a>1 train.txt</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#doc 2050</span><br><span class="line">0	Mrs.	B-Peop	[&apos;N&apos;]	[0]</span><br><span class="line">1	Rose	I-Peop	[&apos;N&apos;]	[1]</span><br><span class="line">2	hired	O	[&apos;N&apos;]	[2]</span><br><span class="line">3	Abebe	B-Peop	[&apos;N&apos;]	[3]</span><br><span class="line">4	Worke	I-Peop	[&apos;Work_For&apos;, &apos;Live_In&apos;]	[22, 8]</span><br><span class="line">5	,	O	[&apos;N&apos;]	[5]</span><br><span class="line">6	one	O	[&apos;N&apos;]	[6]</span><br><span class="line">7	of	O	[&apos;N&apos;]	[7]</span><br><span class="line">8	Ethiopia	B-Loc	[&apos;N&apos;]	[8]</span><br><span class="line">9	&apos;s	O	[&apos;N&apos;]	[9]</span><br><span class="line">10	most	O	[&apos;N&apos;]	[10]</span><br><span class="line">11	distinguished	O	[&apos;N&apos;]	[11]</span><br><span class="line">12	lawyers	O	[&apos;N&apos;]	[12]</span><br><span class="line">13	and	O	[&apos;N&apos;]	[13]</span><br><span class="line">14	a	O	[&apos;N&apos;]	[14]</span><br><span class="line">15	former	O	[&apos;N&apos;]	[15]</span><br><span class="line">16	member	O	[&apos;N&apos;]	[16]</span><br><span class="line">17	of	O	[&apos;N&apos;]	[17]</span><br><span class="line">18	the	O	[&apos;N&apos;]	[18]</span><br><span class="line">19	country	O	[&apos;N&apos;]	[19]</span><br><span class="line">20	&apos;s	O	[&apos;N&apos;]	[20]</span><br><span class="line">21	High	B-Org	[&apos;N&apos;]	[21]</span><br><span class="line">22	Court	I-Org	[&apos;N&apos;]	[22]</span><br><span class="line">23	,	O	[&apos;N&apos;]	[23]</span><br><span class="line">24	to	O	[&apos;N&apos;]	[24]</span><br><span class="line">25	investigate	O	[&apos;N&apos;]	[25]</span><br><span class="line">26	.	O	[&apos;N&apos;]	[26]</span><br></pre></td></tr></table></figure>
+<h4 id="2-Input-data"><a href="#2-Input-data" class="headerlink" title="2 Input data"></a>2 Input data</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">+--------------------------+---------------------------------------------------------------------------+</span><br><span class="line">|        Input data        |                                   Value                                   |</span><br><span class="line">+--------------------------+---------------------------------------------------------------------------+</span><br><span class="line">|  dropout_embedding_keep  |                                     1                                     |</span><br><span class="line">|    dropout_lstm_keep     |                                     1                                     |</span><br><span class="line">| dropout_lstm_output_keep |                                     1                                     |</span><br><span class="line">|   dropout_fcl_ner_keep   |                                     1                                     |</span><br><span class="line">|   dropout_fcl_rel_keep   |                                     1                                     |</span><br><span class="line">|         isTrain          |                                    True                                   |</span><br><span class="line">|         charIds          |                 [[[35 68 69  9  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [40 65 69 55  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [58 59 68 55 54  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [23 52 55 52 55  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [45 65 68 61 55  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [ 7  0  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [65 64 55  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [65 56  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [27 70 58 59 65 66 59 51  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [ 4 69  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [63 65 69 70  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [54 59 69 70 59 64 57 71 59 69 58 55 54]                |</span><br><span class="line">|                          |                   [62 51 73 75 55 68 69  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [51 64 54  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [51  0  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [56 65 68 63 55 68  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [63 55 63 52 55 68  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [65 56  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [70 58 55  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [53 65 71 64 70 68 75  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [ 4 69  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [30 59 57 58  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [25 65 71 68 70  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [ 7  0  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [70 65  0  0  0  0  0  0  0  0  0  0  0]                |</span><br><span class="line">|                          |                   [59 64 72 55 69 70 59 57 51 70 55  0  0]                |</span><br><span class="line">|                          |                  [ 9  0  0  0  0  0  0  0  0  0  0  0  0]]]               |</span><br><span class="line">|        tokensLens        | [[ 4  4  5  5  5  1  3  2  8  2  4 13  7  3  1  6  6  2  3  7  2  4  5  1 |</span><br><span class="line">|                          |                                   2 11  1]]                               |</span><br><span class="line">|       embeddingIds       |  [[  3806   1984   4334 117254     11      5     69     10   7141     29  |</span><br><span class="line">|                          |       155   3359   5857     13     18    360    402     10      6    207  |</span><br><span class="line">|                          |                  29    219    593      5     16   7011      8]]           |</span><br><span class="line">|     entity_tags_ids      |         [[3 7 8 3 7 8 8 8 0 8 8 8 8 8 8 8 8 8 8 8 8 1 5 8 8 8 8]]         |</span><br><span class="line">|       entity_tags        | [[&apos;B-Peop&apos; &apos;I-Peop&apos; &apos;O&apos; &apos;B-Peop&apos; &apos;I-Peop&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;B-Loc&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; |</span><br><span class="line">|                          |    &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;B-Org&apos; &apos;I-Org&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos;]]  |</span><br><span class="line">|          tokens          |   [[&apos;Mrs.&apos; &apos;Rose&apos; &apos;hired&apos; &apos;Abebe&apos; &apos;Worke&apos; &apos;,&apos; &apos;one&apos; &apos;of&apos; &apos;Ethiopia&apos; &quot;&apos;s&quot;  |</span><br><span class="line">|                          |   &apos;most&apos; &apos;distinguished&apos; &apos;lawyers&apos; &apos;and&apos; &apos;a&apos; &apos;former&apos; &apos;member&apos; &apos;of&apos; &apos;the&apos; |</span><br><span class="line">|                          |          &apos;country&apos; &quot;&apos;s&quot; &apos;High&apos; &apos;Court&apos; &apos;,&apos; &apos;to&apos; &apos;investigate&apos; &apos;.&apos;]]       |</span><br><span class="line">|           BIO            | [[&apos;B-Peop&apos; &apos;I-Peop&apos; &apos;O&apos; &apos;B-Peop&apos; &apos;I-Peop&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;B-Loc&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; |</span><br><span class="line">|                          |    &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;B-Org&apos; &apos;I-Org&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos; &apos;O&apos;]]  |</span><br><span class="line">|         tokenIds         | [[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 |</span><br><span class="line">|                          |                                  24 25 26]]                               |</span><br><span class="line">|    scoringMatrixGold     |                         [[[0. 0. 0. ... 0. 0. 0.]                         |</span><br><span class="line">|                          |                           [0. 0. 0. ... 0. 0. 0.]                         |</span><br><span class="line">|                          |                           [0. 0. 0. ... 0. 0. 0.]                         |</span><br><span class="line">|                          |                                     ...                                   |</span><br><span class="line">|                          |                           [0. 0. 0. ... 0. 0. 0.]                         |</span><br><span class="line">|                          |                           [0. 0. 0. ... 0. 0. 0.]                         |</span><br><span class="line">|                          |                          [0. 0. 0. ... 1. 0. 0.]]]                        |</span><br><span class="line">|          seqlen          |                                    [27]                                   |</span><br><span class="line">|         doc_ids          |                               [&apos;#doc 2050&apos;]                               |</span><br><span class="line">+--------------------------+---------------------------------------------------------------------------+</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">relations = [&apos;Kill&apos;, &apos;Live_In&apos;, &apos;Located_In&apos;, &apos;N&apos;, &apos;OrgBased_In&apos;, &apos;Work_For&apos;]</span><br><span class="line">scoringMatrixGold.shape = (1, 27, 162) #(batch_size, sequence_length, sequence_length * relation_numbers)</span><br></pre></td></tr></table></figure>
+<p>由原始数据 4    Worke    I-Peop    [‘Work_For’, ‘Live_In’]    [22, 8] 可以知道原始数据第4个token Worke 对应有两个关系分别是与第22个token的Work_For(对应ID是 5) 和第8个token的live_In(对应ID是 1)。如果把</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scoringMatrixGold.shape = (1, 27, 162) #(batch_size, sequence_length, sequence_length * relation_numbers)</span><br><span class="line">转换成</span><br><span class="line">scoringMatrixGold.shape = (1, 27, 27, 6) #(batch_size, sequence_length, sequence_length, relation_numbers)</span><br></pre></td></tr></table></figure>
+<p>那么 scoringMatrixGold 里面的这个 #doc 2050 数据 scoringMatrixGold[0] 的形状是 (27, 27, 6)，第4个token Worke就是 scoringMatrixGold[0][4] ，这是一个形状是 (27, 6) 的关系矩阵，这个矩阵的第8行第1列以及第22行第5列的数字是1，其余是0。这样就用one-hot形式的矩阵编码了实体之间的关系。矩阵的具体内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&quot;[&quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 1. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 1. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0. &quot; \</span><br><span class="line">&quot;0. 0. 0. 0. 0. 0.]&quot;</span><br></pre></td></tr></table></figure>
+<p>说明：由于我们假设基于令牌的编码，我们只考虑实体的最后一个令牌作为另一个令牌的头部，从而消除了冗余关系。 例如，实体“John Smith”和“Disease Control Center”之间存在关联工作。 我们不是连接实体的所有标记，而是仅将“Smith”与“Center”连接起来。 此外，对于没有关系的情况，我们引入“N”标签，我们将令牌本身预测为头部。</p>
+<p>Since we assume token-based encoding, we consider only the last token of the entity as head of another token, eliminating redundant relations. For instance, there is a Works for relation between entities “John Smith” and “Disease Control Center”. Instead of connecting all tokens of the entities, we connect only “Smith” with “Center”. Also, for the case of no relation, we introduce the “N” label and we predict the token itself as the head.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/论文/" rel="tag"># 论文</a>
+          
+            <a href="/tags/实体识别/" rel="tag"># 实体识别</a>
+          
+            <a href="/tags/关系抽取/" rel="tag"># 关系抽取</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/30/Pytorch/" rel="next" title="Pytorch">
+                <i class="fa fa-chevron-left"></i> Pytorch
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/09/Multiple-Relations-Extraction-Only-Look-Once/" rel="prev" title="Multiple-Relations-Extraction-Only-Look-Once理论与实践">
+                Multiple-Relations-Extraction-Only-Look-Once理论与实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Joint-entity-recognition-and-relation-extraction-as-a-multi-head-selection-problem"><span class="nav-number">1.</span> <span class="nav-text">Joint entity recognition and relation extraction as a multi-head selection problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据处理流程"><span class="nav-number">2.</span> <span class="nav-text">数据处理流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-train-txt"><span class="nav-number">2.1.</span> <span class="nav-text">1 train.txt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Input-data"><span class="nav-number">2.2.</span> <span class="nav-text">2 Input data</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

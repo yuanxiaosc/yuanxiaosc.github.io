@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="SQuAD," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SQuAD 论文摘要：我们展示了斯坦福问答数据集(SQuAD)，这是一个新的阅读理解数据集，由一组维基百科文章上的众筹工作者提出的10万个问题组成，每个问题的答案都是对应阅读文章的一段文字。我们分析数据集，以理解回答问题所需的推理类型，主要依赖依赖关系和选区树。我们建立了一个强逻辑回归模型，该模型的F1得分为51.0 QANet(To Do)A Tensorflow implementation">
+<meta name="keywords" content="SQuAD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQuAD（Stanford Question Answering Dataset）">
+<meta property="og:url" content="http://yoursite.com/2018/12/10/SQuAD/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="SQuAD 论文摘要：我们展示了斯坦福问答数据集(SQuAD)，这是一个新的阅读理解数据集，由一组维基百科文章上的众筹工作者提出的10万个问题组成，每个问题的答案都是对应阅读文章的一段文字。我们分析数据集，以理解回答问题所需的推理类型，主要依赖依赖关系和选区树。我们建立了一个强逻辑回归模型，该模型的F1得分为51.0 QANet(To Do)A Tensorflow implementation">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SQuAD/SQUAD_examples_per_sec.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SQuAD/SQUAD_step_per_sec.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SQuAD/SQUAD_LOSS.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SQuAD/c1.png">
+<meta property="og:image" content="http://yoursite.com/2018/12/10/SQuAD/c2.png">
+<meta property="og:updated_time" content="2019-01-02T06:18:41.669Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQuAD（Stanford Question Answering Dataset）">
+<meta name="twitter:description" content="SQuAD 论文摘要：我们展示了斯坦福问答数据集(SQuAD)，这是一个新的阅读理解数据集，由一组维基百科文章上的众筹工作者提出的10万个问题组成，每个问题的答案都是对应阅读文章的一段文字。我们分析数据集，以理解回答问题所需的推理类型，主要依赖依赖关系和选区树。我们建立了一个强逻辑回归模型，该模型的F1得分为51.0 QANet(To Do)A Tensorflow implementation">
+<meta name="twitter:image" content="http://yoursite.com/2018/12/10/SQuAD/SQUAD_examples_per_sec.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/10/SQuAD/"/>
+
+
+
+
+
+  <title>SQuAD（Stanford Question Answering Dataset） | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/SQuAD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SQuAD（Stanford Question Answering Dataset）</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T22:17:50+08:00">
+                2018-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/论文实现/" itemprop="url" rel="index">
+                    <span itemprop="name">论文实现</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/10/SQuAD/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/10/SQuAD/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SQuAD-论文"><a href="#SQuAD-论文" class="headerlink" title="SQuAD 论文"></a><a href="https://arxiv.org/abs/1606.05250v3" target="_blank" rel="noopener">SQuAD 论文</a></h2><p>摘要：我们展示了斯坦福问答数据集(SQuAD)，这是一个新的阅读理解数据集，由一组维基百科文章上的众筹工作者提出的10万个问题组成，每个问题的答案都是对应阅读文章的一段文字。我们分析数据集，以理解回答问题所需的推理类型，主要依赖依赖关系和选区树。我们建立了一个强逻辑回归模型，该模型的F1得分为51.0</p>
+<h2 id="QANet-To-Do"><a href="#QANet-To-Do" class="headerlink" title="QANet(To Do)"></a>QANet(To Do)</h2><p>A Tensorflow implementation of QANet for machine reading comprehension<br><a href="https://github.com/NLPLearn/QANet" target="_blank" rel="noopener">https://github.com/NLPLearn/QANet</a></p>
+<h2 id="SQuAD-数据地址"><a href="#SQuAD-数据地址" class="headerlink" title="SQuAD 数据地址"></a><a href="https://rajpurkar.github.io/SQuAD-explorer/" target="_blank" rel="noopener">SQuAD 数据地址</a></h2><h2 id="SQuAD-相关文章"><a href="#SQuAD-相关文章" class="headerlink" title="SQuAD 相关文章"></a>SQuAD 相关文章</h2><p><a href="https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&amp;mid=2247484700&amp;idx=1&amp;sn=1a11af55e71d05ef6f96eed9e260f01f&amp;scene=19#wechat_redirect" target="_blank" rel="noopener">PaperWeekly 第38期 SQuAD综述</a></p>
+<p><a href="https://www.leiphone.com/news/201608/ftBdq445PzC1kxbF.html" target="_blank" rel="noopener">SQuAD，斯坦福在自然语言处理的野心</a></p>
+<hr>
+<h1 id="SQUAD-traing"><a href="#SQUAD-traing" class="headerlink" title="SQUAD_traing"></a>SQUAD_traing</h1><p><img src="/2018/12/10/SQuAD/SQUAD_examples_per_sec.png" alt=""><br><img src="/2018/12/10/SQuAD/SQUAD_step_per_sec.png" alt=""><br><img src="/2018/12/10/SQuAD/SQUAD_LOSS.png" alt=""></p>
+<p>训练结果：<br>{“exact_match”: 81.20151371807, “f1”: 88.56178500169332}</p>
+<hr>
+<h1 id="SQUAD-DATA-处理解析"><a href="#SQUAD-DATA-处理解析" class="headerlink" title="SQUAD_DATA_处理解析"></a>SQUAD_DATA_处理解析</h1><h2 id="源代码run-squad-py"><a href="#源代码run-squad-py" class="headerlink" title="源代码run_squad.py"></a>源代码<a href="https://github.com/google-research/bert/blob/master/run_squad.py" target="_blank" rel="noopener">run_squad.py</a></h2><h2 id="原始语料"><a href="#原始语料" class="headerlink" title="原始语料"></a>原始语料</h2><p>‘’’<br>a paragraphs in original SQUAD DATA<br>{‘paragraphs’:<br>[{‘context’: ‘Architecturally, the school has a Catholic ‘<br>            “character. Atop the Main Building’s gold dome is “<br>            ‘a golden statue of the Virgin Mary. Immediately ‘<br>            ‘in front of the Main Building and facing it, is a ‘<br>            ‘copper statue of Christ with arms upraised with ‘<br>            ‘the legend “Venite Ad Me Omnes”. Next to the Main ‘<br>            ‘Building is the Basilica of the Sacred Heart. ‘<br>            ‘Immediately behind the basilica is the Grotto, a ‘<br>            ‘Marian place of prayer and reflection. It is a ‘<br>            ‘replica of the grotto at Lourdes, France where ‘<br>            ‘the Virgin Mary reputedly appeared to Saint ‘<br>            ‘Bernadette Soubirous in 1858. At the end of the ‘<br>            ‘main drive (and in a direct line that connects ‘<br>            ‘through 3 statues and the Gold Dome), is a ‘<br>            ‘simple, modern stone statue of Mary.’,<br> ‘qas’: [{‘answers’: [{‘answer_start’: 515,<br>                       ‘text’: ‘Saint Bernadette Soubirous’}],<br>          ‘id’: ‘5733be284776f41900661182’,<br>          ‘question’: ‘To whom did the Virgin Mary allegedly ‘<br>                      ‘appear in 1858 in Lourdes France?’},<br>         {‘answers’: [{‘answer_start’: 188,<br>                       ‘text’: ‘a copper statue of Christ’}],<br>          ‘id’: ‘5733be284776f4190066117f’,<br>          ‘question’: ‘What is in front of the Notre Dame Main ‘<br>                      ‘Building?’},<br>         {‘answers’: [{‘answer_start’: 279,<br>                       ‘text’: ‘the Main Building’}],<br>          ‘id’: ‘5733be284776f41900661180’,<br>          ‘question’: ‘The Basilica of the Sacred heart at ‘<br>                      ‘Notre Dame is beside to which ‘<br>                      ‘structure?’},<br>         {‘answers’: [{‘answer_start’: 381,<br>                       ‘text’: ‘a Marian place of prayer and ‘<br>                               ‘reflection’}],<br>          ‘id’: ‘5733be284776f41900661181’,<br>          ‘question’: ‘What is the Grotto at Notre Dame?’},<br>         {‘answers’: [{‘answer_start’: 92,<br>                       ‘text’: ‘a golden statue of the Virgin ‘<br>                               ‘Mary’}],<br>          ‘id’: ‘5733be284776f4190066117e’,<br>          ‘question’: ‘What sits on top of the Main Building ‘<br>                      ‘at Notre Dame?’}]},<br>‘’’</p>
+<h2 id="程序处理后的语料"><a href="#程序处理后的语料" class="headerlink" title="程序处理后的语料"></a>程序处理后的语料</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#INFO:tensorflow:*** Example ***</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:unique_id: 1000000005</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:example_index: 5</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:doc_span_index: 0</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:tokens: [CLS] what kind of topics began appearing more commonly in poetry and literature during the enlightenment ? [SEP] the influence of science also began appearing more commonly in poetry and literature during the enlightenment . some poetry became infused with scientific metaphor and imagery , while other poems were written directly about scientific topics . sir richard black ##more committed the newton ##ian system to verse in creation , a philosophical poem in seven books ( 1712 ) . after newton ' s death in 1727 , poems were composed in his honour for decades . james thomson ( 1700 – 1748 ) penned his " poem to the memory of newton , " which mo ##urne ##d the loss of newton , but also praised his science and legacy . [SEP]</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:token_to_orig_map: 18:0 19:1 20:2 21:3 22:4 23:5 24:6 25:7 26:8 27:9 28:10 29:11 30:12 31:13 32:14 33:15 34:15 35:16 36:17 37:18 38:19 39:20 40:21 41:22 42:23 43:24 44:24 45:25 46:26 47:27 48:28 49:29 50:30 51:31 52:32 53:33 54:33 55:34 56:35 57:36 58:36 59:37 60:38 61:39 62:39 63:40 64:41 65:42 66:43 67:44 68:44 69:45 70:46 71:47 72:48 73:49 74:50 75:51 76:51 77:51 78:51 79:52 80:53 81:53 82:53 83:54 84:55 85:56 86:56 87:57 88:58 89:59 90:60 91:61 92:62 93:63 94:64 95:64 96:65 97:66 98:67 99:67 100:67 101:67 102:67 103:68 104:69 105:70 106:70 107:71 108:72 109:73 110:74 111:75 112:75 113:75 114:76 115:77 116:77 117:77 118:78 119:79 120:80 121:81 122:81 123:82 124:83 125:84 126:85 127:86 128:87 129:88 130:88</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:token_is_max_context: 18:True 19:True 20:True 21:True 22:True 23:True 24:True 25:True 26:True 27:True 28:True 29:True 30:True 31:True 32:True 33:True 34:True 35:True 36:True 37:True 38:True 39:True 40:True 41:True 42:True 43:True 44:True 45:True 46:True 47:True 48:True 49:True 50:True 51:True 52:True 53:True 54:True 55:True 56:True 57:True 58:True 59:True 60:True 61:True 62:True 63:True 64:True 65:True 66:True 67:True 68:True 69:True 70:True 71:True 72:True 73:True 74:True 75:True 76:True 77:True 78:True 79:True 80:True 81:True 82:True 83:True 84:True 85:True 86:True 87:True 88:True 89:True 90:True 91:True 92:True 93:True 94:True 95:True 96:True 97:True 98:True 99:True 100:True 101:True 102:True 103:True 104:True 105:True 106:True 107:True 108:True 109:True 110:True 111:True 112:True 113:True 114:True 115:True 116:True 117:True 118:True 119:True 120:True 121:True 122:True 123:True 124:True 125:True 126:True 127:True 128:True 129:True 130:True</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:input_ids: 101 2054 2785 1997 7832 2211 6037 2062 4141 1999 4623 1998 3906 2076 1996 16724 1029 102 1996 3747 1997 2671 2036 2211 6037 2062 4141 1999 4623 1998 3906 2076 1996 16724 1012 2070 4623 2150 29592 2007 4045 19240 1998 13425 1010 2096 2060 5878 2020 2517 3495 2055 4045 7832 1012 2909 2957 2304 5974 5462 1996 8446 2937 2291 2000 7893 1999 4325 1010 1037 9569 5961 1999 2698 2808 1006 28460 1007 1012 2044 8446 1005 1055 2331 1999 25350 1010 5878 2020 3605 1999 2010 6225 2005 5109 1012 2508 11161 1006 16601 1516 24445 1007 17430 2010 1000 5961 2000 1996 3638 1997 8446 1010 1000 2029 9587 21737 2094 1996 3279 1997 8446 1010 2021 2036 5868 2010 2671 1998 8027 1012 102 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:input_mask: 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:segment_ids: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:start_position: 52</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:end_position: 53</span></span><br><span class="line"><span class="comment">#INFO:tensorflow:answer: scientific topics</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tokenization</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">import</span> collections</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_whitespace</span><span class="params">(c)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> c == <span class="string">" "</span> <span class="keyword">or</span> c == <span class="string">"\t"</span> <span class="keyword">or</span> c == <span class="string">"\r"</span> <span class="keyword">or</span> c == <span class="string">"\n"</span> <span class="keyword">or</span> ord(c) == <span class="number">0x202F</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SquadExample</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""A single training/test example for simple sequence classification."""</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,</span></span></span><br><span class="line"><span class="function"><span class="params">                 qas_id,</span></span></span><br><span class="line"><span class="function"><span class="params">                 question_text,</span></span></span><br><span class="line"><span class="function"><span class="params">                 doc_tokens,</span></span></span><br><span class="line"><span class="function"><span class="params">                 orig_answer_text=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 start_position=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 end_position=None)</span>:</span></span><br><span class="line">        self.qas_id = qas_id</span><br><span class="line">        self.question_text = question_text</span><br><span class="line">        self.doc_tokens = doc_tokens</span><br><span class="line">        self.orig_answer_text = orig_answer_text</span><br><span class="line">        self.start_position = start_position</span><br><span class="line">        self.end_position = end_position</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.__repr__()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></span><br><span class="line">        s = <span class="string">""</span></span><br><span class="line">        s += <span class="string">"qas_id: %s"</span> % (tokenization.printable_text(self.qas_id))</span><br><span class="line">        s += <span class="string">", question_text: %s"</span> % (</span><br><span class="line">            tokenization.printable_text(self.question_text))</span><br><span class="line">        s += <span class="string">", doc_tokens: [%s]"</span> % (<span class="string">" "</span>.join(self.doc_tokens))</span><br><span class="line">        <span class="keyword">if</span> self.start_position:</span><br><span class="line">            s += <span class="string">", start_position: %d"</span> % (self.start_position)</span><br><span class="line">        <span class="keyword">if</span> self.start_position:</span><br><span class="line">            s += <span class="string">", end_position: %d"</span> % (self.end_position)</span><br><span class="line">        <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_squad_examples</span><span class="params">(input_file, is_training)</span>:</span></span><br><span class="line">    <span class="string">"""Read a SQuAD json file into a list of SquadExample."""</span></span><br><span class="line">    <span class="keyword">with</span> tf.gfile.Open(input_file, <span class="string">"r"</span>) <span class="keyword">as</span> reader:</span><br><span class="line">        input_data = json.load(reader)[<span class="string">"data"</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_whitespace</span><span class="params">(c)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> c == <span class="string">" "</span> <span class="keyword">or</span> c == <span class="string">"\t"</span> <span class="keyword">or</span> c == <span class="string">"\r"</span> <span class="keyword">or</span> c == <span class="string">"\n"</span> <span class="keyword">or</span> ord(c) == <span class="number">0x202F</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    examples = []</span><br><span class="line">    <span class="keyword">for</span> entry <span class="keyword">in</span> input_data:</span><br><span class="line">        <span class="keyword">for</span> paragraph <span class="keyword">in</span> entry[<span class="string">"paragraphs"</span>]:</span><br><span class="line">            paragraph_text = paragraph[<span class="string">"context"</span>]</span><br><span class="line">            doc_tokens = []</span><br><span class="line">            char_to_word_offset = []</span><br><span class="line">            prev_is_whitespace = <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">for</span> c <span class="keyword">in</span> paragraph_text:</span><br><span class="line">                <span class="keyword">if</span> is_whitespace(c):</span><br><span class="line">                    prev_is_whitespace = <span class="keyword">True</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">if</span> prev_is_whitespace:</span><br><span class="line">                        doc_tokens.append(c)</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        doc_tokens[<span class="number">-1</span>] += c</span><br><span class="line">                    prev_is_whitespace = <span class="keyword">False</span></span><br><span class="line">                char_to_word_offset.append(len(doc_tokens) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> qa <span class="keyword">in</span> paragraph[<span class="string">"qas"</span>]:</span><br><span class="line">                qas_id = qa[<span class="string">"id"</span>]</span><br><span class="line">                question_text = qa[<span class="string">"question"</span>]</span><br><span class="line">                start_position = <span class="keyword">None</span></span><br><span class="line">                end_position = <span class="keyword">None</span></span><br><span class="line">                orig_answer_text = <span class="keyword">None</span></span><br><span class="line">                <span class="keyword">if</span> is_training:</span><br><span class="line">                    <span class="keyword">if</span> len(qa[<span class="string">"answers"</span>]) != <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">raise</span> ValueError(</span><br><span class="line">                            <span class="string">"For training, each question should have exactly 1 answer."</span>)</span><br><span class="line">                    answer = qa[<span class="string">"answers"</span>][<span class="number">0</span>]</span><br><span class="line">                    orig_answer_text = answer[<span class="string">"text"</span>]</span><br><span class="line">                    answer_offset = answer[<span class="string">"answer_start"</span>]</span><br><span class="line">                    answer_length = len(orig_answer_text)</span><br><span class="line">                    start_position = char_to_word_offset[answer_offset]</span><br><span class="line">                    end_position = char_to_word_offset[answer_offset + answer_length - <span class="number">1</span>]</span><br><span class="line">                    <span class="comment"># Only add answers where the text can be exactly recovered from the</span></span><br><span class="line">                    <span class="comment"># document. If this CAN'T happen it's likely due to weird Unicode</span></span><br><span class="line">                    <span class="comment"># stuff so we will just skip the example.</span></span><br><span class="line">                    <span class="comment">#</span></span><br><span class="line">                    <span class="comment"># Note that this means for training mode, every example is NOT</span></span><br><span class="line">                    <span class="comment"># guaranteed to be preserved.</span></span><br><span class="line">                    actual_text = <span class="string">" "</span>.join(doc_tokens[start_position:(end_position + <span class="number">1</span>)])</span><br><span class="line">                    cleaned_answer_text = <span class="string">" "</span>.join(</span><br><span class="line">                        tokenization.whitespace_tokenize(orig_answer_text))</span><br><span class="line">                    <span class="keyword">if</span> actual_text.find(cleaned_answer_text) == <span class="number">-1</span>:</span><br><span class="line">                        tf.logging.warning(<span class="string">"Could not find answer: '%s' vs. '%s'"</span>,</span><br><span class="line">                                           actual_text, cleaned_answer_text)</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">                example = SquadExample(</span><br><span class="line">                    qas_id=qas_id,</span><br><span class="line">                    question_text=question_text,</span><br><span class="line">                    doc_tokens=doc_tokens,</span><br><span class="line">                    orig_answer_text=orig_answer_text,</span><br><span class="line">                    start_position=start_position,</span><br><span class="line">                    end_position=end_position)</span><br><span class="line">                examples.append(example)</span><br><span class="line">    <span class="keyword">return</span> examples</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_check_is_max_context</span><span class="params">(doc_spans, cur_span_index, position)</span>:</span></span><br><span class="line">    <span class="string">"""Check if this is the 'max context' doc span for the token."""</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Because of the sliding window approach taken to scoring documents, a single</span></span><br><span class="line">    <span class="comment"># token can appear in multiple documents. E.g.</span></span><br><span class="line">    <span class="comment">#  Doc: the man went to the store and bought a gallon of milk</span></span><br><span class="line">    <span class="comment">#  Span A: the man went to the</span></span><br><span class="line">    <span class="comment">#  Span B: to the store and bought</span></span><br><span class="line">    <span class="comment">#  Span C: and bought a gallon of</span></span><br><span class="line">    <span class="comment">#  ...</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># Now the word 'bought' will have two scores from spans B and C. We only</span></span><br><span class="line">    <span class="comment"># want to consider the score with "maximum context", which we define as</span></span><br><span class="line">    <span class="comment"># the *minimum* of its left and right context (the *sum* of left and</span></span><br><span class="line">    <span class="comment"># right context will always be the same, of course).</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># In the example the maximum context for 'bought' would be span C since</span></span><br><span class="line">    <span class="comment"># it has 1 left context and 3 right context, while span B has 4 left context</span></span><br><span class="line">    <span class="comment"># and 0 right context.</span></span><br><span class="line">    best_score = <span class="keyword">None</span></span><br><span class="line">    best_span_index = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">for</span> (span_index, doc_span) <span class="keyword">in</span> enumerate(doc_spans):</span><br><span class="line">        end = doc_span.start + doc_span.length - <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> position &lt; doc_span.start:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> position &gt; end:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        num_left_context = position - doc_span.start</span><br><span class="line">        num_right_context = end - position</span><br><span class="line">        score = min(num_left_context, num_right_context) + <span class="number">0.01</span> * doc_span.length</span><br><span class="line">        <span class="keyword">if</span> best_score <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> score &gt; best_score:</span><br><span class="line">            best_score = score</span><br><span class="line">            best_span_index = span_index</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cur_span_index == best_span_index</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vocab_file_path = <span class="string">"/home/b418/jupyter_workspace/B418_common/袁宵/model/BERT/uncased_L-12_H-768_A-12/vocab.txt"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = tokenization.FullTokenizer(vocab_file=vocab_file_path, do_lower_case=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(tokenizer.tokenize(<span class="string">"To whom did the Virgin Mary allegedly appear in 1858 in Lourdes France?"</span>))</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;to&#39;, &#39;whom&#39;, &#39;did&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;allegedly&#39;, &#39;appear&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;in&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;france&#39;, &#39;?&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tokenizer.tokenize(<span class="string">"Lourdes"</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;lou&#39;, &#39;##rdes&#39;]
+</code></pre><h2 id="SQuAD-data-train-v1-1-json"><a href="#SQuAD-data-train-v1-1-json" class="headerlink" title="SQuAD_data/train-v1.1.json"></a>SQuAD_data/train-v1.1.json</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input_file_path = <span class="string">"/home/b418/jupyter_workspace/B418_common/袁宵/data/SQuAD_data/train-v1.1.json"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.gfile.Open(input_file_path, <span class="string">"r"</span>) <span class="keyword">as</span> reader:</span><br><span class="line">    input_data = json.load(reader)[<span class="string">"data"</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a_input_data = input_data[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="paragraph"><a href="#paragraph" class="headerlink" title="paragraph"></a>paragraph</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> paragraph <span class="keyword">in</span> a_input_data[<span class="string">"paragraphs"</span>][:<span class="number">2</span>]:</span><br><span class="line">    print(<span class="string">'-'</span>*<span class="number">100</span>)</span><br><span class="line">    pprint.pprint(paragraph)</span><br></pre></td></tr></table></figure>
+<pre><code>----------------------------------------------------------------------------------------------------
+{&#39;context&#39;: &#39;Architecturally, the school has a Catholic character. Atop the &#39;
+            &quot;Main Building&#39;s gold dome is a golden statue of the Virgin Mary. &quot;
+            &#39;Immediately in front of the Main Building and facing it, is a &#39;
+            &#39;copper statue of Christ with arms upraised with the legend &#39;
+            &#39;&quot;Venite Ad Me Omnes&quot;. Next to the Main Building is the Basilica &#39;
+            &#39;of the Sacred Heart. Immediately behind the basilica is the &#39;
+            &#39;Grotto, a Marian place of prayer and reflection. It is a replica &#39;
+            &#39;of the grotto at Lourdes, France where the Virgin Mary reputedly &#39;
+            &#39;appeared to Saint Bernadette Soubirous in 1858. At the end of the &#39;
+            &#39;main drive (and in a direct line that connects through 3 statues &#39;
+            &#39;and the Gold Dome), is a simple, modern stone statue of Mary.&#39;,
+ &#39;qas&#39;: [{&#39;answers&#39;: [{&#39;answer_start&#39;: 515,
+                       &#39;text&#39;: &#39;Saint Bernadette Soubirous&#39;}],
+          &#39;id&#39;: &#39;5733be284776f41900661182&#39;,
+          &#39;question&#39;: &#39;To whom did the Virgin Mary allegedly appear in 1858 in &#39;
+                      &#39;Lourdes France?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 188,
+                       &#39;text&#39;: &#39;a copper statue of Christ&#39;}],
+          &#39;id&#39;: &#39;5733be284776f4190066117f&#39;,
+          &#39;question&#39;: &#39;What is in front of the Notre Dame Main Building?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 279, &#39;text&#39;: &#39;the Main Building&#39;}],
+          &#39;id&#39;: &#39;5733be284776f41900661180&#39;,
+          &#39;question&#39;: &#39;The Basilica of the Sacred heart at Notre Dame is &#39;
+                      &#39;beside to which structure?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 381,
+                       &#39;text&#39;: &#39;a Marian place of prayer and reflection&#39;}],
+          &#39;id&#39;: &#39;5733be284776f41900661181&#39;,
+          &#39;question&#39;: &#39;What is the Grotto at Notre Dame?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 92,
+                       &#39;text&#39;: &#39;a golden statue of the Virgin Mary&#39;}],
+          &#39;id&#39;: &#39;5733be284776f4190066117e&#39;,
+          &#39;question&#39;: &#39;What sits on top of the Main Building at Notre Dame?&#39;}]}
+----------------------------------------------------------------------------------------------------
+{&#39;context&#39;: &quot;As at most other universities, Notre Dame&#39;s students run a number &quot;
+            &#39;of news media outlets. The nine student-run outlets include three &#39;
+            &#39;newspapers, both a radio and television station, and several &#39;
+            &#39;magazines and journals. Begun as a one-page journal in September &#39;
+            &#39;1876, the Scholastic magazine is issued twice monthly and claims &#39;
+            &#39;to be the oldest continuous collegiate publication in the United &#39;
+            &#39;States. The other magazine, The Juggler, is released twice a year &#39;
+            &#39;and focuses on student literature and artwork. The Dome yearbook &#39;
+            &#39;is published annually. The newspapers have varying publication &#39;
+            &#39;interests, with The Observer published daily and mainly reporting &#39;
+            &#39;university and other news, and staffed by students from both &#39;
+            &quot;Notre Dame and Saint Mary&#39;s College. Unlike Scholastic and The &quot;
+            &#39;Dome, The Observer is an independent publication and does not &#39;
+            &#39;have a faculty advisor or any editorial oversight from the &#39;
+            &#39;University. In 1987, when some students believed that The &#39;
+            &#39;Observer began to show a conservative bias, a liberal newspaper, &#39;
+            &#39;Common Sense was published. Likewise, in 2003, when other &#39;
+            &#39;students believed that the paper showed a liberal bias, the &#39;
+            &#39;conservative paper Irish Rover went into production. Neither &#39;
+            &#39;paper is published as often as The Observer; however, all three &#39;
+            &#39;are distributed to all students. Finally, in Spring 2008 an &#39;
+            &#39;undergraduate journal for political science research, Beyond &#39;
+            &#39;Politics, made its debut.&#39;,
+ &#39;qas&#39;: [{&#39;answers&#39;: [{&#39;answer_start&#39;: 248, &#39;text&#39;: &#39;September 1876&#39;}],
+          &#39;id&#39;: &#39;5733bf84d058e614000b61be&#39;,
+          &#39;question&#39;: &#39;When did the Scholastic Magazine of Notre dame begin &#39;
+                      &#39;publishing?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 441, &#39;text&#39;: &#39;twice&#39;}],
+          &#39;id&#39;: &#39;5733bf84d058e614000b61bf&#39;,
+          &#39;question&#39;: &quot;How often is Notre Dame&#39;s the Juggler published?&quot;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 598, &#39;text&#39;: &#39;The Observer&#39;}],
+          &#39;id&#39;: &#39;5733bf84d058e614000b61c0&#39;,
+          &#39;question&#39;: &#39;What is the daily student paper at Notre Dame called?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 126, &#39;text&#39;: &#39;three&#39;}],
+          &#39;id&#39;: &#39;5733bf84d058e614000b61bd&#39;,
+          &#39;question&#39;: &#39;How many student news papers are found at Notre Dame?&#39;},
+         {&#39;answers&#39;: [{&#39;answer_start&#39;: 908, &#39;text&#39;: &#39;1987&#39;}],
+          &#39;id&#39;: &#39;5733bf84d058e614000b61c1&#39;,
+          &#39;question&#39;: &#39;In what year did the student paper Common Sense begin &#39;
+                      &#39;publication at Notre Dame?&#39;}]}
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">examples = read_squad_examples(input_file_path, <span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">len(examples)</span><br></pre></td></tr></table></figure>
+<pre><code>87599
+</code></pre><h1 id="read-squad-examples"><a href="#read-squad-examples" class="headerlink" title="read_squad_examples"></a>read_squad_examples</h1><h2 id="examples-doc-tokens"><a href="#examples-doc-tokens" class="headerlink" title="examples - doc_tokens"></a>examples - doc_tokens</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a_paragraph_text = a_input_data[<span class="string">"paragraphs"</span>][<span class="number">0</span>][<span class="string">'context'</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a_paragraph_text = <span class="string">'''Architecturally, the school has a Catholic character. Atop the Main Building's gold dome is a golden statue of the Virgin Mary. Immediately in front of the Main Building and facing it, is a copper statue of Christ with arms upraised with the legend "Venite Ad Me Omnes". Next to the Main Building is the Basilica of the Sacred Heart.'''</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(a_paragraph_text))</span><br><span class="line">print(a_paragraph_text)</span><br></pre></td></tr></table></figure>
+<pre><code>333
+Architecturally, the school has a Catholic character. Atop the Main Building&#39;s gold dome is a golden statue of the Virgin Mary. Immediately in front of the Main Building and facing it, is a copper statue of Christ with arms upraised with the legend &quot;Venite Ad Me Omnes&quot;. Next to the Main Building is the Basilica of the Sacred Heart.
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">doc_tokens = []</span><br><span class="line">char_to_word_offset = []</span><br><span class="line">prev_is_whitespace = <span class="keyword">True</span></span><br><span class="line"><span class="comment"># for c in paragraph_text:</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> a_paragraph_text:</span><br><span class="line">    <span class="keyword">if</span> is_whitespace(c):</span><br><span class="line">        prev_is_whitespace = <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> prev_is_whitespace:</span><br><span class="line">            doc_tokens.append(c)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            doc_tokens[<span class="number">-1</span>] += c</span><br><span class="line">        prev_is_whitespace = <span class="keyword">False</span></span><br><span class="line">    char_to_word_offset.append(len(doc_tokens) - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(doc_tokens))</span><br><span class="line">print(doc_tokens)</span><br></pre></td></tr></table></figure>
+<pre><code>59
+[&#39;Architecturally,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;Catholic&#39;, &#39;character.&#39;, &#39;Atop&#39;, &#39;the&#39;, &#39;Main&#39;, &quot;Building&#39;s&quot;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary.&#39;, &#39;Immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;upraised&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;Venite&#39;, &#39;Ad&#39;, &#39;Me&#39;, &#39;Omnes&quot;.&#39;, &#39;Next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Sacred&#39;, &#39;Heart.&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(char_to_word_offset))</span><br><span class="line">print(char_to_word_offset)</span><br></pre></td></tr></table></figure>
+<pre><code>333
+[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13, 14, 14, 15, 15, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 23, 23, 23, 23, 23, 23, 24, 24, 24, 25, 25, 25, 25, 26, 26, 26, 26, 26, 27, 27, 27, 27, 27, 27, 27, 27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 29, 29, 29, 30, 30, 30, 30, 31, 31, 31, 32, 32, 33, 33, 33, 33, 33, 33, 33, 34, 34, 34, 34, 34, 34, 34, 35, 35, 35, 36, 36, 36, 36, 36, 36, 36, 37, 37, 37, 37, 37, 38, 38, 38, 38, 38, 39, 39, 39, 39, 39, 39, 39, 39, 39, 40, 40, 40, 40, 40, 41, 41, 41, 41, 42, 42, 42, 42, 42, 42, 42, 43, 43, 43, 43, 43, 43, 43, 43, 44, 44, 44, 45, 45, 45, 46, 46, 46, 46, 46, 46, 46, 46, 47, 47, 47, 47, 47, 48, 48, 48, 49, 49, 49, 49, 50, 50, 50, 50, 50, 51, 51, 51, 51, 51, 51, 51, 51, 51, 52, 52, 52, 53, 53, 53, 53, 54, 54, 54, 54, 54, 54, 54, 54, 54, 55, 55, 55, 56, 56, 56, 56, 57, 57, 57, 57, 57, 57, 57, 58, 58, 58, 58, 58, 58]
+</code></pre><p>‘Architecturally, the school has a Catholic character. Atop the ‘<br>“Main Building’s gold dome is a golden statue of the Virgin Mary. “<br>‘Immediately in front of the Main Building and facing it, is a ‘<br>‘copper statue of Christ with arms upraised with the legend ‘<br>‘“Venite Ad Me Omnes”. Next to the Main Building is the Basilica ‘<br>‘of the Sacred Heart. Immediately behind the basilica is the ‘<br>‘Grotto, a Marian place of prayer and reflection. It is a replica ‘<br>‘of the grotto at Lourdes, France where the Virgin Mary reputedly ‘<br>‘appeared to Saint Bernadette Soubirous in 1858. At the end of the ‘<br>‘main drive (and in a direct line that connects through 3 statues ‘<br>‘and the Gold Dome), is a simple, modern stone statue of Mary.’,</p>
+<p>[‘Architecturally,’, ‘the’, ‘school’, ‘has’, ‘a’, ‘Catholic’, ‘character.’, ‘Atop’, ‘the’,<br> ‘Main’, “Building’s”, ‘gold’, ‘dome’, ‘is’, ‘a’, ‘golden’, ‘statue’, ‘of’, ‘the’, ‘Virgin’, ‘Mary.’,<br> ‘Immediately’, ‘in’, ‘front’, ‘of’, ‘the’, ‘Main’, ‘Building’, ‘and’, ‘facing’, ‘it,’, ‘is’, ‘a’,<br> ‘copper’, ‘statue’, ‘of’, ‘Christ’, ‘with’, ‘arms’, ‘upraised’, ‘with’, ‘the’, ‘legend’,<br> ‘“Venite’, ‘Ad’, ‘Me’, ‘Omnes”.’, ‘Next’, ‘to’, ‘the’, ‘Main’, ‘Building’, ‘is’, ‘the’, ‘Basilica’,<br> ‘of’, ‘the’, ‘Sacred’, ‘Heart.’, ‘Immediately’, ‘behind’, ‘the’, ‘basilica’, ‘is’, ‘the’,<br> ‘Grotto,’, ‘a’, ‘Marian’, ‘place’, ‘of’, ‘prayer’, ‘and’, ‘reflection.’, ‘It’, ‘is’, ‘a’, ‘replica’,<br> ‘of’, ‘the’, ‘grotto’, ‘at’, ‘Lourdes,’, ‘France’, ‘where’, ‘the’, ‘Virgin’, ‘Mary’, ‘reputedly’,<br> ‘appeared’, ‘to’, ‘Saint’, ‘Bernadette’, ‘Soubirous’, ‘in’, ‘1858.’, ‘At’, ‘the’, ‘end’, ‘of’, ‘the’,<br> ‘main’, ‘drive’, ‘(and’, ‘in’, ‘a’, ‘direct’, ‘line’, ‘that’, ‘connects’, ‘through’, ‘3’, ‘statues’,<br> ‘and’, ‘the’, ‘Gold’, ‘Dome),’, ‘is’, ‘a’, ‘simple,’, ‘modern’, ‘stone’, ‘statue’, ‘of’, ‘Mary.’]</p>
+<h2 id="查看原始语料转换成的-examples-内容"><a href="#查看原始语料转换成的-examples-内容" class="headerlink" title="查看原始语料转换成的 examples 内容"></a>查看原始语料转换成的 examples 内容</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">a_example_doc_tokens = <span class="keyword">None</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">    example = examples[i]</span><br><span class="line">    print(example.qas_id)</span><br><span class="line">    n = <span class="number">100</span> - len(example.question_text) - len(example.orig_answer_text,)</span><br><span class="line">    print(example.question_text, <span class="string">'-'</span>*n, example.orig_answer_text)</span><br><span class="line">    print(example.start_position, <span class="string">'-'</span>*n, example.end_position)</span><br><span class="line">    print(example.doc_tokens)</span><br><span class="line">    print(example.doc_tokens[<span class="number">90</span>], example.doc_tokens[<span class="number">91</span>], example.doc_tokens[<span class="number">92</span>])</span><br><span class="line">    a_example_doc_tokens = example.doc_tokens</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>5733be284776f41900661182
+To whom did the Virgin Mary allegedly appear in 1858 in Lourdes France? --- Saint Bernadette Soubirous
+90 --- 92
+[&#39;Architecturally,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;Catholic&#39;, &#39;character.&#39;, &#39;Atop&#39;, &#39;the&#39;, &#39;Main&#39;, &quot;Building&#39;s&quot;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary.&#39;, &#39;Immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;upraised&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;Venite&#39;, &#39;Ad&#39;, &#39;Me&#39;, &#39;Omnes&quot;.&#39;, &#39;Next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Sacred&#39;, &#39;Heart.&#39;, &#39;Immediately&#39;, &#39;behind&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Grotto,&#39;, &#39;a&#39;, &#39;Marian&#39;, &#39;place&#39;, &#39;of&#39;, &#39;prayer&#39;, &#39;and&#39;, &#39;reflection.&#39;, &#39;It&#39;, &#39;is&#39;, &#39;a&#39;, &#39;replica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;grotto&#39;, &#39;at&#39;, &#39;Lourdes,&#39;, &#39;France&#39;, &#39;where&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary&#39;, &#39;reputedly&#39;, &#39;appeared&#39;, &#39;to&#39;, &#39;Saint&#39;, &#39;Bernadette&#39;, &#39;Soubirous&#39;, &#39;in&#39;, &#39;1858.&#39;, &#39;At&#39;, &#39;the&#39;, &#39;end&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;drive&#39;, &#39;(and&#39;, &#39;in&#39;, &#39;a&#39;, &#39;direct&#39;, &#39;line&#39;, &#39;that&#39;, &#39;connects&#39;, &#39;through&#39;, &#39;3&#39;, &#39;statues&#39;, &#39;and&#39;, &#39;the&#39;, &#39;Gold&#39;, &#39;Dome),&#39;, &#39;is&#39;, &#39;a&#39;, &#39;simple,&#39;, &#39;modern&#39;, &#39;stone&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Mary.&#39;]
+Saint Bernadette Soubirous
+
+
+
+
+5733be284776f4190066117f
+What is in front of the Notre Dame Main Building? -------------------------- a copper statue of Christ
+32 -------------------------- 36
+[&#39;Architecturally,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;Catholic&#39;, &#39;character.&#39;, &#39;Atop&#39;, &#39;the&#39;, &#39;Main&#39;, &quot;Building&#39;s&quot;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary.&#39;, &#39;Immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;upraised&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;Venite&#39;, &#39;Ad&#39;, &#39;Me&#39;, &#39;Omnes&quot;.&#39;, &#39;Next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Sacred&#39;, &#39;Heart.&#39;, &#39;Immediately&#39;, &#39;behind&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Grotto,&#39;, &#39;a&#39;, &#39;Marian&#39;, &#39;place&#39;, &#39;of&#39;, &#39;prayer&#39;, &#39;and&#39;, &#39;reflection.&#39;, &#39;It&#39;, &#39;is&#39;, &#39;a&#39;, &#39;replica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;grotto&#39;, &#39;at&#39;, &#39;Lourdes,&#39;, &#39;France&#39;, &#39;where&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary&#39;, &#39;reputedly&#39;, &#39;appeared&#39;, &#39;to&#39;, &#39;Saint&#39;, &#39;Bernadette&#39;, &#39;Soubirous&#39;, &#39;in&#39;, &#39;1858.&#39;, &#39;At&#39;, &#39;the&#39;, &#39;end&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;drive&#39;, &#39;(and&#39;, &#39;in&#39;, &#39;a&#39;, &#39;direct&#39;, &#39;line&#39;, &#39;that&#39;, &#39;connects&#39;, &#39;through&#39;, &#39;3&#39;, &#39;statues&#39;, &#39;and&#39;, &#39;the&#39;, &#39;Gold&#39;, &#39;Dome),&#39;, &#39;is&#39;, &#39;a&#39;, &#39;simple,&#39;, &#39;modern&#39;, &#39;stone&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Mary.&#39;]
+Saint Bernadette Soubirous
+</code></pre><h1 id="convert-examples-to-features"><a href="#convert-examples-to-features" class="headerlink" title="convert_examples_to_features"></a>convert_examples_to_features</h1><h2 id="doc-tokens-2-all-doc-tokens"><a href="#doc-tokens-2-all-doc-tokens" class="headerlink" title="doc_tokens 2 all_doc_tokens"></a>doc_tokens 2 all_doc_tokens</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(a_example_doc_tokens))</span><br><span class="line">print(a_example_doc_tokens)</span><br></pre></td></tr></table></figure>
+<pre><code>124
+[&#39;Architecturally,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;Catholic&#39;, &#39;character.&#39;, &#39;Atop&#39;, &#39;the&#39;, &#39;Main&#39;, &quot;Building&#39;s&quot;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary.&#39;, &#39;Immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;upraised&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;Venite&#39;, &#39;Ad&#39;, &#39;Me&#39;, &#39;Omnes&quot;.&#39;, &#39;Next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;Main&#39;, &#39;Building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;Sacred&#39;, &#39;Heart.&#39;, &#39;Immediately&#39;, &#39;behind&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;is&#39;, &#39;the&#39;, &#39;Grotto,&#39;, &#39;a&#39;, &#39;Marian&#39;, &#39;place&#39;, &#39;of&#39;, &#39;prayer&#39;, &#39;and&#39;, &#39;reflection.&#39;, &#39;It&#39;, &#39;is&#39;, &#39;a&#39;, &#39;replica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;grotto&#39;, &#39;at&#39;, &#39;Lourdes,&#39;, &#39;France&#39;, &#39;where&#39;, &#39;the&#39;, &#39;Virgin&#39;, &#39;Mary&#39;, &#39;reputedly&#39;, &#39;appeared&#39;, &#39;to&#39;, &#39;Saint&#39;, &#39;Bernadette&#39;, &#39;Soubirous&#39;, &#39;in&#39;, &#39;1858.&#39;, &#39;At&#39;, &#39;the&#39;, &#39;end&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;drive&#39;, &#39;(and&#39;, &#39;in&#39;, &#39;a&#39;, &#39;direct&#39;, &#39;line&#39;, &#39;that&#39;, &#39;connects&#39;, &#39;through&#39;, &#39;3&#39;, &#39;statues&#39;, &#39;and&#39;, &#39;the&#39;, &#39;Gold&#39;, &#39;Dome),&#39;, &#39;is&#39;, &#39;a&#39;, &#39;simple,&#39;, &#39;modern&#39;, &#39;stone&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;Mary.&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tok_to_orig_index = []</span><br><span class="line">orig_to_tok_index = []</span><br><span class="line">all_doc_tokens = []</span><br><span class="line"><span class="comment">#for (i, token) in enumerate(example.doc_tokens):</span></span><br><span class="line"><span class="keyword">for</span> (i, token) <span class="keyword">in</span> enumerate(a_example_doc_tokens):</span><br><span class="line">    orig_to_tok_index.append(len(all_doc_tokens))</span><br><span class="line">    sub_tokens = tokenizer.tokenize(token)</span><br><span class="line">    <span class="keyword">for</span> sub_token <span class="keyword">in</span> sub_tokens:</span><br><span class="line">        tok_to_orig_index.append(i)</span><br><span class="line">        all_doc_tokens.append(sub_token)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(orig_to_tok_index))</span><br><span class="line">print(orig_to_tok_index)</span><br></pre></td></tr></table></figure>
+<pre><code>124
+[0, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 38, 39, 40, 41, 42, 43, 44, 45, 46, 49, 50, 51, 52, 56, 57, 58, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 75, 76, 77, 78, 79, 80, 81, 84, 85, 86, 87, 88, 89, 90, 92, 93, 94, 95, 96, 97, 98, 100, 101, 104, 105, 106, 107, 108, 109, 111, 112, 113, 114, 117, 121, 122, 124, 125, 126, 127, 128, 129, 130, 131, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 148, 149, 150, 152, 153, 154, 155, 156]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(tok_to_orig_index))</span><br><span class="line">print(tok_to_orig_index)</span><br></pre></td></tr></table></figure>
+<pre><code>158
+[0, 0, 0, 1, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 10, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 39, 39, 40, 41, 42, 43, 43, 43, 43, 44, 45, 46, 46, 46, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 58, 59, 60, 61, 62, 63, 64, 65, 65, 65, 66, 67, 68, 69, 70, 71, 72, 72, 73, 74, 75, 76, 77, 78, 79, 79, 80, 81, 81, 81, 82, 83, 84, 85, 86, 87, 87, 88, 89, 90, 91, 91, 91, 92, 92, 92, 92, 93, 94, 94, 95, 96, 97, 98, 99, 100, 101, 102, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 115, 115, 116, 117, 118, 118, 119, 120, 121, 122, 123, 123]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(len(all_doc_tokens))</span><br><span class="line">print(all_doc_tokens)</span><br></pre></td></tr></table></figure>
+<pre><code>158
+[&#39;architectural&#39;, &#39;##ly&#39;, &#39;,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;catholic&#39;, &#39;character&#39;, &#39;.&#39;, &#39;atop&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;.&#39;, &#39;immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it&#39;, &#39;,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;up&#39;, &#39;##rai&#39;, &#39;##sed&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;&#39;, &#39;ve&#39;, &#39;##ni&#39;, &#39;##te&#39;, &#39;ad&#39;, &#39;me&#39;, &#39;om&#39;, &#39;##nes&#39;, &#39;&quot;&#39;, &#39;.&#39;, &#39;next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;sacred&#39;, &#39;heart&#39;, &#39;.&#39;, &#39;immediately&#39;, &#39;behind&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;is&#39;, &#39;the&#39;, &#39;gr&#39;, &#39;##otto&#39;, &#39;,&#39;, &#39;a&#39;, &#39;marian&#39;, &#39;place&#39;, &#39;of&#39;, &#39;prayer&#39;, &#39;and&#39;, &#39;reflection&#39;, &#39;.&#39;, &#39;it&#39;, &#39;is&#39;, &#39;a&#39;, &#39;replica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;gr&#39;, &#39;##otto&#39;, &#39;at&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;,&#39;, &#39;france&#39;, &#39;where&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;reputed&#39;, &#39;##ly&#39;, &#39;appeared&#39;, &#39;to&#39;, &#39;saint&#39;, &#39;bern&#39;, &#39;##ade&#39;, &#39;##tte&#39;, &#39;so&#39;, &#39;##ub&#39;, &#39;##iro&#39;, &#39;##us&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;.&#39;, &#39;at&#39;, &#39;the&#39;, &#39;end&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;drive&#39;, &#39;(&#39;, &#39;and&#39;, &#39;in&#39;, &#39;a&#39;, &#39;direct&#39;, &#39;line&#39;, &#39;that&#39;, &#39;connects&#39;, &#39;through&#39;, &#39;3&#39;, &#39;statues&#39;, &#39;and&#39;, &#39;the&#39;, &#39;gold&#39;, &#39;dome&#39;, &#39;)&#39;, &#39;,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;simple&#39;, &#39;,&#39;, &#39;modern&#39;, &#39;stone&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;mary&#39;, &#39;.&#39;]
+</code></pre><h2 id="使用滑动窗口解决文档太长问题"><a href="#使用滑动窗口解决文档太长问题" class="headerlink" title="使用滑动窗口解决文档太长问题"></a>使用滑动窗口解决文档太长问题</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># The -3 accounts for [CLS], [SEP] and [SEP]</span></span><br><span class="line"><span class="comment">#max_tokens_for_doc = max_seq_length - len(query_tokens) - 3</span></span><br><span class="line">max_tokens_for_doc = <span class="number">100</span> - <span class="number">20</span> <span class="number">-3</span></span><br><span class="line">doc_stride = <span class="number">128</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># We can have documents that are longer than the maximum sequence length.</span></span><br><span class="line"><span class="comment"># To deal with this we do a sliding window approach, where we take chunks</span></span><br><span class="line"><span class="comment"># of the up to our max length with a stride of `doc_stride`.</span></span><br><span class="line">_DocSpan = collections.namedtuple(  <span class="comment"># pylint: disable=invalid-name</span></span><br><span class="line">    <span class="string">"DocSpan"</span>, [<span class="string">"start"</span>, <span class="string">"length"</span>])</span><br><span class="line">doc_spans = []</span><br><span class="line">start_offset = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> start_offset &lt; len(all_doc_tokens):</span><br><span class="line">    length = len(all_doc_tokens) - start_offset</span><br><span class="line">    <span class="keyword">if</span> length &gt; max_tokens_for_doc:</span><br><span class="line">        length = max_tokens_for_doc</span><br><span class="line">    doc_spans.append(_DocSpan(start=start_offset, length=length))</span><br><span class="line">    <span class="keyword">if</span> start_offset + length == len(all_doc_tokens):</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    start_offset += min(length, doc_stride)</span><br><span class="line">print(<span class="string">"max_tokens_for_doc:\t"</span>,max_tokens_for_doc)</span><br><span class="line">print(<span class="string">"doc_spans:\t"</span>,doc_spans)</span><br></pre></td></tr></table></figure>
+<pre><code>max_tokens_for_doc:     77
+doc_spans:     [DocSpan(start=0, length=77), DocSpan(start=77, length=77), DocSpan(start=154, length=4)]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">doc_span = doc_spans[<span class="number">0</span>]</span><br><span class="line">doc_span</span><br></pre></td></tr></table></figure>
+<pre><code>DocSpan(start=0, length=77)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(doc_span.start)</span><br><span class="line">print(doc_span.length)</span><br></pre></td></tr></table></figure>
+<pre><code>0
+77
+</code></pre><h2 id="tokens-token-to-orig-map-token-is-max-context-segment-ids"><a href="#tokens-token-to-orig-map-token-is-max-context-segment-ids" class="headerlink" title="tokens = [], token_to_orig_map = {}, token_is_max_context = {}, segment_ids = []"></a>tokens = [], token_to_orig_map = {}, token_is_max_context = {}, segment_ids = []</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">example = examples[<span class="number">0</span>]</span><br><span class="line">query_tokens = tokenizer.tokenize(example.question_text)</span><br><span class="line">print(query_tokens)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;to&#39;, &#39;whom&#39;, &#39;did&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;allegedly&#39;, &#39;appear&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;in&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;france&#39;, &#39;?&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (doc_span_index, doc_span) <span class="keyword">in</span> enumerate(doc_spans):</span><br><span class="line">    tokens = []</span><br><span class="line">    token_to_orig_map = &#123;&#125;</span><br><span class="line">    token_is_max_context = &#123;&#125;</span><br><span class="line">    segment_ids = []</span><br><span class="line">    tokens.append(<span class="string">"[CLS]"</span>)</span><br><span class="line">    segment_ids.append(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> token <span class="keyword">in</span> query_tokens:</span><br><span class="line">        tokens.append(token)</span><br><span class="line">        segment_ids.append(<span class="number">0</span>)</span><br><span class="line">    tokens.append(<span class="string">"[SEP]"</span>)</span><br><span class="line">    segment_ids.append(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(doc_span.length):</span><br><span class="line">        split_token_index = doc_span.start + i</span><br><span class="line">        token_to_orig_map[len(tokens)] = tok_to_orig_index[split_token_index]</span><br><span class="line"></span><br><span class="line">        is_max_context = _check_is_max_context(doc_spans, doc_span_index,</span><br><span class="line">                                               split_token_index)</span><br><span class="line">        token_is_max_context[len(tokens)] = is_max_context</span><br><span class="line">        tokens.append(all_doc_tokens[split_token_index])</span><br><span class="line">        segment_ids.append(<span class="number">1</span>)</span><br><span class="line">    tokens.append(<span class="string">"[SEP]"</span>)</span><br><span class="line">    segment_ids.append(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    input_ids = tokenizer.convert_tokens_to_ids(tokens)</span><br><span class="line">    print(<span class="string">"tokens:"</span>,len(tokens),<span class="string">'\n'</span>,tokens)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">"input_ids:"</span>,len(input_ids),<span class="string">'\n'</span>,input_ids)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">"segment_ids:"</span>,len(segment_ids),<span class="string">'\n'</span>,segment_ids)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">"token_is_max_context:"</span>,len(token_is_max_context),<span class="string">'\n'</span>,token_is_max_context)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">"token_to_orig_maplen:"</span>,len(token_to_orig_map),<span class="string">'\n'</span>,token_to_orig_map)</span><br><span class="line">    print(<span class="string">'\n'</span>)</span><br><span class="line">    print(<span class="string">'-'</span>*<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>tokens: 95
+ [&#39;[CLS]&#39;, &#39;to&#39;, &#39;whom&#39;, &#39;did&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;allegedly&#39;, &#39;appear&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;in&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;france&#39;, &#39;?&#39;, &#39;[SEP]&#39;, &#39;architectural&#39;, &#39;##ly&#39;, &#39;,&#39;, &#39;the&#39;, &#39;school&#39;, &#39;has&#39;, &#39;a&#39;, &#39;catholic&#39;, &#39;character&#39;, &#39;.&#39;, &#39;atop&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &quot;&#39;&quot;, &#39;s&#39;, &#39;gold&#39;, &#39;dome&#39;, &#39;is&#39;, &#39;a&#39;, &#39;golden&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;.&#39;, &#39;immediately&#39;, &#39;in&#39;, &#39;front&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &#39;and&#39;, &#39;facing&#39;, &#39;it&#39;, &#39;,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;copper&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;christ&#39;, &#39;with&#39;, &#39;arms&#39;, &#39;up&#39;, &#39;##rai&#39;, &#39;##sed&#39;, &#39;with&#39;, &#39;the&#39;, &#39;legend&#39;, &#39;&quot;&#39;, &#39;ve&#39;, &#39;##ni&#39;, &#39;##te&#39;, &#39;ad&#39;, &#39;me&#39;, &#39;om&#39;, &#39;##nes&#39;, &#39;&quot;&#39;, &#39;.&#39;, &#39;next&#39;, &#39;to&#39;, &#39;the&#39;, &#39;main&#39;, &#39;building&#39;, &#39;is&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;sacred&#39;, &#39;heart&#39;, &#39;.&#39;, &#39;immediately&#39;, &#39;behind&#39;, &#39;[SEP]&#39;]
+
+
+input_ids: 95
+ [101, 2000, 3183, 2106, 1996, 6261, 2984, 9382, 3711, 1999, 8517, 1999, 10223, 26371, 2605, 1029, 102, 6549, 2135, 1010, 1996, 2082, 2038, 1037, 3234, 2839, 1012, 10234, 1996, 2364, 2311, 1005, 1055, 2751, 8514, 2003, 1037, 3585, 6231, 1997, 1996, 6261, 2984, 1012, 3202, 1999, 2392, 1997, 1996, 2364, 2311, 1998, 5307, 2009, 1010, 2003, 1037, 6967, 6231, 1997, 4828, 2007, 2608, 2039, 14995, 6924, 2007, 1996, 5722, 1000, 2310, 3490, 2618, 4748, 2033, 18168, 5267, 1000, 1012, 2279, 2000, 1996, 2364, 2311, 2003, 1996, 13546, 1997, 1996, 6730, 2540, 1012, 3202, 2369, 102]
+
+
+segment_ids: 95
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+
+token_is_max_context: 77
+ {17: True, 18: True, 19: True, 20: True, 21: True, 22: True, 23: True, 24: True, 25: True, 26: True, 27: True, 28: True, 29: True, 30: True, 31: True, 32: True, 33: True, 34: True, 35: True, 36: True, 37: True, 38: True, 39: True, 40: True, 41: True, 42: True, 43: True, 44: True, 45: True, 46: True, 47: True, 48: True, 49: True, 50: True, 51: True, 52: True, 53: True, 54: True, 55: True, 56: True, 57: True, 58: True, 59: True, 60: True, 61: True, 62: True, 63: True, 64: True, 65: True, 66: True, 67: True, 68: True, 69: True, 70: True, 71: True, 72: True, 73: True, 74: True, 75: True, 76: True, 77: True, 78: True, 79: True, 80: True, 81: True, 82: True, 83: True, 84: True, 85: True, 86: True, 87: True, 88: True, 89: True, 90: True, 91: True, 92: True, 93: True}
+
+
+token_to_orig_maplen: 77
+ {17: 0, 18: 0, 19: 0, 20: 1, 21: 2, 22: 3, 23: 4, 24: 5, 25: 6, 26: 6, 27: 7, 28: 8, 29: 9, 30: 10, 31: 10, 32: 10, 33: 11, 34: 12, 35: 13, 36: 14, 37: 15, 38: 16, 39: 17, 40: 18, 41: 19, 42: 20, 43: 20, 44: 21, 45: 22, 46: 23, 47: 24, 48: 25, 49: 26, 50: 27, 51: 28, 52: 29, 53: 30, 54: 30, 55: 31, 56: 32, 57: 33, 58: 34, 59: 35, 60: 36, 61: 37, 62: 38, 63: 39, 64: 39, 65: 39, 66: 40, 67: 41, 68: 42, 69: 43, 70: 43, 71: 43, 72: 43, 73: 44, 74: 45, 75: 46, 76: 46, 77: 46, 78: 46, 79: 47, 80: 48, 81: 49, 82: 50, 83: 51, 84: 52, 85: 53, 86: 54, 87: 55, 88: 56, 89: 57, 90: 58, 91: 58, 92: 59, 93: 60}
+
+
+----------------------------------------------------------------------------------------------------
+tokens: 95
+ [&#39;[CLS]&#39;, &#39;to&#39;, &#39;whom&#39;, &#39;did&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;allegedly&#39;, &#39;appear&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;in&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;france&#39;, &#39;?&#39;, &#39;[SEP]&#39;, &#39;the&#39;, &#39;basilica&#39;, &#39;is&#39;, &#39;the&#39;, &#39;gr&#39;, &#39;##otto&#39;, &#39;,&#39;, &#39;a&#39;, &#39;marian&#39;, &#39;place&#39;, &#39;of&#39;, &#39;prayer&#39;, &#39;and&#39;, &#39;reflection&#39;, &#39;.&#39;, &#39;it&#39;, &#39;is&#39;, &#39;a&#39;, &#39;replica&#39;, &#39;of&#39;, &#39;the&#39;, &#39;gr&#39;, &#39;##otto&#39;, &#39;at&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;,&#39;, &#39;france&#39;, &#39;where&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;reputed&#39;, &#39;##ly&#39;, &#39;appeared&#39;, &#39;to&#39;, &#39;saint&#39;, &#39;bern&#39;, &#39;##ade&#39;, &#39;##tte&#39;, &#39;so&#39;, &#39;##ub&#39;, &#39;##iro&#39;, &#39;##us&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;.&#39;, &#39;at&#39;, &#39;the&#39;, &#39;end&#39;, &#39;of&#39;, &#39;the&#39;, &#39;main&#39;, &#39;drive&#39;, &#39;(&#39;, &#39;and&#39;, &#39;in&#39;, &#39;a&#39;, &#39;direct&#39;, &#39;line&#39;, &#39;that&#39;, &#39;connects&#39;, &#39;through&#39;, &#39;3&#39;, &#39;statues&#39;, &#39;and&#39;, &#39;the&#39;, &#39;gold&#39;, &#39;dome&#39;, &#39;)&#39;, &#39;,&#39;, &#39;is&#39;, &#39;a&#39;, &#39;simple&#39;, &#39;,&#39;, &#39;modern&#39;, &#39;stone&#39;, &#39;[SEP]&#39;]
+
+
+input_ids: 95
+ [101, 2000, 3183, 2106, 1996, 6261, 2984, 9382, 3711, 1999, 8517, 1999, 10223, 26371, 2605, 1029, 102, 1996, 13546, 2003, 1996, 24665, 23052, 1010, 1037, 14042, 2173, 1997, 7083, 1998, 9185, 1012, 2009, 2003, 1037, 15059, 1997, 1996, 24665, 23052, 2012, 10223, 26371, 1010, 2605, 2073, 1996, 6261, 2984, 22353, 2135, 2596, 2000, 3002, 16595, 9648, 4674, 2061, 12083, 9711, 2271, 1999, 8517, 1012, 2012, 1996, 2203, 1997, 1996, 2364, 3298, 1006, 1998, 1999, 1037, 3622, 2240, 2008, 8539, 2083, 1017, 11342, 1998, 1996, 2751, 8514, 1007, 1010, 2003, 1037, 3722, 1010, 2715, 2962, 102]
+
+
+segment_ids: 95
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+
+token_is_max_context: 77
+ {17: True, 18: True, 19: True, 20: True, 21: True, 22: True, 23: True, 24: True, 25: True, 26: True, 27: True, 28: True, 29: True, 30: True, 31: True, 32: True, 33: True, 34: True, 35: True, 36: True, 37: True, 38: True, 39: True, 40: True, 41: True, 42: True, 43: True, 44: True, 45: True, 46: True, 47: True, 48: True, 49: True, 50: True, 51: True, 52: True, 53: True, 54: True, 55: True, 56: True, 57: True, 58: True, 59: True, 60: True, 61: True, 62: True, 63: True, 64: True, 65: True, 66: True, 67: True, 68: True, 69: True, 70: True, 71: True, 72: True, 73: True, 74: True, 75: True, 76: True, 77: True, 78: True, 79: True, 80: True, 81: True, 82: True, 83: True, 84: True, 85: True, 86: True, 87: True, 88: True, 89: True, 90: True, 91: True, 92: True, 93: True}
+
+
+token_to_orig_maplen: 77
+ {17: 61, 18: 62, 19: 63, 20: 64, 21: 65, 22: 65, 23: 65, 24: 66, 25: 67, 26: 68, 27: 69, 28: 70, 29: 71, 30: 72, 31: 72, 32: 73, 33: 74, 34: 75, 35: 76, 36: 77, 37: 78, 38: 79, 39: 79, 40: 80, 41: 81, 42: 81, 43: 81, 44: 82, 45: 83, 46: 84, 47: 85, 48: 86, 49: 87, 50: 87, 51: 88, 52: 89, 53: 90, 54: 91, 55: 91, 56: 91, 57: 92, 58: 92, 59: 92, 60: 92, 61: 93, 62: 94, 63: 94, 64: 95, 65: 96, 66: 97, 67: 98, 68: 99, 69: 100, 70: 101, 71: 102, 72: 102, 73: 103, 74: 104, 75: 105, 76: 106, 77: 107, 78: 108, 79: 109, 80: 110, 81: 111, 82: 112, 83: 113, 84: 114, 85: 115, 86: 115, 87: 115, 88: 116, 89: 117, 90: 118, 91: 118, 92: 119, 93: 120}
+
+
+----------------------------------------------------------------------------------------------------
+tokens: 22
+ [&#39;[CLS]&#39;, &#39;to&#39;, &#39;whom&#39;, &#39;did&#39;, &#39;the&#39;, &#39;virgin&#39;, &#39;mary&#39;, &#39;allegedly&#39;, &#39;appear&#39;, &#39;in&#39;, &#39;1858&#39;, &#39;in&#39;, &#39;lou&#39;, &#39;##rdes&#39;, &#39;france&#39;, &#39;?&#39;, &#39;[SEP]&#39;, &#39;statue&#39;, &#39;of&#39;, &#39;mary&#39;, &#39;.&#39;, &#39;[SEP]&#39;]
+
+
+input_ids: 22
+ [101, 2000, 3183, 2106, 1996, 6261, 2984, 9382, 3711, 1999, 8517, 1999, 10223, 26371, 2605, 1029, 102, 6231, 1997, 2984, 1012, 102]
+
+
+segment_ids: 22
+ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
+
+
+token_is_max_context: 4
+ {17: True, 18: True, 19: True, 20: True}
+
+
+token_to_orig_maplen: 4
+ {17: 121, 18: 122, 19: 123, 20: 123}
+
+
+------------------------------------------------------------------
+</code></pre><h2 id="输入模型的一个样本例子"><a href="#输入模型的一个样本例子" class="headerlink" title="输入模型的一个样本例子"></a>输入模型的一个样本例子</h2><p><img src="/2018/12/10/SQuAD/c1.png" alt=""><br><img src="/2018/12/10/SQuAD/c2.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SQuAD/" rel="tag"># SQuAD</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/10/TensorFlow_seq2seq_attention_wrapper/" rel="next" title="TensorFlow_seq2seq_attention_wrapper源码阅读">
+                <i class="fa fa-chevron-left"></i> TensorFlow_seq2seq_attention_wrapper源码阅读
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/11/创造者的传记/" rel="prev" title="创造者的传记 Biography of the Creator">
+                创造者的传记 Biography of the Creator <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQuAD-论文"><span class="nav-number">1.</span> <span class="nav-text">SQuAD 论文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QANet-To-Do"><span class="nav-number">2.</span> <span class="nav-text">QANet(To Do)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQuAD-数据地址"><span class="nav-number">3.</span> <span class="nav-text">SQuAD 数据地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQuAD-相关文章"><span class="nav-number">4.</span> <span class="nav-text">SQuAD 相关文章</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQUAD-traing"><span class="nav-number"></span> <span class="nav-text">SQUAD_traing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQUAD-DATA-处理解析"><span class="nav-number"></span> <span class="nav-text">SQUAD_DATA_处理解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码run-squad-py"><span class="nav-number">1.</span> <span class="nav-text">源代码run_squad.py</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原始语料"><span class="nav-number">2.</span> <span class="nav-text">原始语料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序处理后的语料"><span class="nav-number">3.</span> <span class="nav-text">程序处理后的语料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQuAD-data-train-v1-1-json"><span class="nav-number">4.</span> <span class="nav-text">SQuAD_data/train-v1.1.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#paragraph"><span class="nav-number">5.</span> <span class="nav-text">paragraph</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#read-squad-examples"><span class="nav-number"></span> <span class="nav-text">read_squad_examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#examples-doc-tokens"><span class="nav-number">1.</span> <span class="nav-text">examples - doc_tokens</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看原始语料转换成的-examples-内容"><span class="nav-number">2.</span> <span class="nav-text">查看原始语料转换成的 examples 内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#convert-examples-to-features"><span class="nav-number"></span> <span class="nav-text">convert_examples_to_features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#doc-tokens-2-all-doc-tokens"><span class="nav-number">1.</span> <span class="nav-text">doc_tokens 2 all_doc_tokens</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用滑动窗口解决文档太长问题"><span class="nav-number">2.</span> <span class="nav-text">使用滑动窗口解决文档太长问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tokens-token-to-orig-map-token-is-max-context-segment-ids"><span class="nav-number">3.</span> <span class="nav-text">tokens = [], token_to_orig_map = {}, token_is_max_context = {}, segment_ids = []</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入模型的一个样本例子"><span class="nav-number">4.</span> <span class="nav-text">输入模型的一个样本例子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

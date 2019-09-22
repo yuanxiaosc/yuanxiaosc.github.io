@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="VAE,变分自编码器," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="为什么要发明变分自编码器什么是变分自编码机？ 要理解变分自编码机(VAE)，我们要先从一个简单的网络开始，一步一步添加部件。 描述神经网络的常见方法，是把它解释成我们想要建模的功能的某种近似。然而，它们还能被理解为储存信息的某种数据结构。 假设有一个由数层解卷积层构成的神经网络，我们把输入设定为单位向量，然后训练该网络去降低其与目标图像之间的均方误差。这样，该图像的“数据”就包含在神经网络当前的参">
+<meta name="keywords" content="VAE,变分自编码器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="变分自编码器（Variational Auto-Encoder，VAE）">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/变分自编码器/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="为什么要发明变分自编码器什么是变分自编码机？ 要理解变分自编码机(VAE)，我们要先从一个简单的网络开始，一步一步添加部件。 描述神经网络的常见方法，是把它解释成我们想要建模的功能的某种近似。然而，它们还能被理解为储存信息的某种数据结构。 假设有一个由数层解卷积层构成的神经网络，我们把输入设定为单位向量，然后训练该网络去降低其与目标图像之间的均方误差。这样，该图像的“数据”就包含在神经网络当前的参">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/d1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/d2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/d3.png">
+<meta property="og:image" content="http://img.mp.itc.cn/upload/20170807/65b52d6e14f24f148a08de6a5d463d63.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/c1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/26/变分自编码器/8.png">
+<meta property="og:updated_time" content="2019-07-12T01:46:51.157Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="变分自编码器（Variational Auto-Encoder，VAE）">
+<meta name="twitter:description" content="为什么要发明变分自编码器什么是变分自编码机？ 要理解变分自编码机(VAE)，我们要先从一个简单的网络开始，一步一步添加部件。 描述神经网络的常见方法，是把它解释成我们想要建模的功能的某种近似。然而，它们还能被理解为储存信息的某种数据结构。 假设有一个由数层解卷积层构成的神经网络，我们把输入设定为单位向量，然后训练该网络去降低其与目标图像之间的均方误差。这样，该图像的“数据”就包含在神经网络当前的参">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/26/变分自编码器/d1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/变分自编码器/"/>
+
+
+
+
+
+  <title>变分自编码器（Variational Auto-Encoder，VAE） | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/变分自编码器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">变分自编码器（Variational Auto-Encoder，VAE）</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T17:07:42+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/变分自编码器/" itemprop="url" rel="index">
+                    <span itemprop="name">变分自编码器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/26/变分自编码器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/26/变分自编码器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="为什么要发明变分自编码器"><a href="#为什么要发明变分自编码器" class="headerlink" title="为什么要发明变分自编码器"></a>为什么要发明变分自编码器</h2><p><strong>什么是变分自编码机？</strong></p>
+<p>要理解变分自编码机(VAE)，我们要先从一个简单的网络开始，一步一步添加部件。</p>
+<p>描述神经网络的常见方法，是把它解释成我们想要建模的功能的某种近似。然而，它们还能被理解为储存信息的某种数据结构。</p>
+<p>假设有一个由数层解卷积层构成的神经网络，我们把输入设定为单位向量，然后训练该网络去降低其与目标图像之间的均方误差。这样，该图像的“数据”就包含在神经网络当前的参数之中了。</p>
+<p><img src="/2018/08/26/变分自编码器/d1.png" alt=""></p>
+<p>现在，我们用多张图像来尝试这一步骤。此时，输入不再是单位向量，而要改用独热向量。比如，输入 [1, 0, 0, 0] 可能是生成一张猫的图像，而输入 [0, 1, 0, 0] 则可能生成一张狗的图像。这是可行的，不过这样我们只能存储最多4张图像。让网络记住更多的图像则要使用更长的向量，同时也意味着越来越多的参数。</p>
+<p>为此，我们需要使用实向量，而非独热向量。我们可以把它视为某个图像所对应的编码，比如用向量 [3.3, 4.5, 2.1, 9.8] 来表示猫的图像，而用向量 [3.4, 2.1, 6.7, 4.2] 来表示狗的图像，这就是 编码/解码 这一术语的来源。这一初始向量便是我们的潜在变量。</p>
+<p>像我前面那样随机选择潜在变量，明显是个糟糕的做法。在自编码机中，我们加入了一个能自动把原始图像编码成向量的组件。上述解卷积层则能把这些向量“解码”回原始图像。</p>
+<p><img src="/2018/08/26/变分自编码器/d2.jpg" alt=""></p>
+<p>这样，我们的模型终于到了一个能有用武之地的阶段。根据需要，我们可以用尽可能多的图像来训练网络。如果保存了某张图像的编码向量，我们随时就能用解码组件来重建该图像，整个过程仅需一个标准的自编码机。</p>
+<p><strong>不过，这里我们想要的是构建一个生成式模型，而非仅仅是“记忆”图像数据的模糊结构。除了像前面那样从已有图像中编码出潜在向量，我们还不知道如何创造这些向量，也就无法凭空生成任何图像。</strong></p>
+<p><strong>这里有个简单的办法。我们给编码网络增加一个约束，迫使它所生成的潜在向量大体上服从于单位高斯分布。该约束条件使得变分自编码机不同于标准自编码机。</strong></p>
+<p>现在，生成新的图像就变得容易了：我们只需从单位高斯分布中采样出一个潜在向量，并将其传到解码器即可。</p>
+<p>实际操作中，我们需要仔细权衡网络的精确度与潜在变量在单位高斯分布上的契合程度。</p>
+<p>神经网络可以自行决定这里的取舍。对于其中的误差项，我们归纳出独立的两种：生成误差，用以衡量网络重构图像精确度的均方误差；潜在误差，用以衡量潜在变量在单位高斯分布上的契合程度的KL散度。</p>
+<blockquote>
+<p>generation_loss = mean(square(generated_image - real_image))</p>
+<p>latent_loss = KL-Divergence(latent_variable, unit_gaussian)</p>
+<p>loss = generation_loss + latent_loss</p>
+</blockquote>
+<p>为了优化KL散度，我们要用到重新参数化的一个简单技巧：生成一个均值向量一个标准差向量，而非直接生成实值向量。</p>
+<p><img src="/2018/08/26/变分自编码器/d3.png" alt=""></p>
+<p>我们的KL散度计算就变成这样：</p>
+<blockquote>
+<p># z_mean and z_stddev are two vectors generated by encoder network</p>
+<p>latent_loss = 0.5 * tf.reduce_sum(tf.square(z_mean) + tf.square(z_stddev) - tf.log(tf.square(z_stddev)) - 1,1)</p>
+</blockquote>
+<p>在计算解码网络的误差时，我们只需从标准差中取样，再加上均值向量，就能得到我们的潜在向量：</p>
+<blockquote>
+<p>samples = tf.random_normal([batchsize,n_z],0,1,dtype=tf.float32)</p>
+<p>sampled_z = z_mean + (z_stddev * samples)</p>
+</blockquote>
+<p>除了能让我们生成随机的潜在变量，该约束还能提高VAE网络的泛化能力。</p>
+<p>形象地说，我们可以把潜在变量视为数据的变换系数。</p>
+<p>在[ 0, 10 ]的区间内，假定你有一系列的实数-名称对，一个实数代表一个物体的名字。例如，5.43表示苹果，5.44表示香蕉。当有人给你数字5.43时，你肯定知道他们是在谈论苹果。本质上，采用这一方式可以编码无限多的信息，毕竟[ 0, 10 ]之间的实数是有无数个。</p>
+<p>然而，如果每当有人给告诉你一个新数字，它的高斯噪点也会增加一个时，情况会变成怎样？比如说，你收到数字是5.43，其原始数值则应在[4.4 ~ 6.4]之间，那其他人所说的真实数字就有可能是5.44（香蕉）。</p>
+<p>所增噪点的标准差越大，其均值变量所能传递的信息就越少。</p>
+<p>用此相同的逻辑，我们就能在编码器和解码器之间传递潜在变量。对原始图像的编码越有效，我们在高斯分布上所能取样的标准差就越大，直至为1（标准正态分布）。</p>
+<p>这一约束迫使编码器变得非常高效，从而能创造出信息丰富的潜在变量。它所提升的泛化能力，让我们随机生成或从非训练图像编码而来的潜在变量，在解码时将能产生更好的结果。</p>
+<p><strong>VAE的效果有多好？</strong></p>
+<p>我在MNIST手写数据集上做了一些测试，从中可以看出变分自编码机的效果有多好。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170807/65b52d6e14f24f148a08de6a5d463d63.jpg" alt=""></p>
+<p>左：第1世代，中：第9世代，右：原始图像</p>
+<p>看起来很不错！在我那没有显卡的笔记本上运行15分钟后，它就生成了一些很好的MNIST结果。</p>
+<p><strong>VAE的优点：</strong></p>
+<p>由于它们所遵循的是一种 编码-解码 模式，我们能直接把生成的图像同原始图像进行对比，这在使用GAN时是不可能的。</p>
+<p><strong>VAE的不足：</strong></p>
+<p>由于它是直接采用均方误差而非对抗网络，其神经网络倾向于生成更为模糊的图像。</p>
+<p>也有一些需要结合VAE和GAN的研究工作：采用相同的 编码器-解码器 配置，但使用对抗网络来训练解码器。</p>
+<blockquote>
+<p>研究详情参考论文</p>
+<p><a href="https://arxiv.org/pdf/1512.09300.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/1512.09300.pdf</a></p>
+<p><a href="http://blog.otoro.net/2016/04/01/generating\-large\-images\-from\-latent\-vectors/" target="_blank" rel="noopener">http://blog.otoro.net/2016/04/01/generating\-large\-images\-from\-latent\-vectors/</a></p>
+</blockquote>
+<h2 id="变分自编码器经典论文"><a href="#变分自编码器经典论文" class="headerlink" title="变分自编码器经典论文"></a>变分自编码器经典论文</h2><p><img src="/2018/08/26/变分自编码器/c1.png" alt=""><br><a href="https://arxiv.org/abs/1312.6114v10" target="_blank" rel="noopener">《Auto-Encoding Variational Bayes》 | Diederik P Kingma, Max Welling | 2013</a></p>
+<p><strong>Abstract</strong><br>如何在有向概率模型中进行有效的推理和学习，在存在连续的潜在变量和难以处理的后验分布和大数据集的情况下？我们引入一个随机变分推理和学习算法，缩放到大数据集，并在一些温和的可微性条件下，甚至在棘手的情况下工作。我们的贡献是双重的。首先，我们表明，变分下界的重新参数化产生一个下界估计，可以直接使用标准随机梯度方法优化。第二，我们表明，对于I.I.D.数据集具有连续潜变量每个数据点，后推理可以特别有效的拟合近似推理模型（也称为识别模型）棘手的后部使用所提出的下界估计。理论优势反映在实验结果中。<br><strong>Subjects</strong>:    Machine Learning (stat.ML); Machine Learning (cs.LG)</p>
+<hr>
+<h2 id="变分自编码器导论"><a href="#变分自编码器导论" class="headerlink" title="变分自编码器导论"></a>变分自编码器导论</h2><ul>
+<li><p>Vivek Vyas 的<a href="http://www.sohu.com/a/165055924_390227" target="_blank" rel="noopener">《浅析变分自编码器VAE》</a></p>
+</li>
+<li><p>MoussaTintin 的<a href="https://blog.csdn.net/JackyTintin/article/details/53641885" target="_blank" rel="noopener">《【Learning Notes】变分自编码器（Variational Auto-Encoder，VAE）》</a></p>
+</li>
+</ul>
+<h2 id="变分自编码器基础"><a href="#变分自编码器基础" class="headerlink" title="变分自编码器基础"></a>变分自编码器基础</h2><p>首先阅读苏剑林 VAE 的第一篇文章<a href="https://spaces.ac.cn/archives/5253" target="_blank" rel="noopener">《变分自编码器（一）：原来是这么一回事》</a>。</p>
+<p>下面示意 VAE 代码<a href="https://github.com/PacktPublishing/Advanced-Deep-Learning-with-Keras/blob/master/chapter8-vae/vae-mlp-mnist-8.1.1.py" target="_blank" rel="noopener">完整版</a> 。</p>
+<h3 id="VAE-的示意图"><a href="#VAE-的示意图" class="headerlink" title="VAE 的示意图"></a>VAE 的示意图</h3><p><img src="/2018/08/26/变分自编码器/2.png" alt=""></p>
+<p>VAE由三部分组成：编码器 $q(z|x)$，先验 $p(z)$，解码器 $p(x|z)$。</p>
+<p><img src="/2018/08/26/变分自编码器/9.png" alt=""></p>
+<p>编码器将图像映射到针对该图像的代码的分布上。这种分布也被称为后验（posterior），因为它反映了我们关于代码应该用于给定图像之后的准确度。</p>
+<p><img src="/2018/08/26/变分自编码器/10.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''Example of VAE on MNIST dataset using MLP</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">The VAE has a modular design. The encoder, decoder and VAE</span></span><br><span class="line"><span class="string">are 3 models that share weights. After training the VAE model,</span></span><br><span class="line"><span class="string">the encoder can be used to  generate latent vectors.</span></span><br><span class="line"><span class="string">The decoder can be used to generate MNIST digits by sampling the</span></span><br><span class="line"><span class="string">latent vector from a Gaussian distribution with mean=0 and std=1.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># Reference</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">[1] Kingma, Diederik P., and Max Welling.</span></span><br><span class="line"><span class="string">"Auto-encoding variational bayes."</span></span><br><span class="line"><span class="string">https://arxiv.org/abs/1312.6114</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h3 id="VAE-网络结构"><a href="#VAE-网络结构" class="headerlink" title="VAE 网络结构"></a>VAE 网络结构</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># network parameters</span></span><br><span class="line">input_shape = (original_dim, )</span><br><span class="line">intermediate_dim = <span class="number">512</span></span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">latent_dim = <span class="number">2</span> <span class="comment">#可以是其它维度，这里选择二维只是为了方便可视化</span></span><br><span class="line">epochs = <span class="number">50</span></span><br><span class="line"><span class="comment"># VAE model = encoder + decoder</span></span><br></pre></td></tr></table></figure>
+<h4 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h4><p><img src="/2018/08/26/变分自编码器/3.png" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build encoder model</span></span><br><span class="line">inputs = Input(shape=input_shape, name=<span class="string">'encoder_input'</span>)</span><br><span class="line">x = Dense(intermediate_dim, activation=<span class="string">'relu'</span>)(inputs)</span><br><span class="line">z_mean = Dense(latent_dim, name=<span class="string">'z_mean'</span>)(x)</span><br><span class="line">z_log_var = Dense(latent_dim, name=<span class="string">'z_log_var'</span>)(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># use reparameterization trick to push the sampling out as input</span></span><br><span class="line"><span class="comment"># note that "output_shape" isn't necessary with the TensorFlow backend</span></span><br><span class="line">z = Lambda(sampling, output_shape=(latent_dim,), name=<span class="string">'z'</span>)([z_mean, z_log_var])</span><br><span class="line"></span><br><span class="line"><span class="comment"># instantiate encoder model</span></span><br><span class="line">encoder = Model(inputs, [z_mean, z_log_var, z], name=<span class="string">'encoder'</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="解码器"><a href="#解码器" class="headerlink" title="解码器"></a>解码器</h4><p><img src="/2018/08/26/变分自编码器/4.png" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build decoder model</span></span><br><span class="line">latent_inputs = Input(shape=(latent_dim,), name=<span class="string">'z_sampling'</span>)</span><br><span class="line">x = Dense(intermediate_dim, activation=<span class="string">'relu'</span>)(latent_inputs)</span><br><span class="line">outputs = Dense(original_dim, activation=<span class="string">'sigmoid'</span>)(x)</span><br><span class="line"></span><br><span class="line"><span class="comment"># instantiate decoder model</span></span><br><span class="line">decoder = Model(latent_inputs, outputs, name=<span class="string">'decoder'</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="VAE"><a href="#VAE" class="headerlink" title="VAE"></a>VAE</h4><p><img src="/2018/08/26/变分自编码器/5.png" alt=""><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># instantiate VAE model</span></span><br><span class="line">outputs = decoder(encoder(inputs)[<span class="number">2</span>]) <span class="comment">#前两维度分别是均值和“方差”</span></span><br><span class="line">vae = Model(inputs, outputs, name=<span class="string">'vae_mlp'</span>)</span><br></pre></td></tr></table></figure></p>
+<h4 id="重参数技巧"><a href="#重参数技巧" class="headerlink" title="重参数技巧"></a>重参数技巧</h4><p><img src="/2018/08/26/变分自编码器/1.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reparameterization trick</span></span><br><span class="line"><span class="comment"># instead of sampling from Q(z|X), sample eps = N(0,I)</span></span><br><span class="line"><span class="comment"># z = z_mean + sqrt(var)*eps</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sampling</span><span class="params">(args)</span>:</span></span><br><span class="line">    <span class="string">"""Reparameterization trick by sampling fr an isotropic unit Gaussian.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments:</span></span><br><span class="line"><span class="string">        args (tensor): mean and log of variance of Q(z|X)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns:</span></span><br><span class="line"><span class="string">        z (tensor): sampled latent vector</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    z_mean, z_log_var = args</span><br><span class="line">    <span class="comment"># K is the keras backend</span></span><br><span class="line">    batch = K.shape(z_mean)[<span class="number">0</span>]</span><br><span class="line">    dim = K.int_shape(z_mean)[<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># by default, random_normal has mean=0 and std=1.0</span></span><br><span class="line">    epsilon = K.random_normal(shape=(batch, dim))</span><br><span class="line">    <span class="keyword">return</span> z_mean + K.exp(<span class="number">0.5</span> * z_log_var) * epsilon</span><br></pre></td></tr></table></figure>
+<h4 id="VAE-本质结构"><a href="#VAE-本质结构" class="headerlink" title="VAE 本质结构"></a>VAE 本质结构</h4><p><img src="/2018/08/26/变分自编码器/6.png" alt=""></p>
+<h4 id="网络输出结果"><a href="#网络输出结果" class="headerlink" title="网络输出结果"></a>网络输出结果</h4><p>网络输入时 MNIST 数据集<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># MNIST dataset</span></span><br><span class="line">(x_train, y_train), (x_test, y_test) = mnist.load_data()</span><br><span class="line"></span><br><span class="line">image_size = x_train.shape[<span class="number">1</span>]</span><br><span class="line">original_dim = image_size * image_size</span><br><span class="line">x_train = np.reshape(x_train, [<span class="number">-1</span>, original_dim])</span><br><span class="line">x_test = np.reshape(x_test, [<span class="number">-1</span>, original_dim])</span><br><span class="line">x_train = x_train.astype(<span class="string">'float32'</span>) / <span class="number">255</span></span><br><span class="line">x_test = x_test.astype(<span class="string">'float32'</span>) / <span class="number">255</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/2018/08/26/变分自编码器/7.png" alt=""><br><img src="/2018/08/26/变分自编码器/8.png" alt=""></p>
+<h2 id="继续深入研究-VAE"><a href="#继续深入研究-VAE" class="headerlink" title="继续深入研究 VAE"></a>继续深入研究 VAE</h2><p><a href="https://spaces.ac.cn/archives/5343" target="_blank" rel="noopener">《变分自编码器（二）：从贝叶斯观点出发》</a><br><a href="https://spaces.ac.cn/archives/5383" target="_blank" rel="noopener">《变分自编码器（三）：这样做为什么能成？》</a><br><a href="https://jaan.io/what-is-variational-autoencoder-vae-tutorial/" target="_blank" rel="noopener">《what-is-variational-autoencoder-vae-tutorial》</a></p>
+<h2 id="条件变分自编码器"><a href="#条件变分自编码器" class="headerlink" title="条件变分自编码器"></a>条件变分自编码器</h2><p><a href="http://ijdykeman.github.io/ml/2016/12/21/cvae.html" target="_blank" rel="noopener">Conditional Variational Autoencoders | Isaac Dykeman
+</a></p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] 苏剑林‏. 变分自编码器（一）：原来是这么一回事[DB/OL]. <a href="https://spaces.ac.cn/archives/5253" target="_blank" rel="noopener">https://spaces.ac.cn/archives/5253</a>, 2018-08-14.</p>
+<p>[2] 苏剑林‏. 变分自编码器（二）：从贝叶斯观点出发[DB/OL]. <a href="https://spaces.ac.cn/archives/5343" target="_blank" rel="noopener">https://spaces.ac.cn/archives/5343</a>, 2018-08-15.</p>
+<p>[3] 苏剑林‏. 变分自编码器（三）：这样做为什么能成？[DB/OL]. <a href="https://spaces.ac.cn/archives/5383" target="_blank" rel="noopener">https://spaces.ac.cn/archives/5383</a>, 2018-08-15.</p>
+<p>[4] Kingma D P, Welling M. Auto-Encoding Variational Bayes[J]. 2013.</p>
+<p>[5] Isaac Dykeman‏. Conditional Variational Autoencoders[DB/OL]. <a href="http://ijdykeman.github.io/ml/2016/12/21/cvae.html" target="_blank" rel="noopener">http://ijdykeman.github.io/ml/2016/12/21/cvae.html</a>, 2018-08-15.</p>
+<p>[6] MoussaTintin. Learning Notes】变分自编码器（Variational Auto-Encoder，VAE）[DB/OL]. <a href="https://blog.csdn.net/JackyTintin/article/details/53641885" target="_blank" rel="noopener">https://blog.csdn.net/JackyTintin/article/details/53641885</a>, 2018-08-15.</p>
+<p>[7] AI科技大本营. 什么！你竟然还不懂变分自编码机？这个16岁的OpenAI天才实习生讲得可透彻了[DB/OL]. <a href="https://www.sohu.com/a/162863895_697750" target="_blank" rel="noopener">https://www.sohu.com/a/162863895_697750</a>, 2018-08-26.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/VAE/" rel="tag"># VAE</a>
+          
+            <a href="/tags/变分自编码器/" rel="tag"># 变分自编码器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/24/胶囊网络/" rel="next" title="胶囊网络（Capsule Network）">
+                <i class="fa fa-chevron-left"></i> 胶囊网络（Capsule Network）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/主成成分分析、自编码器和变分自编码器解析/" rel="prev" title="主成成分分析、自编码器和变分自编码器解析">
+                主成成分分析、自编码器和变分自编码器解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要发明变分自编码器"><span class="nav-number">1.</span> <span class="nav-text">为什么要发明变分自编码器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分自编码器经典论文"><span class="nav-number">2.</span> <span class="nav-text">变分自编码器经典论文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分自编码器导论"><span class="nav-number">3.</span> <span class="nav-text">变分自编码器导论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分自编码器基础"><span class="nav-number">4.</span> <span class="nav-text">变分自编码器基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VAE-的示意图"><span class="nav-number">4.1.</span> <span class="nav-text">VAE 的示意图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VAE-网络结构"><span class="nav-number">4.2.</span> <span class="nav-text">VAE 网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编码器"><span class="nav-number">4.2.1.</span> <span class="nav-text">编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解码器"><span class="nav-number">4.2.2.</span> <span class="nav-text">解码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VAE"><span class="nav-number">4.2.3.</span> <span class="nav-text">VAE</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重参数技巧"><span class="nav-number">4.2.4.</span> <span class="nav-text">重参数技巧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VAE-本质结构"><span class="nav-number">4.2.5.</span> <span class="nav-text">VAE 本质结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络输出结果"><span class="nav-number">4.2.6.</span> <span class="nav-text">网络输出结果</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#继续深入研究-VAE"><span class="nav-number">5.</span> <span class="nav-text">继续深入研究 VAE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件变分自编码器"><span class="nav-number">6.</span> <span class="nav-text">条件变分自编码器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

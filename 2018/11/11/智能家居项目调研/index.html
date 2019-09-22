@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目录 项目背景 设计原则 发展历史 国内外研究现状 可行的解决方案    一、项目背景  智能家居或称智能住宅，是一个以住宅为平台，兼备建筑、网络通信、信息家电、设备自动化，集系统、结构、服务、管理为一体的高效、舒适、安全、便利、环保的居住环境。 　　随着“智慧地球”概念的提出，物联网技术掀起了继计算机、互联网后世界信息产业的第三次浪潮，把互联网技术应用在传感器上，将被检测设备的信息上传到服务器">
+<meta name="keywords" content="项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="智能家居项目调研">
+<meta property="og:url" content="http://yoursite.com/2018/11/11/智能家居项目调研/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="目录 项目背景 设计原则 发展历史 国内外研究现状 可行的解决方案    一、项目背景  智能家居或称智能住宅，是一个以住宅为平台，兼备建筑、网络通信、信息家电、设备自动化，集系统、结构、服务、管理为一体的高效、舒适、安全、便利、环保的居住环境。 　　随着“智慧地球”概念的提出，物联网技术掀起了继计算机、互联网后世界信息产业的第三次浪潮，把互联网技术应用在传感器上，将被检测设备的信息上传到服务器">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/PlsTvFM.png">
+<meta property="og:image" content="https://i.imgur.com/IMmIS2E.png">
+<meta property="og:image" content="https://i.imgur.com/01U2qAp.png">
+<meta property="og:image" content="https://i.imgur.com/4lTC66H.png">
+<meta property="og:image" content="https://i.imgur.com/vBChrPb.png">
+<meta property="og:image" content="https://i.imgur.com/7nT1lF9.png">
+<meta property="og:image" content="https://i.imgur.com/U0PiCH6.png">
+<meta property="og:image" content="https://i.imgur.com/OolymdA.png">
+<meta property="og:image" content="https://i.imgur.com/2dVL3OQ.png">
+<meta property="og:image" content="https://i.imgur.com/kyfa0cM.jpg">
+<meta property="og:image" content="https://i.imgur.com/9EiR4NP.jpg">
+<meta property="og:image" content="https://i.imgur.com/epr59FQ.jpg">
+<meta property="og:image" content="https://i.imgur.com/upWvAcf.jpg">
+<meta property="og:image" content="https://i.imgur.com/io4o3Kd.jpg">
+<meta property="og:image" content="https://i.imgur.com/GGhF3jv.jpg">
+<meta property="og:updated_time" content="2018-11-12T00:35:01.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="智能家居项目调研">
+<meta name="twitter:description" content="目录 项目背景 设计原则 发展历史 国内外研究现状 可行的解决方案    一、项目背景  智能家居或称智能住宅，是一个以住宅为平台，兼备建筑、网络通信、信息家电、设备自动化，集系统、结构、服务、管理为一体的高效、舒适、安全、便利、环保的居住环境。 　　随着“智慧地球”概念的提出，物联网技术掀起了继计算机、互联网后世界信息产业的第三次浪潮，把互联网技术应用在传感器上，将被检测设备的信息上传到服务器">
+<meta name="twitter:image" content="https://i.imgur.com/PlsTvFM.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/11/智能家居项目调研/"/>
+
+
+
+
+
+  <title>智能家居项目调研 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/智能家居项目调研/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">智能家居项目调研</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-11T23:53:50+08:00">
+                2018-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/智能家居/" itemprop="url" rel="index">
+                    <span itemprop="name">智能家居</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/11/智能家居项目调研/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/11/智能家居项目调研/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><a href="#0">目录</a><ul>
+<li><a href="#1">项目背景</a></li>
+<li><a href="#2">设计原则</a></li>
+<li><a href="#3">发展历史</a></li>
+<li><a href="#４">国内外研究现状</a></li>
+<li><a href="#5">可行的解决方案</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="1">一、项目背景</h1>
+
+<p><strong>智能家居或称智能住宅，是一个以住宅为平台，兼备建筑、网络通信、信息家电、设备自动化，集系统、结构、服务、管理为一体的高效、舒适、安全、便利、环保的居住环境</strong>。</p>
+<p>　　随着“智慧地球”概念的提出，物联网技术掀起了继计算机、互联网后世界信息产业的第三次浪潮，把互联网技术应用在传感器上，将被检测设备的信息上传到服务器上，同时添加服务器对设备的控制，物联网技术为智能家居技术的发展提供了新的方法。实现家庭信息化、网络化是是未来家居发展的主要方向，智能家居将成为蕴含着巨大市场价值的自动化产业。社会在飞速发展，我们的生活发生着翻天覆地的变化。家是我们永远温馨的港湾。<strong>随着我国经济的飞速发展，人们的生活水平不断提高，特别是年轻的一代人开始追求生活的个性化、自动化，希望在快节奏的生活中感受充满乐趣的生活方式，要求居住环境更加安全舒适与人性化</strong>。随着智能家居市场的不断完善，科技的不断进步以及大规模厂商的介入，必将推动行业成本的下降，智能家居市场的行业前景一片光明。</p>
+<p>　　据统计，2016年我国智能家居的渗透率只有0.1%，远远落后于美国、日本等国家。但随着云计算和人工智能等技术的快速发展，我国智能家居硬件的渗透率将快速提升，预计2020年将达到0.5%。尽管渗透率依然低于西方发达国家，但我国智能家居市场总体体量将相当可观。各国智能家居渗透率对比如图1-1所示。</p>
+<p><img src="https://i.imgur.com/PlsTvFM.png" alt=""></p>
+<p>　　2014年，我国智能家居产业市场规模达到290亿元；2015年，我国智能家居市场规模达403.40亿元，同比增长41%。未来五年（2017-2021）年均复合增长率约为48.12%，2021年市场规模将达到4，369亿元。</p>
+<p><img src="https://i.imgur.com/IMmIS2E.png" alt=""></p>
+<h1 id="2">二、设计原则</h1>
+<h3>智能家居系统设计原则一：实用便利</h3>
+
+智能家居最基本的目标是为人们提供一个舒适、安全、方便和高效的生活环境。**对智能家居产品来说，最重要的是以实用为核心，摒弃掉那些华而不实，只能充作摆设的功能，产品以实用性、易用性和人性化为主**。
+
+**在设计智能家居系统时，应根据用户对智能家居功能的需求，整合以下最实用最基本的家居控制功能：包括智能家电控制、智能灯光控制、电动窗帘控制、防盗报警、门禁对讲、煤气泄露等，同时还可以拓展诸如三表抄送、视频点播等服务增值功能**。对很多个性化智能家居的控制方式很丰富多样，比如：本地控制、遥控控制、集中控制、手机远程控制、感应控制、网络控制、定时控制等等，其本意是让人们摆脱繁琐的事务，提高效率，如果操作过程和程序设置过于繁琐，容易让用户产生排斥心理。所以在对智能家居的设计时一定要充分考虑到用户体验，注重操作的便利化和直观 性，最好能采用图形图像化的控制界面，让操作所见即所得。
+
+<h3>智能家居系统设计原则二：可靠性</h3>
+　　整个建筑的各个智能化子系统应能二十四小时运转，系统的安全性、可靠性和容错能力必须予以高度重视。对各个子系统，以电源、系统备份等方面采取相应的容错措施，保证系统正常安全使用、质量、性能良好，具备应付各种复杂环境变化的能力。
+
+<h3>智能家居系统设计原则三：标准性</h3>
+　　智能家居系统方案的设计应依照国家和地区的有关标准进行，确保系统的扩充性和扩展性，在系统传输上采用标准的TCP/IP协议网络技术，保证不同产商 之间系统可以兼容与互联。系统的前端设备是多功能的、开放的、可以扩展的设备。如系统主机、终端与模块采用标准化接口设计，为家居智能系统外部厂商提供集 成的平台，而且其功能可以扩展，当需要增加功能时，不必再开挖管网，简单可靠、方便节约。设计选用的系统和产品能够使本系统与未来不断发展的第三方受控设备进行互通互连。
+
+<h3>智能家居系统设计原则四：方便性</h3>
+　　布线安装是否简单直接关系到成本，可扩展性，可维护性的问题，一定要选择布线简单的系统，施工时可与小区宽带一起布线，简单、容易;设备方面容易学习掌握、操作和维护简便。系统在工程安装调试中的方便设计也非常重要。家庭智能化有一个显着的特点，就是安装、调试与维护的工作量非常大，需要大量的人力物力投入，成为制约行业发展的瓶颈。针对这个问题，系统在设计时， 就应考虑安装与维护的方便性，比如系统可以通过Internet远程调试与维护。通过网络，不仅使住户能够实现家庭智能化系统的控制功能，还允许工程人员 在远程检查系统的工作状况，对系统出现的故障进行诊断。这样，系统设置与版本更新可以在异地进行，从而大大方便了系统的应用与维护，提高了响应速度，降低 了维护成本。
+
+<h3>智能家居系统设计原则五：轻巧型</h3>
+　　“轻巧”型智能家居产品顾名思义它是一种轻量级的智能家居系统。“简单”、“实用”、“灵巧”是它的最主要特点，也是其与传统智能家居系统最大的区别。所以我们一般把无需施工部署，功能可自由搭配组合且价格相对便宜可直接面对最终消费者销售的智能家居产品称为“轻巧”型智能家居产品。
+
+<h1 id="３">三、发展历史</h1>
+
+<p>　　事物的发展总是阶段性的，每个阶段都有一定的代表性，智能家居也是如此，其发展主要分为三个阶段：</p>
+<p>　　<strong>第一阶段：</strong> 家居电子化阶段，在这个阶段，主要是面对用户家里的单个家电，家电还没有融入网络，各个家电之间也没有什么联系，都是独立工作 。</p>
+<p>　　<strong>第二阶段：</strong> 住宅自动化阶段，这个阶段的主要特征是家居已经开始面向功能发展，某些家电已经连入网络，能够实现一些简单的功能，如：水电气的自动抄表等，我国大多数家庭现在就处于第二阶段。</p>
+<p>　　<strong>第三阶段：</strong> <strong>家居智能化阶段，这个阶段是面向系统的阶段，智能家居系统把家里面所有家电连入网络，人们可以通过一个控制终端达对家电的集中控制与监控的目的，并且还具有远程控制的功能。这个阶段的智能家居系统为人们提供方便安全，温馨舒适的家庭环境，丰富了人们的日常生活。同时也保持了环境和家电之间的协调，使得家电更加的节能，安全</strong>。</p>
+<p>1915年到1920年——家用机器的开始</p>
+<p>　　机器被引入家庭是为了帮助解决家庭劳动力日益短缺的问题（比如缝纫机、吸尘器、食品加工器）。广告界将这些电力机器称作是“电力春季大扫除”。 这是在家庭里使用电力技术的第一个实例，电力机器在家居行业的前景由此打开。</p>
+<p>1939年——预测智能家居的未来</p>
+<p>　　《大众机械》杂志中的“未来家电”这篇文章中所描绘的厨房装置是这样的：当你在做饭时，你还可以通过该装置接收到短波无线电频率，所以当你在做饭时，你还可以在第一时间里了解到新闻资讯。</p>
+<p>1966年——第一台家用“电脑”</p>
+<p>　　ECHO IV是一台家庭自动化机器，它可以用来计算购物清单、控制房屋里的室内温度、控制家里电器的开关。但对于这个装置的真正成功性还存在着大量的质疑，并且它还有一个缺点：体型庞大。</p>
+<p>19世纪70年代——自动化的开始</p>
+<p>　　X10是一个非常简单的系统，该系统是利用家里的电线在各类家用电器之间建立起一种联系。但是，由于这个系统是依靠电线完成的，就很容易受到电波干扰，实用性不是很强。</p>
+<p>1984年——为智能家居的发展奠定基础</p>
+<p>　　世界上第一栋智能建筑于 1984 年在美国康涅迪格州建成，它的构建很简单，就是把一栋旧的大楼进行了改装，利用计算机对大楼进行监控，并控制大楼里面的电灯、电梯等，还提供了一些通信服务。</p>
+<p>　　美国建筑商协会成立了一个名为“智能家居”的特殊利益集团，他们提倡将科技和家居设计相结合的设计理念；有的人也把依照这种理念设计出来的建筑称作“电脑化建筑”（cybertecture）——将计算机控制和建筑设计相结合。</p>
+<p>19世纪90年代——智能家居理念成为一种流行文化</p>
+<p>　　智能家居的想法在19世纪90年代颇受欢迎，电影《梦宅诡影》中房屋里的智能家居系统是为房屋的拥有者所控制，他是一个厚颜无耻的家伙。但在迪斯尼电影《智能房屋》中体现的则是一种家庭友好型智能家居理念。</p>
+<p>2010年——Nest开启智能家居新时代</p>
+<p>　　Tony Fadell是前苹果公司iPod的部门主管，Nest Labs（简称Nest）就是由他创办的智能家居公司。他认为现有的家庭自动化产品太过于笨重，只是简单的将技术融入进产品罢了。所以，这家公司的建立开启了智能家居发展的新时代，比如与无线网络连接的恒温器和烟雾警报器。</p>
+<p>2012年——家庭自动化公司SmartThings成立</p>
+<p>　　SmartThings承诺设计一款能够连接家里任何一款电器装置的应用，还在Kickstarter上为它筹集到了120万美元的资金（阿什顿·库奇也是投资者之一）。有了这款应用，可以让你的家用电器之间有更亲密的联系。截至2013年，SmartThings已经了发货1万多个智能家居中控器。</p>
+<p>2013年——微软发布物联网实验室</p>
+<p>　　物联网实验室是微软推出的一个全新平台，旨在让研究者更好地研究联机设备在家庭和其他物理空间中的使用。实验室提供了一个虚拟的仪表盘来监视和控制不同的连接设备，并为与建筑相关的应用制订了标准。实验室记录数据后，人们就可以通过家庭安全照相机了解到家里的门是被打开还是被关闭，当然要想通过它知道其他的事情，也不在话下。</p>
+<p>   Linux基金会组织了AllSeen Alliance，得到了23个电子制造商和软件应用开发商的支持，其中包括LG、松下、夏普和高通。为了发展连通性技术，该组织采用的是独立于供应商的办法来开发一个开源软件。作为最大的跨行业智能家居空间联盟，AllSeen Alliance的目标是让家里的所有电器产品一起工作。</p>
+<p>至今——将所有的事物聚集到一个平台</p>
+<p>　　Quirky（一个创意产品社区与电子商务网站）的创始人本·考夫曼推出了一款名为Wink的智能应用，这款应用可以将Quirky、Nest和飞利浦等的产品集中到一个网络平台，再由其集中控制。有了Wink，你没必要自己动手干任何事了。</p>
+<p>　　据三星显示首席执行总裁尹富根（Boo-Keun-Yoon）指出，三星在智能家居行业的未来是光明的。三星公司以2亿美元收购了SmartThings。三星的智能家居应用能够实现用户与其家庭电器的联系，用户可以智能控制电冰箱、洗衣机、空调、微波炉等。Google以32亿美元收购了Nest Labs，Nest Labs主要是改造像恒温器和烟雾警报器一样的家用设备。谷歌的这次收购表明谷歌对其在物联网领域的发展有极大的信心，并且谷歌也因这次收购走在自动化家居行业的前沿。苹果宣布了HomeKit的到来，HomeKit允许用户智能控制家里的电灯、锁、相机、恒温器和插头等。它目前还没有投入使用，但是制造商们早已生产出能和它一起工作的相关产品。</p>
+<p>　　去年7月中旬，三星、戴尔和英特尔联合成立了一个名为“开放互联联盟”（Open Interconnect Consortium）的组织，旨在为当下大热的物联网设备建立统一标准，也是为了迎合物联网数十亿设备发展的需求。大约在其成立一周后，Nest、三星和其他5家制造商也发起了一个名为“Thread”的无线网络联合组织，制订了一个基于IP化的无线网络协议，允许他们公司的智能设备之间相互联系。这种联合组织的不断出现，说明越来越多的公司和行业对家用自动化和物联网领域感兴趣，对其的投资也在不断增加。</p>
+<p></p><h1 id="４">四、国内外研究现状</h1><p></p>
+<h3>国外研究现状</h3>
+　　智能家居这个概念最早是由美国、欧洲一些发达国家提出。80 年代之后，由于计算机网络技术、通讯技术、信息处理技术的迅速发展使得这一概念成为现实。1984 年，全球首幢智能建筑坐落于美国的康涅迪格州，该建筑是通过对一栋旧式大楼改装来实现，对于智能家居后期发展起关键作用。由于当时技术水平有限，仅通过电脑对大楼的照明设备、供水系统、空调等进行控制。从第一栋智能建筑建成之后，各种智能家具设计方案如同雨后春笋，在美国、新加坡、加拿大、欧洲、日本等发达国家迅速发展开来。
+
+　　此后美国颁发的《二十一世纪的技术：计算机、通信》文件，更加大了智能家居的推广，使得各种高新技术开始逐渐应用到智能建筑中。并提出了到 21世纪，美国的智能建筑将综合利用网络通讯技术、可移动办公技术、家居智能化技术、电视双向传输技术、无线组网技术以及数据卫星通信技术等，各种新技术的应用会带动此行业的发展。智能建筑在美国出现后，日本官方非常重视，出台了一系列的建设计划，包括智能家庭、智能建筑、智慧城市等等，并利用其自主研发的住宅总线技术提出了当时非常先进的家庭总线系统理念，这一理念也在 1988 年被开发制定为超级家庭总线技术-HBS 标准，至此智能家居这一概念更加完善。到 90 年代，幕张市首个示范性智能小区建成，后期又引入多媒体技术，为智能化建筑的发展道路指明了新的方向。
+
+　　随着生态环境方面问题日益突出，使得欧洲的智能家居主要考虑向生态建筑方面进行发展，如何通过高科技手段来建造一栋生态建筑成为研究的主要目的。在此生态建筑不仅要利用一切可利用的先进技术来实现低能耗、低污染、可持续发展的目标，还要在深入研究人体工程学和室内热功环境的基础上，根据人体对环境做出的心理、生理方面的一些反映，来构建一个舒适、高效的办公环境。
+
+　　在系统研发方面，美国和一些欧洲国家投入比较多，且发展比较快。外国的很多知名企业投身于智能家居系统的研发中，如 Microsoft 的“梦幻之家”、新加坡的“未来之家、Motorola 的“居所之门”、IBM 的“家庭主任”等。此外，日本的松下电器、韩国的三星、Intel、3COM 等知名公司也跻身于智能家居的研究中，智能家居的前景十分广阔，因此很多厂商开始加入这一市场。
+
+　　下面是市场上比较出名的智能家居系统：
+
+　　**1. X-10 系统**，这是美国在智能家居方面最知名的技术，市场占有率也是最高的一项技术，它采用国际上通用的电力载波协议，使用此项技术的产品可以通过电力线来直接通信，无须重新布线，且价格低廉、设置方式简单、产品多样化，因此在美国得到广泛应用。此系统固然强大，在国内却并不适合。首先由于此项技术是基于美国的电力线环境来进行设计，因此在国内环境不一定适合；其次，该系统主要应用在单独别墅，与我国基本现状相差较大，故在我国并不适合。
+
+　　**2. EIB 系统**，这是德国研发的一套新型系统，通过预埋总线以及中央控制的方式来完成。在德国的大型超市和办公建筑中，此系统应用较多。但是由于整个工程比较复杂，对建筑带来了较重的建设成本压力，且要求苛刻。其最大弊端是线路要事先预埋，对老式住宅区及其不便，因此还未能打开国内市场。
+
+　　**3. 8X 系统**，这是新加坡通过总线预埋和集中控制的方式来构建，并引入 X-10 的产品来对系统升级扩展，整个系统发展比较成熟。但是此系统和 EIB 系统类似，都是需要总线预埋，在旧式楼房的改造方面显得有些疲软，因此只对于新建住宅较适合；其次集中控制方式使得用户控制起来不够便捷，且前期成本投入太高。综合该系统在灵活性、系统架构、以及价格方面的欠缺，使得此系统虽然发展成熟，但是在国内却有比较少的应用。
+
+下面是市场上比较出名的智能家居公司：
+
+**1. HomeKit**
+
+　　HomeKit，是苹果2014年发布的智能家居平台。2015年5月15日，苹果宣布，首批支持其HomeKit平台的智能家居设备在6月上市。
+
+　　2016年6月13日，苹果开发者大会WWDC在旧金山召开，会议宣布建筑商开始支持HomeKit。而在不久前举行的2018 WWDC大会上，苹果在新发布的iOS 12和tvOS 12中，赋予了HomeKit一项重要功能——支持第三方遥控器。如今经过4年多的开发和建设，HomeKit平台在家庭自动化市场中终于要站稳脚跟了。
+
+　　HomeKit本质上是苹果蓝牙直连和多点设备框架的“伴侣”，允许开发人员使用一套简单的命令控制设备状态，发送命令。当然，如果设备想被iOS控制，必须要先加入到Made For iPhone（MFI）项目中，按照苹果要求，将特殊的无线芯片和软件包整合在硬件设备里面。虽然现在苹果对加入MFI设备的要求不像过去那么严格，但是这种做法还是阻碍了开发人员开发兼容HomeKit的应用，也让开发人员无法使用Arduino控制器搞定属于自己的自动化家居设备。所以，你可以把HomeKit看成是一个自动化家居行业的助推器，而不是一个“黑客工具”。
+
+![](https://i.imgur.com/jAMKMz9.jpg)
+
+　　实际上，在获得授权允许之后，HomeKit能为支持的App和配件设备提供独立的信息访问方式。**这意味着，任何一款支持HomeKit的应用，都可以立即获取房间内部所有设备的信息**。当你在自己家里新增了智能设备之后，无需重新配置，只需插插头，把它添加到现有系统之中就可以了。
+
+　　**Siri被认为是HomeKit的主要系统接口，不过设备自带的独立App也有控制功能**。**换句话说，如果你已经安装好了设备，Siri就能识别，并执行语音命令**。**你只需简单地告诉Siri“打开卧室灯”，它就会自动识别设备、配件和房间，然后执行相应的操作**。借助HomeKit，用户可以使用iOS设备控制家里所有标有“Works with Apple HomeKit”（兼容 Apple HomeKit）的配件。这些配件包括灯、锁、恒温器、智能插头及其他配件。**苹果认为，HomeKit不仅仅是一个简单的框架，用户可以在这里打开和控制各种配件**。
+
+　　**在HomeKit框架里面，可以定义好一些初始设备，比如门锁、车库大门、灯光开关**。**支持开发人员也可以自定义无限数量的新设备**。苹果给HomeKit的定位是“开放的”系统，允许创建并定义任何设备，提供自动交互。内部系统非常灵活，苹果并没有做太多限制，而且允许开发人员为设备编写操作命令，做其他工作。不过，即便HomeKit具有很强的开放性，没有加入MFI就是另一番景象了。所有支持HomeKit的硬件都使用了端到端加密，有很强的安全性。HomeKit API只有在App激活，或是在前端打开时才能使用。目前，还没有应用能在后台运行时使用HomeKit。
+
+　　**当然，你可以设定在特定条件下执行命令，这些条件就包括了应用关闭状态**。**但是，这需要用户给出非常明确的命令，比如“在我回到家时打开车库门”，或是“在礼拜二晚上八点开灯”，等等**。
+
+　　实际上，真正处理用户命令的是iOS系统，而非是那些独立App应用，一些恶意应用如果没有用户许可，是无法执行一些多余操作的。**另外，苹果系统还提供了将房间进行分组的“区域”功能，按“楼上”或“楼下”划分区域**。用户还可能按照服务进行分类，这样就可以支持像“打开所有灯光”这样的命令了。**在MFI硬件设备上市前，开发人员可以用苹果的模拟硬件设备的程序“假装”在控制设备**。
+
+　　Home Kit协议规范了智能家居产品如何和iOS终端连接和通信。苹果软件高级副总裁Craig Federighi曾经轻描淡写地说到，通过Home Ki协议的绑定功能（Secure Pairing）能确保只有你的iPhone能够开你的车库门。在宣布的芯片合作伙伴里有Broadcom，Marvel和TI，这几家都是植入式Wi－Fi芯片的主流供应商，所以可以确认HomeKit前期主要支持Wi－Fi或者直连以太网的设备。目前Wi－Fi智能硬件开发上有不少难点要克服，包括设备如何与手机配对，如何得到Wi－Fi密码并且加入家里的热点，如何保证稳定和安全的远程连接等等。
+
+　　**在数据库层面，苹果推出了一个有利于行业发展的基础设施：在iOS上建立了一个可以供第三方app查询和编辑的智能家居数据库**。**这个数据库包含几个非常重要的概念是对现在的智能硬件开发商有借鉴意义的：家庭，房间，区域，设备，服务，动作，触发**。
+
+**2. IoT**
+
+　　从汽车制造商到医院的先进医疗设备，Windows在为全球各行各业的智能设备提供服务，帮助它们迈向更智能、更强大、更互联的物联网时代。Windows 10 IoT的创新路线图在2018年10月的更新中又向前迈进了一大步，通过机器学习、工业安全、边缘智能，对于对于Win 10 IoT企业，LTSC服务选项可用于Win10 IoT Core服务，如销售点系统、自动取款机和工业设备控制器。
+
+　　另外，有了Win10 IoT Core服务，设备制造商可以降低支持成本，分销商可以创建业务模式，为客户提供经常性的长期价值。据微软官网介绍，Win10 IoT可以在边缘做更多的工作，包括机器学习、事件处理、图像识别和人工智能，而无需内部开发，与Azure物联网再到边缘的无缝集成为Win 10 IoT设备带来了云智能和安全分析。
+
+　　以及将云工作负载转移到智能边缘。Azure IoT Edge是一个完全托管的服务，通过在Win10 IoT设备上直接部署和运行人工智能（AI）工作负载、Azure服务和定制逻辑，在本地交付云智能。Azure IoT Edge模块可以从Azure IoT Hub远程部署到运行Win 10 IoT Core或Enterprise的Edge设备上。
+
+![](https://i.imgur.com/MREz0yJ.png)
+
+　　Azure IoT Central（Azure物联网中心） ，这是一个基于Azure云服务构建的 端到端IoT SaaS（软件及服务）平台 ， 该平台可以帮助客户实现完全托管的SaaS产品，无需专业人士即可帮助客户提出并实现物联网方案。凭借着Azure IoT Central，微软成为少数几家能为物联网提供核心服务、PaaS（平台即服务）和SaaS的公司之一。
+
+
+**3. Google Assistant/Home**
+
+　　对于谷歌来说，昔日32亿美元收购而来的Nest，为了与智能音箱等硬件协同，对Nest进行整合，并与智能音箱部门合并。与此同时，推出了Nest Hello视频门铃和Nest X Yale智能门锁，新一波智能硬件新品上市，提高Nest在智能家居市场竞争力，并率先发起价格战，其温度传感器仅需要39美元的，可与Nest Learning Thermostat绑定使用，与亚马逊形成正面对抗。
+
+　　同时，谷歌还以5600万美元投资了一家人工智能硬件公司SambaNova，为人工智能和数据分析提供计算机处理器和软件的初创公司。
+
+　　得益于在AI 技术在各行各业应用，亚马逊Alexa和谷歌的Google Assistant成为全球最受欢迎的语音助手，越来越多的智能硬件产品纷纷内置其语音技术。
+
+　　支持持谷歌语音助理的设备出货量超 4 亿，还有其包括谷歌Home等智能设备，截至目前，谷歌凭借安卓系统使得谷歌占据了移动互联网核心位置，且AI技术应用也走在了全球前列，引领人工智能科技发展，特别作为开放者的姿态，Google Assistant语音助手无处不在，不仅要做好家庭管家这一角色，还承担与生活息息相关的场景落地。
+
+　　谷歌在智能手机和其他移动智能设备所构建的Google Assistant为核心庞大生态体系，其他厂商无法比拟，从系统道软件、再到智能硬件，嵌入AI 技术，欲让AI无处不在。
+
+　　此外，谷歌Home与August、LIFX、TP－Link、Rachio、Vivint、和百思买的Insignia也进行了整合，允许其产品的所有者通过谷歌Home发布语音控制功能。
+
+
+<h3>国内研究现状</h3>
+
+
+<p>　　智能家居主要包括以下内容：</p>
+<p>　　（1） 家居布线系统：家庭智能化的实现，第一步就要进行家庭布线的基础设施建设，家居布线系统把电话、有线电视、电脑网络、影音系统、家庭自动化控制系统的布线统一规划、布局、集中管理，为实现家居智能化提供网络平台，通过家居综合布线既可以实现自动化的控制，又可以做到资源共享，家庭内部只需一台影碟机、音响、卫星电视接收机就可以在家庭内部每一个房间观看电影、享受音乐，可以实现多台电脑联网，共享宽带服务，多路电话任意接听、转接。而且采用综合布线，使得家庭内部布线系统具有良好的扩展性和可升级性，满足不同用户现在和未来的需求。</p>
+<p>　　（2） 家居安防系统：人们对于安防系统的要求越来越高，家居安防系统可以有效的利用技防手段来实现安全防范。家居安防系统包括防盗、防燃气泄漏、防火等功能，同时可备远程监控，便得住户可以远程通过网络或电话随时了解家庭内部情况，同时可监听或者监视听或者监视家庭内部情况。</p>
+<p>　　（3） <strong>家庭自动化系统</strong>：智能家居的主体在于家庭自动化，将来家庭自动化的主体是家电、照明等电气设备的控制。家庭自动化系统能够通过集中或者分布式控制家庭内部照明或者家电，住户可以通过网络或者电话远程控制家庭内部设备。家居自动化系统是将来智能家居的主要发展方向。</p>
+<p>　　（4） <strong>家庭体验系统</strong>：人们对生活体验的要求越来越高，对家庭内部影音系统、家庭内部环境、网络虚拟环境等的需求也越来越高，用在这方面的消费支出会越来越高，将来的家居智能化也会更多的满足人们这些消费。</p>
+<p>　　<strong>目前国内的各种智能化系统和产品虽然很多，但更多的是系统相互独立、集成度比较低、各个系统相互联系不大、家庭内部没有统一的平台</strong>。</p>
+<p>　　智能家居这一概念从 90 年代末引入我国，相对国外来说发展比较晚，但是随着国内房地产行业的迅猛发展，智能家居概念逐渐深入人心。在国内，智能化建筑首先在一些沿海城市出现。在 1997 年，国家首批“智能住宅示范工程”-上海中皇广场的开建成为智能家居蓬勃发展的导火线。在《2000 年小康型城乡住宅科技产业工程项目实施方案》文件中，明确提出智能化小区的建设将作为国家重点发展项目，标志着智能家居的发展进入一个全新阶段。如今国家正在重点发展物联网行业，且“十二五”规划中也提出智能化住宅建设将成为国家战略性新型产业，因此此行业前景将会非常广阔。</p>
+<p>　　下面是2017年我国智能家居十大品牌：</p>
+<p><img src="https://i.imgur.com/01U2qAp.png" alt=""></p>
+<p><strong>1. 海尔 U-Home</strong></p>
+<p>　　海尔U－home是海尔集团在物联网时代推出的美好住居生活解决方案，它采用有线与无线网络相结合的方式，把所有设备通过信息传感设备与网络连接，从而实现了“家庭小网”、“社区中网”、“世界大网”的物物互联，并通过物联网实现了3C产品、智能家居系统、安防系统等的智能化识别、管理以及数字媒体信息的共享。海尔U－home用户在世界的任何角落、任何时间，均可通过打电话、发短信、上网等方式与家中的电器设备互动，畅享“安全、便利、舒适、愉悦”的高品质生活。</p>
+<p>　　海尔智能家居是海尔集团在信息化时代推出的一个重要业务单元。<strong>它以U-home系统为平台，采用有线与无线网络相结合的方式，把所有设备通过信息传感设备与网络连接</strong>，从而实现了“家庭小网 ”、“社区中网 ”、“世界大网 ”的物物互联，并通过物联网实现了3C产品、智能家居系统、安防系统等的智能化识别、管理以及数字媒体信息的共享。<strong>海尔智能家居使用户在世界的任何角落、任何时间，均可通过打电话、发短信、上网等方式与家中的电器设备互动</strong>。</p>
+<p>　　海尔集团在介入智能家居领域以后，把重心放在了智能家居平台的研究上，重点研究各个家庭智能化系统的整合。</p>
+<p><img src="https://i.imgur.com/4lTC66H.png" alt=""></p>
+<p><strong>2. 华为 HiLink</strong></p>
+<p>　　 华为HiLink联盟的智能产品来自业界TOP厂家，目前有50余家核心合作伙伴，覆盖家庭娱乐、能耗、照明、自动化、安防等6大领域百个品类千余产品，还有更多品类正在不断增加，您可以根据自己的需要灵活选择。</p>
+<p>　　其实，<strong>早在2015年12月华为就发布了HiLink战略，围绕“开放、连接、智能”三个关键词，主要包含四个部分：开放的华为HiLink协议，华为LiteOS操作系统，提供高速稳定Wi－Fi连接的华为路，由为用户提供一个统一管理的华为智能家居App</strong>。</p>
+<p><img src="https://i.imgur.com/vBChrPb.png" alt=""></p>
+<p>　　今天我们重点剖析一下华为的“生态语言”HiLink协议和最新推出的“生态枢纽”路由器Q2。</p>
+<p><img src="https://i.imgur.com/7nT1lF9.png" alt=""></p>
+<p>　　智能硬件的“普通话” 华为HiLink如何打通全场景智能家居？</p>
+<p>　　简单来说，华为HiLink可以看作是智能硬件的“普通话”，让不同品牌厂家的智能设备互通互联。它以支持HiLink智联协议的华为路由器（带Hi按键的路由器均支持HiLink智联）为中心，构建智能家庭网络。</p>
+<p>　　短短两年时间，华为HiLink智能家居联盟发展速度惊人。笔者认为，华为HiLink生态之所以快速获得行业和合作伙伴的认可，用户、技术、品牌、渠道四个方面缺一不可。</p>
+<p>　　首先是用户。任何技术和标准的推广都离不开用户作为后盾，智能家居更是如此。华为HiLink依托于华为手机、平板、穿戴、家庭网络海量的用户，基础夯实。2017年，华为（含荣耀）品牌智能手机全年发货量1．53亿台，全球第三；终端设备及家庭网络2013年－2015年全球累计激活用户2．9亿，2016年－2018年全球累计激活用户预计为6亿。</p>
+<p>　　其次是技术。要实现真正的智能家居生活，关键在于互联互通。众所周知，华为最擅长的就是连接技术，拥有30年来深厚的技术积淀。“无连接、不智能”是其一直坚持的理念，华为HiLink智能家居诞生伊始，就将路由器作为其核心设备，较其它智能家居“玩家”有明显的Buff加成。</p>
+<p>　　从功能上来讲，华为路由不仅提供Wi－Fi连接，同时可让整个智能家居体系实现更加高效的本地控制。比如，用户在控制某一款智能设备时，无需“绕云一圈”，华为路由器作为智能家居中枢，在接收指令后可以毫秒级响应执行。而其它智能家居方案，即便在家里也要通过云来处理，速度往往会慢1－2秒，而如果外部网络不通畅，体验则大打折扣。</p>
+<p>　　具体来说，华为HiLink有以下几方面的优势：</p>
+<p>　　1、联网简单：自动发现各品牌家电，一键联网；</p>
+<p>　　2、联接范围广：通过华为HiLink路由器，可扩展连接不同协议、其它生态的设备；</p>
+<p>　　3、联接稳定：分布式WiFi路由器，WiFi无缝覆盖、信号稳定；</p>
+<p>　　4、跨品牌联动：打通设备之间的连接，支持不同品牌不同品类家电联动，不再需要一个个手动操作；</p>
+<p>　　5、跨时空控制：突破时间与空间的距离，无论何时身在何地，随时随地掌控家中状况。</p>
+<p><img src="https://i.imgur.com/U0PiCH6.png" alt=""></p>
+<p><strong>3. 米家 MIJIA</strong></p>
+<p>　　小米智能家居是围绕小米手机、小米电视、小米路由器三大核心产品，由小米生态链企业的智能硬件产品组成一套完整的闭环体验。目前已构成智能家居网络中心小米路由器、家庭安防中心小蚁智能摄像机、影视娱乐中心小米盒子等产品矩阵，轻松实现智能设备互联，提供智能家居真实落地、简单操作、无限互联的应用体验。并且，极具竞争力的价格也将小米智能家居塑造为大众“买得起的第一个智能家居”。</p>
+<p><img src="https://i.imgur.com/OolymdA.png" alt=""></p>
+<p>　　小米智能家居布局与小米路由器有着密不可分的关系。从路由器第一次的公测时标榜的“顶配路由器”到第三次公测时则成为了“玩转智能家居的控制中心”，预示着小米路由器最初的产品定义：“第一是最好的路由器，第二是家庭数据中心，第三是智能家庭中心，第四是开放平台。通过小米路由器、小米路由器App、小米智能家庭App可实现多设备智能联动，设备联网、影音分享、家庭安防、空气改善等功能和应用场景十分丰富。</p>
+<p>　　截止2015年1月小米路由器销量已突破百万，在国内智能路由器市场遥遥领先。截止2015年6月，小米智能家庭在线设备超1000万、APP安装用户超1500万、日活超200万，业已成为全球第一智能家居平台。</p>
+<p>　　小米以“开放、不排他、不独家”为原则发展生态链，构筑智能家居产品矩阵。未来，小米智能家居将逐步实现海量用户覆盖、资金资源注入、通用技术接入、大数据存贮计算、服务方案提供、渠道扩展触达、用户互动服务等全方位多维度的解决方案，携手更多硬件设备提供商，推动智能家居产业链发展，构建相融合的核心技术，完善行业规范建立，共同打造智能硬件生态体系。</p>
+<p>　　自小米路由器推出起，小米智能家居就备受业界关注。地产企业作为智能家居落地的天然土壤，在近些年来销售以及配套服务方面也在寻求差异化。而智能家居作为为业主提供的增值体验之一，成为了地产企业关注并选择的模式。结合小米智能硬件产品的良好体验，小米智能家居计划应运而生。</p>
+<p>　　小米智能家居计划希望与国内地产企业的合作，真正推动智能家居在家庭用户中间的应用与落地。</p>
+<p><img src="https://i.imgur.com/2dVL3OQ.png" alt=""></p>
+<hr>
+<h1 id="天猫精灵"><a href="#天猫精灵" class="headerlink" title="天猫精灵"></a>天猫精灵</h1><p><img src="https://i.imgur.com/kyfa0cM.jpg" alt=""><br><img src="https://i.imgur.com/9EiR4NP.jpg" alt=""><br>机身尺寸：126mm X 83mm X 83mm</p>
+<p>整机重量：400g</p>
+<p>操作系统：AliGenie语音助手</p>
+<p>内置cpu：MTK MT8516</p>
+<p>网络/蓝牙：2.4G WIFI +BT 4.0</p>
+<p>电源输入：DC 12V/1A (100V-240V)</p>
+<p>天猫精灵（TmallGenie）是阿里巴巴人工智能实验室（Alibaba A.I.Labs）于2017年7月5日发布的AI智能产品品牌，当天同步发布了天猫精灵首款硬件产品——AI智能语音终端设备天猫精灵X1，未来还将推出更多AI智能产品。</p>
+<p>天猫精灵X1内置AliGenie操作系统，AliGenie生活在云端，它能够听懂中文普通话语音指令，目前可实现智能家居控制、语音购物、手机充值、叫外卖、音频音乐播放等功能，带来人机交互新体验。依靠阿里云的机器学习技术和计算能力，AliGenie能够不断进化成长，了解使用者的喜好和习惯，成为人类智能助手。</p>
+<p>天猫精灵X1采用了专门为智能语音行业开发的芯片，在解码，降噪，声音处理，多声道的协同等方面做了专门的优化处理。针对需要进行大量音频处理、声音合成的工作环境，定制芯片加入了独立的NEON处理单元，NEON技术可加速音频和语音处理、电话和声音合成等，从而带来更优秀的语音识别及音频处理效果。</p>
+<p>在收音方案上采用了六麦克风收音阵列技术。顶部拥有一个六麦克风收音阵列，有六颗高灵敏麦克风，有助于收集到来自不同方向的声音，从而更容易在周围的噪音中识别出有用的信息，来达到更好的远场交互效果。</p>
+<p>天猫精灵X1背后的团队在降噪技术上做了大量研究，在厨房，客厅，卧室，书房等环境里面，对玻璃，木材，混凝土，金属，石材等各种材质和环境进行了上千次实验，并专门针对家庭使用场景做了优化，即使在有噪音的环境中也能正常唤醒和使用。并且具备一定的学习功能，可以根据环境噪音进行学习和进化，适应不同家庭环境噪音，经过7天左右优化，会更加适应所在家庭环境。</p>
+<p>此外，天猫精灵X1还使用了回声对消和远近场拾音等技术，即使在播放音乐的同时也能正常接收语音指令。</p>
+<p>附加天猫精灵官网<a href="https://bot.tmall.com/" target="_blank" rel="noopener">https://bot.tmall.com/</a></p>
+<p><strong>关于阿里巴巴人工智能实验室</strong></p>
+<p>阿里巴巴人工智能实验室（Alibaba A.I Labs）致力于探索下一代人机交互技术并实现新颖的用户体验。其研发部门主要负责在阿里巴巴的商业生态系统中开发创新的人工智能应用，并为阿里巴巴的客户及合作伙伴提供人工智能解决方案。实验室拥有世界顶尖的研究团队，专注于各个领域的理论研究和产品商用发展，包括语音识别、自然语言处理、声纹识别、深度学习和计算机视觉。同时，实验室亦为消费者研发人工智能产品，包括其研发的首款智能语音助手音箱 “天猫精灵（Tmall Genie）”。</p>
+<h1 id="具有代表性的产品详情"><a href="#具有代表性的产品详情" class="headerlink" title="具有代表性的产品详情"></a>具有代表性的产品详情</h1><hr>
+<h2 id="小米AI音响"><a href="#小米AI音响" class="headerlink" title="小米AI音响"></a>小米AI音响</h2><p>小米AI音箱是小米公司于2017年7月26日发布的一款智能音箱，是由小米电视、小米大脑、小米探索实验室联合开发。<strong>小米把“小爱同学”作为AI音箱的唤醒词</strong>。</p>
+<p><img src="https://i.imgur.com/epr59FQ.jpg" alt=""><br><img src="https://i.imgur.com/upWvAcf.jpg" alt=""><br><img src="https://i.imgur.com/io4o3Kd.jpg" alt=""></p>
+<p><strong>基本参数：</strong></p>
+<p>扬声器：2英寸全频</p>
+<p>频率响应范围：80Hz-18000Hz (-6dB)</p>
+<p>扬声器灵敏度：82dB/m/W</p>
+<p>额定阻抗：4欧姆</p>
+<p>麦克风：6个</p>
+<p>CPU：64位 Cortex A53 四核 1.2GHz</p>
+<p>双频WiFi</p>
+<p>蓝牙 4.1</p>
+<p>支持A2DP音乐播放</p>
+<p>额定输出电功率：&gt;5W</p>
+<p>电源规格：DC 12V 1.75A</p>
+<p><strong>硬件配置</strong></p>
+<p>小米AI音箱搭载64位四核芯片, 具备6个环形麦克风阵列支持360度收音；波束成形技术，可以有效屏蔽干扰，实现远距离声控。</p>
+<p><strong>主要功能：</strong></p>
+<p>内容收听</p>
+<p>小米AI音箱可以播放音乐、电台点播，还有相声、小说、脱口秀，教育学习、儿童类多种有声读物内容  </p>
+<p>技术中心</p>
+<p><strong>小米AI音箱是支持语音交互，内容包括在线音乐、网络电台、有声读物、广播电台等，提供新闻、天气、闹钟、倒计时、备忘、提醒、时间、汇率、股票、限行、算数、查找手机、百科/问答、闲聊、笑话、菜谱、翻译等各类功能。APP”小米AI”内进行查询</strong>。</p>
+<p>智能家居</p>
+<p>小米AI（人工智能）音箱可控制小米电视、扫地机器人、空气净化器等小米及生态链设备，也可通过小米插座、插线板来控制第三方产品。</p>
+<p>小米AI（人工智能）音箱采用波束成型技术，能够有效屏蔽干扰，实现远距离声控，使得你在房间任意方位，都可以通过语音唤醒音箱。所以在接收语音方面肯定更准确。同时在小米AI音箱灵巧的身形下面，是出色的音质。精准的声波导技术，让锥形扬声器实现360度全空间宽频覆盖；0.4L低音声腔内容积、60Hz－18KHz的宽声域，让声音还原本色，震撼动听。</p>
+<p>小米AI音箱还推出“水滴计划”，向第三方开放人工智能语音能力和SDK，号称未来还将迎来成千上万种能力。值得一提的是，小米希望与发烧友合作培训AI设备，通过技能中心AI App训练智能音箱的智能度。</p>
+<p>小米音响mini版，由6麦变为4麦，从理论上来说，麦克风的数量越多，越有利于远场识别。但陈孝良给出的一个看法是，AI 算法在音箱中的应用削弱了麦克风的「统治权」。 也就是说，在与唤醒以及识别等功能产生联动后，不断更迭的算法与阵型可以弥补麦克风的一部分不足之处。</p>
+<p><strong>小米音响的语音识别技术（ASR）的接口，用的是思必驰、Nuance 与搜狗的；自然语言理解（NLP）等关于语义方面的技术，由小米大脑亲自来做前端的麦克风阵列以及降噪方案，是由声智科技提供的；语音合成技术，是由猎户星空提供的</strong>。</p>
+<p>小米AI音响的拆解及简要系统分析<a href="https://blog.csdn.net/leekwen/article/details/82378639" target="_blank" rel="noopener">https://blog.csdn.net/leekwen/article/details/82378639</a></p>
+<hr>
+<h1 id="小米大脑"><a href="#小米大脑" class="headerlink" title="小米大脑"></a>小米大脑</h1><p>小米公司由雷军创办，共计七名创始人，分别为创始人、董事长兼CEO雷军，联合创始人总裁林斌，联合创始及副总裁黎万强、周光平、黄江吉、刘德、洪锋。</p>
+<p>在小米的技术开放平台上的小米AI有深度学习，计算机视觉，声学，语音，自然语言处理，知识图谱，智能问答，小爱同学。<br>其中自然语言处理：自然预压处理基础，文本审核，情感分析，机器翻译，智能聊天。</p>
+<p><strong>从2016年9月小米电视推出全球首个人工智能电视系统——“PatchWall拼图墙”开始，小米电视与“小米大脑”（Mi Brain）团队已经在视频内容理解、用户喜好推荐、语音指令积累等方面有了不错的进展</strong>；小米4A的销量也尚算过关。</p>
+<p>王川介绍说，目前小米大脑在图片识别、语音识别、<strong>语义理解、意图分析</strong>等人工智能领域取得了显著成效，比如，目前小米电视系统可以从海量的影视数据中提取特征，为不同的用户做精准匹配。</p>
+<h1 id="微软小冰"><a href="#微软小冰" class="headerlink" title="微软小冰"></a>微软小冰</h1><hr>
+<p><img src="https://i.imgur.com/GGhF3jv.jpg" alt=""></p>
+<p>微软小冰是微软人工智能三条全球产品线之一。它的产品形态涉及对话式人工智能机器人、智能语音助手、人工智能创造内容提供者和一系列垂直领域解决方案。这是微软小冰的3D模型。</p>
+<p><strong>技术原理编辑</strong></p>
+<p><strong>第五代微软小冰已全面在线上产品中使用生成模型（Generative Model）</strong>。其中，中国、日本、美国和印度小冰部分使用，印尼小冰则完全使用生成模型。第五代微软小冰是全球开放领域人工智能对话中，第一个百分之百使用生成模型的落地产品。</p>
+<p><strong>在使用生成模型之前的第四代小冰，虽然拥有十亿级的大数据语料库，小冰通过分析理解用户的问题，寻找语料库中最合适的话作为她的回答。使用生成模型之后，小冰不再鹦鹉学舌，而是能够自创回应</strong>。</p>
+<p>微软将人工智能交互技术产品的演进分为三个阶段。第一阶段是基本的人工智能交互，即拥有某一种或多种交互方式，如文本、语音、图像、视频等，但不同交互方式之间是割裂的。第二阶段是初级感官，即在人工智能系统中，用一种核心引擎（如小冰的EQ核心对话引擎）将上述各种交互统一起来，使不同感官可以混合运用。微软小冰从2015年第三代发布起，进入这一阶段。微软发布第五代微软小冰，进入第三阶段（高级感官）。</p>
+<p>微软小冰高级感官由多种初级感官有机融合形成的，因而交互能力强，对综合技术储备和数据要求大幅度提高。</p>
+<p>第六代小冰上线全新的共感模型，同时开始公测一种融合了文本、全双工语音与实时视觉的新感官。其中：<strong>共感模型是一种基于生成模型的对话引擎。能够进一步提高小冰对于对话内容、领域和节奏的控制力，也即小冰可以通过自创回应，来牵引对话向她所希望的方向进行</strong>。</p>
+<p>在2017年八月份举行的第五代小冰发布会上，微软宣布已完成全双工语音（Full Duplex Voice）交互感官的产品化，并在打电话和智能音箱设备两个场景中落地。微软在第六代小冰发布会上宣布开始公开测试的这个新感官，是融合了共感模型的对话引擎、全双工语音和实时视觉三个类别的全新感官。 在测试设备中，小冰可以通过视觉、语音的实时连续交互，指挥用户完成面容检测，并可在上述过程中进行开放域的对话。微软预计该感官将于一年内完成全部产品化工作。</p>
+<p><strong>全双工语音交互感官</strong></p>
+<p><strong>全双工语音交互感官（Full Duplex Voice Sense）与既有的单轮或多轮连续语音识别不同，这项技术可实时预测人类即将说出的内容，实时生成回应并控制对话节奏，从而使长程语音交互成为可能</strong>。<strong>采用该技术的智能硬件设备，将不再需要用户在每轮交互时都说出唤醒词，仅需一次唤醒，就可以轻松实现连续对话</strong>。</p>
+<p>自2016年8月起，微软（亚洲）互联网工程院通过人类用户主动发起的方式，已让微软小冰与人类用户累计完成了超过60万通电话。</p>
+<p><strong>共感模型</strong></p>
+<p>共感模型是一种基于生成模型的对话引擎。在生成模型的基础上，共感模型能够进一步提高小冰对于对话内容、领域和节奏的控制力。</p>
+<p><strong>全新交互感官</strong></p>
+<p>微软宣布开始公开测试一种融合了共感模型的对话引擎、全双工语音和实时视觉三个类别的全新感官。微软在第六代小冰发布会现场放置了用于体验的测试设备。在测试设备中，微软小冰可以通过视觉、语音的实时连续交互，指挥用户完成面容检测，并可在上述过程中进行开放域的对话。</p>
+<p><strong>第四版人工智能歌曲DNN模型</strong></p>
+<p>第四版人工智能歌曲DNN模型能够进一步快速合成与人类歌手质量相当的歌曲，并能够使微软小冰自由吸收多数人类歌手的演唱技巧，融会贯通，在演唱过程中达成更加成熟的演绎。此外，该技术还能够完整吸收并复制特定人类歌手的全部演唱特质（嗓音、韵律等），使小冰能完全代替原人类歌手完成新作品的创作。</p>
+<p><strong>六代小冰</strong></p>
+<p>垂直领域</p>
+<p>在金融领域的微软小冰金融文本生成技术，与万得资讯及华尔街见闻合作，已覆盖国内约90%金融机构、75%经批准的合格境外投资机构和约40%的国内个人投资者。</p>
+<p>在大众文化领域，微软小冰的儿童有声读物自动生成技术成果，已获得超过400万小时的收听量，微软小冰姐姐讲故事有声读物覆盖国内90%以上的儿童早教机器人以及80%在线收听平台。</p>
+<p>在电视电台领域，微软小冰通过人工智能技术参与生产与主持的电视电台节目，已达21档电视节目和28档广播电台节目。仅每天早上6点至9点，微软小冰就需参与多达7档节目。</p>
+<p>微软小冰还与微软Bing搜索引擎技术相结合，推出了针对媒体与出版两个垂直行业的辅助型解决方案，并已在超过15个媒体平台落地。由小冰提供人工智能技术支持的媒体及自媒体公众号已超过60000个。在第六代小冰发布会上，微软宣布了可支持人工智能以多种观点和角度，同时撰写多篇新闻文章的“白盒写作辅助工具”等新产品，并首次公布了面向出版垂直领域的有声内容、IP塑造等解决方案。</p>
+<h1 id="百度大脑"><a href="#百度大脑" class="headerlink" title="百度大脑"></a>百度大脑</h1><hr>
+<p>在百度AI的开放平台上有语音技术，图像技术等，其中的自然语言处理包括语言处理基础技术、文本审核、机器翻译。</p>
+<p>语言处理基础技术有词法分析,词向量表示,词义相似度,依存句法分析,DNN语言模型,短文本相似度 ,文本纠错,情感倾向分析,评论观点抽取,对话情绪识别,文章分类,文章标签。</p>
+<p>机器翻译有通用翻译API，定制化翻译API，语音翻译SDK，拍照翻译SDK。</p>
+<p>点击相应的功能会有相关介绍和体验，有点意思。<a href="https://ai.baidu.com/" target="_blank" rel="noopener">https://ai.baidu.com/</a></p>
+<p>2016年9月1日，百度世界大会在北京中国大饭店举行。会上，百度首次向外界全面展示百度人工智能成果——“百度大脑”，并宣布对广大开发者、创业者及传统企业开放其核心能力和底层技术。开放的百度大脑，将引领整个互联网行业进入下一幕。</p>
+<p>作为最早布局人工智能的技术公司之一，百度大脑已建成超大规模的神经网络，拥有万亿级的参数、千亿样本、千亿特征训练，能模拟人脑的工作机制。相比三年前2-3岁孩子的智力水平，百度大脑如今智商已经有了超前的发展，在一些能力上甚至超越了人类。</p>
+<p>2018年7月4日，在Baidu Creat 2018百度AI开发者大会上，百度大脑3.0发布。百度大脑1.0完成了基础能力的搭建和新技术的初步开放，对外开放20多种能力，2017年的百度大脑2.0已形成完整体系，开放60多种能力。百度大脑3.0已开放110多项能力，AI技术能力也在不断提升。<strong>百度大脑3.0最大的优势，就是多模态深度语义理解技术。百度大脑每天的调用次数已超过4000亿次</strong>。</p>
+<p>百度的深度学习研究工作启动于2012年，2013年百度深度学习研究院IDL（Institute of Deep Learning）在李彦宏的指示下正式成立，前Facebook资深科学家徐伟、美国新泽西州立大学统计系教授张潼，异构计算专家、前AMD异构系统首席软件架构师吴韧、“千人计划”国家特聘专家余凯等一大批世界知名专家纷纷加入，除了在国内有专门实验室外，在美国硅谷，离苹果公司不远的地方，百度深度学习实验室也已经在运转。</p>
+<p><strong>应用功能</strong></p>
+<p>深度学习的研究让百度搜索更加“智能”了。如百度的语音识别，准确度已经近乎和人际交流相同；在图像识别方面，百度也已经是全世界最为领先的公司之一。</p>
+<p>百度大脑的四大功能，分别是语音、图像，自然语言处理和用户画像这四大能力。  </p>
+<p>语音的能力：包括语音识别能力和语音合成能力。</p>
+<p>图像的能力：图像能力指的是看到一个图片，不仅能看得见，还能看得懂。按照技术界的说法，它应该是计算机视觉。</p>
+<p><strong>自然语言处理能力：自然语言处理能力比语音和图像更难。语音和图像技术更多还处在认知的阶段，而自然语言理解除了要有认知能力之外，还需要逻辑推理能力、规划能力等等，同时也需要依赖于更为强大的知识图谱</strong>。</p>
+<p>用户画像：用户画像在传统的AI中并不是主流。但是今天，我们每时每刻都可以收集很多很多和用户行为相关的数据，就可以对用户做很好的画像，而这里面使用的技术又基本上都是与人工智能相关的。</p>
+<p><strong>百度大脑3.0</strong><br>百度大脑3.0最大的优势，就是多模态深度语义理解技术。</p>
+<p>多模态深度语义理解”是指对文字、声音、图片、视频等多模态的数据和信息进行深层次多维度的语义理解，包括数据语义、知识语义、视觉语义、语音语义一体化和自然语言语义等多方面的语义理解技术。</p>
+<p>百度大脑3.0已经对外开放了110多项领先的AI能力。</p>
+<p>百度大脑的深度学习训练，已经阅读了一千亿文章，相当于六万个国家图书馆的容量。同时百度深度学习平台paddlepaddle也迎来的3.0版本。</p>
+<p>“百度大脑3.0首次将芯片纳入技术体系，它使百度大脑具备了更完备的软硬一体化能力，带动百度大脑算力爆发式增长。AI芯片还将与百度自主研发的PaddlePaddle深度学习框架深度结合，推动AI行业生态快速发展“，王海峰讲到。</p>
+<hr>
+<p></p><h1 id="1">百度大脑</h1><p></p>
+<h1 id="我们的解决方案——以百度大脑为纲领"><a href="#我们的解决方案——以百度大脑为纲领" class="headerlink" title="我们的解决方案——以百度大脑为纲领"></a>我们的解决方案——以百度大脑为纲领</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ai.baidu.com/tech/unit" target="_blank" rel="noopener">理解与交互技术UNIT</a></td>
+<td>UNIT搭载业界领先的需求理解、对话控制及底层的机器学习、自然语言处理、知识挖掘等核心技术，让您的产品快速拥有对话交互能力</td>
+<td><a href="https://ai.baidu.com/docs#/UNIT-v2-guide/top" target="_blank" rel="noopener">UNIT2.0 文档</a></td>
+</tr>
+<tr>
+<td><a href="https://ai.baidu.com/docs#/" target="_blank" rel="noopener">AI开放平台文档中心</a></td>
+<td>重点关注：自然语言 + 知识图谱</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/06/LearningRate模型的学习率/" rel="next" title="LearningRate模型的学习率">
+                <i class="fa fa-chevron-left"></i> LearningRate模型的学习率
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/12/自然语言理解与交互技术平台/" rel="prev" title="自然语言理解与交互技术平台">
+                自然语言理解与交互技术平台 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-number">1.</span> <span class="nav-text">一、项目背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2"><span class="nav-number">2.</span> <span class="nav-text">二、设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.0.1.</span> <span class="nav-text">智能家居系统设计原则一：实用便利</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.0.2.</span> <span class="nav-text">智能家居系统设计原则二：可靠性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.0.3.</span> <span class="nav-text">智能家居系统设计原则三：标准性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.0.4.</span> <span class="nav-text">智能家居系统设计原则四：方便性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">2.0.5.</span> <span class="nav-text">智能家居系统设计原则五：轻巧型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#３"><span class="nav-number">3.</span> <span class="nav-text">三、发展历史</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#４"><span class="nav-number">4.</span> <span class="nav-text">四、国内外研究现状</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.1.</span> <span class="nav-text">国外研究现状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#undefined"><span class="nav-number">4.0.2.</span> <span class="nav-text">国内研究现状</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#天猫精灵"><span class="nav-number">5.</span> <span class="nav-text">天猫精灵</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#具有代表性的产品详情"><span class="nav-number">6.</span> <span class="nav-text">具有代表性的产品详情</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#小米AI音响"><span class="nav-number">6.1.</span> <span class="nav-text">小米AI音响</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小米大脑"><span class="nav-number">7.</span> <span class="nav-text">小米大脑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#微软小冰"><span class="nav-number">8.</span> <span class="nav-text">微软小冰</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#百度大脑"><span class="nav-number">9.</span> <span class="nav-text">百度大脑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-number">10.</span> <span class="nav-text">百度大脑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#我们的解决方案——以百度大脑为纲领"><span class="nav-number">11.</span> <span class="nav-text">我们的解决方案——以百度大脑为纲领</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

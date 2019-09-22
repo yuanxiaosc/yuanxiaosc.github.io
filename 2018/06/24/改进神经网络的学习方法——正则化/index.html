@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,正则化,奥卡姆剃刀原则," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  产生过度拟合和正则化的原因拥有大量的自由参数的模型能够描述特别神奇的现象。即使这样的模型能够很好的拟合已有的数据，但并不表示是一个好模型。因为这可能只是因为模型中足够的自由度使得它可以描述几乎所有给定大小的数据集，而不需要真正洞察现象的本质。所以发生这种情形时，模型对已有的数据会表现的">
+<meta name="keywords" content="深度学习,正则化,奥卡姆剃刀原则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改进神经网络的学习方法——正则化">
+<meta property="og:url" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  产生过度拟合和正则化的原因拥有大量的自由参数的模型能够描述特别神奇的现象。即使这样的模型能够很好的拟合已有的数据，但并不表示是一个好模型。因为这可能只是因为模型中足够的自由度使得它可以描述几乎所有给定大小的数据集，而不需要真正洞察现象的本质。所以发生这种情形时，模型对已有的数据会表现的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/11.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/12.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/13.jpg">
+<meta property="og:updated_time" content="2019-08-04T14:29:09.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改进神经网络的学习方法——正则化">
+<meta name="twitter:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  产生过度拟合和正则化的原因拥有大量的自由参数的模型能够描述特别神奇的现象。即使这样的模型能够很好的拟合已有的数据，但并不表示是一个好模型。因为这可能只是因为模型中足够的自由度使得它可以描述几乎所有给定大小的数据集，而不需要真正洞察现象的本质。所以发生这种情形时，模型对已有的数据会表现的">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/"/>
+
+
+
+
+
+  <title>改进神经网络的学习方法——正则化 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/24/改进神经网络的学习方法——正则化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">改进神经网络的学习方法——正则化</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-24T19:31:15+08:00">
+                2018-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/24/改进神经网络的学习方法——正则化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/24/改进神经网络的学习方法——正则化/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote>
+<h2 id="产生过度拟合和正则化的原因"><a href="#产生过度拟合和正则化的原因" class="headerlink" title="产生过度拟合和正则化的原因"></a>产生过度拟合和正则化的原因</h2><p>拥有大量的自由参数的模型能够描述特别神奇的现象。即使这样的模型能够很好的拟合已有的数据，但并不表示是一个好模型。因为这可能只是因为模型中足够的自由度使得它可以描述几乎所有给定大小的数据集，而不需要真正洞察现象的本质。所以发生这种情形时，模型对已有的数据会表现的很好，但是对新的数据很难泛化。对一个模型真正的测验就是它对没有见过的场景的预测能力。</p>
+<p>我们用来对 MNIST 数字分类的 30 个隐藏神经元神经网络拥有将近 24,000 个参数！当然很多。我们有 100 个隐藏元的网络拥有将近 80,000 个参数，而目前最先进的深度神经网络包含百万级或者十亿级的参数。我们应当信赖这些结果么？</p>
+<p>让我们通过构造一个网络泛化能力很差的例子使这个问题更清晰。我们的网络有 30 个隐藏神经元，共 23,860 个参数。但是我们不会使用所有 50,000 幅 MNIST 训练图像。相反，我们只使用前 1,000 幅图像。使用这个受限的集合，会让泛化的问题突显。我们按照之前同样的方式，使用交叉熵损失函数，学习率设置为 $\eta = 0.5$ 而小批量大小设置为 $10$。不过这里我们要训练 400 个周期。我们现在使用 <a href="https://github.com/skylook/neural-networks-and-deep-learning/blob/master/src/network2.py" target="_blank" rel="noopener">network2</a> 来研究损失函数改变的情况：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> mnist_loader</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>training_data, validation_data, test_data = \</span><br><span class="line"><span class="meta">... </span>mnist_loader.load_data_wrapper()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> network2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">10</span>], cost=network2.CrossEntropyCost)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.large_weight_initializer()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data[:<span class="number">1000</span>], <span class="number">400</span>, <span class="number">10</span>, <span class="number">0.5</span>, evaluation_data=test_data,</span><br><span class="line"><span class="meta">... </span>monitor_evaluation_accuracy=<span class="keyword">True</span>, monitor_training_cost=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>使用上面的结果，我们可以画出当网络学习时代价变化的情况：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/1.png" alt=""></p>
+<p>这看起来令人振奋，因为损失函数有一个光滑的下降，跟我们预期一致。注意，我只是展示了 $200$ 到 $399$ 损失函数的情况。这给出了很好的近距离理解训练后期的情况，也是出现有趣现象的地方。</p>
+<p>让我们看看分类准确率在测试集上的表现：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/2.png" alt=""></p>
+<p>这里我还是聚焦到了后面的过程。 在前 200 迭代期（图中没有显示）中准确率提升到了 82%。然后学习逐渐变缓。最终，在 280 迭代期左右分类准确率就停止了增长。后面的的迭代期，仅仅看到了在 280 迭代期准确率周围随机的小波动。将这幅图和前面的图进行对比，前面的图中和训练数据相关的代价持续平滑下降。如果我们只看那个代价，会发现我们模型的表现变得“更好”。但是测试准确率展示了提升只是一种假象。就像费米不大喜欢的那个模型一样，我们的网络在 280 迭代期后就不再能够推广到测试数据上。所以这不是有用的学习。我们说网络在 280 迭代期后就<strong>过度拟合</strong>或者过度训练了。</p>
+<p>这里引出过度拟合的概念，过度拟合即过拟合。为了得到一致假设而使假设变得过度严格称为过拟合。过拟合的一种定义：给定一个假设空间 $H$，一个假设 $h$ 属于 $H$，如果存在其他的假设 $h’$ 属于 $H$,使得在训练样例上h的错误率比 $h’$ 小，但在整个实例分布上 $h’$ 比 $h$ 的错误率小，那么就说假设 $h$ 过度拟合训练数据。</p>
+<p><strong>你可能想知道这里的问题是不是由于我们看的是训练数据的代价，而对比的却是测试数据上的分类准确率导致的。</strong> 换言之，可能我们这里在进行苹果和橙子的对比。如果我们比较训练数据上的代价和测试数据上的代价，会发生什么，我们是在比较类似的度量吗？或者可能我们可以比较在两个数据集上的分类准确率啊？实际上，不管我们使用什么度量的方式，尽管细节会变化，但本质上都是一样的。让我们来看看测试数据集上的代价变化情况：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/3.png" alt=""></p>
+<p>我们可以看到测试集上的代价在 15 迭代期前一直在提升，随后越来越差，尽管训练数据集上的代价表现是越来越好的。这其实是另一种模型过度拟合的迹象。尽管，这里带来了关于我们应当将 15 还是 280 迭代期当作是过度拟合开始影响学习的时间点的困扰。<strong>从一个实践角度，我们真的关心的是提升测试数据集上的分类准确率，而测试集合上的代价不过是分类准确率的一个反应。所以更加合理的选择就是将 280 迭代期看成是过度拟合开始影响学习的时间点。</strong></p>
+<p>另一个过度拟合的迹象在训练数据上的分类准确率上也能看出来：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/4.png" alt=""></p>
+<p>准确率一直在提升接近 100%。也就是说，我们的网络能够正确地对所有 $1000$ 幅图像进行分类！而在同时，我们的测试准确率仅仅能够达到 82.27%。所以我们的网络实际上在学习训练数据集的特例，而不是能够一般地进行识别。我们的网络几乎是在单纯记忆训练集合，而没有对数字本质进行理解能够泛化到测试数据集上。</p>
+<p>过拟合是神经网络的一个主要问题。这在现代网络中特别正常，因为网络权重 $W$ 和偏置 $b$ 数量巨大。为了高效地训练，我们需要一种检测过拟合是不是发生的技术，这样我们不会过度训练。并且我们也想要找到一些技术来降低过拟合的影响。</p>
+<p>检测过拟合的明显方法是使用上面的方法跟踪测试数据集合上的准确率随训练变化情<br>况。如果我们看到测试数据上的准确率不再提升，那么我们就停止训练。当然，严格地说，这其实并非是过拟合的一个必要现象，因为测试集和训练集上的准确率可能会同时停止提升。当然，采用这样的策略是可以阻止过拟合的。</p>
+<p>实际上，我们会使用这种策略的变化形式来试验。记得之前我们载入 MNIST 数据时用了三个数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> mnist_loader</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>training_data, validation_data, test_data = \</span><br><span class="line"><span class="meta">... </span>mnist_loader.load_data_wrapper()</span><br></pre></td></tr></table></figure>
+<p>到现在我们一直在使用 training_data 和 test_data，没有用过 validation_data。validation_data 中包含了 $10,000$ 幅数字图像，这些图像和 MNIST 训练数据集中的 $50,000$ 幅图像以及测试数据集中的$10,000$ 幅都不相同。我们会使用 validation_data 而不是 test_data 来防止过拟合。我们会为 test_data 使用和上面提到的相同的策略。我们在每个迭代期的最后都计算在 validation_data 上的分类准确率。一旦分类准确率已经饱和，就停止训练。这个策略被称为提前停止。当然，实际应用中，我们不会立即知道什么时候准确率会饱和。相反，我们会一直训练直到我们确信准确率已经饱和（这里需要一些判定标准来确定什么时候停止）。</p>
+<p>为何要使用 validation_data 来替代 test_data 防止过拟合问题？实际上，这是一个更为一般的策略的一部分，这个一般的策略就是使用 validation_data 来衡量不同的超参数（如迭代期}，学习率，最好的网络架构等等）的选择的效果。我们使用这样方法来找到超参数的合适值。因此，尽管到现在我并没有提及这点，但其实本书前面已经稍微介绍了一些超参数选择的方法。</p>
+<p>当然，这仍然没有回答为什么我们用 validation_data 而不是 test_data 来防止过拟合的问题。实际上，有一个更加一般的问题，就是 <strong>为何用 validation_data 取代 test_data 来设置更好的超参数？</strong> 为了理解这点，想想当设置超参数时，我们想要尝试许多不同的超参数选择。如果我们设置超参数是基于 test_data 的话，可能最终我们就会得到 过拟合 于 test_data 的超参数。也就是说，我们可能会找到那些符合 test_data 特点的超参数，但是网络的性能并不能够泛化到其他数据集合上。我们借助 validation_data 来克服这个问题。然后一旦获得了想要的超参数，最终我们就使用 test_data 进行准确率测量。这给了我们在 test_data 上的结果是一个网络泛化能力真正的度量方式的信心。换言之，你可以将验证集看成是一种特殊的训练数据集能够帮助我们学习好的超参数。这种寻找好的超参数的方法有时候被称为 hold out 方法，因为 validation_data 是从 traning_data 训练集中留出或者“拿出”的一部分。</p>
+<p>在实际应用中，甚至在衡量了 test_data 的性能后，我们可能也会改变想法并去尝试另外的方法，也许是一种不同的网络架构，这将会引入寻找新的超参数的过程。如果我们这样做，难道不会产生 过拟合 于 test_data 的困境么？我们是不是需要一种数据集的潜在无限回归，这样才能够确信模型能够泛化？去除这样的疑惑其实是一个深刻而困难的问题。但是对我们实际应用的目标，我们不会担心太多。相反，我们会继续采用基于 training_data，validation_data，和 test_data 的基本 Hold-Out 方法。</p>
+<p>我们已经研究了只使用 $1,000$ 幅训练图像时的 过拟合 问题。那么如果我们使用所有的 50,000 幅图像的训练数据会发生什么？我们会保留所有其它的参数都一样（$30$ 个隐藏元，learning-rate $0.5$ mini-batch 规模为 $10$），但是 epoch为 30 次。下图展示了分类准确率在训练和测试集上的变化情况。注意我们使用的测试数据，而不是验证集合，为了让结果看起来和前面的图更方便比较。</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/5.png" alt=""></p>
+<p>如你所见，测试集和训练集上的准确率相比我们使用 $1,000$ 个训练数据时相差更小。特别地，在训练数据上的最佳的分类准确率 97.86% 只比测试集上的 95.33% 准确率高了1.53%。而之前的例子中，这个差距是 17.73%！过拟合仍然发生了，但是已经减轻了不少。我们的网络从训练数据上更好地泛化到了测试数据上。一般来说，最好的降低 过拟合 的方式之一就是增加训练样本的量。有了足够的训练数据，就算是一个规模非常大的网络也不大容易 过拟合。不幸的是，训练数据其实是很难或者很昂贵的资源，所以这不是一种太切实际的选择。</p>
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2><p>增加训练样本的数量是一种减轻过拟合的方法。还有其他的方法能够减轻过拟合的程度吗？一种可行的方式就是降低网络的规模。然而，大的网络拥有一种比小网络更强的潜力，所以这里存在一种应用冗余性的选项。</p>
+<p>幸运的是，还有其他的技术能够缓解过拟合，即使我们只有一个固定的网络和固定的训练集合。这种技术就是正则化。本节，我会给出一种最为常用的正则化手段，有时候被称为权重-decay 或者 L2正则化。L2正则化的想法是增加一个额外的项到损失函数上，这个项叫做正则化项。下面是正则化的交叉熵：</p>
+<script type="math/tex; mode=display">
+C = -\frac{1}{n} \sum_{xj} \left[ y_j \ln a^L_j+(1-y_j) \ln(1-a^L_j)\right] + \frac{\lambda}{2n} \sum_w w^2</script><p>其中第一个项就是常规的交叉熵的表达式。第二个现在加入的就是所有权重的平方的和。然后使用一个因子 $\lambda / 2n$ 进行量化调整，其中 $\lambda &gt; 0$ 可以称为正则化参数，而 $n$ 就是训练集合的大小。我们会在后面讨论 $\lambda$ 的选择策略。需要注意的是，正则化项里面并不包偏置。这点我们后面也会再讲述。</p>
+<p>当然，对其他的损失函数也可以进行正则化，例如二次 损失函数。类似的正则化的形式如下：</p>
+<script type="math/tex; mode=display">
+  C = \frac{1}{2n} \sum_x \|y-a^L\|^2 + \frac{\lambda}{2n} \sum_w w^2</script><p>两者都可以写成这样：</p>
+<script type="math/tex; mode=display">
+  C = C_0 + \frac{\lambda}{2n} \sum_w w^2</script><p>其中 $C_0$ 是原始的 损失函数。</p>
+<p>直觉地看，正则化的效果是让网络倾向于学习小一点的权重，其他的东西都一样的。大的权重只有能够给出损失函数第一项足够的提升时才被允许。换言之，正则化可以当做一种寻找小的权重和最小化原始的损失函数之间的折中。这两部分之间相对的重要性就由 $\lambda$ 的值来控制了：$\lambda$ 越小，就偏向于最小化原始 损失函数，反之，倾向于小的权重。</p>
+<p>现在，对于这样的折中为何能够减轻过拟合还不是很清楚！但是，实际表现表明了这点。我们会在下一节来回答这个问题。但现在，我们来看看一个正则化的确减轻过拟合的例子。</p>
+<p>为了构造这个例子，我们首先需要弄清楚如何将随机梯度下降算法应用在一个正则化的神经网络上。特别地，我们需要知道如何计算对网络中所有权重和偏置的偏导数 $\partial C/\partial w$ 和 $\partial C/\partial b$。对方程$C = C_0 + \frac{\lambda}{2n} \sum_w w^2<br>$进行求偏导数得：</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w}  = \frac{\partial C_0}{\partial w} + \frac{\lambda}{n} w</script><script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b} = \frac{\partial C_0}{\partial b}</script><p>$\partial C_0/\partial w$ 和 $\partial C_0/\partial b$ 可以通过反向传播算法进行计算，正如<a href="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">《反向传播算法》</a>中描述的那样。所以我们看到其实计算正则化的损失函数的梯度是很简单的：仅仅需要反向传播，然后加上$\frac{\lambda}{n} w$ 得到所有权重的偏导数。而偏置的偏导数就不要变化，所以偏置的梯度下降学习规则不会发生变化：</p>
+<script type="math/tex; mode=display">
+  b \rightarrow b -\eta \frac{\partial C_0}{\partial b}</script><p>权重的学习规则就变成：</p>
+<script type="math/tex; mode=display">
+  w  \rightarrow w-\eta \frac{\partial C_0}{\partial
+      w}-\frac{\eta \lambda}{n} w</script><script type="math/tex; mode=display">
+     w = \left(1-\frac{\eta \lambda}{n}\right) w -\eta \frac{\partial
+      C_0}{\partial w}</script><p>这正和通常的梯度下降学习规则相同，除了通过一个因子 $1-\frac{\eta\lambda}{n}$ 重新调整了权重$w$。这种调整有时被称为权重衰减，因为它使得权重变小。粗看，这样会导致权重会不断下降到 $0$。但是实际不是这样的，因为如果在原始损失函数中造成下降的话其他的项（比如 $\eta \frac{\partial<br> C_0}{\partial w}$）可能会让权重增加。</p>
+<p>好的，这就是梯度下降工作的原理。那么随机梯度下降呢？正如在没有正则化的随机梯度下降中，我们可以通过平均 $m$ 个训练样本的 mini-batch 来估计 $\partial C_0/\partial<br>w$。因此，为了随机梯度下降的正则化学习规则就变成</p>
+<script type="math/tex; mode=display">
+  w \rightarrow \left(1-\frac{\eta \lambda}{n}\right) w -\frac{\eta}{m}
+  \sum_x \frac{\partial C_x}{\partial w}</script><p>其中后面一项是在训练样本的 mini-batch $x$ 上进行的，而 $C_x$ 是对每个训练样本的（无正则化的）代价。这其实和之前通常的随机梯度下降的规则是一样的，除了有一个权重下降的因子 $1-\frac{\eta \lambda}{n}$。最后，为了完整，我给出偏置的正则化的学习规则。这当然是和我们之前的非正则化的情形一致了，</p>
+<script type="math/tex; mode=display">
+  b \rightarrow b - \frac{\eta}{m} \sum_x \frac{\partial C_x}{\partial b}</script><p>这里求和也是在训练样本的 mini-batch $x$ 上进行的。</p>
+<p>让我们看看正则化给网络带来的性能提升吧。这里还会使用有 $30$ 个隐藏神经元、 mini-batch大小为 $10$， learning-rate为 $0.5$，使用交叉熵的神经网络。然而，这次我们会使用正则化参数为 $\lambda = 0.1$。注意在代码中，我们使用的变量名字为 lmbda!，这是因为在 Python 中 lambda是关键字，有着不相关的含义。我也会再次使用 test_data，而不是 validation_data。不过严格地讲，我们应当使用 validation_data 的，因为前面已经讲过了。这里我这样做，是因为这会让结果和非正则化的结果对比起来效果更加直接。你可以轻松地调整为 validation_data，你会发现有相似的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> mnist_loader</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>training_data, validation_data, test_data = \</span><br><span class="line"><span class="meta">... </span>mnist_loader.load_data_wrapper()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> network2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">10</span>], cost=network2.CrossEntropyCost)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.large_weight_initializer()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data[:<span class="number">1000</span>], <span class="number">400</span>, <span class="number">10</span>, <span class="number">0.5</span>,</span><br><span class="line"><span class="meta">... </span>evaluation_data=test_data, lmbda = <span class="number">0.1</span>,</span><br><span class="line"><span class="meta">... </span>monitor_evaluation_cost=<span class="keyword">True</span>, monitor_evaluation_accuracy=<span class="keyword">True</span>,</span><br><span class="line"><span class="meta">... </span>monitor_training_cost=<span class="keyword">True</span>, monitor_training_accuracy=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>训练集上的损失函数持续下降，和前面无正则化的情况一样的规律：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/6.png" alt=""></p>
+<p>但是这次测试集上的准确率在整个 400 迭代期内持续增加：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/7.png" alt=""></p>
+<p>显然，正则化的使用能够解决过拟合的问题。而且，准确率相当高了，最高处达到了87.1%，相较于之前的 82.27%。因此，我们几乎可以确信在 400 迭代期之后持续训练会有更加好的结果。看起来，经实践检验，正则化让网络具有更好的泛化能力，显著地减轻了过拟合的影响。</p>
+<p>如果我们摆脱人为的仅用 1,000 个训练图像的环境，转而用所有 50,000 图像的训练集，会发生什么？当然，我们之前已经看到过拟合在大规模的数据上其实不是那么明显了。那正则化能不能起到相应的作用呢？保持超参数和之前一样，30 epoch, learning-rate 为 0.5, mini-batch 大小为 10。不过我们这里需要改变正则化参数。原因在于训练数据的大小已经从 $n=1,000$ 改成了 $n=50,000$，这个会改变权重衰减因子 $1-\frac{\eta\lambda}{n}$。如果我们持续使用 $\lambda = 0.1$ 就会产生很小的权重衰减，因此就将正则化的效果降低很多。我们通过修改为 $\lambda = 5.0$ 来补偿这种下降。</p>
+<p>好了，来训练网络，重新初始化权重：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.large_weight_initializer()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0.5</span>,</span><br><span class="line"><span class="meta">... </span>evaluation_data=test_data, lmbda = <span class="number">5.0</span>,</span><br><span class="line"><span class="meta">... </span>monitor_evaluation_accuracy=<span class="keyword">True</span>, monitor_training_accuracy=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>我们得到：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/8.png" alt=""></p>
+<p>这个结果很不错。第一，我们在测试集上的分类准确率在使用正则化后有了提升，从95.49% 到 96.49%。这是个很大的进步。第二，我们可以看到在训练数据和测试数据上的结果之间的差距也更小了。这仍然是一个大的差距，不过我们已经显著得到了本质上的降低过拟合的进步。</p>
+<p>最后，我们看看在使用 100 个隐藏神经元和正则化参数为 $\lambda = 5.0$ 相应的测试分<br>类准确率。我不会给出详细分析，纯粹为了好玩，来看看我们使用一些技巧（交叉熵函数和 L2正则化）能够达到多高的准确率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">100</span>, <span class="number">10</span>], cost=network2.CrossEntropyCost)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.large_weight_initializer()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">0.5</span>, lmbda=<span class="number">5.0</span>,</span><br><span class="line"><span class="meta">... </span>evaluation_data=validation_data,</span><br><span class="line"><span class="meta">... </span>monitor_evaluation_accuracy=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>最终在验证集上的准确率达到了 97.92%。这是比 30 个隐藏元的较大飞跃。实际上，稍微改变一点，60 epoch $\eta=0.1$ 和$\lambda = 5.0$。我们就突破了 98%，达到了98.04% 的分类准确率 98%。对于 152 行代码这个效果还真不错！</p>
+<p>我已经把正则化描述为一种减轻过拟合和提高分类准确率的方法。实际上，这不是仅有的好处。实践表明，在使用不同的（随机）权重初始化进行多次 MNIST 网络训练的时候，我发现无正则化的网络会偶然被限制住，明显困在了损失函数的局部最优值处。结果就是不同的运行会给出相差很大的结果。对比看来，正则化的网络能够提供更容易复制的结果。</p>
+<p>为何会这样子？从经验上看，如果损失函数是无正则化的，那么权重向量的范数可能会增长，而其他的东西都保持一样。随着时间的推移，这会导致权重向量变得非常大。所以会使得权重向量卡在朝着更多还是更少的方向上变化，因为当范数很大的时候梯度下降带来的变化仅仅会引起在那个方向发生微小的变化。我相信这个现象让我们的学习算法更难有效地探索权重空间，最终导致很难找到损失函数的最优值。</p>
+<h2 id="为什么正则化可以帮助减轻过度拟合"><a href="#为什么正则化可以帮助减轻过度拟合" class="headerlink" title="为什么正则化可以帮助减轻过度拟合"></a>为什么正则化可以帮助减轻过度拟合</h2><p>我们已经看到了正则化在实践中能够减少过拟合了。这是令人振奋的，不过，这背后的原因还不得而知！通常的说法是：小的权重在某种程度上，意味着更低的复杂性，也就对数据给出了一种更简单却更强大解释，因此应该优先选择。这虽然很简短，不过暗藏了一些可能看起来会令人困惑的因素。让我们将这个解释细化，认真地研究一下。现在给一个简单的数据集，我们为其建立模型：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/9.png" alt=""></p>
+<p>这里我们其实在研究某种真实的现象，$x$ 和 $y$ 表示真实的数据。我们的目标是训练一个模型来预测 $y$ 关于 $x$ 的函数。我们可以使用神经网络来构建这个模型，但是我们先来个简单的：用一个多项式来拟合数据。这样做的原因其实是多项式相比神经网络能够让事情变得更加清楚。一旦我们理解了多项式的场景，对于神经网络可以如法炮制。现在，图中有十个点，我们就可以找到唯一的 $9$ 阶多项式 $y=a_0x^9 + a_1x^8 + … + a_9$ 来完全拟合数据。下面是多项式的图像，这里我不明确列出这些系数。</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/10.png" alt=""></p>
+<p>这给出了一个准确的拟合。但是我们同样也能够使用线性模型 $y=2x$ 得到一个好的拟合效果：</p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/11.png" alt=""></p>
+<p>哪个是更好的模型？哪个更可能是真的？还有哪个模型更可能泛化到其他的拥有同样现象的样本上？</p>
+<p>这些都是很难回答的问题。实际上，我们如果没有更多关于真实现象背后的信息的话，并不能确定给出上面任何一个问题的答案。但是让我们考虑两种可能的情况：（1）9 阶多项式实际上是完全描述了真实情况的模型，最终它能够很好地泛化；（2）正确的模型是 $y=2x$，但是存在着由于测量误差导致的额外的噪声，使得模型不能够准确拟合。</p>
+<p>先验假设无法说出哪个是正确的（或者，如果还有其他的情况出现）。逻辑上讲，这些都可能出现。并且这不是微不足道的差异。在给出的数据上，两个模型的表现其实是差不多的。但是假设我们想要预测对应于某个超过了图中所有的 $x$ 的 $y$ 的值，在两个模型给出的结果之间肯定有一个极大的差距，因为 9 阶多项式模型肯定会被 $x^9$ 主导，而线性模型只是线性的增长。</p>
+<p>在科学中，一种观点是我们除非不得已应该追随更简单的解释。当我们找到一个简单模型似乎能够解释很多数据样本的时候，我们都会激动地认为发现了规律！我们怀疑模型必须表达出某些关于现象的内在的真理。如上面的例子，线性模型加噪声肯定比多项式更加可能。我们会认为线性模型加噪声表达出了一些潜在的真理。从这个角度看，多项式模型仅仅是学习到了局部噪声的影响效果。所以尽管多项式对于这些特定的数据点表现得很好。模型最终会在未知数据上的泛化上出现问题，所以噪声线性模型具有更强大的预测能力。</p>
+<p>让我们从这个观点来看神经网络。假设神经网络大多数有很小的权重，这最可能出现在正则化的网络中。更小的权重意味着网络的行为不会因为我们随便改变了一个输入而改变太大。这会让正则化网络学习局部噪声的影响更加困难。将它看做是一种让单个的证据不会影响网络输出太多的方式。相对的， 正则化网络学习去对整个训练集中经常出现的证据进行反应。对比看，大权重的网络可能会因为输入的微小改变而产生比较大的行为改变。所以一个无正则化的网络可以使用大的权重来学习包含训练数据中的噪声的大量信息的复杂模型。<strong>简言之，正则化网络受限于根据训练数据中常见的模式来构造相对简单的模型，而能够抵抗训练数据中的噪声的特性影响。我们的想法就是这可以让我们的网络对看到的现象进行真实的学习，并能够根据已经学到的知识更好地进行泛化。</strong></p>
+<p>所以，倾向于更简单的解释的想法其实会让我们觉得紧张。<strong>人们有时候将这个想法称为“奥卡姆剃刀原则”，然后就会热情地将其当成某种科学原理来应用这个法则。但是，这就不是一个一般的科学原理。也没有任何先验的逻辑原因来说明简单的解释就比更为复杂的解释要好。实际上，有时候更加复杂的解释其实是正确的。</strong> 下面有三点提示：第一，确定两种解释中哪个“更加简单”其实是一件相当微妙的工作。第二，即使我们可以做出这样一个判断，简单性也是一个使用时需要相当小心的指导！第三，<strong>对模型真正的测试不是简单性，而是它在新场景中对新的活动中的预测能力。</strong></p>
+<p>所以，我们应当时时记住这一点，<strong>正则化的神经网络常常能够比非正则化的泛化能力更强，这只是一种实验事实（empirical fact）。</strong> 我已经在上面讲过了为何现在还没有一个人能够发展出一整套具有说服力的关于正则化可以帮助网络泛化的理论解释。实际上，研究者们不断地在写自己尝试不同的正则化方法，然后看看哪种表现更好，尝试理解为何不同的观点表现的更好。所以你可以将正则化看做某种任意整合的技术。尽管其效果不错，但我们并没有一套完整的关于所发生情况的理解，仅仅是一些不完备的启发式规则或者经验。</p>
+<p>这里也有更深的问题，这个问题也是有关科学的关键问题：我们如何泛化。正则化能够给我们一种计算上的魔力帮助神经网络更好地泛化，但是并不会带来原理上理解的指导，甚至不会告诉我们什么样的观点才是最好的。</p>
+<p>这实在是令人困扰，因为在日常生活中，我们人类在泛化上表现很好。给一个儿童几幅大象的图片，他就能快速地学会认识其他的大象。当然，他们偶尔也会搞错，很可能将一只犀牛误认为大象，但是一般说来，这个过程会相当准确。所以我们有个系统人的大脑拥有超大量的自由变量。在受到仅仅少量的训练图像后，系统学会了在其他图像上的推广。某种程度上，我们的大脑的正则化做得特别好！怎么做的？现在还不得而知。我期望若干年后，我们能够发展出更加强大的技术来正则化神经网络，最终这些技术会让神经网络甚至在小的训练集上也能够学到强大的泛化能力。</p>
+<p>实际上，我们的网络已经比我们预先期望的要好一些了。拥有 100 个隐藏元的网络会有接近 80,000 个参数。我们的训练集仅仅有 50,000 幅图像。这好像是用一个 80,000 阶的多项式来拟合 50,000 个数据点。我们的网络肯定会过拟合得很严重。但是，这样的网络实际上却泛化得很好。为什么？这一点并没有很好地理解。这里有个猜想：梯度下降学习的动态有一种自正则化的效应。这真是一个意料之外的巧合，但也带来了对于这种现象本质无知的不安。不过，我们还是会在后面依照这种实践的观点来应用正则化技术的。神经网络也是由于这点表现才更好一些。</p>
+<p>现在我们回到前面留下来的一个细节：<strong>L2 正则化没有限制偏置</strong>，以此作为本节的结论。当然了，对正则化的过程稍作调整就可以对偏置进行规范了。实践看来，做出这样的调整并不会对结果改变太多，所以，在某种程度上，对不对偏置进行正则化其实就是一种习惯了。然而，需要注意的是，有一个大的偏置并不会像大的权重那样会让神经元对输入太过敏感。所以我们不需要对大的偏置所带来的学习训练数据的噪声太过担心。同时，允许大的偏置能够让网络更加灵活。因为，大的偏置让神经元更加容易饱和，这有时候是我们所要达到的效果。所以，我们通常不会对偏置进行正则化。</p>
+<h2 id="L1-正则化"><a href="#L1-正则化" class="headerlink" title="L1 正则化"></a>L1 正则化</h2><p>L1正则化：这个方法是在未正则化 的损失函数上加上一个权重绝对值的和：</p>
+<script type="math/tex; mode=display">
+  C = C_0 + \frac{\lambda}{n} \sum_w |w|</script><p>凭直觉地看，这和 L2正则化相似，惩罚大的权重，倾向于让网络优先选择小的权重。当然，L1正则化和 L2正则化并不相同，所以我们不应该期望从 L1正则化得到完全同样的行为。让我们来试着理解使用 L1正则化训练的网络和 L2正则化训练的网络所不同的行为。</p>
+<p>首先，我们会研究一下 cost-func 的偏导数。对$C = C_0 + \frac{\lambda}{n} \sum_w |w|$求导我们有</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w} = \frac{\partial C_0}{\partial w}+ \frac{\lambda}{n} {\rm sgn}(w)</script><p>其中 ${\rm sgn}(w)$ 就是 $w$ 的正负号，即 $w$ 是正数时为 $+1$，而 $w$ 为负数时为 $-1$。使用这个表达式，我们可以轻易地对反向传播算法进行修改从而使用基于 L1正则化的随机梯度下降进行学习。对 L1正则化的网络进行更新的规则就是</p>
+<script type="math/tex; mode=display">
+w \rightarrow w' =w-\frac{\eta \lambda}{n} sgn(w) - \eta \frac{\partial C_0}{\partial w}</script><p>其中和往常一样，我们可以用一个小批量数据的均值来估计 $\partial C_0/\partial w$。对比 L2 正则化的更新规则，</p>
+<script type="math/tex; mode=display">
+  w \rightarrow w' = w\left(1 - \frac{\eta \lambda}{n} \right)- \eta \frac{\partial C_0}{\partial w}</script><p>在两种情形下正则化的效果就是缩小权重。这符合我们的直觉，两种正则化都惩罚大的权重。但权重 缩小的方式不同。在 L1正则化中，权重 通过一个常量向 $0$ 进行缩小。在 L2正则化中，权重 通过一个和 $w$ 成比例的量进行缩小的。所以，当一个特定的权重 绝对值 $|w|$ 很大时，L1正则化的权重 缩小得远比 L2正则化要小得多。相反，当一个特定的权重绝对值 $|w|$ 很小时，L1正则化的权重 缩小得要比 L2正则化大得多。最终的结果就是：L1正则化倾向于聚集网络的权重 在相对少量的高重要度连接上，而其他权重 就会被驱使向 $0$ 接近。</p>
+<p>我在上面的讨论中其实忽略了一个问题~——~在 $w=0$ 的时候，偏导数 $\partial C/\partial w$ 未定义。原因在于函数 $|w|$ 在 $w=0$ 时有个“直角”，事实上，导数是不存在的。不过也没有关系。我们下面要做的就是应用通常的（无正则化的）随机梯度下降的规则在 $w=0$ 处。这应该不会有什么问题，凭直觉地看，正则化的效果就是缩小权重，显然，不能对一个已经是 $0$ 的权重进行缩小了。更准确地说，我们将会使用上述方程并约定 $ sgn(0) = 0$。这样就给出了一种细致又紧凑的规则来进行采用 L1 正则化的随机梯度下降学习。</p>
+<h2 id="L1、L2-正则化与参数估计的关系"><a href="#L1、L2-正则化与参数估计的关系" class="headerlink" title="L1、L2 正则化与参数估计的关系"></a>L1、L2 正则化与参数估计的关系</h2><p><img src="/2018/06/24/改进神经网络的学习方法——正则化/12.jpg" alt=""></p>
+<p><img src="/2018/06/24/改进神经网络的学习方法——正则化/13.jpg" alt=""></p>
+<p>通过上面的推导我们可以发现，最大后验估计与最大似然估计最大的不同在于p(参数)项，所以可以说最大后验估计是正好可以解决机器学习缺乏先验知识的缺点，将先验知识加入后，优化损失函数。</p>
+<p>其实p(参数)项正好起到了正则化的作用。如：如果假设p(参数)服从高斯分布，则相当于加了一个L2 正则化；如果假设p(参数)服从拉普拉斯分布，则相当于加了一个L1 正则化。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/正则化/" rel="tag"># 正则化</a>
+          
+            <a href="/tags/奥卡姆剃刀原则/" rel="tag"># 奥卡姆剃刀原则</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/22/改进神经网络的学习方法——Softmax/" rel="next" title="改进神经网络的学习方法——Softmax">
+                <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——Softmax
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/24/改进神经网络的学习方法——弃权/" rel="prev" title="改进神经网络的学习方法——弃权">
+                改进神经网络的学习方法——弃权 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#产生过度拟合和正则化的原因"><span class="nav-number">1.</span> <span class="nav-text">产生过度拟合和正则化的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化"><span class="nav-number">2.</span> <span class="nav-text">正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么正则化可以帮助减轻过度拟合"><span class="nav-number">3.</span> <span class="nav-text">为什么正则化可以帮助减轻过度拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-正则化"><span class="nav-number">4.</span> <span class="nav-text">L1 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1、L2-正则化与参数估计的关系"><span class="nav-number">5.</span> <span class="nav-text">L1、L2 正则化与参数估计的关系</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

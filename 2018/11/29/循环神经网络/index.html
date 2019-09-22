@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Recurrent Neural Networks Introduction We introduce Recurrent Neural Networks and how they are able to feed in a sequence and predict either a fixed target (categorical/numerical) or another sequence">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="循环神经网络 Recurrent Neural Networks">
+<meta property="og:url" content="http://yoursite.com/2018/11/29/循环神经网络/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Recurrent Neural Networks Introduction We introduce Recurrent Neural Networks and how they are able to feed in a sequence and predict either a fixed target (categorical/numerical) or another sequence">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/29/循环神经网络/output_19_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/29/循环神经网络/output_19_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/29/循环神经网络/output_25_0.png">
+<meta property="og:updated_time" content="2018-11-30T01:32:06.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="循环神经网络 Recurrent Neural Networks">
+<meta name="twitter:description" content="Recurrent Neural Networks Introduction We introduce Recurrent Neural Networks and how they are able to feed in a sequence and predict either a fixed target (categorical/numerical) or another sequence">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/29/循环神经网络/output_19_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/29/循环神经网络/"/>
+
+
+
+
+
+  <title>循环神经网络 Recurrent Neural Networks | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/29/循环神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">循环神经网络 Recurrent Neural Networks</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T19:30:15+08:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/循环神经网络/" itemprop="url" rel="index">
+                    <span itemprop="name">循环神经网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/29/循环神经网络/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/29/循环神经网络/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Recurrent-Neural-Networks"><a href="#Recurrent-Neural-Networks" class="headerlink" title="Recurrent Neural Networks"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/09_Recurrent_Neural_Networks" target="_blank" rel="noopener">Recurrent Neural Networks</a></h2><ol>
+<li><a href="01_Introduction#introduction-to-rnns-in-tensorflow">Introduction</a><ul>
+<li>We introduce Recurrent Neural Networks and how they are able to feed in a sequence and predict either a fixed target (categorical/numerical) or another sequence (sequence to sequence).</li>
+</ul>
+</li>
+<li><a href="02_Implementing_RNN_for_Spam_Prediction#implementing-an-rnn-for-spam-prediction">Implementing an RNN Model for Spam Prediction</a><ul>
+<li>We create an RNN model to improve on our spam/ham SMS text predictions.</li>
+</ul>
+</li>
+<li><a href="03_Implementing_LSTM#implementing-an-lstm-model">Implementing an LSTM Model for Text Generation</a><ul>
+<li>We show how to implement a LSTM (Long Short Term Memory) RNN for Shakespeare language generation. (Word level vocabulary)</li>
+</ul>
+</li>
+<li><a href="04_Stacking_Multiple_LSTM_Layers#stacking-multiple-lstm-layers">Stacking Multiple LSTM Layers</a><ul>
+<li>We stack multiple LSTM layers to improve on our Shakespeare language generation. (Character level vocabulary)</li>
+</ul>
+</li>
+<li><a href="05_Creating_A_Sequence_To_Sequence_Model#creating-a-sequence-to-sequence-model-with-tensorflow-seq2seq">Creating a Sequence to Sequence Translation Model (Seq2Seq)</a><ul>
+<li>We show how to use TensorFlow’s sequence-to-sequence models to train an English-German translation model.</li>
+</ul>
+</li>
+<li><a href="06_Training_A_Siamese_Similarity_Measure#training-a-siamese-similarity-measure-rnns">Training a Siamese Similarity Measure</a><ul>
+<li>Here, we implement a Siamese RNN to predict the similarity of addresses and use it for record matching.  Using RNNs for record matching is very versatile, as we do not have a fixed set of target categories and can use the trained model to predict similarities across new addresses.</li>
+</ul>
+</li>
+</ol>
+<h2 id="Implementing-an-RNN-in-TensorFlow"><a href="#Implementing-an-RNN-in-TensorFlow" class="headerlink" title="Implementing an RNN in TensorFlow"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/09_Recurrent_Neural_Networks/02_Implementing_RNN_for_Spam_Prediction" target="_blank" rel="noopener">Implementing an RNN in TensorFlow</a></h2><p>This script implements an RNN in TensorFlow to predict spam/ham from texts.</p>
+<p>We start by loading the necessary libraries and initializing a computation graph in TensorFlow.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> zipfile <span class="keyword">import</span> ZipFile</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"><span class="comment"># Start a graph</span></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Next we set the parameters for the RNN model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set RNN parameters</span></span><br><span class="line">epochs = <span class="number">50</span></span><br><span class="line">batch_size = <span class="number">250</span></span><br><span class="line">max_sequence_length = <span class="number">25</span></span><br><span class="line">rnn_size = <span class="number">10</span></span><br><span class="line">embedding_size = <span class="number">50</span></span><br><span class="line">min_word_frequency = <span class="number">10</span></span><br><span class="line">learning_rate = <span class="number">0.0005</span></span><br><span class="line">dropout_keep_prob = tf.placeholder(tf.float32)</span><br></pre></td></tr></table></figure>
+<p>We download and save the data next.  First we check if we have saved it before and load it locally, if not, we load it from the internet (UCI machine learning data repository).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Download or open data</span></span><br><span class="line">data_dir = <span class="string">'temp'</span></span><br><span class="line">data_file = <span class="string">'text_data.txt'</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(data_dir):</span><br><span class="line">    os.makedirs(data_dir)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(os.path.join(data_dir, data_file)):</span><br><span class="line">    zip_url = <span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip'</span></span><br><span class="line">    r = requests.get(zip_url)</span><br><span class="line">    z = ZipFile(io.BytesIO(r.content))</span><br><span class="line">    file = z.read(<span class="string">'SMSSpamCollection'</span>)</span><br><span class="line">    <span class="comment"># Format Data</span></span><br><span class="line">    text_data = file.decode()</span><br><span class="line">    text_data = text_data.encode(<span class="string">'ascii'</span>, errors=<span class="string">'ignore'</span>)</span><br><span class="line">    text_data = text_data.decode().split(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save data to text file</span></span><br><span class="line">    <span class="keyword">with</span> open(os.path.join(data_dir, data_file), <span class="string">'w'</span>) <span class="keyword">as</span> file_conn:</span><br><span class="line">        <span class="keyword">for</span> text <span class="keyword">in</span> text_data:</span><br><span class="line">            file_conn.write(<span class="string">"&#123;&#125;\n"</span>.format(text))</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># Open data from text file</span></span><br><span class="line">    text_data = []</span><br><span class="line">    <span class="keyword">with</span> open(os.path.join(data_dir, data_file), <span class="string">'r'</span>) <span class="keyword">as</span> file_conn:</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> file_conn:</span><br><span class="line">            text_data.append(row)</span><br><span class="line">    text_data = text_data[:<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">text_data = [x.split(<span class="string">'\t'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> text_data <span class="keyword">if</span> len(x) &gt;= <span class="number">1</span>]</span><br><span class="line">[text_data_target, text_data_train] = [list(x) <span class="keyword">for</span> x <span class="keyword">in</span> zip(*text_data)]</span><br></pre></td></tr></table></figure>
+<p>Next, we process the texts and turn them into numeric representations (words —&gt; indices).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a text cleaning function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">clean_text</span><span class="params">(text_string)</span>:</span></span><br><span class="line">    text_string = re.sub(<span class="string">r'([^\s\w]|_|[0-9])+'</span>, <span class="string">''</span>, text_string)</span><br><span class="line">    text_string = <span class="string">" "</span>.join(text_string.split())</span><br><span class="line">    text_string = text_string.lower()</span><br><span class="line">    <span class="keyword">return</span> text_string</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean texts</span></span><br><span class="line">text_data_train = [clean_text(x) <span class="keyword">for</span> x <span class="keyword">in</span> text_data_train]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Change texts into numeric vectors</span></span><br><span class="line">vocab_processor = tf.contrib.learn.preprocessing.VocabularyProcessor(max_sequence_length,</span><br><span class="line">                                                                     min_frequency=min_word_frequency)</span><br><span class="line">text_processed = np.array(list(vocab_processor.fit_transform(text_data_train)))</span><br></pre></td></tr></table></figure>
+<p>Now we shuffle and split the texts into train/tests (80% training, 20% testing).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Shuffle and split data</span></span><br><span class="line">text_processed = np.array(text_processed)</span><br><span class="line">text_data_target = np.array([<span class="number">1</span> <span class="keyword">if</span> x == <span class="string">'ham'</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> text_data_target])</span><br><span class="line">shuffled_ix = np.random.permutation(np.arange(len(text_data_target)))</span><br><span class="line">x_shuffled = text_processed[shuffled_ix]</span><br><span class="line">y_shuffled = text_data_target[shuffled_ix]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split train/test set</span></span><br><span class="line">ix_cutoff = int(len(y_shuffled)*<span class="number">0.80</span>)</span><br><span class="line">x_train, x_test = x_shuffled[:ix_cutoff], x_shuffled[ix_cutoff:]</span><br><span class="line">y_train, y_test = y_shuffled[:ix_cutoff], y_shuffled[ix_cutoff:]</span><br><span class="line">vocab_size = len(vocab_processor.vocabulary_)</span><br><span class="line">print(<span class="string">"Vocabulary Size: &#123;:d&#125;"</span>.format(vocab_size))</span><br><span class="line">print(<span class="string">"80-20 Train Test split: &#123;:d&#125; -- &#123;:d&#125;"</span>.format(len(y_train), len(y_test)))</span><br></pre></td></tr></table></figure>
+<pre><code>Vocabulary Size: 933
+80-20 Train Test split: 4459 -- 1115
+</code></pre><p>Here we can define our RNN model.  We create the placeholders for the data, word embedding matrices (and embedding lookups), and define the rest of the model.</p>
+<p>The rest of the RNN model will create a dynamic RNN cell (regular RNN type), which will vary the number of RNNs needed for variable input length (different amount of words for input texts), and then output into a fully connected logistic layer to predict spam or ham as output.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create placeholders</span></span><br><span class="line">x_data = tf.placeholder(tf.int32, [<span class="keyword">None</span>, max_sequence_length])</span><br><span class="line">y_output = tf.placeholder(tf.int32, [<span class="keyword">None</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create embedding</span></span><br><span class="line">embedding_mat = tf.Variable(tf.random_uniform([vocab_size, embedding_size], <span class="number">-1.0</span>, <span class="number">1.0</span>))</span><br><span class="line">embedding_output = tf.nn.embedding_lookup(embedding_mat, x_data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Define the RNN cell</span></span><br><span class="line"><span class="comment"># tensorflow change &gt;= 1.0, rnn is put into tensorflow.contrib directory. Prior version not test.</span></span><br><span class="line"><span class="keyword">if</span> tf.__version__[<span class="number">0</span>] &gt;= <span class="string">'1'</span>:</span><br><span class="line">    cell = tf.contrib.rnn.BasicRNNCell(num_units=rnn_size)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    cell = tf.nn.rnn_cell.BasicRNNCell(num_units=rnn_size)</span><br><span class="line"></span><br><span class="line">output, state = tf.nn.dynamic_rnn(cell, embedding_output, dtype=tf.float32)</span><br><span class="line">output = tf.nn.dropout(output, dropout_keep_prob)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get output of RNN sequence</span></span><br><span class="line"><span class="comment">#output = tf.transpose(output, [1, 0, 2])</span></span><br><span class="line"><span class="comment">#last = tf.gather(output, int(output.get_shape()[0]) - 1)</span></span><br><span class="line"></span><br><span class="line">last = output[:,<span class="number">-1</span>,:]</span><br><span class="line"></span><br><span class="line">weight = tf.Variable(tf.truncated_normal([rnn_size, <span class="number">2</span>], stddev=<span class="number">0.1</span>))</span><br><span class="line">bias = tf.Variable(tf.constant(<span class="number">0.1</span>, shape=[<span class="number">2</span>]))</span><br><span class="line">logits_out = tf.matmul(last, weight) + bias</span><br></pre></td></tr></table></figure>
+<p>Next we declare the loss function (softmax cross entropy), an accuracy function, and optimization function (RMSProp).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Loss function</span></span><br><span class="line">losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits_out, labels=y_output)</span><br><span class="line">loss = tf.reduce_mean(losses)</span><br><span class="line"></span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(logits_out, <span class="number">1</span>), tf.cast(y_output, tf.int64)), tf.float32))</span><br><span class="line"></span><br><span class="line">optimizer = tf.train.RMSPropOptimizer(learning_rate)</span><br><span class="line">train_step = optimizer.minimize(loss)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>You may ignore the warning, as the texts are small and our batch size is only 100.  If you increase the batch size and/or have longer sequences of texts, this model may consume too much memory.</p>
+</blockquote>
+<p>Next we initialize the variables in the computational graph.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line">train_loss = []</span><br><span class="line">test_loss = []</span><br><span class="line">train_accuracy = []</span><br><span class="line">test_accuracy = []</span><br></pre></td></tr></table></figure>
+<p>Now we can start our training!</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start training</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Shuffle training data</span></span><br><span class="line">    shuffled_ix = np.random.permutation(np.arange(len(x_train)))</span><br><span class="line">    x_train = x_train[shuffled_ix]</span><br><span class="line">    y_train = y_train[shuffled_ix]</span><br><span class="line">    num_batches = int(len(x_train)/batch_size) + <span class="number">1</span></span><br><span class="line">    <span class="comment"># TO DO CALCULATE GENERATIONS ExACTLY</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_batches):</span><br><span class="line">        <span class="comment"># Select train data</span></span><br><span class="line">        min_ix = i * batch_size</span><br><span class="line">        max_ix = np.min([len(x_train), ((i+<span class="number">1</span>) * batch_size)])</span><br><span class="line">        x_train_batch = x_train[min_ix:max_ix]</span><br><span class="line">        y_train_batch = y_train[min_ix:max_ix]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Run train step</span></span><br><span class="line">        train_dict = &#123;x_data: x_train_batch, y_output: y_train_batch, dropout_keep_prob:<span class="number">0.5</span>&#125;</span><br><span class="line">        sess.run(train_step, feed_dict=train_dict)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run loss and accuracy for training</span></span><br><span class="line">    temp_train_loss, temp_train_acc = sess.run([loss, accuracy], feed_dict=train_dict)</span><br><span class="line">    train_loss.append(temp_train_loss)</span><br><span class="line">    train_accuracy.append(temp_train_acc)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run Eval Step</span></span><br><span class="line">    test_dict = &#123;x_data: x_test, y_output: y_test, dropout_keep_prob:<span class="number">1.0</span>&#125;</span><br><span class="line">    temp_test_loss, temp_test_acc = sess.run([loss, accuracy], feed_dict=test_dict)</span><br><span class="line">    test_loss.append(temp_test_loss)</span><br><span class="line">    test_accuracy.append(temp_test_acc)</span><br><span class="line">    print(<span class="string">'Epoch: &#123;&#125;, Test Loss: &#123;:.2&#125;, Test Acc: &#123;:.2&#125;'</span>.format(epoch+<span class="number">1</span>, temp_test_loss, temp_test_acc))</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch: 1, Test Loss: 0.71, Test Acc: 0.17
+Epoch: 2, Test Loss: 0.68, Test Acc: 0.82
+...
+Epoch: 50, Test Loss: 0.12, Test Acc: 0.96
+</code></pre><p>Here is matplotlib code to plot the loss and accuracy over the training generations for both the train and test sets.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">epoch_seq = np.arange(<span class="number">1</span>, epochs+<span class="number">1</span>)</span><br><span class="line">plt.plot(epoch_seq, train_loss, <span class="string">'k--'</span>, label=<span class="string">'Train Set'</span>)</span><br><span class="line">plt.plot(epoch_seq, test_loss, <span class="string">'r-'</span>, label=<span class="string">'Test Set'</span>)</span><br><span class="line">plt.title(<span class="string">'Softmax Loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epochs'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Softmax Loss'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot accuracy over time</span></span><br><span class="line">plt.plot(epoch_seq, train_accuracy, <span class="string">'k--'</span>, label=<span class="string">'Train Set'</span>)</span><br><span class="line">plt.plot(epoch_seq, test_accuracy, <span class="string">'r-'</span>, label=<span class="string">'Test Set'</span>)</span><br><span class="line">plt.title(<span class="string">'Test Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epochs'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/29/循环神经网络/output_19_0.png" alt="png"></p>
+<p><img src="/2018/11/29/循环神经网络/output_19_1.png" alt="png"></p>
+<h3 id="Evaluating-New-Texts"><a href="#Evaluating-New-Texts" class="headerlink" title="Evaluating New Texts"></a>Evaluating New Texts</h3><p>Here, we show how to use our trained model to evaluate new texts (which may or may not be spam/ham)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sample_texts = [<span class="string">'Hi, please respond 1111 asap to claim your change to win now!'</span>,</span><br><span class="line">                <span class="string">'Hey what are you doing for dinner tonight?'</span>,</span><br><span class="line">                <span class="string">'New offer, show this text for 50% off of our inagural sale!'</span>,</span><br><span class="line">                <span class="string">'Can you take the dog to the vet tomorrow?'</span>,</span><br><span class="line">                <span class="string">'Congratulations! You have been randomly selected to receive account credit!'</span>]</span><br></pre></td></tr></table></figure>
+<p>Now we clean our sample texts.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clean_texts = [clean_text(text) <span class="keyword">for</span> text <span class="keyword">in</span> sample_texts]</span><br><span class="line">print(clean_texts)</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;hi please respond asap to claim your change to win now&#39;, &#39;hey what are you doing for dinner tonight&#39;, &#39;new offer show this text for off of our inagural sale&#39;, &#39;can you take the dog to the vet tomorrow&#39;, &#39;congratulations you have been randomly selected to receive account credit&#39;]
+</code></pre><p>Next, we transform each text as a sequence of words into a sequence of vocabulary indices.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">processed_texts = np.array(list(vocab_processor.transform(clean_texts)))</span><br><span class="line">print(processed_texts)</span><br></pre></td></tr></table></figure>
+<pre><code>[[ 93  99   0   0   1 114  13 524   1 178  21   0   0   0   0   0   0   0
+    0   0   0   0   0   0   0]
+ [121  52  20   3 151  12 332 208   0   0   0   0   0   0   0   0   0   0
+    0   0   0   0   0   0   0]
+ [ 92 376 483  39  69  12 203  15  86   0   0   0   0   0   0   0   0   0
+    0   0   0   0   0   0   0]
+ [ 28   3 104   5   0   1   5   0 143   0   0   0   0   0   0   0   0   0
+    0   0   0   0   0   0   0]
+ [701   3  17  98   0 420   1 318 301 738   0   0   0   0   0   0   0   0
+    0   0   0   0   0   0   0]]
+</code></pre><p>Now we can run each of the texts through our model and get the output logits.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Remember to wrap the resulting logits in a softmax to get probabilities</span></span><br><span class="line">eval_feed_dict = &#123;x_data: processed_texts, dropout_keep_prob: <span class="number">1.0</span>&#125;</span><br><span class="line">model_results = sess.run(tf.nn.softmax(logits_out), feed_dict=eval_feed_dict)</span><br><span class="line"></span><br><span class="line">print(model_results)</span><br></pre></td></tr></table></figure>
+<pre><code>[[0.86792374 0.13207628]
+ [0.00838861 0.9916114 ]
+ [0.00871871 0.99128133]
+ [0.00838833 0.99161166]
+ [0.6345383  0.36546162]]
+</code></pre><p>Now print results</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">categories = [<span class="string">'spam'</span>, <span class="string">'ham'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ix, result <span class="keyword">in</span> enumerate(model_results):</span><br><span class="line">    prediction = categories[np.argmax(result)]</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Text: &#123;&#125;, \nPrediction: &#123;&#125;\n'</span>.format(sample_texts[ix], prediction))</span><br></pre></td></tr></table></figure>
+<pre><code>Text: Hi, please respond 1111 asap to claim your change to win now!,
+Prediction: spam
+
+Text: Hey what are you doing for dinner tonight?,
+Prediction: ham
+
+Text: New offer, show this text for 50% off of our inagural sale!,
+Prediction: ham
+
+Text: Can you take the dog to the vet tomorrow?,
+Prediction: ham
+
+Text: Congratulations! You have been randomly selected to receive account credit!,
+Prediction: spam
+</code></pre><h2 id="Implementing-an-LSTM-RNN-Model"><a href="#Implementing-an-LSTM-RNN-Model" class="headerlink" title="Implementing an LSTM RNN Model"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/09_Recurrent_Neural_Networks/03_Implementing_LSTM" target="_blank" rel="noopener">Implementing an LSTM RNN Model</a></h2><p>Here we implement an LSTM model on all a data set of Shakespeare works.</p>
+<p>We start by loading the necessary libraries and resetting the default computational graph.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>We start a computational graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Next, it is important to set the algorithm and data processing parameters.</p>
+<hr>
+<p>Parameter  :  Descriptions</p>
+<ul>
+<li>min_word_freq: Only attempt to model words that appear at least 5 times.</li>
+<li>rnn_size: size of our RNN (equal to the embedding size)</li>
+<li>epochs: Number of epochs to cycle through the data</li>
+<li>batch_size: How many examples to train on at once</li>
+<li>learning_rate: The learning rate or the convergence paramter</li>
+<li>training_seq_len: The length of the surrounding word group (e.g. 10 = 5 on each side)</li>
+<li>embedding_size: Must be equal to the rnn_size</li>
+<li>save_every: How often to save the model</li>
+<li>eval_every: How often to evaluate the model</li>
+<li>prime_texts: List of test sentences</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Set RNN Parameters</span></span><br><span class="line">min_word_freq = <span class="number">5</span> <span class="comment"># Trim the less frequent words off</span></span><br><span class="line">rnn_size = <span class="number">128</span> <span class="comment"># RNN Model size</span></span><br><span class="line">embedding_size = <span class="number">100</span> <span class="comment"># Word embedding size</span></span><br><span class="line">epochs = <span class="number">10</span> <span class="comment"># Number of epochs to cycle through data</span></span><br><span class="line">batch_size = <span class="number">100</span> <span class="comment"># Train on this many examples at once</span></span><br><span class="line">learning_rate = <span class="number">0.001</span> <span class="comment"># Learning rate</span></span><br><span class="line">training_seq_len = <span class="number">50</span> <span class="comment"># how long of a word group to consider</span></span><br><span class="line"><span class="comment">#embedding_size = rnn_size</span></span><br><span class="line">save_every = <span class="number">500</span> <span class="comment"># How often to save model checkpoints</span></span><br><span class="line">eval_every = <span class="number">50</span> <span class="comment"># How often to evaluate the test sentences</span></span><br><span class="line">prime_texts = [<span class="string">'thou art more'</span>, <span class="string">'to be or not to'</span>, <span class="string">'wherefore art thou'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Download/store Shakespeare data</span></span><br><span class="line">data_dir = <span class="string">'temp'</span></span><br><span class="line">data_file = <span class="string">'shakespeare.txt'</span></span><br><span class="line">model_path = <span class="string">'shakespeare_model'</span></span><br><span class="line">full_model_dir = os.path.join(data_dir, model_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare punctuation to remove, everything except hyphens and apostrophes</span></span><br><span class="line">punctuation = string.punctuation</span><br><span class="line">punctuation = <span class="string">''</span>.join([x <span class="keyword">for</span> x <span class="keyword">in</span> punctuation <span class="keyword">if</span> x <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">'-'</span>, <span class="string">"'"</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make Model Directory</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(full_model_dir):</span><br><span class="line">    os.makedirs(full_model_dir)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make data directory</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(data_dir):</span><br><span class="line">    os.makedirs(data_dir)</span><br></pre></td></tr></table></figure>
+<p>Download the data if we don’t have it saved already.  The data comes from the <a href="http://www.gutenberg.org]" target="_blank" rel="noopener">Gutenberg Project</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Loading Shakespeare Data'</span>)</span><br><span class="line"><span class="comment"># Check if file is downloaded.</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.isfile(os.path.join(data_dir, data_file)):</span><br><span class="line">    print(<span class="string">'Not found, downloading Shakespeare texts from www.gutenberg.org'</span>)</span><br><span class="line">    shakespeare_url = <span class="string">'http://www.gutenberg.org/cache/epub/100/pg100.txt'</span></span><br><span class="line">    <span class="comment"># Get Shakespeare text</span></span><br><span class="line">    response = requests.get(shakespeare_url)</span><br><span class="line">    shakespeare_file = response.content</span><br><span class="line">    <span class="comment"># Decode binary into string</span></span><br><span class="line">    s_text = shakespeare_file.decode(<span class="string">'utf-8'</span>)</span><br><span class="line">    <span class="comment"># Drop first few descriptive paragraphs.</span></span><br><span class="line">    s_text = s_text[<span class="number">7675</span>:]</span><br><span class="line">    <span class="comment"># Remove newlines</span></span><br><span class="line">    s_text = s_text.replace(<span class="string">'\r\n'</span>, <span class="string">''</span>)</span><br><span class="line">    s_text = s_text.replace(<span class="string">'\n'</span>, <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Write to file</span></span><br><span class="line">    <span class="keyword">with</span> open(os.path.join(data_dir, data_file), <span class="string">'w'</span>) <span class="keyword">as</span> out_conn:</span><br><span class="line">        out_conn.write(s_text)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># If file has been saved, load from that file</span></span><br><span class="line">    <span class="keyword">with</span> open(os.path.join(data_dir, data_file), <span class="string">'r'</span>) <span class="keyword">as</span> file_conn:</span><br><span class="line">        s_text = file_conn.read().replace(<span class="string">'\n'</span>, <span class="string">''</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Clean text</span></span><br><span class="line">print(<span class="string">'Cleaning Text'</span>)</span><br><span class="line">s_text = re.sub(<span class="string">r'[&#123;&#125;]'</span>.format(punctuation), <span class="string">' '</span>, s_text)</span><br><span class="line">s_text = re.sub(<span class="string">'\s+'</span>, <span class="string">' '</span>, s_text ).strip().lower()</span><br><span class="line">print(<span class="string">'Done loading/cleaning.'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Loading Shakespeare Data
+Cleaning Text
+Done loading/cleaning.
+</code></pre><p>Define a function to build a word processing dictionary (word -&gt; ix)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build word vocabulary function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_vocab</span><span class="params">(text, min_word_freq)</span>:</span></span><br><span class="line">    word_counts = collections.Counter(text.split(<span class="string">' '</span>))</span><br><span class="line">    <span class="comment"># limit word counts to those more frequent than cutoff</span></span><br><span class="line">    word_counts = &#123;key:val <span class="keyword">for</span> key, val <span class="keyword">in</span> word_counts.items() <span class="keyword">if</span> val&gt;min_word_freq&#125;</span><br><span class="line">    <span class="comment"># Create vocab --&gt; index mapping</span></span><br><span class="line">    words = word_counts.keys()</span><br><span class="line">    vocab_to_ix_dict = &#123;key:(ix+<span class="number">1</span>) <span class="keyword">for</span> ix, key <span class="keyword">in</span> enumerate(words)&#125;</span><br><span class="line">    <span class="comment"># Add unknown key --&gt; 0 index</span></span><br><span class="line">    vocab_to_ix_dict[<span class="string">'unknown'</span>]=<span class="number">0</span></span><br><span class="line">    <span class="comment"># Create index --&gt; vocab mapping</span></span><br><span class="line">    ix_to_vocab_dict = &#123;val:key <span class="keyword">for</span> key,val <span class="keyword">in</span> vocab_to_ix_dict.items()&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>(ix_to_vocab_dict, vocab_to_ix_dict)</span><br></pre></td></tr></table></figure>
+<p>Now we can build the index-vocabulary from the Shakespeare data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build Shakespeare vocabulary</span></span><br><span class="line">print(<span class="string">'Building Shakespeare Vocab'</span>)</span><br><span class="line">ix2vocab, vocab2ix = build_vocab(s_text, min_word_freq)</span><br><span class="line">vocab_size = len(ix2vocab) + <span class="number">1</span></span><br><span class="line">print(<span class="string">'Vocabulary Length = &#123;&#125;'</span>.format(vocab_size))</span><br><span class="line"><span class="comment"># Sanity Check</span></span><br><span class="line"><span class="keyword">assert</span>(len(ix2vocab) == len(vocab2ix))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Convert text to word vectors</span></span><br><span class="line">s_text_words = s_text.split(<span class="string">' '</span>)</span><br><span class="line">s_text_ix = []</span><br><span class="line"><span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(s_text_words):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        s_text_ix.append(vocab2ix[x])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        s_text_ix.append(<span class="number">0</span>)</span><br><span class="line">s_text_ix = np.array(s_text_ix)</span><br></pre></td></tr></table></figure>
+<pre><code>Building Shakespeare Vocab
+Vocabulary Length = 8009
+</code></pre><p>We define the LSTM model.  The methods of interest are the <code>__init__()</code> method, which defines all the model variables and operations, and the <code>sample()</code> method which takes in a sample word and loops through to generate text.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define LSTM RNN Model</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LSTM_Model</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, embedding_size, rnn_size, batch_size, learning_rate,</span></span></span><br><span class="line"><span class="function"><span class="params">                 training_seq_len, vocab_size, infer_sample=False)</span>:</span></span><br><span class="line">        self.embedding_size = embedding_size</span><br><span class="line">        self.rnn_size = rnn_size</span><br><span class="line">        self.vocab_size = vocab_size</span><br><span class="line">        self.infer_sample = infer_sample</span><br><span class="line">        self.learning_rate = learning_rate</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> infer_sample:</span><br><span class="line">            self.batch_size = <span class="number">1</span></span><br><span class="line">            self.training_seq_len = <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.batch_size = batch_size</span><br><span class="line">            self.training_seq_len = training_seq_len</span><br><span class="line"></span><br><span class="line">        self.lstm_cell = tf.nn.rnn_cell.LSTMCell(self.rnn_size)</span><br><span class="line">        self.initial_state = self.lstm_cell.zero_state(self.batch_size, tf.float32)</span><br><span class="line"></span><br><span class="line">        self.x_data = tf.placeholder(tf.int32, [self.batch_size, self.training_seq_len])</span><br><span class="line">        self.y_output = tf.placeholder(tf.int32, [self.batch_size, self.training_seq_len])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> tf.variable_scope(<span class="string">'lstm_vars'</span>):</span><br><span class="line">            <span class="comment"># Softmax Output Weights</span></span><br><span class="line">            W = tf.get_variable(<span class="string">'W'</span>, [self.rnn_size, self.vocab_size], tf.float32, tf.random_normal_initializer())</span><br><span class="line">            b = tf.get_variable(<span class="string">'b'</span>, [self.vocab_size], tf.float32, tf.constant_initializer(<span class="number">0.0</span>))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># Define Embedding</span></span><br><span class="line">            embedding_mat = tf.get_variable(<span class="string">'embedding_mat'</span>, [self.vocab_size, self.embedding_size],</span><br><span class="line">                                            tf.float32, tf.random_normal_initializer())</span><br><span class="line"></span><br><span class="line">            embedding_output = tf.nn.embedding_lookup(embedding_mat, self.x_data)</span><br><span class="line">            rnn_inputs = tf.split(axis=<span class="number">1</span>, num_or_size_splits=self.training_seq_len, value=embedding_output)</span><br><span class="line">            rnn_inputs_trimmed = [tf.squeeze(x, [<span class="number">1</span>]) <span class="keyword">for</span> x <span class="keyword">in</span> rnn_inputs]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># If we are inferring (generating text), we add a 'loop' function</span></span><br><span class="line">        <span class="comment"># Define how to get the i+1 th input from the i th output</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inferred_loop</span><span class="params">(prev, count)</span>:</span></span><br><span class="line">            <span class="comment"># Apply hidden layer</span></span><br><span class="line">            prev_transformed = tf.matmul(prev, W) + b</span><br><span class="line">            <span class="comment"># Get the index of the output (also don't run the gradient)</span></span><br><span class="line">            prev_symbol = tf.stop_gradient(tf.argmax(prev_transformed, <span class="number">1</span>))</span><br><span class="line">            <span class="comment"># Get embedded vector</span></span><br><span class="line">            output = tf.nn.embedding_lookup(embedding_mat, prev_symbol)</span><br><span class="line">            <span class="keyword">return</span>(output)</span><br><span class="line"></span><br><span class="line">        decoder = tf.contrib.legacy_seq2seq.rnn_decoder</span><br><span class="line">        outputs, last_state = decoder(rnn_inputs_trimmed,</span><br><span class="line">                                      self.initial_state,</span><br><span class="line">                                      self.lstm_cell,</span><br><span class="line">                                      loop_function=inferred_loop <span class="keyword">if</span> infer_sample <span class="keyword">else</span> <span class="keyword">None</span>)</span><br><span class="line">        <span class="comment"># Non inferred outputs</span></span><br><span class="line">        output = tf.reshape(tf.concat(axis=<span class="number">1</span>, values=outputs), [<span class="number">-1</span>, self.rnn_size])</span><br><span class="line">        <span class="comment"># Logits and output</span></span><br><span class="line">        self.logit_output = tf.matmul(output, W) + b</span><br><span class="line">        self.model_output = tf.nn.softmax(self.logit_output)</span><br><span class="line"></span><br><span class="line">        loss_fun = tf.contrib.legacy_seq2seq.sequence_loss_by_example</span><br><span class="line">        loss = loss_fun([self.logit_output],[tf.reshape(self.y_output, [<span class="number">-1</span>])],</span><br><span class="line">                [tf.ones([self.batch_size * self.training_seq_len])],</span><br><span class="line">                self.vocab_size)</span><br><span class="line">        self.cost = tf.reduce_sum(loss) / (self.batch_size * self.training_seq_len)</span><br><span class="line">        self.final_state = last_state</span><br><span class="line">        gradients, _ = tf.clip_by_global_norm(tf.gradients(self.cost, tf.trainable_variables()), <span class="number">4.5</span>)</span><br><span class="line">        optimizer = tf.train.AdamOptimizer(self.learning_rate)</span><br><span class="line">        self.train_op = optimizer.apply_gradients(zip(gradients, tf.trainable_variables()))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sample</span><span class="params">(self, sess, words=ix2vocab, vocab=vocab2ix, num=<span class="number">10</span>, prime_text=<span class="string">'thou art'</span>)</span>:</span></span><br><span class="line">        state = sess.run(self.lstm_cell.zero_state(<span class="number">1</span>, tf.float32))</span><br><span class="line">        word_list = prime_text.split()</span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> word_list[:<span class="number">-1</span>]:</span><br><span class="line">            x = np.zeros((<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">            x[<span class="number">0</span>, <span class="number">0</span>] = vocab[word]</span><br><span class="line">            feed_dict = &#123;self.x_data: x, self.initial_state:state&#125;</span><br><span class="line">            [state] = sess.run([self.final_state], feed_dict=feed_dict)</span><br><span class="line"></span><br><span class="line">        out_sentence = prime_text</span><br><span class="line">        word = word_list[<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> range(num):</span><br><span class="line">            x = np.zeros((<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">            x[<span class="number">0</span>, <span class="number">0</span>] = vocab[word]</span><br><span class="line">            feed_dict = &#123;self.x_data: x, self.initial_state:state&#125;</span><br><span class="line">            [model_output, state] = sess.run([self.model_output, self.final_state], feed_dict=feed_dict)</span><br><span class="line">            sample = np.argmax(model_output[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">if</span> sample == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            word = words[sample]</span><br><span class="line">            out_sentence = out_sentence + <span class="string">' '</span> + word</span><br><span class="line">        <span class="keyword">return</span>(out_sentence)</span><br></pre></td></tr></table></figure>
+<p>In order to use the same model (with the same trained variables), we need to share the variable scope between the trained model and the test model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define LSTM Model</span></span><br><span class="line">lstm_model = LSTM_Model(embedding_size, rnn_size, batch_size, learning_rate,</span><br><span class="line">                        training_seq_len, vocab_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tell TensorFlow we are reusing the scope for the testing</span></span><br><span class="line"><span class="keyword">with</span> tf.variable_scope(tf.get_variable_scope(), reuse=<span class="keyword">True</span>):</span><br><span class="line">    test_lstm_model = LSTM_Model(embedding_size, rnn_size, batch_size, learning_rate,</span><br><span class="line">                                 training_seq_len, vocab_size, infer_sample=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>We need to save the model, so we create a model saving operation.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create model saver</span></span><br><span class="line">saver = tf.train.Saver(tf.global_variables())</span><br></pre></td></tr></table></figure>
+<p>Let’s calculate how many batches are needed for each epoch and split up the data accordingly.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create batches for each epoch</span></span><br><span class="line">num_batches = int(len(s_text_ix)/(batch_size * training_seq_len)) + <span class="number">1</span></span><br><span class="line"><span class="comment"># Split up text indices into subarrays, of equal size</span></span><br><span class="line">batches = np.array_split(s_text_ix, num_batches)</span><br><span class="line"><span class="comment"># Reshape each split into [batch_size, training_seq_len]</span></span><br><span class="line">batches = [np.resize(x, [batch_size, training_seq_len]) <span class="keyword">for</span> x <span class="keyword">in</span> batches]</span><br></pre></td></tr></table></figure>
+<p>Initialize all the variables</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize all variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Training the model!</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Train model</span></span><br><span class="line">train_loss = []</span><br><span class="line">iteration_count = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    <span class="comment"># Shuffle word indices</span></span><br><span class="line">    random.shuffle(batches)</span><br><span class="line">    <span class="comment"># Create targets from shuffled batches</span></span><br><span class="line">    targets = [np.roll(x, <span class="number">-1</span>, axis=<span class="number">1</span>) <span class="keyword">for</span> x <span class="keyword">in</span> batches]</span><br><span class="line">    <span class="comment"># Run a through one epoch</span></span><br><span class="line">    print(<span class="string">'Starting Epoch #&#123;&#125; of &#123;&#125;.'</span>.format(epoch+<span class="number">1</span>, epochs))</span><br><span class="line">    <span class="comment"># Reset initial LSTM state every epoch</span></span><br><span class="line">    state = sess.run(lstm_model.initial_state)</span><br><span class="line">    <span class="keyword">for</span> ix, batch <span class="keyword">in</span> enumerate(batches):</span><br><span class="line">        training_dict = &#123;lstm_model.x_data: batch, lstm_model.y_output: targets[ix]&#125;</span><br><span class="line">        c, h = lstm_model.initial_state</span><br><span class="line">        training_dict[c] = state.c</span><br><span class="line">        training_dict[h] = state.h</span><br><span class="line"></span><br><span class="line">        temp_loss, state, _ = sess.run([lstm_model.cost, lstm_model.final_state, lstm_model.train_op],</span><br><span class="line">                                       feed_dict=training_dict)</span><br><span class="line">        train_loss.append(temp_loss)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Print status every 10 gens</span></span><br><span class="line">        <span class="keyword">if</span> iteration_count % <span class="number">10</span> == <span class="number">0</span>:</span><br><span class="line">            summary_nums = (iteration_count, epoch+<span class="number">1</span>, ix+<span class="number">1</span>, num_batches+<span class="number">1</span>, temp_loss)</span><br><span class="line">            print(<span class="string">'Iteration: &#123;&#125;, Epoch: &#123;&#125;, Batch: &#123;&#125; out of &#123;&#125;, Loss: &#123;:.2f&#125;'</span>.format(*summary_nums))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Save the model and the vocab</span></span><br><span class="line">        <span class="keyword">if</span> iteration_count % save_every == <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># Save model</span></span><br><span class="line">            model_file_name = os.path.join(full_model_dir, <span class="string">'model'</span>)</span><br><span class="line">            saver.save(sess, model_file_name, global_step = iteration_count)</span><br><span class="line">            print(<span class="string">'Model Saved To: &#123;&#125;'</span>.format(model_file_name))</span><br><span class="line">            <span class="comment"># Save vocabulary</span></span><br><span class="line">            dictionary_file = os.path.join(full_model_dir, <span class="string">'vocab.pkl'</span>)</span><br><span class="line">            <span class="keyword">with</span> open(dictionary_file, <span class="string">'wb'</span>) <span class="keyword">as</span> dict_file_conn:</span><br><span class="line">                pickle.dump([vocab2ix, ix2vocab], dict_file_conn)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> iteration_count % eval_every == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">for</span> sample <span class="keyword">in</span> prime_texts:</span><br><span class="line">                print(test_lstm_model.sample(sess, ix2vocab, vocab2ix, num=<span class="number">10</span>, prime_text=sample))</span><br><span class="line"></span><br><span class="line">        iteration_count += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<pre><code>Starting Epoch #1 of 10.
+Iteration: 10, Epoch: 1, Batch: 10 out of 182, Loss: 9.73
+
+thou art more curtain show&#39;rs to the
+to be or not to the
+wherefore art thou art needs to the
+...
+Iteration: 1800, Epoch: 10, Batch: 171 out of 182, Loss: 5.71
+thou art more than a
+to be or not to be
+wherefore art thou dost wedded not make me a
+Iteration: 1810, Epoch: 10, Batch: 181 out of 182, Loss: 5.56
+</code></pre><p>Here is a plot of the training loss across the iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(train_loss, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Sequence to Sequence Loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Iterations'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/29/循环神经网络/output_25_0.png" alt="png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/27/中文序列标注/" rel="next" title="中文序列标注">
+                <i class="fa fa-chevron-left"></i> 中文序列标注
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/02/动手学深度学习Gluon/" rel="prev" title="动手学深度学习Gluon">
+                动手学深度学习Gluon <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Recurrent-Neural-Networks"><span class="nav-number">1.</span> <span class="nav-text">Recurrent Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-an-RNN-in-TensorFlow"><span class="nav-number">2.</span> <span class="nav-text">Implementing an RNN in TensorFlow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Evaluating-New-Texts"><span class="nav-number">2.1.</span> <span class="nav-text">Evaluating New Texts</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-an-LSTM-RNN-Model"><span class="nav-number">3.</span> <span class="nav-text">Implementing an LSTM RNN Model</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

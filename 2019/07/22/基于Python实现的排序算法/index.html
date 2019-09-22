@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="排序," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="所谓排序算法，即通过特定的算法因式将一组或多组数据按照既定模式进行重新排序。这种新序列遵循着一定的规则，体现出一定的规律，因此，经处理后的数据便于筛选和计算，大大提高了计算效率。对于排序，我们首先要求其具有一定的稳定性，即当两个相同的元素同时出现在某个序列之中，则经过一定的排序算法之后，两者在排序前后的相对位置不发生变化。换言之，即便是两个完全相同的元素，它们在排序过程中也是各有区别的，不允许混淆">
+<meta name="keywords" content="排序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Python实现的排序算法">
+<meta property="og:url" content="http://yoursite.com/2019/07/22/基于Python实现的排序算法/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="所谓排序算法，即通过特定的算法因式将一组或多组数据按照既定模式进行重新排序。这种新序列遵循着一定的规则，体现出一定的规律，因此，经处理后的数据便于筛选和计算，大大提高了计算效率。对于排序，我们首先要求其具有一定的稳定性，即当两个相同的元素同时出现在某个序列之中，则经过一定的排序算法之后，两者在排序前后的相对位置不发生变化。换言之，即便是两个完全相同的元素，它们在排序过程中也是各有区别的，不允许混淆">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/07/22/基于Python实现的排序算法/排序算法的时间复杂度与空间复杂度.png">
+<meta property="og:updated_time" content="2019-09-16T08:26:53.442Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Python实现的排序算法">
+<meta name="twitter:description" content="所谓排序算法，即通过特定的算法因式将一组或多组数据按照既定模式进行重新排序。这种新序列遵循着一定的规则，体现出一定的规律，因此，经处理后的数据便于筛选和计算，大大提高了计算效率。对于排序，我们首先要求其具有一定的稳定性，即当两个相同的元素同时出现在某个序列之中，则经过一定的排序算法之后，两者在排序前后的相对位置不发生变化。换言之，即便是两个完全相同的元素，它们在排序过程中也是各有区别的，不允许混淆">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/22/基于Python实现的排序算法/排序算法的时间复杂度与空间复杂度.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/22/基于Python实现的排序算法/"/>
+
+
+
+
+
+  <title>基于Python实现的排序算法 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/基于Python实现的排序算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Python实现的排序算法</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-22T10:40:00+08:00">
+                2019-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/" itemprop="url" rel="index">
+                    <span itemprop="name">数学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/22/基于Python实现的排序算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/22/基于Python实现的排序算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>所谓排序算法，即通过特定的算法因式将一组或多组数据按照既定模式进行重新排序。这种新序列遵循着一定的规则，体现出一定的规律，因此，经处理后的数据便于筛选和计算，大大提高了计算效率。对于排序，我们首先要求其具有一定的稳定性，即当两个相同的元素同时出现在某个序列之中，则经过一定的排序算法之后，两者在排序前后的相对位置不发生变化。换言之，即便是两个完全相同的元素，它们在排序过程中也是各有区别的，不允许混淆不清。</p>
+<h2 id="排序算法的时间复杂度与空间复杂度"><a href="#排序算法的时间复杂度与空间复杂度" class="headerlink" title="排序算法的时间复杂度与空间复杂度"></a>排序算法的时间复杂度与空间复杂度</h2><p><img src="/2019/07/22/基于Python实现的排序算法/排序算法的时间复杂度与空间复杂度.png" alt=""></p>
+<h3 id="比较排序和非比较排序时间复杂度分析"><a href="#比较排序和非比较排序时间复杂度分析" class="headerlink" title="比较排序和非比较排序时间复杂度分析"></a>比较排序和非比较排序时间复杂度分析</h3><p>常见的排序算法都是比较排序，非比较排序包括计数排序、桶排序和基数排序，非比较排序对数据有要求，因为数据本身包含了定位特征，所有才能不通过比较来确定元素的位置。</p>
+<p>比较排序的时间复杂度通常为O(n2)或者O(nlogn)，比较排序的时间复杂度下界就是O(nlogn)，而非比较排序的时间复杂度可以达到O(n)，但是都需要额外的空间开销。</p>
+<p>基于比较的排序，时间复杂度下界是o(nlogn)的分析：</p>
+<ul>
+<li>对于n个待排序元素，在未比较时，可能的正确结果有n!种。</li>
+<li>在经过一次比较后，其中两个元素的顺序被确定，所以可能的正确结果剩余n!/2种。</li>
+<li>依次类推，直到经过m次比较，剩余可能性n!/(2^m)种。</li>
+<li>直到n!/(2^m)&lt;=1时，结果只剩余一种。此时的比较次数m为o(nlogn)次。</li>
+<li>所以基于排序的比较算法，最优情况下，复杂度是o(nlogn)的。</li>
+</ul>
+<p>比较排序时间复杂度为O(nlogn)的证明：<br>a1,a2,a3……an序列的所有排序有n!种，所以满足要求的排序a1’,a2’,a3’……an’（其中a1’&lt;=a2’&lt;=a3’……&lt;=an’）的概率为1/n!。基于输入元素的比较排序，每一次比较的返回不是0就是1，这恰好可以作为决策树的一个决策将一个事件分成两个分支。比如冒泡排序时通过比较a1和a2两个数的大小可以把序列分成a1,a2……an与a2,a1……an（气泡a2上升一个身位）两种不同的结果，因此比较排序也可以构造决策树。根节点代表原始序列a1,a2,a3……an，所有叶子节点都是这个序列的重排（共有n!个，其中有一个就是我们排序的结果a1’,a2’,a3’……an’）。如果每次比较的结果都是等概率的话（恰好划分为概率空间相等的两个事件），那么二叉树就是高度平衡的，深度至少是log(n!)。</p>
+<p> 又因为:</p>
+<ol>
+<li>n! &lt; nn ,两边取对数就得到log(n!)&lt;nlog(n)，所以log(n!) = O(nlogn)</li>
+<li><p>n!=n(n-1)(n-2)(n-3)…1 &gt; (n/2)^(n/2) 两边取对数得到 log(n!) &gt; (n/2)log(n/2) = Ω(nlogn)，所以 log(n!) = Ω(nlogn)</p>
+<p>因此log(n!)的增长速度与 nlogn 相同,即 log(n!)=Θ(nlogn)，这就是通用排序算法的最低时间复杂度O(nlogn)的依据。</p>
+</li>
+</ol>
+<p><a href="https://www.zhihu.com/question/22393997" target="_blank" rel="noopener">如何证明快速排序法的平均复杂度为 O(nlogn)？</a></p>
+<h2 id="基于Python实现排序算法"><a href="#基于Python实现排序算法" class="headerlink" title="基于Python实现排序算法"></a>基于Python实现排序算法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># Code Reference https://github.com/TheAlgorithms/Python/tree/master/sorts</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">排序算法 https://baike.baidu.com/item/排序算法/5399605</span></span><br><span class="line"><span class="string">排序算法，即通过特定的算法因式将一组或多组数据按照既定模式进行重新排序。</span></span><br><span class="line"><span class="string">这种新序列遵循着一定的规则，体现出一定的规律，因此，经处理后的数据便于筛选和计算，大大提高了计算效率。</span></span><br><span class="line"><span class="string">对于排序，我们首先要求其具有一定的稳定性，即当两个相同的元素同时出现在某个序列之中，</span></span><br><span class="line"><span class="string">则经过一定的排序算法之后，两者在排序前后的相对位置不发生变化。</span></span><br><span class="line"><span class="string">换言之，即便是两个完全相同的元素，它们在排序过程中也是各有区别的，不允许混淆不清。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">排序(Sorting) 是计算机程序设计中的一种重要操作，</span></span><br><span class="line"><span class="string">它的功能是将一个数据元素（或记录）的任意序列，重新排列成一个关键字有序的序列。</span></span><br><span class="line"><span class="string">排序就是把集合中的元素按照一定的次序排序在一起。</span></span><br><span class="line"><span class="string">一般来说有升序排列和降序排列2种排序，在算法中有8中基本排序：</span></span><br><span class="line"><span class="string">(1)冒泡排序；</span></span><br><span class="line"><span class="string">(2)选择排序；</span></span><br><span class="line"><span class="string">(3)插入排序；</span></span><br><span class="line"><span class="string">(4)希尔排序；</span></span><br><span class="line"><span class="string">(5)归并排序；</span></span><br><span class="line"><span class="string">(6)快速排序；</span></span><br><span class="line"><span class="string">(7)基数排序；</span></span><br><span class="line"><span class="string">(8)堆排序。</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    冒泡排序</span></span><br><span class="line"><span class="string">    冒泡排序算法是把较小的元素往前调或者把较大的元素往后调。这种方法主要是通过对相邻两个元素进行大小的比较，</span></span><br><span class="line"><span class="string">    根据比较结果和算法规则对该二元素的位置进行交换，这样逐个依次进行比较和交换，就能达到排序目的。</span></span><br><span class="line"><span class="string">    冒泡排序的基本思想是，首先将第1个和第2个记录的关键字比较大小，如果是逆序的，就将这两个记录进行交换，</span></span><br><span class="line"><span class="string">    再对第2个和第3个记录的关键字进行比较，依次类推，重复进行上述计算，直至完成第(n一1)个和第n个记录的关键字之间的比较，</span></span><br><span class="line"><span class="string">    此后，再按照上述过程进行第2次、第3次排序，直至整个序列有序为止。排序过程中要特别注意的是，</span></span><br><span class="line"><span class="string">    当相邻两个元素大小一致时，这一步操作就不需要交换位置，因此也说明冒泡排序是一种严格的稳定排序算法，</span></span><br><span class="line"><span class="string">    它不改变序列中相同元素之间的相对位置关系。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    output_list = input_list.copy()</span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="keyword">for</span> ordered_item_num <span class="keyword">in</span> range(input_list_len - <span class="number">1</span>):  <span class="comment"># 遍历次数</span></span><br><span class="line">        flag = <span class="keyword">True</span>  <span class="comment"># 设定一个标记，若为true，则表示此次循环没有进行交换，也就是待排序列已经有序，排序已经完成。</span></span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> range(input_list_len - ordered_item_num - <span class="number">1</span>):  <span class="comment"># 每次遍历处理的范围</span></span><br><span class="line">            <span class="keyword">if</span> output_list[idx] &gt; output_list[idx + <span class="number">1</span>]:</span><br><span class="line">                output_list[idx], output_list[idx + <span class="number">1</span>] = output_list[idx + <span class="number">1</span>], output_list[idx]</span><br><span class="line">                flag = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> flag:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">select_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    选择排序</span></span><br><span class="line"><span class="string">    选择排序算法的基本思路是为每一个位置选择当前最小的元素。</span></span><br><span class="line"><span class="string">    选择排序的基本思想是，基于直接选择排序和堆排序这两种基本的简单排序方法。</span></span><br><span class="line"><span class="string">    首先从第1个位置开始对全部元素进行选择，选出全部元素中最小的给该位置，</span></span><br><span class="line"><span class="string">    再对第2个位置进行选择，在剩余元素中选择最小的给该位置即可；</span></span><br><span class="line"><span class="string">    以此类推，重复进行“最小元素”的选择，直至完成第(n-1)个位置的元素选择，</span></span><br><span class="line"><span class="string">    则第厅个位置就只剩唯一的最大元素，此时不需再进行选择。</span></span><br><span class="line"><span class="string">    使用这种排序时，要注意其中一个不同于冒泡法的细节。</span></span><br><span class="line"><span class="string">    举例说明：序列58539．我们知道第一遍选择第1个元素“5”会和元素“3”交换，</span></span><br><span class="line"><span class="string">    那么原序列中的两个相同元素“5”之间的前后相对顺序就发生了改变。</span></span><br><span class="line"><span class="string">    因此，我们说选择排序不是稳定的排序算法，它在计算过程中会破坏稳定性。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    output_list = input_list.copy()</span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="keyword">for</span> ordered_item_num <span class="keyword">in</span> range(input_list_len - <span class="number">1</span>):  <span class="comment"># 遍历次数</span></span><br><span class="line">        min_number_idx = ordered_item_num</span><br><span class="line">        <span class="keyword">for</span> idx <span class="keyword">in</span> range(ordered_item_num + <span class="number">1</span>, input_list_len):  <span class="comment"># 每次遍历处理的范围</span></span><br><span class="line">            <span class="keyword">if</span> output_list[idx] &lt; output_list[min_number_idx]:</span><br><span class="line">                min_number_idx = idx</span><br><span class="line">        output_list[ordered_item_num], output_list[min_number_idx] = \</span><br><span class="line">            output_list[min_number_idx], output_list[ordered_item_num]</span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">insert_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    插入排序</span></span><br><span class="line"><span class="string">    插入排序算法是基于某序列已经有序排列的情况下，通过一次插入一个元素的方式按照原有排序方式增加元素。</span></span><br><span class="line"><span class="string">    这种比较是从该有序序列的最末端开始执行，即要插入序列中的元素最先和有序序列中最大的元素比较，</span></span><br><span class="line"><span class="string">    若其大于该最大元素，则可直接插入最大元素的后面即可，否则再向前一位比较查找直至找到应该插入的位置为止。</span></span><br><span class="line"><span class="string">    插入排序的基本思想是，每次将1个待排序的记录按其关键字大小插入到前面已经排好序的子序列中，寻找最适当的位置，</span></span><br><span class="line"><span class="string">    直至全部记录插入完毕。执行过程中，若遇到和插入元素相等的位置，则将要插人的元素放在该相等元素的后面，</span></span><br><span class="line"><span class="string">    因此插入该元素后并未改变原序列的前后顺序。我们认为插入排序也是一种稳定的排序方法。</span></span><br><span class="line"><span class="string">    插入排序分直接插入排序、折半插入排序和希尔排序3类。    """</span></span><br><span class="line">    output_list = list()</span><br><span class="line">    output_list.append(input_list[<span class="number">0</span>])</span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="keyword">for</span> item_idx <span class="keyword">in</span> range(<span class="number">1</span>, input_list_len):  <span class="comment"># 遍历次数</span></span><br><span class="line">        insert_number_value = input_list[item_idx]</span><br><span class="line">        insert_location = len(output_list)</span><br><span class="line">        <span class="keyword">for</span> ordered_number_value <span class="keyword">in</span> output_list[::<span class="number">-1</span>]:</span><br><span class="line">            <span class="keyword">if</span> insert_number_value &lt; ordered_number_value:</span><br><span class="line">                insert_location = insert_location - <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        output_list.insert(insert_location, insert_number_value)</span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    希尔排序</span></span><br><span class="line"><span class="string">    选择一个增量序列 t1，t2，……，tk，其中 ti &gt; tj, tk = 1；</span></span><br><span class="line"><span class="string">    按增量序列个数 k，对序列进行 k 趟排序；</span></span><br><span class="line"><span class="string">    每趟排序，根据对应的增量 ti，将待排序列分割成若干长度为 m 的子序列，分别对各子表进行直接插入排序。仅增量因子为 1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    output_list = input_list.copy()</span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="comment"># 初始间隔</span></span><br><span class="line">    gap = input_list_len // <span class="number">2</span></span><br><span class="line">    <span class="keyword">while</span> gap &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(gap, input_list_len):</span><br><span class="line">            <span class="comment"># 类似插入排序, 当前值与指定步长之前的值比较, 符合条件则交换位置</span></span><br><span class="line">            <span class="keyword">while</span> i &gt;= gap <span class="keyword">and</span> output_list[i - gap] &gt; output_list[i]:</span><br><span class="line">                output_list[i], output_list[i - gap] = output_list[i - gap], output_list[i]</span><br><span class="line">                i = i - gap</span><br><span class="line">        gap = gap // <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shell_sort_2</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    希尔排序</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    output_list = input_list.copy()</span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="comment"># 初始间隔</span></span><br><span class="line">    gap = input_list_len // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> gap &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(gap, input_list_len):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i, gap - <span class="number">1</span>, -gap):  <span class="comment"># j 最小可以取到 gap, 也就保证了 j - gap &gt;=0 不会越界</span></span><br><span class="line">                <span class="keyword">if</span> output_list[j] &lt; output_list[j - gap]:</span><br><span class="line">                    output_list[j], output_list[j - gap] = output_list[j - gap], output_list[j]</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        gap = gap // <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    归并排序</span></span><br><span class="line"><span class="string">    归并排序算法就是把序列递归划分成为一个个短序列，</span></span><br><span class="line"><span class="string">    以其中只有1个元素的直接序列或者只有2个元素的序列作为短序列的递归出口，</span></span><br><span class="line"><span class="string">    再将全部有序的短序列按照一定的规则进行排序为长序列。</span></span><br><span class="line"><span class="string">    归并排序融合了分治策略，即将含有n个记录的初始序列中的每个记录均视为长度为1的子序列，</span></span><br><span class="line"><span class="string">    再将这n个子序列两两合并得到n/2个长度为2(当凡为奇数时会出现长度为l的情况)的有序子序列；</span></span><br><span class="line"><span class="string">    将上述步骤重复操作，直至得到1个长度为n的有序长序列。需要注意的是，在进行元素比较和交换时，</span></span><br><span class="line"><span class="string">    若两个元素大小相等则不必刻意交换位置，因此该算法不会破坏序列的稳定性，即归并排序也是稳定的排序算法。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_merge_operation_of_merge_sort</span><span class="params">(input_list_A, input_list_B)</span>:</span></span><br><span class="line">        output_list = list()</span><br><span class="line">        list_A_len = len(input_list_A)</span><br><span class="line">        list_B_len = len(input_list_B)</span><br><span class="line">        i, j = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; list_A_len <span class="keyword">and</span> j &lt; list_B_len:</span><br><span class="line">            a = input_list_A[i]</span><br><span class="line">            b = input_list_B[j]</span><br><span class="line">            <span class="keyword">if</span> a &lt;= b:</span><br><span class="line">                output_list.append(a)</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                output_list.append(b)</span><br><span class="line">                j += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> i == list_A_len:</span><br><span class="line">            output_list.extend(input_list_B[j:])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            output_list.extend(input_list_A[i:])</span><br><span class="line">        <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="keyword">if</span> input_list_len &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> input_list</span><br><span class="line"></span><br><span class="line">    middle = input_list_len // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    left_list = merge_sort(input_list[:middle])</span><br><span class="line">    right_list = merge_sort(input_list[middle:])</span><br><span class="line">    <span class="keyword">return</span> _merge_operation_of_merge_sort(left_list, right_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    快速排序</span></span><br><span class="line"><span class="string">    从数列中挑出一个元素，称为 “基准”（pivot）;</span></span><br><span class="line"><span class="string">    重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；</span></span><br><span class="line"><span class="string">    递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序；</span></span><br><span class="line"><span class="string">    https://www.jianshu.com/p/2b2f1f79984e</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_partition</span><span class="params">(input_list, left, right)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        返回基准pivot值的位置，并且满足input_list[left, right]这段区间内，</span></span><br><span class="line"><span class="string">        大于基准值的数值都在基准值的右侧，小于基准值的数值都在基准值左侧。</span></span><br><span class="line"><span class="string">        :param input_list: 待处理的列表</span></span><br><span class="line"><span class="string">        :param left: 列表起始位置left</span></span><br><span class="line"><span class="string">        :param right: 列表结束位置right</span></span><br><span class="line"><span class="string">        :return: 基准pivot值的位置</span></span><br><span class="line"><span class="string">        1. 最初left所指位置的值被选做基准pivot</span></span><br><span class="line"><span class="string">        当 left &lt; right 时（说明[left, right]区间的值还未处理）执行：</span></span><br><span class="line"><span class="string">            2. 然后left所指位置被当做交换区，right所指位置被当做判断区。</span></span><br><span class="line"><span class="string">                当满足要求（left &lt; right 且 right所指的值大于基准pivot）时，一直执行right所指位置向左推进一位。</span></span><br><span class="line"><span class="string">                当不满足要求时则将right所指位置的值移动到left所指交换区。</span></span><br><span class="line"><span class="string">            3. 然后right所指位置被当做交换区，left所指位置被当做判断区。</span></span><br><span class="line"><span class="string">                当满足要求（left &lt; right 且 left所指的值小于基准pivot）时，一直执行left所指位置向右推进一位。</span></span><br><span class="line"><span class="string">                当不满足要求时则将left所指位置的值移动到right所指的交换区。</span></span><br><span class="line"><span class="string">        当 left == right时（说明只剩下left所指位置没有处理）：</span></span><br><span class="line"><span class="string">            此时已经满足left所指位置的左侧值小于基准pivot，left所指位置的右侧值大于基准pivot。</span></span><br><span class="line"><span class="string">            直接将基准值放入left所指位置即可。</span></span><br><span class="line"><span class="string">        4. 返回基准值所在的位置 left</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        pivot_value = input_list[left]</span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> input_list[right] &gt;= pivot_value:</span><br><span class="line">                right -= <span class="number">1</span></span><br><span class="line">            input_list[left] = input_list[right]</span><br><span class="line">            <span class="keyword">while</span> left &lt; right <span class="keyword">and</span> input_list[left] &lt; pivot_value:</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            input_list[right] = input_list[left]</span><br><span class="line"></span><br><span class="line">        input_list[left] = pivot_value</span><br><span class="line">        <span class="keyword">return</span> left</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_quick_sort</span><span class="params">(input_list, left, right)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> left &lt; right:  <span class="comment"># 当区间有两个及以上的值时进行递归操作</span></span><br><span class="line">            pivot = _partition(input_list, left, right)</span><br><span class="line">            _quick_sort(input_list, left, pivot - <span class="number">1</span>)</span><br><span class="line">            _quick_sort(input_list, pivot + <span class="number">1</span>, right)</span><br><span class="line">        <span class="keyword">return</span> input_list</span><br><span class="line"></span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line">    <span class="keyword">return</span> _quick_sort(input_list, <span class="number">0</span>, input_list_len - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort_2</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    快速排序</span></span><br><span class="line"><span class="string">    快速排序的基本思想是:通过一趟排序算法把所需要排序的序列的元素分割成两大块，</span></span><br><span class="line"><span class="string">    其中，一部分的元素都要小于或等于另外一部分的序列元素，</span></span><br><span class="line"><span class="string">    然后仍根据该种方法对划分后的这两块序列的元素分别再次实行快速排序算法，</span></span><br><span class="line"><span class="string">    排序实现的整个过程可以是递归的来进行调用，最终能够实现将所需排序的无序序列元素变为一个有序的序列。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    length = len(input_list)</span><br><span class="line">    <span class="keyword">if</span> length &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> input_list</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Use the last element as the first pivot</span></span><br><span class="line">        pivot = input_list.pop()</span><br><span class="line">        <span class="comment"># Put elements greater than pivot in greater list</span></span><br><span class="line">        <span class="comment"># Put elements lesser than pivot in lesser list</span></span><br><span class="line">        greater, lesser = [], []</span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> input_list:</span><br><span class="line">            <span class="keyword">if</span> element &gt; pivot:</span><br><span class="line">                greater.append(element)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                lesser.append(element)</span><br><span class="line">        <span class="keyword">return</span> quick_sort_2(lesser) + [pivot] + quick_sort_2(greater)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">heap_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    堆排序</span></span><br><span class="line"><span class="string">    https://www.cnblogs.com/cj723/archive/2011/04/22/2024269.html</span></span><br><span class="line"><span class="string">    https://www.jianshu.com/p/d174f1862601</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_heap_adjust</span><span class="params">(array, start, end)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        调整列表array满足堆性质</span></span><br><span class="line"><span class="string">        :param array: 待调整为满足堆性质的列表</span></span><br><span class="line"><span class="string">        :param start: 要调整的堆的根节点位置</span></span><br><span class="line"><span class="string">        :param end: 列表要处理数值的最大位置</span></span><br><span class="line"><span class="string">        :return: 调整为满足堆性质的列表</span></span><br><span class="line"><span class="string">        1. 取出根节点的位置start对应的数值temp，计算出该根节点的左孩子位置child</span></span><br><span class="line"><span class="string">        当 child &lt;= end（孩子位置没有超过列表要处理数值的最大位置时）：</span></span><br><span class="line"><span class="string">            2. 如果有两个孩子（child &lt;= end） 且左孩子的值小于右孩子的值（array[child] &lt; array[child + 1]）</span></span><br><span class="line"><span class="string">                ，那么把孩子位置移动到右孩子位置；</span></span><br><span class="line"><span class="string">            3. 如果根节点temp值大于等于它所有孩子的值，则退出循环；</span></span><br><span class="line"><span class="string">            4. 将根节点的值调整为最大孩子的值 array[start] = array[child]</span></span><br><span class="line"><span class="string">                根节点位置调整为原来最大孩子的位置 start = child</span></span><br><span class="line"><span class="string">                更新该新的根节点对应的左孩子的位置 child = start * 2</span></span><br><span class="line"><span class="string">        5. 确定出temp最终所处的位置start，然后赋值array[start] = temp</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        temp = array[start]</span><br><span class="line">        child = start * <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> child &lt;= end:</span><br><span class="line">            <span class="keyword">if</span> child &lt; end <span class="keyword">and</span> array[child] &lt; array[child + <span class="number">1</span>]:</span><br><span class="line">                child += <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> temp &gt;= array[child]:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            array[start] = array[child]</span><br><span class="line">            start = child</span><br><span class="line">            child = start * <span class="number">2</span></span><br><span class="line">        array[start] = temp</span><br><span class="line"></span><br><span class="line">    output_list = [<span class="number">0</span>] + list(input_list)  <span class="comment"># 添加辅助位置0</span></span><br><span class="line">    input_list_len = len(input_list)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 现在的待排序序列构建成一个大顶堆</span></span><br><span class="line">    <span class="keyword">for</span> start <span class="keyword">in</span> range(input_list_len // <span class="number">2</span>, <span class="number">0</span>, <span class="number">-1</span>):  <span class="comment"># 对 input_list_len // 2 个父亲节点处理</span></span><br><span class="line">        _heap_adjust(output_list, start, input_list_len)</span><br><span class="line">    <span class="comment"># 逐步将堆结构转换为排序好的数列</span></span><br><span class="line">    <span class="comment"># 逐步将每个最大值的根结点与末尾元素交换，并且再调整其成为大顶堆</span></span><br><span class="line">    <span class="keyword">for</span> end <span class="keyword">in</span> range(input_list_len, <span class="number">1</span>, <span class="number">-1</span>):  <span class="comment"># 遍历次数，需要找到 input_list_len - 1 次最值来交换</span></span><br><span class="line">        output_list[<span class="number">1</span>], output_list[end] = output_list[end], output_list[<span class="number">1</span>]  <span class="comment"># 交换最值</span></span><br><span class="line">        _heap_adjust(output_list, <span class="number">1</span>, end - <span class="number">1</span>)  <span class="comment"># 重新调整堆</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">del</span> output_list[<span class="number">0</span>]  <span class="comment"># 删除辅助位置0</span></span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    计数排序</span></span><br><span class="line"><span class="string">    什么时候不用计数排序？</span></span><br><span class="line"><span class="string">        当数组最大最小值差距过大时，并不适用计数排序</span></span><br><span class="line"><span class="string">        当数组元素不是整数，并不适用计数排序</span></span><br><span class="line"><span class="string">    所以当数组最大最小值差远小于数组长度时，使用计数排序更快，比如年龄。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(input_list[<span class="number">0</span>], int):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">"This count_sort code only handles integers!"</span>)</span><br><span class="line"></span><br><span class="line">    max, min = input_list[<span class="number">0</span>], input_list[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> input_list:</span><br><span class="line">        <span class="keyword">if</span> i &gt; max: max = i</span><br><span class="line">        <span class="keyword">if</span> i &lt; min: min = i</span><br><span class="line"></span><br><span class="line">    nums = [<span class="number">0</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(max - min + <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> input_list:</span><br><span class="line">        nums[i - min] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    output_list = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">        output_list += [min + i] * nums[i]</span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bucket_sort</span><span class="params">(input_list, bucket_size=<span class="number">5</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    桶排序</span></span><br><span class="line"><span class="string">    https://github.com/TheAlgorithms/Python/blob/master/sorts/bucket_sort.py</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    min_value, max_value = (min(input_list), max(input_list))</span><br><span class="line">    bucket_count = ((max_value - min_value) // bucket_size + <span class="number">1</span>)</span><br><span class="line">    buckets = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(int(bucket_count))]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(input_list)):</span><br><span class="line">        buckets[int((input_list[i] - min_value) // bucket_size)</span><br><span class="line">        ].append(input_list[i])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sorted([buckets[i][j] <span class="keyword">for</span> i <span class="keyword">in</span> range(len(buckets))</span><br><span class="line">                   <span class="keyword">for</span> j <span class="keyword">in</span> range(len(buckets[i]))])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bucket_sort_2</span><span class="params">(input_list, bucket_size=<span class="number">5</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    桶排序</span></span><br><span class="line"><span class="string">    https://blog.csdn.net/sty945/article/details/81530774</span></span><br><span class="line"><span class="string">    设置固定数量的空桶。</span></span><br><span class="line"><span class="string">    把数据放到对应的桶中。</span></span><br><span class="line"><span class="string">    对每个不为空的桶中数据进行排序。</span></span><br><span class="line"><span class="string">    拼接不为空的桶中数据，得到结果。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    min_value, max_value = (min(input_list), max(input_list))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 创建空桶</span></span><br><span class="line">    bucket_count = int(((max_value - min_value) // bucket_size + <span class="number">1</span>))</span><br><span class="line">    buckets = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(bucket_count)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 把待排序列表数值放入对应的桶中</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> input_list:</span><br><span class="line">        item_buckets_idx = int((item - min_value) // bucket_size)</span><br><span class="line">        buckets[item_buckets_idx].append(item)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 桶内排序</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(bucket_count):</span><br><span class="line">        buckets[i].sort()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 产生新的排序后的列表</span></span><br><span class="line">    output_list = [item <span class="keyword">for</span> bucket <span class="keyword">in</span> buckets <span class="keyword">for</span> item <span class="keyword">in</span> bucket]</span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">radix_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    基数排序</span></span><br><span class="line"><span class="string">    这个代码仅仅能处理整数</span></span><br><span class="line"><span class="string">    https://github.com/TheAlgorithms/Python/blob/master/sorts/radix_sort.py</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> isinstance(input_list[<span class="number">0</span>], int):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">"This radix sorting code only handles integers!"</span>)</span><br><span class="line"></span><br><span class="line">    RADIX = <span class="number">10</span></span><br><span class="line">    placement = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    min_int_digit = int(min(input_list)) - <span class="number">1</span></span><br><span class="line">    normal_lst = [item - min_int_digit <span class="keyword">for</span> item <span class="keyword">in</span> input_list]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># get the maximum number</span></span><br><span class="line">    max_digit = max(normal_lst)</span><br><span class="line">    print(normal_lst)</span><br><span class="line">    <span class="keyword">while</span> placement &lt; max_digit:</span><br><span class="line">        <span class="comment"># declare and initialize buckets</span></span><br><span class="line">        buckets = [list() <span class="keyword">for</span> _ <span class="keyword">in</span> range(RADIX)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># split lst between lists</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> normal_lst:</span><br><span class="line">            tmp = int((item / placement) % RADIX)</span><br><span class="line">            buckets[tmp].append(item)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># empty lists into lst array</span></span><br><span class="line">        a = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> range(RADIX):</span><br><span class="line">            buck = buckets[b]</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> buck:</span><br><span class="line">                normal_lst[a] = i</span><br><span class="line">                a += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        print(normal_lst)</span><br><span class="line">        <span class="comment"># move to next</span></span><br><span class="line">        placement *= RADIX</span><br><span class="line"></span><br><span class="line">    output_list = [item + min_int_digit <span class="keyword">for</span> item <span class="keyword">in</span> normal_lst]</span><br><span class="line">    <span class="keyword">return</span> output_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce_random_int_list</span><span class="params">(number=<span class="number">1000</span>, start=<span class="number">-100</span>, stop=<span class="number">1000</span>)</span>:</span></span><br><span class="line">    input_list = [random.randint(start, stop) <span class="keyword">for</span> _ <span class="keyword">in</span> range(number)]</span><br><span class="line">    <span class="keyword">return</span> input_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">produce_random_float_list</span><span class="params">(number=<span class="number">1000</span>, start=<span class="number">-100.0</span>, stop=<span class="number">1000.0</span>)</span>:</span></span><br><span class="line">    input_list = [random.uniform(start, stop) <span class="keyword">for</span> _ <span class="keyword">in</span> range(number)]</span><br><span class="line">    <span class="keyword">return</span> input_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fack_sort</span><span class="params">(input_list)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> input_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_sort_function</span><span class="params">(sort_function, number=<span class="number">1000</span>)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">            input_list = produce_random_int_list(number)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            input_list = produce_random_float_list(number)</span><br><span class="line"></span><br><span class="line">        stand_sort_out = sorted(input_list)</span><br><span class="line">        custom_sort_medthod_out = sort_function(input_list)</span><br><span class="line">        <span class="keyword">for</span> a, b <span class="keyword">in</span> zip(custom_sort_medthod_out, stand_sort_out):</span><br><span class="line">            <span class="keyword">if</span> a != b:</span><br><span class="line">                print(<span class="string">f"stand <span class="subst">&#123;a&#125;</span> != custom <span class="subst">&#123;b&#125;</span>"</span>)</span><br><span class="line">                print(<span class="string">"stand_sort_out:\t"</span>, stand_sort_out)</span><br><span class="line">                print(<span class="string">"custom_sort_medthod_out:\t"</span>, custom_sort_medthod_out)</span><br><span class="line">                <span class="keyword">raise</span> ValueError(<span class="string">"sort_function error!"</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_sort_process</span><span class="params">(sort_function)</span>:</span></span><br><span class="line">    input_list = produce_random_int_list(number=<span class="number">5</span>, start=<span class="number">-100</span>, stop=<span class="number">1000</span>)</span><br><span class="line">    print(<span class="string">"---input_list---"</span>, input_list)</span><br><span class="line">    output_list = sort_function(input_list)</span><br><span class="line">    print(<span class="string">"---output_list---"</span>, output_list)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    <span class="comment"># 排序函数列表</span></span><br><span class="line">    sort_function_list = [bubble_sort, select_sort, insert_sort,</span><br><span class="line">                          shell_sort, shell_sort_2, merge_sort,</span><br><span class="line">                          quick_sort, quick_sort_2, heap_sort,</span><br><span class="line">                          bubble_sort, bucket_sort_2]</span><br><span class="line"></span><br><span class="line">    sort_int_fuction_list = [count_sort, radix_sort]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 排序函数序号</span></span><br><span class="line">    sort_function_index = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) == <span class="number">2</span>:</span><br><span class="line">        sort_function_index = int(sys.argv[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查排序过程</span></span><br><span class="line">    <span class="comment"># if sort_function_index is None:</span></span><br><span class="line">    <span class="comment">#     for sort_f in sort_function_list:</span></span><br><span class="line">    <span class="comment">#         check_sort_process(sort_f)</span></span><br><span class="line">    <span class="comment"># else:</span></span><br><span class="line">    <span class="comment">#     check_sort_process(sort_function_list[sort_function_index])</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查排序函数</span></span><br><span class="line">    <span class="keyword">if</span> sort_function_index <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">        <span class="keyword">for</span> sort_f <span class="keyword">in</span> sort_function_list:</span><br><span class="line">            print(<span class="string">f"check <span class="subst">&#123;str(sort_f)&#125;</span>..."</span>)</span><br><span class="line">            check_sort_function(sort_f, <span class="number">1000</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        check_sort_process(sort_function_list[sort_function_index])</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/排序/" rel="tag"># 排序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/17/Python/" rel="next" title="Python">
+                <i class="fa fa-chevron-left"></i> Python
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/31/机器学习相关的概率论基础知识/" rel="prev" title="机器学习相关的概率论基础知识">
+                机器学习相关的概率论基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法的时间复杂度与空间复杂度"><span class="nav-number">1.</span> <span class="nav-text">排序算法的时间复杂度与空间复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比较排序和非比较排序时间复杂度分析"><span class="nav-number">1.1.</span> <span class="nav-text">比较排序和非比较排序时间复杂度分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于Python实现排序算法"><span class="nav-number">2.</span> <span class="nav-text">基于Python实现排序算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

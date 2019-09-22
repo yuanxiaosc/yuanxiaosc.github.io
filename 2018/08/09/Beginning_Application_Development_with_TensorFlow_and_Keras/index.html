@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,书籍," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="阅读和下载地址PDF 书籍配套代码GitHub 代码整理Jupyter nbviewer 购买地址《Beginning Application Development with TensorFlow and Keras》| Luis Capelo | May 2018 | Packt 读书笔记 前言这本书是你的指南将TensorFlow和Keras模型部署到实际应用程序中。 本书首先介绍了如何构建">
+<meta name="keywords" content="深度学习,书籍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）">
+<meta property="og:url" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="阅读和下载地址PDF 书籍配套代码GitHub 代码整理Jupyter nbviewer 购买地址《Beginning Application Development with TensorFlow and Keras》| Luis Capelo | May 2018 | Packt 读书笔记 前言这本书是你的指南将TensorFlow和Keras模型部署到实际应用程序中。 本书首先介绍了如何构建">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c2.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_10_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_12_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_21_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c3.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c4.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c5.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c6.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c7.png">
+<meta property="og:updated_time" content="2018-09-10T08:58:15.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）">
+<meta name="twitter:description" content="阅读和下载地址PDF 书籍配套代码GitHub 代码整理Jupyter nbviewer 购买地址《Beginning Application Development with TensorFlow and Keras》| Luis Capelo | May 2018 | Packt 读书笔记 前言这本书是你的指南将TensorFlow和Keras模型部署到实际应用程序中。 本书首先介绍了如何构建">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/"/>
+
+
+
+
+
+  <title>Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗） | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-09T11:15:00+08:00">
+                2018-08-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Beginning-Application-Development-with-TensorFlow-and-Keras（路易斯卡佩罗）/" itemprop="url" rel="index">
+                    <span itemprop="name">Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>阅读和下载地址</strong><br><a href="https://github.com/yuanxiaosc/Machine_Learning/blob/master/book/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89.pdf" target="_blank" rel="noopener">PDF</a></p>
+<p><strong>书籍配套代码</strong><br><a href="https://github.com/PacktPublishing/Beginning-Application-Development-with-TensorFlow-and-Keras" target="_blank" rel="noopener">GitHub</a></p>
+<p><strong>代码整理</strong><br><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/tree/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/" target="_blank" rel="noopener">Jupyter nbviewer</a></p>
+<p><strong>购买地址</strong><br><a href="https://www.packtpub.com/application-development/beginning-application-development-tensorflow-and-keras" target="_blank" rel="noopener">《Beginning Application Development with TensorFlow and Keras》| Luis Capelo | May 2018 | Packt</a></p>
+<p><strong>读书笔记</strong></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这本书是你的指南将TensorFlow和Keras模型部署到实际应用程序中。</p>
+<p>本书首先介绍了如何构建应用程序的专用蓝图产生预测。每个后续课程都会解决一个问题模型的类型，例如神经网络，配置深度学习<br>环境，使用Keras并着重于三个重要问题：该模型如何工作，如何提高我们的预测准确性，以及如何使用它来衡量和评估其性能<br>现实世界的应用程序。在本书中，您将学习如何创建生成的应用程序来自深度学习的预测。这个学习之旅从探索开始神经网络的共同组成部分及其必要条件性能。在课程结束时，您将探索训练有素的神经使用TensorFlow创建的网络。在剩下的课程中，你会学习构建一个包含不同组件的深度学习模型并测量他们在预测中的表现。最后，我们将能够部署一个有效的Web应用程序到本书结束时。</p>
+<h1 id="本书内容"><a href="#本书内容" class="headerlink" title="本书内容"></a>本书内容</h1><p>Lesson 1, Introduction to Neural Networks and Deep Learning, helps you set up and configure deep learning environment and start looking at individual models and case studies. It also discusses neural networks and its idea along with their origins and explores their power.</p>
+<p>Lesson 2, Model Architecture, shows how to predict Bitcoin prices using deep learning model.</p>
+<p>Lesson 3, Model Evaluation and Optimization, shows on how to evaluate a neural network model. We will modify the network’s hyperparameters to improve its performance.</p>
+<p>Lesson 4, Productization explains how to productize a deep learning model and also provides an exercise of how to deploy a model as a web application.</p>
+<h2 id="Chapter-1-Introduction-to-Neural-Networks-and-Deep-Learning"><a href="#Chapter-1-Introduction-to-Neural-Networks-and-Deep-Learning" class="headerlink" title="Chapter 1. Introduction to Neural Networks and Deep Learning"></a>Chapter 1. Introduction to Neural Networks and Deep Learning</h2><h3 id="What-are-Neural-Networks"><a href="#What-are-Neural-Networks" class="headerlink" title="What are Neural Networks?"></a>What are Neural Networks?</h3><p>Neural networks—also known as Artificial Neural Networks—were first proposed in the 40s by MIT professors Warren McCullough and Walter Pitts.</p>
+<blockquote>
+<p>For more information refer, Explained: Neural networks. MIT News Office, April 14, 2017. Available at: <a href="http://news.mit.edu/2017/explained-neural-networks-deep-learning-0414" target="_blank" rel="noopener">http://news.mit.edu/2017/explained-neural-networks-deep-learning-0414</a>.</p>
+</blockquote>
+<h4 id="Successful-Applications"><a href="#Successful-Applications" class="headerlink" title="Successful Applications"></a>Successful Applications</h4><p><strong>Translating text</strong>: In 2017, Google announced that it was releasing a new algorithm for its translation service called Transformer. The algorithm consisted of a recurrent neural network (LSTM) that is trained used bilingual text. Google showed that its algorithm had gained notable accuracy when comparing to industry standards (BLEU) and was also computationally efficient.</p>
+<blockquote>
+<p>Google Research Blog. Transformer: A Novel Neural Network Architecture for Language Understanding. August 31, 2017. Available at: <a href="https://research.googleblog.com/2017/08/transformer-novel-neural-network.html" target="_blank" rel="noopener">https://research.googleblog.com/2017/08/transformer-novel-neural-network.html</a>.</p>
+</blockquote>
+<p><strong>Self-driving vehicles</strong>: Uber, NVIDIA, and Waymo are believed to be using deep learning models to control different vehicle functions that control driving.</p>
+<blockquote>
+<p>Alexis C. Madrigal: Inside Waymo’s Secret World for Training Se Driving Cars. The Atlantic. August 23, 2017. Available <a href="https://www.theatlantic.com/technology/archive/2017/08/inside-waymos-secret-testing-and-simulation-" target="_blank" rel="noopener">https://www.theatlantic.com/technology/archive/2017/08/inside-waymos-secret-testing-and-simulation-</a><br>facilities/537648/“&gt;lities/537648/.<br>NVIDIA: End-to-End Deep Learning for Self-Driving Cars. Augu 17, 2016. Available <a href="https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/" target="_blank" rel="noopener">https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/</a>.<br>Dave Gershgorn: Uber’s new AI team is looking for the shorte route to self-driving cars. Quartz. December 5, 2016. Available <a href="https://qz.com/853236/ubers-new-ai-team-is-looking-for-the-shortest-route-to-self-driving-cars/" target="_blank" rel="noopener">https://qz.com/853236/ubers-new-ai-team-is-looking-for-the-shortest-route-to-self-driving-cars/</a>.</p>
+</blockquote>
+<p><strong>Image recognition</strong>: Facebook and Google use deep learning models to identify entities in images and automatically tag these entities as persons from a set of contacts.</p>
+<h4 id="Why-Do-Neural-Networks-Work-So-Well"><a href="#Why-Do-Neural-Networks-Work-So-Well" class="headerlink" title="Why Do Neural Networks Work So Well?"></a>Why Do Neural Networks Work So Well?</h4><p>Neural networks are powerful because they can be used to predict any given function with reasonable approximation. If one is able to represent a problem as a mathematical function and also has data that represents that function correctly, then a deep learning model can, in principle—and given enough resources—be able to approximate that function. This is typically called the universality principle of neural networks.</p>
+<blockquote>
+<p>For more information refer, Michael Nielsen: Neural Networks and Deep Learning: A visual proof that neural nets can compute any function. Available at: <a href="http://neuralnetworksanddeeplearning.com/chap4.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap4.html</a>.</p>
+</blockquote>
+<h4 id="Representation-Learning"><a href="#Representation-Learning" class="headerlink" title="Representation Learning"></a>Representation Learning</h4><p>neural networks are computation graphs in which each step computes higher abstraction representations from input data.</p>
+<p>Each one of these steps represents a progression into a different abstraction layer. Data progresses through these layers, building continuously higher-level representations. The process finishes with the highest representation possible: the one the model is trying to predict.</p>
+<h4 id="Function-Approximation"><a href="#Function-Approximation" class="headerlink" title="Function Approximation"></a>Function Approximation</h4><p>When neural networks learn new representations of data, they do so by combining weights and biases with neurons from different layers.</p>
+<p>However, there are many reasons why a neural network may not be able to predict a function with perfection, chief among them being that:</p>
+<ul>
+<li>Many functions contain stochastic properties (that is, random properties)</li>
+<li>There may be overfitting to peculiarities from the training data</li>
+<li>There may be a lack of training data</li>
+</ul>
+<h4 id="Limitations-of-Deep-Learning"><a href="#Limitations-of-Deep-Learning" class="headerlink" title="Limitations of Deep Learning"></a>Limitations of Deep Learning</h4><p>Deep learning techniques are best suited to problems that can be defined with formal mathematical rules (that is, as data representations). If a problem is hard to define this way, then it is likely that deep learning will not provide a useful solution.</p>
+<p>Remember that deep learning algorithms are learning different representations of data to approximate a given function. If data does not represent a function appropriately, it is likely that a function will be incorrectly represented by a neural network.</p>
+<p>To avoid this problem, make sure that the data used to train a model represents the problem the model is trying to address as accurately as possible.</p>
+<p><strong>Inherent Bias and Ethical Considerations</strong></p>
+<p>Researchers have suggested that the use of the deep learning model without considering the inherent bias in the training data can lead not only to poor performing solutions, but also to ethical complications.</p>
+<h4 id="Common-Components-and-Operations-of-Neural-Networks"><a href="#Common-Components-and-Operations-of-Neural-Networks" class="headerlink" title="Common Components and Operations of Neural Networks"></a>Common Components and Operations of Neural Networks</h4><p>Neural networks have two key components: layers and nodes.<br>Nodes are responsible for specific operations, and layers are groups of nodes used to differentiate different stages of the system.节点负责特定的操作，而层是用来区分系统不同阶段的节点组。</p>
+<p>Nodes are where data is represented in the network. There are two values associated with nodes: biases and weights. Both of these values affect how data is represented by the nodes and passed on to other nodes.</p>
+<p>Unfortunately, there isn’t a clear rule for determining how many layers or nodes a network should have.</p>
+<h3 id="Configuring-a-Deep-Learning-Environment"><a href="#Configuring-a-Deep-Learning-Environment" class="headerlink" title="Configuring a Deep Learning Environment"></a>Configuring a Deep Learning Environment</h3><h3 id="Activity-1-–-Verifying-Software-Components"><a href="#Activity-1-–-Verifying-Software-Components" class="headerlink" title="Activity 1 – Verifying Software Components"></a><a href="https://github.com/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_1_test_environment.py" target="_blank" rel="noopener">Activity 1 – Verifying Software Components</a></h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数名</th>
+<th>作用</th>
+<th>启发</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>__separator</td>
+<td>打印规整的分隔符</td>
+<td></td>
+</tr>
+<tr>
+<td>test_python</td>
+<td>测试 Python 版本是否符合要求</td>
+<td></td>
+</tr>
+<tr>
+<td>test_tensorflow</td>
+<td>测试 TensorFlow 版本是否符合要求</td>
+<td>测试其它第三方库时也可以用此方法</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__separator</span><span class="params">(c)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Prints a pretty separator.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    c: str</span></span><br><span class="line"><span class="string">        Character to use.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    print(c * <span class="number">65</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_python</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Tests if Python 3 is installed.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    message = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        success = <span class="keyword">True</span></span><br><span class="line">        log = <span class="string">"""</span></span><br><span class="line"><span class="string">        PASS: Python 3.0 (or higher) is installed.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        success = <span class="keyword">False</span></span><br><span class="line">        log = <span class="string">"""</span></span><br><span class="line"><span class="string">        FAIL: Python 3.0 (or higher) not detected.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        message = <span class="string">"""</span></span><br><span class="line"><span class="string">            https://www.python.org/downloads/</span></span><br><span class="line"><span class="string">        """</span>   </span><br><span class="line">    print(log)</span><br><span class="line">    <span class="keyword">if</span> message:</span><br><span class="line">        print(message)</span><br><span class="line">    __separator(<span class="string">'~'</span>)</span><br><span class="line">    <span class="keyword">return</span> success</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test_tensorflow</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Tests if TensorFlow is installed.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    message = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">import</span> tensorflow</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> tensorflow.__version__ &gt;= <span class="string">'1.4.0'</span>:</span><br><span class="line">            success = <span class="keyword">True</span></span><br><span class="line">            log = <span class="string">"""</span></span><br><span class="line"><span class="string">        PASS: TensorFlow 1.4.0 (or higher) is installed.</span></span><br><span class="line"><span class="string">            """</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            success = <span class="keyword">False</span></span><br><span class="line">            log = <span class="string">"""</span></span><br><span class="line"><span class="string">        FAIL: TensorFlow 1.4.0 (or higher) not detected.</span></span><br><span class="line"><span class="string">            """</span></span><br><span class="line">            message = <span class="string">"""           </span></span><br><span class="line"><span class="string">                https://www.tensorflow.org/install/</span></span><br><span class="line"><span class="string">            """</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> ModuleNotFoundError:</span><br><span class="line">        success = <span class="keyword">False</span></span><br><span class="line">        log = <span class="string">"""</span></span><br><span class="line"><span class="string">        FAIL: TensorFlow 1.4.0 (or higher) not detected.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        message = <span class="string">"""</span></span><br><span class="line"><span class="string">                https://www.tensorflow.org/install/</span></span><br><span class="line"><span class="string">        """</span>  </span><br><span class="line">    print(log)</span><br><span class="line">    <span class="keyword">if</span> message:</span><br><span class="line">        print(message)</span><br><span class="line"></span><br><span class="line">    __separator(<span class="string">'~'</span>)</span><br><span class="line">    <span class="keyword">return</span> success</span><br></pre></td></tr></table></figure>
+<h3 id="Activity-2-mnist"><a href="#Activity-2-mnist" class="headerlink" title="Activity_2_mnist"></a><a href="https://github.com/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_2_mnist.py" target="_blank" rel="noopener">Activity_2_mnist</a></h3><p><a href="http://mnist-demo.herokuapp.com/" target="_blank" rel="noopener">mnist-demo</a></p>
+<h2 id="Chapter-2-Model-Architecture"><a href="#Chapter-2-Model-Architecture" class="headerlink" title="Chapter 2. Model Architecture"></a>Chapter 2. Model Architecture</h2><p>Older architectures have been used to solve a large array of problems and are generally considered the right choice when starting a new project. Newer architectures have shown great successes in specific problems, but are harder to generalize. The latter are interesting as references of what to explore next, but are hardly a good choice when starting a project.</p>
+<h3 id="Choosing-the-Right-Model-Architecture"><a href="#Choosing-the-Right-Model-Architecture" class="headerlink" title="Choosing the Right Model Architecture"></a>Choosing the Right Model Architecture</h3><p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c1.png" alt=""></p>
+<p>Table 1: Different neural network architectures have shown success in<br>different fields. The networks’ architecture is typically related to the</p>
+<h3 id="Data-Normalization"><a href="#Data-Normalization" class="headerlink" title="Data Normalization"></a>Data Normalization</h3><p>Before building a deep learning model, one more step is necessary: data normalization.</p>
+<p>Data normalization is a common practice in machine learning systems. Particularly regarding neural networks, researchers have proposed that normalization is an essential technique for training RNNs (and LSTMs), mainly because it decreases the network’s training time and increases the network’s overall performance.</p>
+<blockquote>
+<p>For more information refer, Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift by Sergey Ioffe et. al., arXiv, March 2015. Available at: <a href="https://arxiv.org/abs/1502.03167" target="_blank" rel="noopener">https://arxiv.org/abs/1502.03167</a>.</p>
+</blockquote>
+<h4 id="Z-score"><a href="#Z-score" class="headerlink" title="Z-score"></a>Z-score</h4><p>When data is normally distributed (that is, Gaussian), one can compute the distance between each observation as a standard deviation from its mean. This normalization is useful when identifying how distant data points are from more likely occurrences in the distribution. The Z-score is defined by:</p>
+<script type="math/tex; mode=display">Z_i=\dfrac{x_i-\mu}{\sigma}</script><p>Here, $x_i$ is the $i^{th}$ observation, $\mu$ is the mean, and $\sigma$ is the stand deviation of the series.</p>
+<h4 id="Point-Relative-Normalization"><a href="#Point-Relative-Normalization" class="headerlink" title="Point-Relative Normalization"></a>Point-Relative Normalization</h4><p>This normalization computes the difference of a given observation in relation to the first observation of the series. This kind of normalization is useful to identify trends in relation to a starting point. The point-relative normalization is defined by:</p>
+<script type="math/tex; mode=display">n_i=(\dfrac{O_i}{O_o})-1</script><p>Here, $O_i$ is the $i^{th}$ observation, $O_o$ is the first observation of the series.</p>
+<h4 id="Maximum-and-Minimum-Normalization"><a href="#Maximum-and-Minimum-Normalization" class="headerlink" title="Maximum and Minimum Normalization"></a>Maximum and Minimum Normalization</h4><p>This normalization computes the distance between a given observation and the maximum and minimum values of the series. This normalization is useful when working with series in which the maximum and minimum values are not outliers and are important for future predictions. This normalization technique can be applied with:</p>
+<script type="math/tex; mode=display">n_i=\dfrac{O_i - min(O}{max(O)-min(O}</script><p>Here, $O_i$ is the $i^{th}$ observation,ation, $O$ represents a vector with all $O$ values, and the functions $min(O)$ and $max(O)$ represent the minimum and maximum values of the series, respectively.</p>
+<h3 id="Structuring-Your-Problem"><a href="#Structuring-Your-Problem" class="headerlink" title="Structuring Your Problem"></a>Structuring Your Problem</h3><p>Compared to researchers, practitioners spend much less time determining which architecture to choose when starting a new deep learning project. Acquiring data that represents a given problem correctly is the most important factor to consider when developing these systems, followed by the understanding of the dataset’s inherent biases and limitations.</p>
+<p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c2.png" alt=""><br>Figure 5: Decision-tree of key reflection questions to be made at the beginning of a deep learning project</p>
+<h3 id="Activity-3-–-Exploring-the-Bitcoin-Dataset-and-Preparing-Data-for-Model"><a href="#Activity-3-–-Exploring-the-Bitcoin-Dataset-and-Preparing-Data-for-Model" class="headerlink" title="Activity 3 – Exploring the Bitcoin Dataset and Preparing Data for Model"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_3_Exploring_Bitcoin_Dataset.ipynb" target="_blank" rel="noopener">Activity 3 – Exploring the Bitcoin Dataset and Preparing Data for Model</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitcoin = pd.read_csv(<span class="string">'data/bitcoin_historical_prices.csv'</span>)</span><br></pre></td></tr></table></figure>
+<p>Our dataset contains 7 variables (i.e. columns). Here’s what each one of them represents:</p>
+<ul>
+<li><code>date</code>: date of the observation.</li>
+<li><code>iso_week</code>: week number of a given year.</li>
+<li><code>open</code>: open value of a single Bitcoin coin.</li>
+<li><code>high</code>: highest value achieved during a given day period.</li>
+<li><code>low</code>: lowest value achieved during a given day period.</li>
+<li><code>close</code>: value at the close of the transaction day.</li>
+<li><code>volume</code>: what is the total volume of Bitcoin that was exchanged during that day.</li>
+<li><code>market_capitalization</code>: as described in CoinMarketCap’s FAQ page, this is calculated by Market Cap = Price X Circulating Supply.</li>
+</ul>
+<p>All values are in USD.</p>
+<h3 id="Exploration"><a href="#Exploration" class="headerlink" title="Exploration"></a>Exploration</h3><p>We will now explore the dataset timeseries to understand its patterns.</p>
+<p>Let’s first explore two variables: close price and volume. Volume only contains data starting in November 2013, while close prices start earlier in April of that year. However, both show similar spiking patterns starting at the beginning of 2017.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitcoin.set_index(<span class="string">'date'</span>)[<span class="string">'close'</span>].plot(linewidth=<span class="number">2</span>, figsize=(<span class="number">14</span>, <span class="number">4</span>), color=<span class="string">'#d35400'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x8869048&gt;
+</code></pre><p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_10_1.png" alt="png"></p>
+<p>Now let’s explore the yera of 2017 only. This is the year where the price of bitcoin has risen significantly.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bitcoin[bitcoin[<span class="string">'date'</span>] &gt;= <span class="string">'2017-01-01'</span>].set_index(<span class="string">'date'</span>)[<span class="string">'close'</span>].plot(</span><br><span class="line">    linewidth=<span class="number">2</span>, figsize=(<span class="number">14</span>, <span class="number">4</span>), color=<span class="string">'#d35400'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0x8b50048&gt;
+</code></pre><p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_12_1.png" alt="png"></p>
+<h3 id="Preparing-Dataset-for-Model"><a href="#Preparing-Dataset-for-Model" class="headerlink" title="Preparing Dataset for Model"></a>Preparing Dataset for Model</h3><p>Neural networks typically work with either <a href="https://en.wikipedia.org/wiki/Matrix_(mathematics" target="_blank" rel="noopener">matrices</a>) or <a href="https://en.wikipedia.org/wiki/Tensor" target="_blank" rel="noopener">tensors</a>. Our data needs to fit that structure before it can be used by either <code>keras</code> (or <code>tensorflow</code>).</p>
+<p>Also, it is common practice to normalize data before using it to train a neural network. We will be using a normalization technique the evaluates each observation into a range between 0 and 1 in relation to the first observation in each week.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitcoin.head()</span><br></pre></td></tr></table></figure>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>iso_week</th>
+      <th>open</th>
+      <th>high</th>
+      <th>low</th>
+      <th>close</th>
+      <th>volume</th>
+      <th>market_capitalization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2013-04-28</td>
+      <td>2013-17</td>
+      <td>135.30</td>
+      <td>135.98</td>
+      <td>132.10</td>
+      <td>134.21</td>
+      <td>NaN</td>
+      <td>1.500520e+09</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2013-04-29</td>
+      <td>2013-17</td>
+      <td>134.44</td>
+      <td>147.49</td>
+      <td>134.00</td>
+      <td>144.54</td>
+      <td>NaN</td>
+      <td>1.491160e+09</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2013-04-30</td>
+      <td>2013-17</td>
+      <td>144.00</td>
+      <td>146.93</td>
+      <td>134.05</td>
+      <td>139.00</td>
+      <td>NaN</td>
+      <td>1.597780e+09</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2013-05-01</td>
+      <td>2013-17</td>
+      <td>139.00</td>
+      <td>139.89</td>
+      <td>107.72</td>
+      <td>116.99</td>
+      <td>NaN</td>
+      <td>1.542820e+09</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2013-05-02</td>
+      <td>2013-17</td>
+      <td>116.38</td>
+      <td>125.60</td>
+      <td>92.28</td>
+      <td>105.21</td>
+      <td>NaN</td>
+      <td>1.292190e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<p>First, let’s remove data from older periods. We will keep only data from 2016 until the latest observation of 2017. Older observations may be useful to understand current prices. However, Bitcoin has gained so much popularity in recent years that including older data would require a more laborious treatment. We will leave that for a future exploration.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitcoin_recent = bitcoin[bitcoin[<span class="string">'date'</span>] &gt;= <span class="string">'2016-01-01'</span>]</span><br></pre></td></tr></table></figure>
+<p>Let’s keep only the close and volume variables. We can use the other variables in another time.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bitcoin_recent = bitcoin_recent[[<span class="string">'date'</span>, <span class="string">'iso_week'</span>, <span class="string">'close'</span>, <span class="string">'volume'</span>]]</span><br></pre></td></tr></table></figure>
+<p>Now, let’s normalize our data for both the <code>close</code> and <code>volume</code> variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bitcoin_recent[<span class="string">'close_point_relative_normalization'</span>] = bitcoin_recent.groupby(<span class="string">'iso_week'</span>)[<span class="string">'close'</span>].apply(</span><br><span class="line">    <span class="keyword">lambda</span> x: normalizations.point_relative_normalization(x))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bitcoin_recent.set_index(<span class="string">'date'</span>)[<span class="string">'close_point_relative_normalization'</span>].plot(</span><br><span class="line">    linewidth=<span class="number">2</span>, figsize=(<span class="number">14</span>, <span class="number">4</span>), color=<span class="string">'#d35400'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;matplotlib.axes._subplots.AxesSubplot at 0xb81d160&gt;
+</code></pre><p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/output_21_1.png" alt="png"></p>
+<h3 id="Using-Keras-as-a-TensorFlow-Interface"><a href="#Using-Keras-as-a-TensorFlow-Interface" class="headerlink" title="Using Keras as a TensorFlow Interface"></a>Using Keras as a TensorFlow Interface</h3><p>Keras simplifies the interface for working with different architectures by using three components - network architecture, fit, and predict:</p>
+<p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c3.png" alt=""></p>
+<p>Figure 15: The Keras neural network paradigm: A. design a neural network architecture, B. Train a neural network (or Fit), and C. Make predictions</p>
+<h3 id="Activity-4-–-Creating-a-TensorFlow-Model-Using-Keras"><a href="#Activity-4-–-Creating-a-TensorFlow-Model-Using-Keras" class="headerlink" title="Activity 4 – Creating a TensorFlow Model Using Keras"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_4_Creating_a_TensorFlow_Model_Using_Keras.ipynb" target="_blank" rel="noopener">Activity 4 – Creating a TensorFlow Model Using Keras</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># build_model</span></span><br><span class="line">model = Sequential()</span><br><span class="line">model.add(LSTM(</span><br><span class="line">    units=period_length,</span><br><span class="line">    batch_input_shape=(batch_size, number_of_periods, period_length),</span><br><span class="line">    input_shape=(number_of_periods, period_length),</span><br><span class="line">    return_sequences=<span class="keyword">False</span>, stateful=<span class="keyword">False</span>))</span><br><span class="line"></span><br><span class="line">model.add(Dense(units=period_length))</span><br><span class="line">model.add(Activation(<span class="string">"linear"</span>))</span><br><span class="line"></span><br><span class="line">model.compile(loss=<span class="string">"mse"</span>, optimizer=<span class="string">"rmsprop"</span>)</span><br><span class="line"><span class="comment">## saving model</span></span><br><span class="line">model.save(<span class="string">'bitcoin_lstm_v0.h5'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Activity-5-–-Assembling-a-Deep-Learning-System"><a href="#Activity-5-–-Assembling-a-Deep-Learning-System" class="headerlink" title="Activity 5 – Assembling a Deep Learning System"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_5_Assembling_a_Deep_Learning_System.ipynb" target="_blank" rel="noopener">Activity 5 – Assembling a Deep Learning System</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Shaping Data</span></span><br><span class="line">X_train = data[:<span class="number">-1</span>,:].reshape(<span class="number">1</span>, <span class="number">76</span>, <span class="number">7</span>)</span><br><span class="line">Y_validation = data[<span class="number">-1</span>].reshape(<span class="number">1</span>, <span class="number">7</span>)</span><br><span class="line"><span class="comment"># Load Model</span></span><br><span class="line">model = load_model(<span class="string">'bitcoin_lstm_v0.h5'</span>)</span><br><span class="line"><span class="comment"># Make Predictions</span></span><br><span class="line">%%time</span><br><span class="line">history = model.fit(x=X_train, y=Y_validation,</span><br><span class="line">                    batch_size=<span class="number">32</span>, epochs=<span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Chapter-3-Model-Evaluation-and-Optimization"><a href="#Chapter-3-Model-Evaluation-and-Optimization" class="headerlink" title="Chapter 3. Model Evaluation and Optimization"></a>Chapter 3. Model Evaluation and Optimization</h2><h3 id="Parameter-and-Hyperparameter"><a href="#Parameter-and-Hyperparameter" class="headerlink" title="Parameter and Hyperparameter"></a>Parameter and Hyperparameter</h3><p>Parameters are properties that affect how a model makes predictions from data. Hyperparameters refer to how a model learns from data. Parameters can be learned from the data and modified dynamically. Hyperparameters are higher-level properties and are not typically learned from data.</p>
+<p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c4.png" alt=""><br><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c5.png" alt=""></p>
+<p>Table 1: Common loss functions used for classification and regression problems</p>
+<p>We learned that loss functions are key elements of neural networks, as they evaluate the performance of a network at each epoch and are the starting point for the propagation of adjustments back into layers and nodes. We also explored why some loss functions can be difficult to interpret (for instance, the MSE) and developed a strategy using two other functions—RMSE and MAPE—to interpret the predicted results from our LSTM model.</p>
+<h3 id="Activity-6-–-Creating-an-Active-Training-Environment"><a href="#Activity-6-–-Creating-an-Active-Training-Environment" class="headerlink" title="Activity 6 – Creating an Active Training Environment"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_6_Creating_an_active_training_environment.ipynb" target="_blank" rel="noopener">Activity 6 – Creating an Active Training Environment</a></h3><h4 id="Layers-and-Nodes-Adding-More-Layers"><a href="#Layers-and-Nodes-Adding-More-Layers" class="headerlink" title="Layers and Nodes - Adding More Layers"></a>Layers and Nodes - Adding More Layers</h4><p>the more layers you add, the more hyperparameters you have to tune—and the longer your network will take to train. If your model is performing fairly well and not overfitting your data, experiment with the other strategies outlined in this lesson before adding new layers to your network.</p>
+<h4 id="Epochs"><a href="#Epochs" class="headerlink" title="Epochs"></a>Epochs</h4><p>he larger the date used to train your model, the more epochs it will need to achieve good performance.</p>
+<h4 id="Activation-Functions"><a href="#Activation-Functions" class="headerlink" title="Activation Functions"></a>Activation Functions</h4><blockquote>
+<p>Understanding Activation Functions in Neural Networks by Avinash Sharma V, available at: <a href="https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0" target="_blank" rel="noopener">https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0</a>.</p>
+</blockquote>
+<h4 id="L2-Regularization"><a href="#L2-Regularization" class="headerlink" title="L2 Regularization"></a>L2 Regularization</h4><p>L2 regularization (or weight decay) is a common technique for dealing with overfitting models. In some models, certain parameters vary in great magnitudes. The L2 regularization penalizes such parameters, reducing the effect of these parameters on the network.</p>
+<h4 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h4><p>Dropout is a regularization technique based on a simple question: if one randomly takes away a proportion of nodes from layers, how will the other node adapt? It turns out that the remaining neurons adapt, learning to represent patterns that were previously handled by those neurons that are missing.</p>
+<h3 id="Activity-7-Optimizing-a-deep-learning-model"><a href="#Activity-7-Optimizing-a-deep-learning-model" class="headerlink" title="Activity 7: Optimizing a deep learning model"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_7_Optimizing_a_deep_learning_model.ipynb" target="_blank" rel="noopener">Activity 7: Optimizing a deep learning model</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 tensorboard 辅助训练的函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(model, X, Y, epochs=<span class="number">100</span>, version=<span class="number">0</span>, run_number=<span class="number">0</span>)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Shorthand function for training a new model.</span></span><br><span class="line"><span class="string">    This function names each run of the model</span></span><br><span class="line"><span class="string">    using the TensorBoard naming conventions.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    ----------</span></span><br><span class="line"><span class="string">    model: Keras model instance</span></span><br><span class="line"><span class="string">        Compiled Keras model.</span></span><br><span class="line"><span class="string">    X, Y: np.array</span></span><br><span class="line"><span class="string">        Series of observations to be used in</span></span><br><span class="line"><span class="string">        the training process.</span></span><br><span class="line"><span class="string">    version: int</span></span><br><span class="line"><span class="string">        Version of the model to run.</span></span><br><span class="line"><span class="string">    run_number: int</span></span><br><span class="line"><span class="string">        The number of the run. Used in case</span></span><br><span class="line"><span class="string">        the same model version is run again.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    hash = random.getrandbits(<span class="number">128</span>)</span><br><span class="line">    hex_code = <span class="string">'%032x'</span> % hash</span><br><span class="line">    model_name = <span class="string">'bitcoin_lstm_v&#123;version&#125;_run_&#123;run_number&#125;_&#123;hex_code&#125;'</span>.format(</span><br><span class="line">        version=version, run_number=run_number, hex_code=hex_code[:<span class="number">6</span>])</span><br><span class="line"></span><br><span class="line">    tensorboard = TensorBoard(log_dir=<span class="string">'./logs/&#123;&#125;'</span>.format(model_name))</span><br><span class="line"></span><br><span class="line">    model_history = model.fit(</span><br><span class="line">        x=X, y=Y,</span><br><span class="line">        batch_size=<span class="number">1</span>, epochs=epochs,</span><br><span class="line">        verbose=<span class="number">0</span>, callbacks=[tensorboard],</span><br><span class="line">        shuffle=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model_history</span><br></pre></td></tr></table></figure>
+<h2 id="Chapter-4-Productization"><a href="#Chapter-4-Productization" class="headerlink" title="Chapter 4. Productization"></a>Chapter 4. Productization</h2><p>This lesson focuses on how to productize a deep learning model. We use the word productize to define the creation of a software product from a deep learning model that can be used by other people and applications.<br>We are interested in models that use new data when it becomes available, continuously learning patterns from new data and, consequently, making better predictions. We study two strategies to deal with new data: one that re-trains an existing model, and another that creates a completely new model. Then, we implement the latter strategy in our Bitcoin prices prediction model so that it can continuously predict new Bitcoin prices.</p>
+<p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c6.png" alt=""></p>
+<p>Figure 1: System architecture for the web application built in this project</p>
+<h4 id="Handling-New-Data"><a href="#Handling-New-Data" class="headerlink" title="Handling New Data"></a>Handling New Data</h4><p>Models can be trained once in a set of data and can then be used to make predictions. Such static models can be very useful, but it is often the case that we want our model to continuously learn from new data—and to continuously get better as it does so.<br>In this section, we will discuss two strategies on how to re-train a deep learning model and how to implement them in Python.</p>
+<h4 id="Separating-Data-and-Model"><a href="#Separating-Data-and-Model" class="headerlink" title="Separating Data and Model"></a>Separating Data and Model</h4><p>When building a deep learning application, the two most important areas are data and model. From an architectural point of view, we suggest that these two areas be separate. We believe that is a good suggestion because each of these areas include functions inherently separated from each other. Data is often required to be collected, cleaned, organized, and normalized; and models need to be trained, evaluated, and able to make predictions. Both of these areas are dependent, but are better dealt with separately.<br>As a matter of following that suggestion, we will be using two classes to help us build our web application: CoinMarketCap() and Model():</p>
+<ul>
+<li><p>CoinMarketCap(): This is a class designed for fetching Bitcoin prices from the following website: <a href="http://www.coinmarketcap.com" target="_blank" rel="noopener">http://www.coinmarketcap.com</a>. This is the same place where our original Bitcoin data comes from. This class makes it easy to retrieve that data on a regular schedule, returning a Pandas DataFrame with the parsed records and all available historical data.</p>
+</li>
+<li><p>Model(): This class implements all the code we have written so far into a single class. That class provides facilities for interacting with our previously trained models, and also allows for the making of predictions using de-normalized data—which is much easier to understand. The Model() class is our model component.</p>
+</li>
+</ul>
+<p>These two classes are used extensively throughout our example application and define the data and model components.</p>
+<h4 id="Activity-8-Re-training-a-model-dynamically"><a href="#Activity-8-Re-training-a-model-dynamically" class="headerlink" title="Activity 8: Re-training a model dynamically"></a><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/blob/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/Activity_8_Re_training_a_model_dynamically.ipynb" target="_blank" rel="noopener">Activity 8: Re-training a model dynamically</a></h4><h4 id="Achievements"><a href="#Achievements" class="headerlink" title="Achievements"></a>Achievements</h4><p><img src="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/c7.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/书籍/" rel="tag"># 书籍</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/" rel="next" title="hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答">
+                <i class="fa fa-chevron-left"></i> hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/24/胶囊网络/" rel="prev" title="胶囊网络（Capsule Network）">
+                胶囊网络（Capsule Network） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本书内容"><span class="nav-number"></span> <span class="nav-text">本书内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-1-Introduction-to-Neural-Networks-and-Deep-Learning"><span class="nav-number">1.</span> <span class="nav-text">Chapter 1. Introduction to Neural Networks and Deep Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-are-Neural-Networks"><span class="nav-number">1.1.</span> <span class="nav-text">What are Neural Networks?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Successful-Applications"><span class="nav-number">1.1.1.</span> <span class="nav-text">Successful Applications</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Why-Do-Neural-Networks-Work-So-Well"><span class="nav-number">1.1.2.</span> <span class="nav-text">Why Do Neural Networks Work So Well?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Representation-Learning"><span class="nav-number">1.1.3.</span> <span class="nav-text">Representation Learning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Function-Approximation"><span class="nav-number">1.1.4.</span> <span class="nav-text">Function Approximation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Limitations-of-Deep-Learning"><span class="nav-number">1.1.5.</span> <span class="nav-text">Limitations of Deep Learning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Common-Components-and-Operations-of-Neural-Networks"><span class="nav-number">1.1.6.</span> <span class="nav-text">Common Components and Operations of Neural Networks</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuring-a-Deep-Learning-Environment"><span class="nav-number">1.2.</span> <span class="nav-text">Configuring a Deep Learning Environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-1-–-Verifying-Software-Components"><span class="nav-number">1.3.</span> <span class="nav-text">Activity 1 – Verifying Software Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-2-mnist"><span class="nav-number">1.4.</span> <span class="nav-text">Activity_2_mnist</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-2-Model-Architecture"><span class="nav-number">2.</span> <span class="nav-text">Chapter 2. Model Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Choosing-the-Right-Model-Architecture"><span class="nav-number">2.1.</span> <span class="nav-text">Choosing the Right Model Architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Normalization"><span class="nav-number">2.2.</span> <span class="nav-text">Data Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Z-score"><span class="nav-number">2.2.1.</span> <span class="nav-text">Z-score</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Point-Relative-Normalization"><span class="nav-number">2.2.2.</span> <span class="nav-text">Point-Relative Normalization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Maximum-and-Minimum-Normalization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Maximum and Minimum Normalization</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Structuring-Your-Problem"><span class="nav-number">2.3.</span> <span class="nav-text">Structuring Your Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-3-–-Exploring-the-Bitcoin-Dataset-and-Preparing-Data-for-Model"><span class="nav-number">2.4.</span> <span class="nav-text">Activity 3 – Exploring the Bitcoin Dataset and Preparing Data for Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Exploration"><span class="nav-number">2.5.</span> <span class="nav-text">Exploration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preparing-Dataset-for-Model"><span class="nav-number">2.6.</span> <span class="nav-text">Preparing Dataset for Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Keras-as-a-TensorFlow-Interface"><span class="nav-number">2.7.</span> <span class="nav-text">Using Keras as a TensorFlow Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-4-–-Creating-a-TensorFlow-Model-Using-Keras"><span class="nav-number">2.8.</span> <span class="nav-text">Activity 4 – Creating a TensorFlow Model Using Keras</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-5-–-Assembling-a-Deep-Learning-System"><span class="nav-number">2.9.</span> <span class="nav-text">Activity 5 – Assembling a Deep Learning System</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-3-Model-Evaluation-and-Optimization"><span class="nav-number">3.</span> <span class="nav-text">Chapter 3. Model Evaluation and Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameter-and-Hyperparameter"><span class="nav-number">3.1.</span> <span class="nav-text">Parameter and Hyperparameter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-6-–-Creating-an-Active-Training-Environment"><span class="nav-number">3.2.</span> <span class="nav-text">Activity 6 – Creating an Active Training Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Layers-and-Nodes-Adding-More-Layers"><span class="nav-number">3.2.1.</span> <span class="nav-text">Layers and Nodes - Adding More Layers</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Epochs"><span class="nav-number">3.2.2.</span> <span class="nav-text">Epochs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activation-Functions"><span class="nav-number">3.2.3.</span> <span class="nav-text">Activation Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L2-Regularization"><span class="nav-number">3.2.4.</span> <span class="nav-text">L2 Regularization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Dropout"><span class="nav-number">3.2.5.</span> <span class="nav-text">Dropout</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-7-Optimizing-a-deep-learning-model"><span class="nav-number">3.3.</span> <span class="nav-text">Activity 7: Optimizing a deep learning model</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chapter-4-Productization"><span class="nav-number">4.</span> <span class="nav-text">Chapter 4. Productization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Handling-New-Data"><span class="nav-number">4.0.1.</span> <span class="nav-text">Handling New Data</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Separating-Data-and-Model"><span class="nav-number">4.0.2.</span> <span class="nav-text">Separating Data and Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity-8-Re-training-a-model-dynamically"><span class="nav-number">4.0.3.</span> <span class="nav-text">Activity 8: Re-training a model dynamically</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Achievements"><span class="nav-number">4.0.4.</span> <span class="nav-text">Achievements</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

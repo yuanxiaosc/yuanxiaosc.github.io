@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="线性回归Linear Regression (function) https://en.wikipedia.org/wiki/Linear_regression在现实世界中，存在着大量这样的情况：两个变量例如X和Y有一些依赖关系。由X可以部分地决定Y的值，但这种决定往往不很确切。常常用来说明这种依赖关系的最简单、直观的例子是体重与身高，用Y表示他的体重。众所周知，一般说来，当X大时，Y也倾向于大，">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性回归 Linear_Regression">
+<meta property="og:url" content="http://yoursite.com/2018/11/24/线性回归/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="线性回归Linear Regression (function) https://en.wikipedia.org/wiki/Linear_regression在现实世界中，存在着大量这样的情况：两个变量例如X和Y有一些依赖关系。由X可以部分地决定Y的值，但这种决定往往不很确切。常常用来说明这种依赖关系的最简单、直观的例子是体重与身高，用Y表示他的体重。众所周知，一般说来，当X大时，Y也倾向于大，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_19_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_19_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_19_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/images/05_demming_vs_linear_reg.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_1_LASSO.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_10_0_logistic_regression.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/24/线性回归/output_10_1_logistic_regression.png">
+<meta property="og:updated_time" content="2018-11-24T07:27:55.549Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线性回归 Linear_Regression">
+<meta name="twitter:description" content="线性回归Linear Regression (function) https://en.wikipedia.org/wiki/Linear_regression在现实世界中，存在着大量这样的情况：两个变量例如X和Y有一些依赖关系。由X可以部分地决定Y的值，但这种决定往往不很确切。常常用来说明这种依赖关系的最简单、直观的例子是体重与身高，用Y表示他的体重。众所周知，一般说来，当X大时，Y也倾向于大，">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/24/线性回归/output_17_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/24/线性回归/"/>
+
+
+
+
+
+  <title>线性回归 Linear_Regression | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/24/线性回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">线性回归 Linear_Regression</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-24T11:30:15+08:00">
+                2018-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/线性回归/" itemprop="url" rel="index">
+                    <span itemprop="name">线性回归</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/24/线性回归/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/24/线性回归/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a><a href="https://www.jiqizhixin.com/technologies/7d29606b-791a-4280-844c-0f5d88782dfb" target="_blank" rel="noopener">线性回归</a></h1><p><strong>Linear Regression (function) <a href="https://en.wikipedia.org/wiki/Linear_regression" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Linear_regression</a></strong><br>在现实世界中，存在着大量这样的情况：两个变量例如X和Y有一些依赖关系。由X可以部分地决定Y的值，但这种决定往往不很确切。常常用来说明这种依赖关系的最简单、直观的例子是体重与身高，用Y表示他的体重。众所周知，一般说来，当X大时，Y也倾向于大，但由X不能严格地决定Y。又如，城市生活用电量Y与气温X有很大的关系。在夏天气温很高或冬天气温很低时，由于室内空调、冰箱等家用电器的使用，可能用电就高，相反，在春秋季节气温不高也不低，用电量就可能少。但我们不能由气温X准确地决定用电量Y。类似的例子还很多，变量之间的这种关系称为“相关关系”，回归模型就是研究相关关系的一个有力工具。</p>
+<h1 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression" target="_blank" rel="noopener">Linear Regression</a></h1><p>Here we show how to implement various linear regression techniques in TensorFlow. The first two sections show how to do standard matrix linear regression solving in TensorFlow. The remaining six sections depict how to implement various types of regression using computational graphs in TensorFlow.</p>
+<h2 id="1-Linear-Regression-Inverse-Matrix-Method"><a href="#1-Linear-Regression-Inverse-Matrix-Method" class="headerlink" title="1. Linear Regression: Inverse Matrix Method"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/01_Using_the_Matrix_Inverse_Method" target="_blank" rel="noopener">1. Linear Regression: Inverse Matrix Method</a></h2><p><strong>Using the Matrix Inverse Method</strong></p>
+<p>Here we implement solving 2D linear regression via the matrix inverse method in TensorFlow.</p>
+<p><strong>Model</strong></p>
+<p>Given A * x = b, we can solve for x via:</p>
+<p>(t(A) <em> A) </em> x = t(A) * b</p>
+<p>x = (t(A) <em> A)^(-1) </em> t(A) * b</p>
+<p>Here, note that t(A) is the transpose of A.</p>
+<p>This script explores how to accomplish linear regression with TensorFlow using the matrix inverse.</p>
+<p>Given the system $ A \cdot x = y $, the matrix inverse way of linear regression (equations for overdetermined systems) is given by solving for x as follows.</p>
+<script type="math/tex; mode=display">x = \left( A^{T} \cdot A \right)^{-1} \cdot A^{T} \cdot y</script><p>As a reminder, here, $x$ is our parameter matrix (vector of length $F+1$, where $F$ is the number of features). Here, $A$, our design matrix takes the form</p>
+<script type="math/tex; mode=display">
+A=
+\begin{bmatrix}
+    1 & x_{11} & x_{12} & \dots  & x_{1F} \\
+    1 & x_{21} & x_{22} & \dots  & x_{2F} \\
+    \vdots & \vdots & \vdots & \ddots & \vdots \\
+    1 & x_{n1} & x_{n2} & \dots  & x_{nF}
+\end{bmatrix}</script><p>Where $F$ is the number of independent features, and $n$ is the number of points.  For an overdetermined system, $n&gt;F$. Remember that one observed point in our system will have length $F+1$ and the $i^{th}$ point will look like</p>
+<script type="math/tex; mode=display">point_{i} = \left( y_{i}, x_{i1}, x_{i2}, \dots, x_{iF} \right)</script><p>For this recipe, we will consider only a 2-dimensional system ($F=1$), so that we can plot the results at the end.</p>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Next we start a graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>For illustration purposes, we randomly generate data to fit.</p>
+<p>The x-values will be a sequence of 100 evenly spaced values between 0 and 100.</p>
+<p>The y-values will fit to the line: $y=x$, but we will add normally distributed error according to $N(0,1)$.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the data</span></span><br><span class="line">x_vals = np.linspace(<span class="number">0</span>, <span class="number">10</span>, <span class="number">100</span>)</span><br><span class="line">y_vals = x_vals + np.random.normal(<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p>We create the design matrix, $A$, which will be a column of ones and the x-values.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create design matrix</span></span><br><span class="line">x_vals_column = np.transpose(np.matrix(x_vals))</span><br><span class="line">ones_column = np.transpose(np.matrix(np.repeat(<span class="number">1</span>, <span class="number">100</span>)))</span><br><span class="line">A = np.column_stack((x_vals_column, ones_column))</span><br></pre></td></tr></table></figure>
+<p>We now create the y-values as a matrix with Numpy.</p>
+<p>After we have the y-values and the design matrix, we create tensors from them.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Format the y matrix</span></span><br><span class="line">y = np.transpose(np.matrix(y_vals))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create tensors</span></span><br><span class="line">A_tensor = tf.constant(A)</span><br><span class="line">y_tensor = tf.constant(y)</span><br></pre></td></tr></table></figure>
+<p>Now we solve for the parameter matrix with TensorFlow operations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Matrix inverse solution</span></span><br><span class="line">tA_A = tf.matmul(tf.transpose(A_tensor), A_tensor)</span><br><span class="line">tA_A_inv = tf.matrix_inverse(tA_A)</span><br><span class="line">product = tf.matmul(tA_A_inv, tf.transpose(A_tensor))</span><br><span class="line">solution = tf.matmul(product, y_tensor)</span><br></pre></td></tr></table></figure>
+<p>Run the solutions and extract the slope and intercept from the parameter matrix.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">solution_eval = sess.run(solution)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Extract coefficients</span></span><br><span class="line">slope = solution_eval[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">y_intercept = solution_eval[<span class="number">1</span>][<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>Now we print the solution we found and create a best fit line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'slope: '</span> + str(slope))</span><br><span class="line">print(<span class="string">'y_intercept: '</span> + str(y_intercept))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br></pre></td></tr></table></figure>
+<pre><code>slope: 0.9953458430212332
+y_intercept: 0.0956584431188145
+</code></pre><p>We use Matplotlib to plot the results.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the results</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Best fit line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_17_0.png" alt="png"></p>
+<hr>
+<h2 id="2-Linear-Regression-Using-a-Decomposition-Cholesky-Method"><a href="#2-Linear-Regression-Using-a-Decomposition-Cholesky-Method" class="headerlink" title="2. Linear Regression: Using a Decomposition (Cholesky Method)"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/02_Implementing_a_Decomposition_Method" target="_blank" rel="noopener">2. Linear Regression: Using a Decomposition (Cholesky Method)</a></h2><p><strong>Using the Cholesky Decomposition Method</strong></p>
+<p>Here we implement solving 2D linear regression via the Cholesky decomposition in TensorFlow.</p>
+<p><strong>Model</strong></p>
+<p>Given A <em> x = b, and a Cholesky decomposition such that A = L</em>L’ then we can get solve for x via</p>
+<ol>
+<li>Solving L <em> y = t(A) </em> b for y</li>
+<li>Solving L’ * x = y for x.</li>
+</ol>
+<p>This script will use TensorFlow’s function, <code>tf.cholesky()</code> to decompose our design matrix and solve for the parameter matrix from linear regression.</p>
+<p>For linear regression we are given the system $A \cdot x = y$.  Here, $A$ is our design matrix, $x$ is our parameter matrix (of interest), and $y$ is our target matrix (dependent values).</p>
+<p>For a Cholesky decomposition to work we assume that $A$ can be broken up into a product of a lower triangular matrix, $L$ and the transpose of the same matrix, $L^{T}$.</p>
+<p>Note that this is when $A$ is square.  Of course, with an over determined system, $A$ is not square.  So we factor the product $A^{T} \cdot A$ instead.  We then assume:</p>
+<script type="math/tex; mode=display">A^{T} \cdot A = L^{T} \cdot L</script><p>For more information on the Cholesky decomposition and it’s uses, see the following wikipedia link: <a href="https://en.wikipedia.org/wiki/Cholesky_decomposition" target="_blank" rel="noopener">The Cholesky Decomposition</a></p>
+<p>Given that $A$ has a unique Cholesky decomposition, we can write our linear regression system as the following:</p>
+<script type="math/tex; mode=display">L^{T} \cdot L \cdot x = A^{T} \cdot y</script><p>Then we break apart the system as follows:</p>
+<script type="math/tex; mode=display">L^{T} \cdot z = A^{T} \cdot y</script><p>and</p>
+<script type="math/tex; mode=display">L \cdot x = z</script><p>The steps we will take to solve for $x$ are the following</p>
+<ol>
+<li><p>Compute the Cholesky decomposition of $A$, where $A^{T} \cdot A = L^{T} \cdot L$.</p>
+</li>
+<li><p>Solve ($L^{T} \cdot z = A^{T} \cdot y$) for $z$.</p>
+</li>
+<li><p>Finally, solve ($L \cdot x = z$) for $x$.</p>
+</li>
+</ol>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Next we create a graph session</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>We use the same method of generating data as in the prior recipe for consistency.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create the data</span></span><br><span class="line">x_vals = np.linspace(<span class="number">0</span>, <span class="number">10</span>, <span class="number">100</span>)</span><br><span class="line">y_vals = x_vals + np.random.normal(<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
+<p>We generate the design matrix, $A$.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create design matrix</span></span><br><span class="line">x_vals_column = np.transpose(np.matrix(x_vals))</span><br><span class="line">ones_column = np.transpose(np.matrix(np.repeat(<span class="number">1</span>, <span class="number">100</span>)))</span><br><span class="line">A = np.column_stack((x_vals_column, ones_column))</span><br></pre></td></tr></table></figure>
+<p>Next, we generate the</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create y matrix</span></span><br><span class="line">y = np.transpose(np.matrix(y_vals))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create tensors</span></span><br><span class="line">A_tensor = tf.constant(A)</span><br><span class="line">y_tensor = tf.constant(y)</span><br></pre></td></tr></table></figure>
+<p>Now we calculate the square of the matrix $A$ and the Cholesky decomposition.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Find Cholesky Decomposition</span></span><br><span class="line">tA_A = tf.matmul(tf.transpose(A_tensor), A_tensor)</span><br><span class="line">L = tf.cholesky(tA_A)</span><br></pre></td></tr></table></figure>
+<p>We solve the first equation. (see step 2 in the intro paragraph above)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Solve L*y=t(A)*b</span></span><br><span class="line">tA_y = tf.matmul(tf.transpose(A_tensor), y)</span><br><span class="line">sol1 = tf.matrix_solve(L, tA_y)</span><br></pre></td></tr></table></figure>
+<p>We finally solve for the parameter matrix by solving the second equation (see step 3 in the intro paragraph).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Solve L' * y = sol1</span></span><br><span class="line">sol2 = tf.matrix_solve(tf.transpose(L), sol1)</span><br><span class="line"></span><br><span class="line">solution_eval = sess.run(sol2)</span><br></pre></td></tr></table></figure>
+<p>Extract the coefficients and create the best fit line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extract coefficients</span></span><br><span class="line">slope = solution_eval[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line">y_intercept = solution_eval[<span class="number">1</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">print(<span class="string">'slope: '</span> + str(slope))</span><br><span class="line">print(<span class="string">'y_intercept: '</span> + str(y_intercept))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br></pre></td></tr></table></figure>
+<pre><code>slope: 1.006032728766641
+y_intercept: -0.0033007871888138603
+</code></pre><p>Finally, we plot the fit with Matplotlib.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the results</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Best fit line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_19_0.png" alt="png"></p>
+<h2 id="3-Linear-Regression-The-TensorFlow-Way"><a href="#3-Linear-Regression-The-TensorFlow-Way" class="headerlink" title="3. Linear Regression: The TensorFlow Way"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/03_TensorFlow_Way_of_Linear_Regression" target="_blank" rel="noopener">3. Linear Regression: The TensorFlow Way</a></h2><p><strong>Learning the TensorFlow Way of Regression</strong></p>
+<p>In this section we will implement linear regression as an iterative computational graph in TensorFlow.  To make this more pertinent, instead of using generated data, we will instead use the Iris data set.  Our x will be the Petal Width, our y will be the Sepal Length.  Viewing the data in these two dimensions suggests a linear relationship.</p>
+<p><strong>Model</strong></p>
+<p>The the output of our model is a 2D linear regression:</p>
+<p>y = A * x + b</p>
+<p>The x matrix input will be a 2D matrix, where it’s dimensions will be (batch size x 1).  The y target output will have the same dimensions, (batch size x 1).</p>
+<p>The loss function we will use will be the mean of the batch L2 Loss:</p>
+<p>loss = mean( (y_target - model_output)^2 )</p>
+<p>We will then iterate through random batch size selections of the data.<br>For this script, we introduce how to perform linear regression in the context of TensorFlow.</p>
+<p>We will solve the linear equation system:</p>
+<script type="math/tex; mode=display">y = Ax + b</script><p>With the Sepal length (y) and Petal width (x) of the Iris data.</p>
+<p>Performing linear regression in TensorFlow is a lot easier than trying to understand Linear Algebra or Matrix decompositions for the prior two recipes.  We will do the following:</p>
+<ol>
+<li>Create the linear regression computational graph output. This means we will accept an input, $x$, and generate the output, $Ax + b$.</li>
+<li>We create a loss function, the L2 loss, and use that output with the learning rate to compute the gradients of the model variables, $A$ and $b$ to minimize the loss.</li>
+</ol>
+<p>The benefit of using TensorFlow in this way is that the model can be routinely updated and tweaked with new data incrementally with any reasonable batch size of data.  The more iterative we make our machine learning algorithms, the better.</p>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>We create a graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Next we load the Iris data from the Scikit-Learn library.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load the data</span></span><br><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([x[<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([y[<span class="number">0</span>] <span class="keyword">for</span> y <span class="keyword">in</span> iris.data])</span><br></pre></td></tr></table></figure>
+<p>With most TensorFlow algorithms, we will need to declare a batch size for the placeholders and operations in the graph.  Here, we set it to 25.  We can set it to any integer between 1 and the size of the dataset.</p>
+<p>For the effect of batch size on the training, see <a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/02_TensorFlow_Way/06_Working_with_Batch_and_Stochastic_Training" target="_blank" rel="noopener">Chapter 2: Batch vs Stochastic Training</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">25</span></span><br></pre></td></tr></table></figure>
+<p>We now initialize the placeholders and variables in the model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<p>We add the model operations (linear model output) and the L2 loss.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare loss function (L2 loss)</span></span><br><span class="line">loss = tf.reduce_mean(tf.square(y_target - model_output))</span><br></pre></td></tr></table></figure>
+<p>We have to tell TensorFlow how to optimize and back propagate the gradients.  We do this with the standard Gradient Descent operator (<code>tf.train.GradientDescentOptimizer</code>), with the learning rate argument of $0.05$.</p>
+<p>Then we initialize all the model variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.05</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>We start our training loop and run the optimizer for 100 iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = np.transpose([x_vals[rand_index]])</span><br><span class="line">    rand_y = np.transpose([y_vals[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">25</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>) + <span class="string">' A = '</span> + str(sess.run(A)) + <span class="string">' b = '</span> + str(sess.run(b)))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #25 A = [[1.5073389]] b = [[3.7461321]]
+Loss = 0.53326994
+Step #50 A = [[1.2745976]] b = [[4.1358175]]
+Loss = 0.42734933
+Step #75 A = [[1.1166353]] b = [[4.4049253]]
+Loss = 0.29555324
+Step #100 A = [[1.0541962]] b = [[4.5658007]]
+Loss = 0.23579143
+</code></pre><p>We pull out the optimal coefficients and get the best fit line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get the optimal coefficients</span></span><br><span class="line">[slope] = sess.run(A)</span><br><span class="line">[y_intercept] = sess.run(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br></pre></td></tr></table></figure>
+<p>Plot the results with Matplotlib.  Along with the linear fit, we will also plot the L2 loss over the model training iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the result</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data Points'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Best fit line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.title(<span class="string">'Sepal Length vs Petal Width'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Width'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Length'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'L2 Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'L2 Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_19_0.png" alt="png"><br><img src="/2018/11/24/线性回归/output_19_1.png" alt="png"></p>
+<hr>
+<h2 id="4-Deming-Regression"><a href="#4-Deming-Regression" class="headerlink" title="4. Deming Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/05_Implementing_Deming_Regression" target="_blank" rel="noopener">4. Deming Regression</a></h2><p><strong>Model</strong></p>
+<p>The model will be the same as regular linear regression:</p>
+<p>y = A * x + b</p>
+<p>Instead of measuring the vertical L2 distance, we will measure the shortest distance between the line and the predicted point in the loss function.</p>
+<p>loss = |y_target - (A * x_input + b)| / sqrt(A^2 + 1)</p>
+<p>This function shows how to use TensorFlow to solve linear Deming regression.</p>
+<p>$y = Ax + b$</p>
+<p>We will use the iris data, specifically:</p>
+<p>y = Sepal Length and x = Petal Width.</p>
+<p>Deming regression is also called total least squares, in which we minimize the shortest distance from the predicted line and the actual (x,y) points.</p>
+<p>If least squares linear regression minimizes the vertical distance to the line, Deming regression minimizes the total distance to the line.  This type of regression minimizes the error in the y values and the x values.  See the below figure for a comparison.</p>
+<p><img src="../images/05_demming_vs_linear_reg.png" width="512"></p>
+<p>To implement this in TensorFlow, we start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Start a computational graph session:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set a random seed</span></span><br><span class="line">tf.set_random_seed(<span class="number">42</span>)</span><br><span class="line">np.random.seed(<span class="number">42</span>)</span><br></pre></td></tr></table></figure>
+<p>We load the iris data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load the data</span></span><br><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([x[<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data]) <span class="comment"># Petal Width</span></span><br><span class="line">y_vals = np.array([y[<span class="number">0</span>] <span class="keyword">for</span> y <span class="keyword">in</span> iris.data]) <span class="comment"># Sepal Length</span></span><br></pre></td></tr></table></figure>
+<p>Next we declare the batch size, model placeholders, model variables, and model operations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">125</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br></pre></td></tr></table></figure>
+<p>For the demming loss, we want to compute:</p>
+<script type="math/tex; mode=display">\frac{\left| A \cdot x + b - y \right|}{\sqrt{A^{2} + 1}}</script><p>Which will give us the shortest distance between a point (x,y) and the predicted line, $A \cdot x + b$.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare Deming loss function</span></span><br><span class="line">deming_numerator = tf.abs(tf.subtract(tf.add(tf.matmul(x_data, A), b), y_target))</span><br><span class="line">deming_denominator = tf.sqrt(tf.add(tf.square(A),<span class="number">1</span>))</span><br><span class="line">loss = tf.reduce_mean(tf.truediv(deming_numerator, deming_denominator))</span><br></pre></td></tr></table></figure>
+<p>Next we declare the optimization function and initialize all model variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.25</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Now we train our Deming regression for 250 iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = np.transpose([x_vals[rand_index]])</span><br><span class="line">    rand_y = np.transpose([y_vals[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">100</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>) + <span class="string">' A = '</span> + str(sess.run(A)) + <span class="string">' b = '</span> + str(sess.run(b)))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #100 A = [[3.0731559]] b = [[1.7809086]]
+Loss = 0.47353575
+Step #200 A = [[2.4822469]] b = [[2.522591]]
+Loss = 0.41145653
+Step #300 A = [[1.7613103]] b = [[3.6220071]]
+Loss = 0.37061805
+Step #400 A = [[1.0064616]] b = [[4.5484953]]
+Loss = 0.26182547
+Step #500 A = [[0.9593529]] b = [[4.610097]]
+Loss = 0.2435131
+Step #600 A = [[0.9646577]] b = [[4.624607]]
+Loss = 0.26413646
+Step #700 A = [[1.0198785]] b = [[4.6017494]]
+Loss = 0.2845798
+Step #800 A = [[0.99521935]] b = [[4.6001368]]
+Loss = 0.27551532
+Step #900 A = [[1.0415721]] b = [[4.6130023]]
+Loss = 0.2898117
+Step #1000 A = [[1.0065476]] b = [[4.6437864]]
+Loss = 0.2525265
+Step #1100 A = [[1.0090839]] b = [[4.6393313]]
+Loss = 0.27818772
+Step #1200 A = [[0.9649767]] b = [[4.581815]]
+Loss = 0.25168285
+Step #1300 A = [[1.006261]] b = [[4.5881867]]
+Loss = 0.25499973
+Step #1400 A = [[1.0311592]] b = [[4.618432]]
+Loss = 0.2563808
+Step #1500 A = [[0.9623312]] b = [[4.5966215]]
+Loss = 0.2465789
+</code></pre><p>Retrieve the optimal coefficients (slope and intercept).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get the optimal coefficients</span></span><br><span class="line">[slope] = sess.run(A)</span><br><span class="line">[y_intercept] = sess.run(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br></pre></td></tr></table></figure>
+<p>Here is matplotlib code to plot the best fit Deming regression line and the Demming Loss.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot the result</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data Points'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Best fit line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.title(<span class="string">'Sepal Length vs Petal Width'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Width'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Length'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Deming Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Iteration'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Deming Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_17_0.png" alt="png"><br><img src="/2018/11/24/线性回归/output_17_1.png" alt="png"></p>
+<hr>
+<h2 id="5-LASSO-and-Ridge-Regression"><a href="#5-LASSO-and-Ridge-Regression" class="headerlink" title="5. LASSO and Ridge Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/06_Implementing_Lasso_and_Ridge_Regression" target="_blank" rel="noopener">5. LASSO and Ridge Regression</a></h2><p>This function shows how to use TensorFlow to solve lasso or ridge regression for $\boldsymbol{y} = \boldsymbol{Ax} + \boldsymbol{b}$</p>
+<p>We will use the iris data, specifically: $\boldsymbol{y}$ = Sepal Length, $\boldsymbol{x}$ = Petal Width</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import required libraries</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Specify 'Ridge' or 'LASSO'</span></span><br><span class="line">regression_type = <span class="string">'LASSO'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># clear out old graph</span></span><br><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create graph</span></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p><strong>Load iris data</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([x[<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([y[<span class="number">0</span>] <span class="keyword">for</span> y <span class="keyword">in</span> iris.data])</span><br></pre></td></tr></table></figure>
+<p><strong>Model Parameters</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># make results reproducible</span></span><br><span class="line">seed = <span class="number">13</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br></pre></td></tr></table></figure>
+<p><strong>Loss Functions</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Select appropriate loss function based on regression type</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> regression_type == <span class="string">'LASSO'</span>:</span><br><span class="line">    <span class="comment"># Declare Lasso loss function</span></span><br><span class="line">    <span class="comment"># Lasso Loss = L2_Loss + heavyside_step,</span></span><br><span class="line">    <span class="comment"># Where heavyside_step ~ 0 if A &lt; constant, otherwise ~ 99</span></span><br><span class="line">    lasso_param = tf.constant(<span class="number">0.9</span>)</span><br><span class="line">    heavyside_step = tf.truediv(<span class="number">1.</span>, tf.add(<span class="number">1.</span>, tf.exp(tf.multiply(<span class="number">-50.</span>, tf.subtract(A, lasso_param)))))</span><br><span class="line">    regularization_param = tf.multiply(heavyside_step, <span class="number">99.</span>)</span><br><span class="line">    loss = tf.add(tf.reduce_mean(tf.square(y_target - model_output)), regularization_param)</span><br><span class="line"></span><br><span class="line"><span class="keyword">elif</span> regression_type == <span class="string">'Ridge'</span>:</span><br><span class="line">    <span class="comment"># Declare the Ridge loss function</span></span><br><span class="line">    <span class="comment"># Ridge loss = L2_loss + L2 norm of slope</span></span><br><span class="line">    ridge_param = tf.constant(<span class="number">1.</span>)</span><br><span class="line">    ridge_loss = tf.reduce_mean(tf.square(A))</span><br><span class="line">    loss = tf.expand_dims(tf.add(tf.reduce_mean(tf.square(y_target - model_output)), tf.multiply(ridge_param, ridge_loss)), <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    print(<span class="string">'Invalid regression_type parameter value'</span>,file=sys.stderr)</span><br></pre></td></tr></table></figure>
+<p><strong>Optimizer</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.001</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure>
+<p><strong>Run regression</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = np.transpose([x_vals[rand_index]])</span><br><span class="line">    rand_y = np.transpose([y_vals[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss[<span class="number">0</span>])</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">300</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>) + <span class="string">' A = '</span> + str(sess.run(A)) + <span class="string">' b = '</span> + str(sess.run(b)))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br><span class="line">        print(<span class="string">'\n'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>Step #300 A = [[0.7717163]] b = [[1.8247688]]
+Loss = [[10.26617]]
+
+
+Step #600 A = [[0.75910366]] b = [[3.2217226]]
+Loss = [[3.059304]]
+
+
+Step #900 A = [[0.74844867]] b = [[3.9971633]]
+Loss = [[1.2329929]]
+
+
+Step #1200 A = [[0.73754]] b = [[4.429276]]
+Loss = [[0.57923675]]
+
+
+Step #1500 A = [[0.72945035]] b = [[4.672014]]
+Loss = [[0.40877518]]
+</code></pre><p><strong>Extract regression results</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get the optimal coefficients</span></span><br><span class="line">[slope] = sess.run(A)</span><br><span class="line">[y_intercept] = sess.run(b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br></pre></td></tr></table></figure>
+<p><strong>Plot results</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot the result</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data Points'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Best fit line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper left'</span>)</span><br><span class="line">plt.title(<span class="string">'Sepal Length vs Pedal Width'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Pedal Width'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Length'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(regression_type + <span class="string">' Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_17_0.png" alt="png"><br><img src="/2018/11/24/线性回归/output_17_1_LASSO.png" alt="png"></p>
+<h2 id="6-Elastic-Net-Regression"><a href="#6-Elastic-Net-Regression" class="headerlink" title="6. Elastic Net Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/07_Implementing_Elasticnet_Regression" target="_blank" rel="noopener">6. Elastic Net Regression</a></h2><p>This function shows how to use TensorFlow to solve elastic net regression.<br>$y = Ax + b$</p>
+<p><strong>Setup model</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># make results reproducible</span></span><br><span class="line">seed = <span class="number">13</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">3</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">3</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare the elastic net loss function</span></span><br><span class="line">elastic_param1 = tf.constant(<span class="number">1.</span>)</span><br><span class="line">elastic_param2 = tf.constant(<span class="number">1.</span>)</span><br><span class="line">l1_a_loss = tf.reduce_mean(tf.abs(A))</span><br><span class="line">l2_a_loss = tf.reduce_mean(tf.square(A))</span><br><span class="line">e1_term = tf.multiply(elastic_param1, l1_a_loss)</span><br><span class="line">e2_term = tf.multiply(elastic_param2, l2_a_loss)</span><br><span class="line">loss = tf.expand_dims(tf.add(tf.add(tf.reduce_mean(tf.square(y_target - model_output)), e1_term), e2_term), <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.001</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure></p>
+<h2 id="7-Logistic-Regression"><a href="#7-Logistic-Regression" class="headerlink" title="7. Logistic Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/03_Linear_Regression/08_Implementing_Logistic_Regression" target="_blank" rel="noopener">7. Logistic Regression</a></h2><p><strong>Implementing Logistic Regression</strong></p>
+<p>Logistic regression is a way to predict a number between zero or one (usually we consider the output a probability). This prediction is classified into class value ‘1’ if the prediction is above a specified cut off value and class ‘0’ otherwise.  The standard cutoff is 0.5.  For the purpose of this example, we will specify that cut off to be 0.5, which will make the classification as simple as rounding the output.</p>
+<p>The data we will use for this example will be the <a href="https://www.umass.edu/statdata/statdata/data/lowbwt.txt" target="_blank" rel="noopener">UMASS low birth weight data</a>.</p>
+<p><strong>Model</strong></p>
+<p>The the output of our model is the standard logistic regression:</p>
+<p>y = sigmoid(A * x + b)</p>
+<p>The x matrix input will have dimensions (batch size x # features).  The y target output will have the dimension batch size x 1.</p>
+<p>The loss function we will use will be the mean of the cross-entropy loss:</p>
+<p>loss = mean( - y <em> log(predicted) + (1-y) </em> log(1-predicted) )</p>
+<p>TensorFlow has this cross entropy built in, and we can use the function, ‘tf.nn.sigmoid_cross_entropy_with_logits()’</p>
+<p>We will then iterate through random batch size selections of the data.</p>
+<p>This function shows how to use TensorFlow to solve logistic regression.<br>$ \textbf{y} = sigmoid(\textbf{A}\times \textbf{x} + \textbf{b})$</p>
+<p>We will use the low birth weight data, specifically:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#  y = 0 or 1 = low birth weight</span><br><span class="line">#  x = demographic and medical history data</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line"><span class="keyword">import</span> os.path</span><br><span class="line"><span class="keyword">import</span> csv</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ops.reset_default_graph()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create graph</span></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p><strong>Obtain and prepare data for modeling</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># name of data file</span></span><br><span class="line">birth_weight_file = <span class="string">'birth_weight.csv'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># download data and create data file if file does not exist in current directory</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(birth_weight_file):</span><br><span class="line"></span><br><span class="line">    birthdata_url = <span class="string">'https://github.com/nfmcclure/tensorflow_cookbook/'</span> + \</span><br><span class="line">    <span class="string">'raw/master/01_Introduction/07_Working_with_Data_Sources/birthweight_data/birthweight.dat'</span></span><br><span class="line">    birth_file = requests.get(birthdata_url)</span><br><span class="line">    birth_data = birth_file.text.split(<span class="string">'\r\n'</span>)</span><br><span class="line">    birth_header = birth_data[<span class="number">0</span>].split(<span class="string">'\t'</span>)</span><br><span class="line">    birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> y.split(<span class="string">'\t'</span>) <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> birth_data[<span class="number">1</span>:] <span class="keyword">if</span> len(y)&gt;=<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">with</span> open(birth_weight_file, <span class="string">'w'</span>, newline=<span class="string">''</span>) <span class="keyword">as</span> f:</span><br><span class="line">        writer = csv.writer(f)</span><br><span class="line">        writer.writerow(birth_header)</span><br><span class="line">        writer.writerows(birth_data)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># read birth weight data into memory</span></span><br><span class="line">birth_data = []</span><br><span class="line"><span class="keyword">with</span> open(birth_weight_file, newline=<span class="string">''</span>) <span class="keyword">as</span> csvfile:</span><br><span class="line">     csv_reader = csv.reader(csvfile)</span><br><span class="line">     birth_header = next(csv_reader)</span><br><span class="line">     <span class="keyword">for</span> row <span class="keyword">in</span> csv_reader:</span><br><span class="line">         birth_data.append(row)</span><br><span class="line"></span><br><span class="line">birth_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> row] <span class="keyword">for</span> row <span class="keyword">in</span> birth_data]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pull out target variable</span></span><br><span class="line">y_vals = np.array([x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line"><span class="comment"># Pull out predictor variables (not id, not target, and not birthweight)</span></span><br><span class="line">x_vals = np.array([x[<span class="number">1</span>:<span class="number">8</span>] <span class="keyword">for</span> x <span class="keyword">in</span> birth_data])</span><br><span class="line"></span><br><span class="line"><span class="comment"># set for reproducible results</span></span><br><span class="line">seed = <span class="number">99</span></span><br><span class="line">np.random.seed(seed)</span><br><span class="line">tf.set_random_seed(seed)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into train/test = 80%/20%</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize by column (min-max norm)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize_cols</span><span class="params">(m, col_min=np.array<span class="params">([None])</span>, col_max=np.array<span class="params">([None])</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> col_min[<span class="number">0</span>]:</span><br><span class="line">        col_min = m.min(axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> col_max[<span class="number">0</span>]:</span><br><span class="line">        col_max = m.max(axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> (m-col_min) / (col_max - col_min), col_min, col_max</span><br><span class="line"></span><br><span class="line">x_vals_train, train_min, train_max = np.nan_to_num(normalize_cols(x_vals_train))</span><br><span class="line">x_vals_test, _, _ = np.nan_to_num(normalize_cols(x_vals_test, train_min, train_max))</span><br></pre></td></tr></table></figure>
+<p><strong>Define Tensorflow computational graph</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">25</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">7</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">7</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare loss function (Cross Entropy loss)</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=model_output, labels=y_target))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br></pre></td></tr></table></figure>
+<p><strong>Train model</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Actual Prediction</span></span><br><span class="line">prediction = tf.round(tf.sigmoid(model_output))</span><br><span class="line">predictions_correct = tf.cast(tf.equal(prediction, y_target), tf.float32)</span><br><span class="line">accuracy = tf.reduce_mean(predictions_correct)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">train_acc = []</span><br><span class="line">test_acc = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = x_vals_train[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line">    temp_acc_train = sess.run(accuracy, feed_dict=&#123;x_data: x_vals_train, y_target: np.transpose([y_vals_train])&#125;)</span><br><span class="line">    train_acc.append(temp_acc_train)</span><br><span class="line">    temp_acc_test = sess.run(accuracy, feed_dict=&#123;x_data: x_vals_test, y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_acc.append(temp_acc_test)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">300</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Loss = 0.6944471
+Loss = 0.7304496
+Loss = 0.62496805
+Loss = 0.69695
+Loss = 0.6096429
+</code></pre><p><strong>Display model performance</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Cross Entropy Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Cross Entropy Loss'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot train and test accuracy</span></span><br><span class="line">plt.plot(train_acc, <span class="string">'k-'</span>, label=<span class="string">'Train Set Accuracy'</span>)</span><br><span class="line">plt.plot(test_acc, <span class="string">'r--'</span>, label=<span class="string">'Test Set Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Train and Test Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/24/线性回归/output_10_0_logistic_regression.png" alt="png"><br><img src="/2018/11/24/线性回归/output_10_1_logistic_regression.png" alt="png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/23/最近邻算法/" rel="next" title="最近邻方法 Nearest Neighbor Methords">
+                <i class="fa fa-chevron-left"></i> 最近邻方法 Nearest Neighbor Methords
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/24/神经网络/" rel="prev" title="神经网络 Neural Networks">
+                神经网络 Neural Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性回归"><span class="nav-number">1.</span> <span class="nav-text">线性回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linear-Regression"><span class="nav-number">2.</span> <span class="nav-text">Linear Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Linear-Regression-Inverse-Matrix-Method"><span class="nav-number">2.1.</span> <span class="nav-text">1. Linear Regression: Inverse Matrix Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Linear-Regression-Using-a-Decomposition-Cholesky-Method"><span class="nav-number">2.2.</span> <span class="nav-text">2. Linear Regression: Using a Decomposition (Cholesky Method)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Linear-Regression-The-TensorFlow-Way"><span class="nav-number">2.3.</span> <span class="nav-text">3. Linear Regression: The TensorFlow Way</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Deming-Regression"><span class="nav-number">2.4.</span> <span class="nav-text">4. Deming Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-LASSO-and-Ridge-Regression"><span class="nav-number">2.5.</span> <span class="nav-text">5. LASSO and Ridge Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Elastic-Net-Regression"><span class="nav-number">2.6.</span> <span class="nav-text">6. Elastic Net Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Logistic-Regression"><span class="nav-number">2.7.</span> <span class="nav-text">7. Logistic Regression</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

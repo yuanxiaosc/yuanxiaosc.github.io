@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是 《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》的课后习题解答！ 把练习和答案分开是为了督促学习和思考，提倡独立思考，主动学习，而不是背答案！文章前半段中文翻译有问题的地方欢迎评论指正，英文原文在后面。  《Hands-on Machine Learning with Scikit-Learn and Tensor">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答">
+<meta property="og:url" content="http://yoursite.com/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="本文是 《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》的课后习题解答！ 把练习和答案分开是为了督促学习和思考，提倡独立思考，主动学习，而不是背答案！文章前半段中文翻译有问题的地方欢迎评论指正，英文原文在后面。  《Hands-on Machine Learning with Scikit-Learn and Tensor">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-24T07:29:52.010Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答">
+<meta name="twitter:description" content="本文是 《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》的课后习题解答！ 把练习和答案分开是为了督促学习和思考，提倡独立思考，主动学习，而不是背答案！文章前半段中文翻译有问题的地方欢迎评论指正，英文原文在后面。  《Hands-on Machine Learning with Scikit-Learn and Tensor">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/"/>
+
+
+
+
+
+  <title>hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T19:31:15+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文是 <a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》</a>的课后习题解答！</p>
+<p>把练习和答案分开是为了督促学习和思考，提倡独立思考，主动学习，而不是背答案！文章前半段中文翻译有问题的地方欢迎评论指正，英文原文在后面。</p>
+</blockquote>
+<h1 id="《Hands-on-Machine-Learning-with-Scikit-Learn-and-TensorFlow-》资源"><a href="#《Hands-on-Machine-Learning-with-Scikit-Learn-and-TensorFlow-》资源" class="headerlink" title="《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》资源"></a><a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》</a>资源</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》</a></td>
+<td>书籍配套GItHub代码</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://legacy.gitbook.com/book/wizardforcel/hands-on-ml-with-sklearn-and-tf/details" target="_blank" rel="noopener">Sklearn 与 TensorFlow 机器学习实用指南</a></td>
+<td>在线阅读</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="CHAPTER-1-The-Machine-Learning-Landscape"><a href="#CHAPTER-1-The-Machine-Learning-Landscape" class="headerlink" title="CHAPTER 1 The Machine Learning Landscape"></a>CHAPTER 1 The Machine Learning Landscape</h1><h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h2><p>本章中，我们学习了一些机器学习中最为重要的概念。下一章，我们会更加深入，并写一些代码。开始下章之前，确保你能回答下面的问题：</p>
+<ol>
+<li>如何定义机器学习？</li>
+<li>机器学习可以解决的四类问题？</li>
+<li>什么是带标签的训练集？</li>
+<li>最常见的两个监督任务是什么？</li>
+<li>指出四个常见的非监督任务？</li>
+<li>要让一个机器人能在各种未知地形行走，你会采用什么机器学习算法？</li>
+<li>要对你的顾客进行分组，你会采用哪类算法？</li>
+<li>垃圾邮件检测是监督学习问题，还是非监督学习问题？</li>
+<li>什么是在线学习系统？</li>
+<li>什么是核外学习？</li>
+<li>什么学习算法是用相似度做预测？</li>
+<li>模型参数和学习算法的超参数的区别是什么？</li>
+<li>基于模型学习的算法搜寻的是什么？最成功的策略是什么？基于模型学习如何做预测？</li>
+<li>机器学习主要的挑战是什么？</li>
+<li>如果模型在训练集上表现好，但推广到新实例表现差，问题是什么？给出三个可能的解决方案。</li>
+<li>什么是测试集，为什么要使用它？</li>
+<li>验证集的目的是什么？</li>
+<li>如果用测试集调节超参数，会发生什么？</li>
+<li>什么是交叉验证，为什么它比验证集好？</li>
+</ol>
+<h2 id="练习解答"><a href="#练习解答" class="headerlink" title="练习解答"></a>练习解答</h2><ol>
+<li>机器学习是关于构建可以从数据中学习的模型。学习意味着在某些任务中，根据一些绩效衡量，模型可以更好。</li>
+<li>机器学习非常适用于：</li>
+</ol>
+<ul>
+<li>我们没有算法解决方案的复杂问题；</li>
+<li>可以替换手工调整规则的长列表；</li>
+<li>构建适应波动环境的系统；</li>
+<li>最后帮助人类学习（例如，数据挖掘） 。<br>提示：不要把所以问题往机器学习上套，比如做网页，比如已经有高效算法的（图联通判断）。</li>
+</ul>
+<ol>
+<li>标记的训练集是一个训练集，其中包含每个实例的所需解决方案（例如标签）。</li>
+<li>两个最常见的监督任务是回归和分类。</li>
+<li>常见的无监督任务包括聚类，可视化，降维和关联规则学习。</li>
+<li>强化学习如果我们希望机器人学会在各种未知的地形中行走，那么学习可能会表现得最好，因为这通常是强化学习所解决的问题类型。有可能将问题表达为监督或半监督学习问题，但这种解决方式不太自然。</li>
+<li>如果您不知道如何定义组，则可以使用聚类算法（无监督学习）将客户划分为类似客户的集群。但是，如果您知道您希望拥有哪些组，那么您可以将每个组的许多示例提供给分类算法（监督学习），并将所有客户分类到这些组中。</li>
+<li>垃圾邮件检测是一种典型的监督学习问题：算法会输入许多电子邮件及其标签（垃圾邮件或非垃圾邮件）。</li>
+<li>在线学习系统可以逐步学习，而不是批量学习系统。这使它能够快速适应不断变化的数据和自治系统，以及对大量数据的培训。</li>
+<li>核外算法可以处理大量无法容纳在计算机主存中的数据。核心学习算法将数据分成小批量，并使用在线学习技术从这些小批量中学习。</li>
+<li>基于实例的学习系统用心学习训练数据;然后，当给定一个新实例时，它使用相似性度量来查找最相似的学习实例并使用它们进行预测。</li>
+<li>模型具有一个或多个模型参数，其确定在给定新实例的情况下它将预测什么（例如，线性模型的斜率）。学习算法试图找到这些参数的最佳值，以便模型很好地推广到新实例。超参数是学习算法本身的参数，而不是模型的参数（例如，要应用的正则化的量）。</li>
+<li>基于模型的学习算法搜索模型参数的最佳值，使得模型将很好地推广到新实例。我们通常通过最小化成本函数来训练这样的系统，该成本函数测量系统在对训练数据进行预测时的糟糕程度，以及如果模型正规化则对模型复杂性的惩罚。为了进行预测，我们使用学习算法找到的参数值将新实例的特征提供给模型的预测函数。</li>
+<li>机器学习中的一些主要挑战是缺乏数据，数据质量差，非代表性数据，无法提供信息的特征，过于简单的模型以及过度拟合训练数据的模型，以及过度复杂的模型过度拟合数据。</li>
+<li>如果一个模型在训练数据上表现很好，但对新实例表现不佳，那么该模型可能会过度拟合训练数据（或者我们对训练数据非常幸运）。过度拟合的可能解决方案是获得更多数据，简化模型（选择更简单的算法，减少所使用的参数或特征的数量，或使模型正规化），或减少训练数据中的噪声。</li>
+<li>测试集用于估计模型在生产中启动之前模型将对新实例进行的泛化错误。</li>
+<li>验证集用于比较模型。它可以选择最佳模型并调整超参数。</li>
+<li>如果使用测试集调整超参数，则存在过度拟合测试集的风险，并且您测量的泛化错误将是乐观的（您可能会启动比预期更差的模型）。</li>
+<li>交叉验证是一种技术，可以比较模型（模型选择和超参数调整），而无需单独的验证集。这节省了宝贵的培训数据。</li>
+</ol>
+<hr>
+<h2 id="Exercises"><a href="#Exercises" class="headerlink" title="Exercises"></a>Exercises</h2><p>In this chapter we have covered some of the most important concepts in Machine Learning. In the next chapters we will dive deeper and write more code, but before we do, make sure you know how to answer the following questions:</p>
+<ol>
+<li>How would you define Machine Learning?</li>
+<li>Can you name four types of problems where it shines?</li>
+<li>What is a labeled training set?</li>
+<li>What are the two most common supervised tasks?</li>
+<li>Can you name four common unsupervised tasks?</li>
+<li>What type of Machine Learning algorithm would you use to allow a robot to walk in various unknown terrains?</li>
+<li>What type of algorithm would you use to segment your customers into multiple groups?</li>
+<li>Would you frame the problem of spam detection as a supervised learning prob‐lem or an unsupervised learning problem?</li>
+<li>What is an online learning system?</li>
+<li>What is out-of-core learning?</li>
+<li>What type of learning algorithm relies on a similarity measure to make predic‐tions?</li>
+<li>What is the difference between a model parameter and a learning algorithm’s hyperparameter?</li>
+<li>What do model-based learning algorithms search for? What is the most common strategy they use to succeed? How do they make predictions?</li>
+<li>Can you name four of the main challenges in Machine Learning?</li>
+<li>If your model performs great on the training data but generalizes poorly to new instances, what is happening? Can you name three possible solutions?</li>
+<li>What is a test set and why would you want to use it?</li>
+<li>What is the purpose of a validation set?</li>
+<li>What can go wrong if you tune hyperparameters using the test set?</li>
+<li>What is cross-validation and why would you prefer it to a validation set?</li>
+</ol>
+<h2 id="Exercise-Solutions"><a href="#Exercise-Solutions" class="headerlink" title="Exercise Solutions"></a>Exercise Solutions</h2><ol>
+<li>Machine Learning is about building systems that can learn from data. Learning means getting better at some task, given some performance measure.</li>
+<li>Machine Learning is great for complex problems for which we have no algorith‐mic solution, to replace long lists of hand-tuned rules, to build systems that adapt to fluctuating environments, and finally to help humans learn (e.g., data mining).</li>
+<li>A labeled training set is a training set that contains the desired solution (a.k.a. a label) for each instance.</li>
+<li>The two most common supervised tasks are regression and classification.</li>
+<li>Common unsupervised tasks include clustering, visualization, dimensionality reduction, and association rule learning.</li>
+<li>Reinforcement Learning is likely to perform best if we want a robot to learn to walk in various unknown terrains since this is typically the type of problem that Reinforcement Learning tackles. It might be possible to express the problem as a supervised or semisupervised learning problem, but it would be less natural.</li>
+<li>If you don’t know how to define the groups, then you can use a clustering algo‐rithm (unsupervised learning) to segment your customers into clusters of similar customers. However, if you know what groups you would like to have, then you can feed many examples of each group to a classification algorithm (supervised learning), and it will classify all your customers into these groups.</li>
+<li>Spam detection is a typical supervised learning problem: the algorithm is fed many emails along with their label (spam or not spam).</li>
+<li>An online learning system can learn incrementally, as opposed to a batch learn‐ing system. This makes it capable of adapting rapidly to both changing data and autonomous systems, and of training on very large quantities of data.</li>
+<li>Out-of-core algorithms can handle vast quantities of data that cannot fit in a computer’s main memory. An out-of-core learning algorithm chops the data into mini-batches and uses online learning techniques to learn from these mini-batches.</li>
+<li>An instance-based learning system learns the training data by heart; then, when given a new instance, it uses a similarity measure to find the most similar learned instances and uses them to make predictions.</li>
+<li>A model has one or more model parameters that determine what it will predict given a new instance (e.g., the slope of a linear model). A learning algorithm tries to find optimal values for these parameters such that the model generalizes well to new instances. A hyperparameter is a parameter of the learning algorithm itself, not of the model (e.g., the amount of regularization to apply).</li>
+<li>Model-based learning algorithms search for an optimal value for the model parameters such that the model will generalize well to new instances. We usually train such systems by minimizing a cost function that measures how bad the sys‐tem is at making predictions on the training data, plus a penalty for model com‐plexity if the model is regularized. To make predictions, we feed the new instance’s features into the model’s prediction function, using the parameter val‐ues found by the learning algorithm.</li>
+<li>Some of the main challenges in Machine Learning are the lack of data, poor data quality, nonrepresentative data, uninformative features, excessively simple mod‐els that underfit the training data, and excessively complex models that overfit the data.</li>
+<li>If a model performs great on the training data but generalizes poorly to new instances, the model is likely overfitting the training data (or we got extremely lucky on the training data). Possible solutions to overfitting are getting more data, simplifying the model (selecting a simpler algorithm, reducing the number of parameters or features used, or regularizing the model), or reducing the noise in the training data.</li>
+<li>A test set is used to estimate the generalization error that a model will make on new instances, before the model is launched in production.</li>
+<li>A validation set is used to compare models. It makes it possible to select the best model and tune the hyperparameters.</li>
+<li>If you tune hyperparameters using the test set, you risk overfitting the test set, and the generalization error you measure will be optimistic (you may launch a model that performs worse than you expect).</li>
+<li>Cross-validation is a technique that makes it possible to compare models (for model selection and hyperparameter tuning) without the need for a separate vali‐dation set. This saves precious training data.</li>
+</ol>
+<h1 id="Chapter-13-Convolutional-Neural-Networks"><a href="#Chapter-13-Convolutional-Neural-Networks" class="headerlink" title="Chapter 13: Convolutional Neural Networks"></a>Chapter 13: Convolutional Neural Networks</h1><h2 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h2><ol>
+<li>CNN相对于完全连接的DNN有什么优势可用于图像分类？</li>
+<li>考虑由三个卷积层组成的CNN，每个卷积层具有3×3个内核，步长为2，以及SAME填充。最下层输出100个特征图，中间一个输出200，顶部输出400.输入图像是200×300像素的RGB图像。 CNN中的参数总数是多少？如果我们使用32位浮点数，那么在对单个实例进行预测时，该网络至少需要多少RAM？什么时候对50个图像的小批量培训？</li>
+<li>如果您的GPU在训练CNN时内存不足，您可以尝试解决问题的五件事情是什么？</li>
+<li>为什么要添加最大池化层而不是具有相同步幅的卷积层？</li>
+<li>您希望何时添加本地响应规范化层？</li>
+<li>与LeNet-5相比，您能说出AlexNet的主要创新吗？ GoogLeNet和ResNet的主要创新如何？</li>
+</ol>
+<h2 id="练习解答-1"><a href="#练习解答-1" class="headerlink" title="练习解答"></a>练习解答</h2><p>1.这是CNN相对于完全连接的DNN进行图像分类的主要优点：</p>
+<ul>
+<li>因为连续的层只是部分连接，并且因为它重复使用其权重，所以CNN的参数比完全连接的DNN少得多，这使得训练速度更快，降低了过度拟合的风险，并且需要的训练数据要少得多。</li>
+<li>当CNN学习了可以检测特定功能的内核时，它可以在图像的任何位置检测到该功能。相反，当DNN在一个位置学习一个特征时，它只能在该特定位置检测到它。由于图像通常具有非常重复的特征，因此使用较少的训练示例，CNN能够比DNN更好地用于图像处理任务（例如分类）。</li>
+<li>最后，DNN没有关于如何组织像素的先验知识;它不知道附近的像素是否接近。 CNN的架构嵌入了这一先验知识。较低层通常识别图像的小区域中的特征，而较高层将较低层特征组合成较大特征。这适用于大多数自然图像，使CNN与DNN相比具有决定性的先机性。</li>
+</ul>
+<ol>
+<li><p>让我们计算CNN有多少参数。由于其第一个卷积层具有3×3个内核，并且输入具有三个通道（红色，绿色和蓝色），因此每个特征图具有3×3×3个权重，加上偏置项。这是每个功能图的28个参数。由于该第一卷积层具有100个特征映射，因此它具有总共2,800个参数。第二卷积层具有3×3个核，其输入是前一层的100个特征映射的集合，因此每个特征映射具有3×3×100 = 900个权重，加上偏差项。由于它有200个特征图，因此该层具有901×200 = 180,200个参数。最后，第三个和最后一个卷积层也有3×3个核，其输入是前一个层的200个特征映射的集合，因此每个特征映射具有3×3×200 = 1,800个权重，加上一个偏置项。由于它有400个特征图，因此该图层总共有1,801×400 = 720,400个参数。总而言之，CNN有2,800 + 180,200 + 720,400 = 903,400个参数。<br>现在让我们计算这个神经网络在对单个实例进行预测时需要多少RAM（至少）。首先让我们计算每一层的特征图大小。由于我们使用2和SAME填充的步幅，因此要素图的水平和垂直尺寸在每一层被除以2（必要时向上舍入），因此输入通道为200×300像素，第一层的特征地图是100×150，第二层的特征地图是50×75，第三层的特征地图是25×38。因为32位是4个字节而第一个卷积层有100个特征地图，所以第一层需要4 x 100×150×100 = 600万字节（约5.7 MB，考虑到1 MB = 1,024 KB和1 KB = 1,024字节）。第二层占用4×50×75×200 = 300万字节（约2.9MB）。最后，第三层占用4×25×38×400 = 1,520,000字节（约1.4MB）。但是，一旦计算了一个层，就可以释放前一层占用的内存，因此如果一切都经过优化，只需要6 + 9 = 1500万字节（约14.3 MB）的RAM（第二层时）刚刚计算过，但第一层占用的内存尚未释放）。但是等等，你还需要添加CNN参数占用的内存。我们之前计算过它有903,400个参数，每个参数使用4个字节，所以这增加了3,613,600个字节（大约3.4 MB）。所需的总RAM是（至少）18,613,600字节（约17.8 MB）。<br>最后，让我们计算在50个图像的小批量训练CNN时所需的最小RAM量。在训练期间，TensorFlow使用反向传播，这需要保留在前向传递期间计算的所有值，直到反向传递开始。因此，我们必须计算单个实例的所有层所需的总RAM，并将其乘以50。那时让我们开始以兆字节而不是字节计数。我们之前计算过，每个实例的三层分别需要5.7,2.9和1.4 MB。每个实例总共10.0 MB。因此，对于50个实例，总RAM为500 MB。再加上输入图像所需的RAM，即50×4×200×300×3 = 36百万字节（约34.3 MB），加上模型参数所需的RAM，大约3.4 MB（之前计算过）加上一些用于渐变的RAM（我们将忽略它们，因为它们可以逐渐释放，因为反向传播在反向传递过程中向下传播）。我们总共大约500.0 + 34.3 + 3.4 = 537.7 MB。这真的是一个乐观的最低限度。</p>
+</li>
+<li><p>如果您的GPU在训练CNN时内存不足，可以尝试解决问题的五件事情（除了购买具有更多RAM的GPU）：</p>
+</li>
+</ol>
+<ul>
+<li>减少小批量。</li>
+<li>在一个或多个图层中使用更大的步幅减少维度。</li>
+<li>删除一个或多个图层。</li>
+<li>使用16位浮点数而不是32位浮点数。</li>
+<li>在多个设备上分发CNN。</li>
+</ul>
+<ol>
+<li><p>最大池层根本没有参数，而卷积层有很多参数（参见前面的问题）。</p>
+</li>
+<li><p>局部响应归一化层使得最强烈激活的神经元在相同位置但在相邻特征图中抑制神经元，这促使不同的特征图专门化并将它们分开，迫使它们探索更广泛的特征。 它通常在较低层中使用，以具有较大的低级特征池，上层可以构建在其上。</p>
+</li>
+<li><p>与LeNet-5相比，AlexNet的主要创新是：（1）它更大更深，（2）它将卷积层直接叠加在一起，而不是在每个卷积层的顶部堆叠汇集层。 GoogLeNet的主要创新是引入了初始模块，这使得有可能拥有比以前的CNN架构更深的网络，参数更少。 最后，ResNet的主要创新是跳过连接的引入，这使得它可以超越100层。 可以说，它的简洁性和一致性也相当具有创新性。</p>
+</li>
+</ol>
+<hr>
+<h2 id="Exercises-1"><a href="#Exercises-1" class="headerlink" title="Exercises"></a>Exercises</h2><ol>
+<li>What are the advantages of a CNN over a fully connected DNN for image classi‐fication?</li>
+<li>Consider a CNN composed of three convolutional layers, each with 3 × 3 kernels, a stride of 2, and SAME padding. The lowest layer outputs 100 feature maps, the middle one outputs 200, and the top one outputs 400. The input images are RGB images of 200 × 300 pixels. What is the total number of parameters in the CNN?If we are using 32-bit floats, at least how much RAM will this network require when making a prediction for a single instance? What about when training on a mini-batch of 50 images?</li>
+<li>If your GPU runs out of memory while training a CNN, what are five things you could try to solve the problem?</li>
+<li>Why would you want to add a max pooling layer rather than a convolutional layer with the same stride?</li>
+<li>When would you want to add a local response normalization layer?</li>
+<li>Can you name the main innovations in AlexNet, compared to LeNet-5? What about the main innovations in GoogLeNet and ResNet?</li>
+</ol>
+<h2 id="Exercise-Solutions-1"><a href="#Exercise-Solutions-1" class="headerlink" title="Exercise Solutions"></a>Exercise Solutions</h2><ol>
+<li>These are the main advantages of a CNN over a fully connected DNN for image classification:</li>
+</ol>
+<ul>
+<li>Because consecutive layers are only partially connected and because it heavily reuses its weights, a CNN has many fewer parameters than a fully connected DNN, which makes it much faster to train, reduces the risk of overfitting, and requires much less training data.</li>
+<li>When a CNN has learned a kernel that can detect a particular feature, it can detect that feature anywhere on the image. In contrast, when a DNN learns a feature in one location, it can detect it only in that particular location. Since images typically have very repetitive features, CNNs are able to generalize much better than DNNs for image processing tasks such as classification, using fewer training examples.</li>
+<li>Finally, a DNN has no prior knowledge of how pixels are organized; it does not know that nearby pixels are close. A CNN’s architecture embeds this prior knowledge. Lower layers typically identify features in small areas of the images, while higher layers combine the lower-level features into larger features. This works well with most natural images, giving CNNs a decisive head start com‐pared to DNNs.</li>
+</ul>
+<ol>
+<li><p>Let’s compute how many parameters the CNN has. Since its first convolutional layer has 3 × 3 kernels, and the input has three channels (red, green, and blue), then each feature map has 3 × 3 × 3 weights, plus a bias term. That’s 28 parame‐ters per feature map. Since this first convolutional layer has 100 feature maps, it has a total of 2,800 parameters. The second convolutional layer has 3 × 3 kernels, and its input is the set of 100 feature maps of the previous layer, so each feature map has 3 × 3 × 100 = 900 weights, plus a bias term. Since it has 200 feature maps, this layer has 901 × 200 = 180,200 parameters. Finally, the third and last convolutional layer also has 3 × 3 kernels, and its input is the set of 200 feature maps of the previous layers, so each feature map has 3 × 3 × 200 = 1,800 weights, plus a bias term. Since it has 400 feature maps, this layer has a total of 1,801 × 400 = 720,400 parameters. All in all, the CNN has 2,800 + 180,200 + 720,400 = 903,400 parameters.<br>Now let’s compute how much RAM this neural network will require (at least) when making a prediction for a single instance. First let’s compute the feature map size for each layer. Since we are using a stride of 2 and SAME padding, the horizontal and vertical size of the feature maps are divided by 2 at each layer (rounding up if necessary), so as the input channels are 200 × 300 pixels, the first layer’s feature maps are 100 × 150, the second layer’s feature maps are 50 × 75, and the third layer’s feature maps are 25 × 38. Since 32 bits is 4 bytes and the first convolutional layer has 100 feature maps, this first layer takes up 4 x 100 × 150 × 100 = 6 million bytes (about 5.7 MB, considering that 1 MB = 1,024 KB and 1 KB = 1,024 bytes). The second layer takes up 4 × 50 × 75 × 200 = 3 million bytes (about 2.9 MB). Finally, the third layer takes up 4 × 25 × 38 × 400 = 1,520,000 bytes (about 1.4 MB). However, once a layer has been computed, the memory occupied by the previous layer can be released, so if everything is well optimized, only 6 + 9 = 15 million bytes (about 14.3 MB) of RAM will be required (when the second layer has just been computed, but the memory occupied by the first layer is not released yet). But wait, you also need to add the memory occupied by the CNN’s parameters. We computed earlier that it has 903,400 parameters, each using up 4 bytes, so this adds 3,613,600 bytes (about 3.4 MB). The total RAM required is (at least) 18,613,600 bytes (about 17.8 MB).<br>Lastly, let’s compute the minimum amount of RAM required when training the CNN on a mini-batch of 50 images. During training TensorFlow uses backpropa‐gation, which requires keeping all values computed during the forward pass until the reverse pass begins. So we must compute the total RAM required by all layers for a single instance and multiply that by 50! At that point let’s start counting in megabytes rather than bytes. We computed before that the three layers require respectively 5.7, 2.9, and 1.4 MB for each instance. That’s a total of 10.0 MB per instance. So for 50 instances the total RAM is 500 MB. Add to that the RAM required by the input images, which is 50 × 4 × 200 × 300 × 3 = 36 million bytes (about 34.3 MB), plus the RAM required for the model parameters, which is about 3.4 MB (computed earlier), plus some RAM for the gradients (we will neglect them since they can be released gradually as backpropagation goes down the layers during the reverse pass). We are up to a total of roughly 500.0 + 34.3 + 3.4 = 537.7 MB. And that’s really an optimistic bare minimum.</p>
+</li>
+<li><p>If your GPU runs out of memory while training a CNN, here are five things you could try to solve the problem (other than purchasing a GPU with more RAM):</p>
+</li>
+</ol>
+<ul>
+<li>Reduce the mini-batch size.</li>
+<li>Reduce dimensionality using a larger stride in one or more layers.</li>
+<li>Remove one or more layers.</li>
+<li>Use 16-bit floats instead of 32-bit floats.</li>
+<li>Distribute the CNN across multiple devices.</li>
+</ul>
+<ol>
+<li><p>A max pooling layer has no parameters at all, whereas a convolutional layer has quite a few (see the previous questions).</p>
+</li>
+<li><p>A local response normalization layer makes the neurons that most strongly acti‐vate inhibit neurons at the same location but in neighboring feature maps, which encourages different feature maps to specialize and pushes them apart, forcing them to explore a wider range of features. It is typically used in the lower layers to have a larger pool of low-level features that the upper layers can build upon.</p>
+</li>
+<li><p>The main innovations in AlexNet compared to LeNet-5 are (1) it is much larger and deeper, and (2) it stacks convolutional layers directly on top of each other, instead of stacking a pooling layer on top of each convolutional layer. The main innovation in GoogLeNet is the introduction of inception modules, which make it possible to have a much deeper net than previous CNN architectures, with fewer parameters. Finally, ResNet’s main innovation is the introduction of skip connec‐tions, which make it possible to go well beyond 100 layers. Arguably, its simplic‐ity and consistency are also rather innovative.</p>
+</li>
+</ol>
+<h1 id="Chapter-14-Recurrent-Neural-Networks"><a href="#Chapter-14-Recurrent-Neural-Networks" class="headerlink" title="Chapter 14: Recurrent Neural Networks"></a>Chapter 14: Recurrent Neural Networks</h1><h2 id="练习-2"><a href="#练习-2" class="headerlink" title="练习"></a>练习</h2><ol>
+<li>你能想象 seq2seq RNN 的几个应用吗？ seq2vec 的 RNN 呢？vex2seq 的 RNN 呢？</li>
+<li>为什么人们使用编解码器 RNN 而不是简单的 seq2seq RNN 来自动翻译？</li>
+<li>如何将卷积神经网络与 RNN 结合，来对视频进行分类？</li>
+<li>使用 dynamic_rnn() 而不是 static_rnn() 构建 RNN 有什么好处？</li>
+<li>你如何处理长度可变的输入序列？ 那么长度可变输出序列呢？</li>
+<li>在多个 GPU 上分配深层 RNN 的训练和执行的常见方式是什么？</li>
+</ol>
+<h2 id="练习解答-2"><a href="#练习解答-2" class="headerlink" title="练习解答"></a>练习解答</h2><ol>
+<li>以下是一些RNN应用程序：</li>
+</ol>
+<ul>
+<li>对于序列到序列的RNN：预测天气（或任何其他时间序列），机器翻译（使用编码器 - 解码器架构），视频字幕，语音到文本，音乐生成（或其他序列生成），识别 一首歌的和弦。</li>
+<li>对于序列到矢量RNN：按音乐类型对音乐样本进行分类，分析书评的情绪，根据大脑植入物的读数预测失语症患者正在考虑的单词，预测概率 用户希望根据她的观看历史观看电影（这是协作过滤的许多可能实现之一）。</li>
+<li>对于矢量到序列RNN：图像字幕，基于当前艺术家的嵌入创建音乐播放列表，基于一组参数生成旋律，在图片中定位行人。</li>
+</ul>
+<ol>
+<li><p>一般来说，如果你一次翻译一个单词，结果将是非常可怕的。 例如，法语句子“Je vous en prie”的意思是“欢迎你”，但如果你一次翻译一个词，你会得到“我在祷告。”嗯？ 首先阅读整个句子然后翻译它会好得多。 普通的序列到序列RNN将在读取第一个字之后立即开始翻译句子，而编码器 - 解码器RNN将首先读取整个句子然后翻译它。 也就是说，人们可以想象一个简单的序列到序列的RNN，只要不确定接下来要说什么就会输出静音（就像人类翻译者必须翻译直播时那样）。</p>
+</li>
+<li><p>为了基于视觉内容对视频进行分类，一种可能的架构可以是（比方说）每秒一帧，然后通过卷积神经网络运行每一帧，将CNN的输出馈送到序列到矢量RNN ，最后通过softmax层运行其输出，为您提供所有类概率。 对于培训，您只需使用交叉熵作为成本函数。 如果您也想将音频用于分类，您可以将每秒音频转换为摄谱仪，将此摄谱仪输入CNN，并将此CNN的输出馈送到RNN（以及其他CNN的相应输出））。</p>
+</li>
+<li><p>使用dynamic_rnn（）而不是static_rnn（）构建RNN具有以下几个优点：</p>
+</li>
+</ol>
+<ul>
+<li>它基于while_loop（）操作，该操作能够在反向传播期间将GPU的内存交换到CPU的内存，从而避免内存不足错误。</li>
+<li>它可以说更容易使用，因为它可以直接将单个张量作为输入和输出（涵盖所有时间步骤），而不是张量列表（每个时间步长一个）。 无需堆叠，取消堆叠或转置。</li>
+<li>它生成一个较小的图形，更容易在TensorBoard中可视化。</li>
+</ul>
+<p>5.要处理可变长度输入序列，最简单的选项是在调用static_rnn（）或dynamic_rnn（）函数时设置sequence_length参数。 另一种选择是填充较小的输入（例如，用零）以使它们与最大输入相同（如果输入序列都具有非常相似的长度，则这可能比第一选项快）。 要处理可变长度输出序列，如果事先知道每个输出序列的长度，可以使用sequence_length参数（例如，考虑序列到序列的RNN，用暴力标记视频中的每一帧 得分：输出序列与输入序列的长度完全相同）。 如果您事先不知道输出序列的长度，则可以使用填充技巧：始终输出相同大小的序列，但忽略序列结束标记之后的任何输出（通过在计算时忽略它们） 成本函数）。</p>
+<ol>
+<li>要在多个GPU上分发深度RNN的训练和执行，常见的技术就是将每个层放在不同的GPU上（参见第12章）。</li>
+</ol>
+<hr>
+<h2 id="Exercises-2"><a href="#Exercises-2" class="headerlink" title="Exercises"></a>Exercises</h2><ol>
+<li>Can you think of a few applications for a sequence-to-sequence RNN? What about a sequence-to-vector RNN? And a vector-to-sequence RNN?</li>
+<li>Why do people use encoder–decoder RNNs rather than plain sequence-to-sequence RNNs for automatic translation?</li>
+<li>How could you combine a convolutional neural network with an RNN to classify videos?</li>
+<li>What are the advantages of building an RNN using dynamic_rnn() rather than static_rnn()?</li>
+<li>How can you deal with variable-length input sequences? What about variable-length output sequences?</li>
+<li>What is a common way to distribute training and execution of a deep RNN across multiple GPUs?</li>
+</ol>
+<h2 id="Exercise-Solutions-2"><a href="#Exercise-Solutions-2" class="headerlink" title="Exercise Solutions"></a>Exercise Solutions</h2><ol>
+<li>Here are a few RNN applications:</li>
+</ol>
+<ul>
+<li>For a sequence-to-sequence RNN: predicting the weather (or any other time series), machine translation (using an encoder–decoder architecture), video captioning, speech to text, music generation (or other sequence generation), identifying the chords of a song.</li>
+<li>For a sequence-to-vector RNN: classifying music samples by music genre, ana‐lyzing the sentiment of a book review, predicting what word an aphasic patient is thinking of based on readings from brain implants, predicting the probabil‐ity that a user will want to watch a movie based on her watch history (this is one of many possible implementations of collaborative filtering).</li>
+<li>For a vector-to-sequence RNN: image captioning, creating a music playlist based on an embedding of the current artist, generating a melody based on a set of parameters, locating pedestrians in a picture (e.g., a video frame from a self-driving car’s camera).</li>
+</ul>
+<ol>
+<li>In general, if you translate a sentence one word at a time, the result will be terri‐ble. For example, the French sentence “Je vous en prie” means “You are welcome,” but if you translate it one word at a time, you get “I you in pray.” Huh? It is much better to read the whole sentence first and then translate it. A plain sequence-to-sequence RNN would start translating a sentence immediately after reading the first word, while an encoder–decoder RNN will first read the whole sentence and then translate it. That said, one could imagine a plain sequence-to-sequence RNN that would output silence whenever it is unsure about what to say next (just like human translators do when they must translate a live broadcast).</li>
+<li>To classify videos based on the visual content, one possible architecture could be to take (say) one frame per second, then run each frame through a convolutional neural network, feed the output of the CNN to a sequence-to-vector RNN, and finally run its output through a softmax layer, giving you all the class probabili‐ties. For training you would just use cross entropy as the cost function. If you wanted to use the audio for classification as well, you could convert every second of audio to a spectrograph, feed this spectrograph to a CNN, and feed the output of this CNN to the RNN (along with the corresponding output of the other CNN).</li>
+<li>Building an RNN using dynamic_rnn() rather than static_rnn() offers several advantages:</li>
+</ol>
+<ul>
+<li>It is based on a while_loop() operation that is able to swap the GPU’s memory to the CPU’s memory during backpropagation, avoiding out-of-memory errors.</li>
+<li>It is arguably easier to use, as it can directly take a single tensor as input and output (covering all time steps), rather than a list of tensors (one per time step). No need to stack, unstack, or transpose.</li>
+<li>It generates a smaller graph, easier to visualize in TensorBoard.</li>
+</ul>
+<ol>
+<li>To handle variable length input sequences, the simplest option is to set the sequence_length parameter when calling the static_rnn() or dynamic_rnn() functions. Another option is to pad the smaller inputs (e.g., with zeros) to make them the same size as the largest input (this may be faster than the first option if the input sequences all have very similar lengths). To handle variable-length out‐put sequences, if you know in advance the length of each output sequence, you can use the sequence_length parameter (for example, consider a sequence-to-sequence RNN that labels every frame in a video with a violence score: the output sequence will be exactly the same length as the input sequence). If you don’t know in advance the length of the output sequence, you can use the padding trick: always output the same size sequence, but ignore any outputs that come after the end-of-sequence token (by ignoring them when computing the cost function).</li>
+<li>To distribute training and execution of a deep RNN across multiple GPUs, a common technique is simply to place each layer on a different GPU (see Chap‐ter 12).</li>
+</ol>
+<h1 id="Chapter-15-Autoencoders"><a href="#Chapter-15-Autoencoders" class="headerlink" title="Chapter 15: Autoencoders"></a>Chapter 15: Autoencoders</h1><h2 id="练习-3"><a href="#练习-3" class="headerlink" title="练习"></a>练习</h2><ol>
+<li>自动编码器使用的主要任务是什么？</li>
+<li>假设你想训练一个分类器，你有很多未标记的训练数据，但是只有几千个标记的实例。自动编码器如何帮助？你将如何进行？</li>
+<li>如果一个自动编码器完美地重建输入，它一定是好的吗？自动编码器？如何评价自动编码器的性能？</li>
+<li>什么是欠完备和过完备的自动编码器？过度完备的自动编码器的主要风险是什么？超完备自动编码器的主要风险是什么？</li>
+<li>如何在堆叠式自动编码器中系紧砝码？这样做有什么意义呢？</li>
+<li>什么是一种常见的技术来可视化的特点，学习下层的堆叠自动编码器？更高层怎么办？</li>
+<li>什么是生成模型？你能说出一种生成式自动编码器吗？</li>
+</ol>
+<h2 id="练习解答-3"><a href="#练习解答-3" class="headerlink" title="练习解答"></a>练习解答</h2><ol>
+<li>以下是自动编码器用于的一些主要任务：</li>
+</ol>
+<ul>
+<li>特征提取</li>
+<li>无人监督的预训练</li>
+<li>维度降低</li>
+<li>生成模型</li>
+<li>异常检测（自动编码器通常不利于重建异常值）</li>
+</ul>
+<ol>
+<li><p>如果你想训练一个分类器，你有大量的未标记的训练数据，但是只有几千个标记的实例，那么你可以首先在完整的数据集（标记和未标记）上训练一个深度的自动编码器，然后再将其下半部分用于分类器（即，重复使用编码层）。编码层，包括使用标记数据训练分类器。如果您的标记数据很少，则可能需要在训练分类器时冻结重复使用的层。</p>
+</li>
+<li><p>自动编码器完美地重建其输入的事实并不一定如此意味着它是一个很好的自动编码器;也许它只是一个过度完整的自动编码器学会了将其输入复制到编码层然后再输出到输出。实际上，即使编码层包含单个神经元，也是可能的对于一个非常深的自动编码器来学习将每个训练实例映射到不同的编码（例如，第一个实例可以映射到0.001，第二个实例可以映射到0.002，即第三到0.003，等等），它可以“用心”学习重建右边每个编码的训练实例。它将完美地重建其输入没有真正学习数据中任何有用的模式。在实践中这样的映射不太可能发生，但它说明了完美的重建不是这样的事实保证自动编码器学到了什么有用的东西。但是，如果它产生非常糟糕的重建，然后它几乎保证是一个糟糕的自动编码器。为了评估自动编码器的性能，一种选择是测量重建损失（例如，计算MSE，输出的均方值）减去输入）。再次，高重建损失是一个很好的迹象自动编码器很糟糕，但重建损失很小并不能保证好。您还应该根据它将使用的内容来评估自动编码器对于。例如，如果您将其用于无人监督的分类器预训练，那么你还应该评估分类器的性能。</p>
+</li>
+<li><p>欠完全自动编码器是一种编码层小于编码层的编码器输入和输出层。 如果它更大，那么它是一个过完备的自动编码器。欠完全自动编码器的主要风险是它可能无法完成重建输入。 过度完整的自动编码器的主要风险是它可能只是将输入复制到输出，而不学习任何有用的功能。</p>
+</li>
+<li><p>要将编码器层及其相应解码器层的权重联系起来简单地使解码器权重等于编码器权重的转置。这会将模型中的参数数量减少一半，通常会进行培训通过较少的训练数据更快地收敛，并降低过度拟合的风险训练集。</p>
+</li>
+<li><p>为了可视化由堆叠自动编码器的下层学习的特征，通常的技术是通过将每个权重向量重新整形为输入图像的大小来简单地绘制每个神经元的权重（例如，对于MNIST，重塑一个权重向量）。 形状[784]至[28,28]）。 为了可视化更高层学习的特征，一种技术是显示最能激活每个神经元的训练实例。</p>
+</li>
+<li><p>生成模型是能够随机生成类似于训练实例的输出的模型。 例如，一旦在MNIST数据集上成功训练，生成模型可用于随机生成数字的真实图像。 输出分布通常类似于训练数据。 例如，由于MNIST包含每个数字的许多图像，因此生成模型将输出大致相同数量的每个数字的图像。 一些生成模型可以参数化。例如，仅生成某种输出。 生成自动编码器的一个例子是变分自动编码器。</p>
+</li>
+</ol>
+<hr>
+<h2 id="Exercise"><a href="#Exercise" class="headerlink" title="Exercise"></a>Exercise</h2><ol>
+<li>What are the main tasks that autoencoders are used for?</li>
+<li>Suppose you want to train a classifier and you have plenty of unlabeled training data, but only a few thousand labeled instances. How can autoencoders help? How would you proceed?</li>
+<li>If an autoencoder perfectly reconstructs the inputs, is it necessarily a good autoencoder? How can you evaluate the performance of an autoencoder?</li>
+<li>What are undercomplete and overcomplete autoencoders? What is the main risk of an excessively undercomplete autoencoder? What about the main risk of an overcomplete autoencoder?</li>
+<li>How do you tie weights in a stacked autoencoder? What is the point of doing so?</li>
+<li>What is a common technique to visualize features learned by the lower layer of a stacked autoencoder? What about higher layers?</li>
+<li>What is a generative model? Can you name a type of generative autoencoder?</li>
+</ol>
+<h2 id="Exercise-Solutions-3"><a href="#Exercise-Solutions-3" class="headerlink" title="Exercise Solutions"></a>Exercise Solutions</h2><ol>
+<li>Here are some of the main tasks that autoencoders are used for:</li>
+</ol>
+<ul>
+<li>Feature extraction</li>
+<li>Unsupervised pretraining</li>
+<li>Dimensionality reduction</li>
+<li>Generative models</li>
+<li>Anomaly detection (an autoencoder is generally bad at reconstructing outliers)</li>
+</ul>
+<ol>
+<li><p>If you want to train a classifier and you have plenty of unlabeled training data, but only a few thousand labeled instances, then you could first train a deep autoencoder on the full dataset (labeled + unlabeled), then reuse its lower half for the classifier (i.e., reuse the layers up to the codings layer, included) and train the classifier using the labeled data. If you have little labeled data, you probably want to freeze the reused layers when training the classifier.</p>
+</li>
+<li><p>The fact that an autoencoder perfectly reconstructs its inputs does not necessarily mean that it is a good autoencoder; perhaps it is simply an overcomplete autoen‐coder that learned to copy its inputs to the codings layer and then to the outputs. In fact, even if the codings layer contained a single neuron, it would be possible for a very deep autoencoder to learn to map each training instance to a different coding (e.g., the first instance could be mapped to 0.001, the second to 0.002, the third to 0.003, and so on), and it could learn “by heart” to reconstruct the right training instance for each coding. It would perfectly reconstruct its inputs without really learning any useful pattern in the data. In practice such a mapping is unlikely to happen, but it illustrates the fact that perfect reconstructions are not a guarantee that the autoencoder learned anything useful. However, if it produces very bad reconstructions, then it is almost guaranteed to be a bad autoencoder. To evaluate the performance of an autoencoder, one option is to measure the reconstruction loss (e.g., compute the MSE, the mean square of the outputs minus the inputs). Again, a high reconstruction loss is a good sign that the autoencoder is bad, but a low reconstruction loss is not a guarantee that it is good. You should also evaluate the autoencoder according to what it will be used for. For example, if you are using it for unsupervised pretraining of a classifier, then you should also evaluate the classifier’s performance.</p>
+</li>
+<li>An undercomplete autoencoder is one whose codings layer is smaller than the input and output layers. If it is larger, then it is an overcomplete autoencoder. The main risk of an excessively undercomplete autoencoder is that it may fail to reconstruct the inputs. The main risk of an overcomplete autoencoder is that it may just copy the inputs to the outputs, without learning any useful feature.</li>
+<li>To tie the weights of an encoder layer and its corresponding decoder layer, you simply make the decoder weights equal to the transpose of the encoder weights. This reduces the number of parameters in the model by half, often making train‐ing converge faster with less training data, and reducing the risk of overfitting the training set.</li>
+<li>To visualize the features learned by the lower layer of a stacked autoencoder, a common technique is simply to plot the weights of each neuron, by reshaping each weight vector to the size of an input image (e.g., for MNIST, reshaping a weight vector of shape [784] to [28, 28]). To visualize the features learned by higher layers, one technique is to display the training instances that most activate each neuron.</li>
+<li>A generative model is a model capable of randomly generating outputs that resemble the training instances. For example, once trained successfully on the MNIST dataset, a generative model can be used to randomly generate realistic images of digits. The output distribution is typically similar to the training data. For example, since MNIST contains many images of each digit, the generative model would output roughly the same number of images of each digit. Some generative models can be parametrized—for example, to generate only some kinds of outputs. An example of a generative autoencoder is the variational autoencoder.</li>
+</ol>
+<h1 id="Chapter-16-Reinforcement-Learning"><a href="#Chapter-16-Reinforcement-Learning" class="headerlink" title="Chapter 16: Reinforcement Learning"></a>Chapter 16: Reinforcement Learning</h1><h2 id="练习-4"><a href="#练习-4" class="headerlink" title="练习"></a>练习</h2><p>1.您如何定义强化学习？ 它与常规监督或无监督学习有什么不同？<br>2.您能想到本章未提及的RL的三种可能应用吗？ 对于他们每个人来说，环境是什么？ 代理商是什么？可能的行动是什么？ 有什么奖励？<br>3.折扣率是多少？ 如果修改计数率，最优政策会改变吗？<br>4.您如何衡量强化学习代理的表现？<br>5.什么是信用分配问题？ 什么时候发生？ 你怎么能减轻它？<br>6.使用重放内存有什么意义？<br>7.什么是非策略RL算法？</p>
+<h2 id="练习解答-4"><a href="#练习解答-4" class="headerlink" title="练习解答"></a>练习解答</h2><ol>
+<li>强化学习是机器学习的一个领域，旨在创建能够以最大化奖励的方式在环境中采取行动的代理。 RL与常规监督和无监督学习之间存在许多差异。以下是一些：</li>
+</ol>
+<ul>
+<li>在有监督和无监督学习中，目标通常是在数据中找到模式。在强化学习中，目标是找到一个好的策略。</li>
+<li>与监督学习不同，代理人没有明确给出“正确”的答案。它必须通过反复试验来学习。</li>
+<li>与无监督学习不同，通过奖励有一种监督形式。我们不会告诉代理如何执行任务，但我们会告诉它何时进行任务或何时失败。</li>
+<li>强化学习代理需要在探索环境，寻找获得奖励的新方法以及利用已经知道的奖励来源之间找到适当的平衡点。相比之下，有监督和无监督的学习系统通常不需要担心探索;他们只是根据他们给出的训练数据。</li>
+<li>在有监督和无监督的学习中，训练实例通常是独立的（事实上，它们通常是洗牌的）。在强化学习中，连续观察通常不是独立的。在移动之前，代理可能会在环境的同一区域停留一段时间，因此连续的观察将非常相关。在某些情况下，使用重放存储器来确保训练算法获得相当独立的观察。</li>
+</ul>
+<ol>
+<li>除了第16章中提到的那些之外，以下是强化学习的一些可能应用：</li>
+</ol>
+<p>音乐个性化</p>
+<blockquote>
+<p>环境是用户的个性化网络电台。代理是决定该用户接下来要播放的歌曲的软件。其可能的行动是播放目录中的任何歌曲（它必须尝试选择用户将喜欢的歌曲）或播放广告（它必须尝试选择用户将被介入的广告）。每次用户收听歌曲时获得小奖励，每次用户收听广告时获得更大奖励，当用户跳过歌曲或广告时获得负奖励，如果用户离开则获得非常负面奖励。</p>
+</blockquote>
+<p>营销</p>
+<blockquote>
+<p>环境是贵公司的营销部门。代理商是一个软件，根据他们的个人资料和购买历史记录定义应向哪些客户发送邮件活动（对于每个客户，它有两个可能的操作：发送或不发送）。它会对邮寄广告系列的费用产生负面回报，并对此广告系列产生的估算收入产生积极回报。</p>
+</blockquote>
+<p>产品交付</p>
+<blockquote>
+<p>让代理商控制一批运货卡车，决定他们应该在油库接收什么，他们应该去哪里，他们应该放下什么，等等。对于按时交付的每种产品，他们都会得到积极的回报，对于延迟交付，他们会得到负面的回报。</p>
+</blockquote>
+<ol>
+<li><p>在估算行动的价值时，强化学习算法通常会将此行为带来的所有奖励加起来，给予即时奖励更多的权重，减少后期奖励的权重（考虑到行动对近期的影响大于在遥远的未来）。为了对此进行建模，通常在每个时间步应用折扣率。例如，在折扣率为0.9的情况下，当您估算行动的价值时，两个时间段后收到的100的奖励仅计为0.92×100 = 81。您可以将计算率视为衡量未来相对于现在的估值程度的指标：如果它非常接近1，那么未来的估值几乎与现在一样多。如果它接近0，那么只有直接奖励很重要。当然，这极大地影响了最优政策：如果你重视未来，你可能愿意为最终奖励的前景忍受很多直接的痛苦，而如果你不重视未来，你就会抓住您可以找到的任何直接奖励，永远不会投资于未来。</p>
+</li>
+<li><p>要衡量强化学习代理的表现，您可以简单地总结其获得的奖励。 在模拟环境中，您可以运行许多epi-sodes并查看平均得到的总奖励（并且可能会查看最小值，最大值，标准差等）。</p>
+</li>
+<li><p>信用分配问题是，当强化学习代理收到奖励时，它无法直接了解其先前的哪些行为对此奖励有贡献。 它通常发生在一个动作与所产生的奖励之间存在很大的延迟时（例如，在Atari的乒乓球比赛期间，在球员击球之前和赢得该球的那一刻之间可能会有几十个时间步长）。 减轻它的一种方法是在可能的情况下为代理人提供短期奖励。 这通常需要有关任务的先验知识。 例如，如果我们想要建立一个学会下棋的代理人，而不是仅在它赢得比赛时给予奖励，我们可以在每次捕获对手的棋子时给予奖励。</p>
+</li>
+<li><p>代理人通常可以在一段时间内保持在其环境的同一区域，因此在这段时间内，它的所有经验都非常相似。 这可以在学习算法中引入一些偏差。 它可能会调整这个环境区域的政策，但一旦离开这个区域就不会表现良好。 要解决此问题，您可以使用重放内存; 代理人不会仅使用最直接的学习经验，而是根据过去经验的缓冲来学习，最近也不是最近的经历（也许这就是为什么我们在晚上做梦：重播我们当天的经历并更好地学习 他们？）。</p>
+</li>
+<li><p>非策略RL算法学习最优策略的值（即，如果代理最佳地行为，则可以为每个状态预期的折扣奖励的总和），而与代理实际行为的方式无关。 Q-Learning是这种算法的一个很好的例子。 相反，on-policy算法学习代理实际执行的策略的值。</p>
+</li>
+</ol>
+<h2 id="Exercises-3"><a href="#Exercises-3" class="headerlink" title="Exercises"></a>Exercises</h2><ol>
+<li>How would you define Reinforcement Learning? How is it different from regular supervised or unsupervised learning?</li>
+<li>Can you think of three possible applications of RL that were not mentioned in this chapter? For each of them, what is the environment? What is the agent?What are possible actions? What are the rewards?</li>
+<li>What is the discount rate? Can the optimal policy change if you modify the dis‐count rate?</li>
+<li>How do you measure the performance of a Reinforcement Learning agent?</li>
+<li>What is the credit assignment problem? When does it occur? How can you allevi‐ate it?</li>
+<li>What is the point of using a replay memory?</li>
+<li>What is an off-policy RL algorithm?</li>
+</ol>
+<h2 id="Exercise-Solutions-4"><a href="#Exercise-Solutions-4" class="headerlink" title="Exercise Solutions"></a>Exercise Solutions</h2><ol>
+<li>Reinforcement Learning is an area of Machine Learning aimed at creating agents capable of taking actions in an environment in a way that maximizes rewards over time. There are many differences between RL and regular supervised and unsupervised learning. Here are a few:</li>
+</ol>
+<ul>
+<li>In supervised and unsupervised learning, the goal is generally to find patterns in the data. In Reinforcement Learning, the goal is to find a good policy.</li>
+<li>Unlike in supervised learning, the agent is not explicitly given the “right” answer. It must learn by trial and error.</li>
+<li>Unlike in unsupervised learning, there is a form of supervision, through rewards. We do not tell the agent how to perform the task, but we do tell it when it is making progress or when it is failing.</li>
+<li>A Reinforcement Learning agent needs to find the right balance between exploring the environment, looking for new ways of getting rewards, and exploiting sources of rewards that it already knows. In contrast, supervised and unsupervised learning systems generally don’t need to worry about explora‐tion; they just feed on the training data they are given.</li>
+<li>In supervised and unsupervised learning, training instances are typically inde‐pendent (in fact, they are generally shuffled). In Reinforcement Learning, con‐secutive observations are generally not independent. An agent may remain in the same region of the environment for a while before it moves on, so consecu‐tive observations will be very correlated. In some cases a replay memory is used to ensure that the training algorithm gets fairly independent observa‐tions.</li>
+</ul>
+<ol>
+<li>Here are a few possible applications of Reinforcement Learning, other than those mentioned in Chapter 16:</li>
+</ol>
+<p>Music personalization</p>
+<blockquote>
+<p>The environment is a user’s personalized web radio. The agent is the software deciding what song to play next for that user. Its possible actions are to play any song in the catalog (it must try to choose a song the user will enjoy) or to play an advertisement (it must try to choose an ad that the user will be inter‐ested in). It gets a small reward every time the user listens to a song, a larger reward every time the user listens to an ad, a negative reward when the user skips a song or an ad, and a very negative reward if the user leaves.</p>
+</blockquote>
+<p>Marketing</p>
+<blockquote>
+<p>The environment is your company’s marketing department. The agent is the software that defines which customers a mailing campaign should be sent to, given their profile and purchase history (for each customer it has two possi‐ble actions: send or don’t send). It gets a negative reward for the cost of the mailing campaign, and a positive reward for estimated revenue generated from this campaign.</p>
+</blockquote>
+<p>Product delivery</p>
+<blockquote>
+<p>Let the agent control a fleet of delivery trucks, deciding what they should pick up at the depots, where they should go, what they should drop off, and so on. They would get positive rewards for each product delivered on time, and negative rewards for late deliveries.</p>
+</blockquote>
+<ol>
+<li><p>When estimating the value of an action, Reinforcement Learning algorithms typ‐ically sum all the rewards that this action led to, giving more weight to immediate rewards, and less weight to later rewards (considering that an action has more influence on the near future than on the distant future). To model this, a discount rate is typically applied at each time step. For example, with a discount rate of 0.9, a reward of 100 that is received two time steps later is counted as only 0.92 × 100 = 81 when you are estimating the value of the action. You can think of the dis‐count rate as a measure of how much the future is valued relative to the present: if it is very close to 1, then the future is valued almost as much as the present. If it is close to 0, then only immediate rewards matter. Of course, this impacts the optimal policy tremendously: if you value the future, you may be willing to put up with a lot of immediate pain for the prospect of eventual rewards, while if you don’t value the future, you will just grab any immediate reward you can find, never investing in the future.</p>
+</li>
+<li><p>To measure the performance of a Reinforcement Learning agent, you can simply sum up the rewards it gets. In a simulated environment, you can run many epi‐sodes and look at the total rewards it gets on average (and possibly look at the min, max, standard deviation, and so on).</p>
+</li>
+<li><p>The credit assignment problem is the fact that when a Reinforcement Learning agent receives a reward, it has no direct way of knowing which of its previous actions contributed to this reward. It typically occurs when there is a large delay between an action and the resulting rewards (e.g., during a game of Atari’s Pong, there may be a few dozen time steps between the moment the agent hits the ball and the moment it wins the point). One way to alleviate it is to provide the agent with shorter-term rewards, when possible. This usually  requires prior knowledge about the task. For example, if we want to build an agent that will learn to play chess, instead of giving it a reward only when it wins the game, we could give it a reward every time it captures one of the opponent’s pieces.</p>
+</li>
+<li><p>An agent can often remain in the same region of its environment for a while, so all of its experiences will be very similar for that period of time. This can intro‐duce some bias in the learning algorithm. It may tune its policy for this region of the environment, but it will not perform well as soon as it moves out of this region. To solve this problem, you can use a replay memory; instead of using only the most immediate experiences for learning, the agent will learn based on a buffer of its past experiences, recent and not so recent (perhaps this is why we dream at night: to replay our experiences of the day and better learn from them?).</p>
+</li>
+<li><p>An off-policy RL algorithm learns the value of the optimal policy (i.e., the sum of discounted rewards that can be expected for each state if the agent acts opti‐mally), independently of how the agent actually acts. Q-Learning is a good exam‐ple of such an algorithm. In contrast, an on-policy algorithm learns the value of the policy that the agent actually executes, including both exploration and exploi‐tation.</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/09/四川大学研究生软件项目管理期末考试分析/" rel="next" title="四川大学研究生软件项目管理期末考试分析">
+                <i class="fa fa-chevron-left"></i> 四川大学研究生软件项目管理期末考试分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/" rel="prev" title="Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）">
+                Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#《Hands-on-Machine-Learning-with-Scikit-Learn-and-TensorFlow-》资源"><span class="nav-number">1.</span> <span class="nav-text">《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CHAPTER-1-The-Machine-Learning-Landscape"><span class="nav-number">2.</span> <span class="nav-text">CHAPTER 1 The Machine Learning Landscape</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习"><span class="nav-number">2.1.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习解答"><span class="nav-number">2.2.</span> <span class="nav-text">练习解答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercises"><span class="nav-number">2.3.</span> <span class="nav-text">Exercises</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise-Solutions"><span class="nav-number">2.4.</span> <span class="nav-text">Exercise Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-13-Convolutional-Neural-Networks"><span class="nav-number">3.</span> <span class="nav-text">Chapter 13: Convolutional Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习-1"><span class="nav-number">3.1.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习解答-1"><span class="nav-number">3.2.</span> <span class="nav-text">练习解答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercises-1"><span class="nav-number">3.3.</span> <span class="nav-text">Exercises</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise-Solutions-1"><span class="nav-number">3.4.</span> <span class="nav-text">Exercise Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-14-Recurrent-Neural-Networks"><span class="nav-number">4.</span> <span class="nav-text">Chapter 14: Recurrent Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习-2"><span class="nav-number">4.1.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习解答-2"><span class="nav-number">4.2.</span> <span class="nav-text">练习解答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercises-2"><span class="nav-number">4.3.</span> <span class="nav-text">Exercises</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise-Solutions-2"><span class="nav-number">4.4.</span> <span class="nav-text">Exercise Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-15-Autoencoders"><span class="nav-number">5.</span> <span class="nav-text">Chapter 15: Autoencoders</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习-3"><span class="nav-number">5.1.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习解答-3"><span class="nav-number">5.2.</span> <span class="nav-text">练习解答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise"><span class="nav-number">5.3.</span> <span class="nav-text">Exercise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise-Solutions-3"><span class="nav-number">5.4.</span> <span class="nav-text">Exercise Solutions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter-16-Reinforcement-Learning"><span class="nav-number">6.</span> <span class="nav-text">Chapter 16: Reinforcement Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#练习-4"><span class="nav-number">6.1.</span> <span class="nav-text">练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习解答-4"><span class="nav-number">6.2.</span> <span class="nav-text">练习解答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercises-3"><span class="nav-number">6.3.</span> <span class="nav-text">Exercises</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exercise-Solutions-4"><span class="nav-number">6.4.</span> <span class="nav-text">Exercise Solutions</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

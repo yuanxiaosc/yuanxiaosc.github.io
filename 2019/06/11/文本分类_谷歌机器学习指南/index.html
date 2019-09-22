@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍文本分类算法是大规模处理文本数据的各种软件系统的核心。 电子邮件软件使用文本分类来确定传入邮件是发送到收件箱还是过滤到垃圾邮件文件夹中。 讨论论坛使用文本分类来确定是否应将评论标记为不合适。 这是主题分类的两个示例，将文本文档分类为预定义的一组主题。 在许多主题分类问题中，此分类主要基于文本中的关键字。 图 1: 主题分类用于标记传入的垃圾邮件，这些邮件被过滤到垃圾邮件文件夹中。 另一种常见的">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="文本分类_谷歌机器学习指南">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="介绍文本分类算法是大规模处理文本数据的各种软件系统的核心。 电子邮件软件使用文本分类来确定传入邮件是发送到收件箱还是过滤到垃圾邮件文件夹中。 讨论论坛使用文本分类来确定是否应将评论标记为不合适。 这是主题分类的两个示例，将文本文档分类为预定义的一组主题。 在许多主题分类问题中，此分类主要基于文本中的关键字。 图 1: 主题分类用于标记传入的垃圾邮件，这些邮件被过滤到垃圾邮件文件夹中。 另一种常见的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/TextClassificationExample.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/Workflow.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/FrequencyDistributionOfWordsIMDb.svg">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/DistributionOfSampleLengthIMDb.svg">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/TextClassificationFlowchart.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/TopKvsAccuracy.svg">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/WordEmbeddings.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/EmbeddingLayer.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/LinearStackOfLayers.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/LastLayer.png">
+<meta property="og:updated_time" content="2019-09-01T03:16:45.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="文本分类_谷歌机器学习指南">
+<meta name="twitter:description" content="介绍文本分类算法是大规模处理文本数据的各种软件系统的核心。 电子邮件软件使用文本分类来确定传入邮件是发送到收件箱还是过滤到垃圾邮件文件夹中。 讨论论坛使用文本分类来确定是否应将评论标记为不合适。 这是主题分类的两个示例，将文本文档分类为预定义的一组主题。 在许多主题分类问题中，此分类主要基于文本中的关键字。 图 1: 主题分类用于标记传入的垃圾邮件，这些邮件被过滤到垃圾邮件文件夹中。 另一种常见的">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/TextClassificationExample.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/"/>
+
+
+
+
+
+  <title>文本分类_谷歌机器学习指南 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/11/文本分类_谷歌机器学习指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">文本分类_谷歌机器学习指南</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-11T14:30:15+08:00">
+                2019-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/文本分类/" itemprop="url" rel="index">
+                    <span itemprop="name">文本分类</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/11/文本分类_谷歌机器学习指南/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/11/文本分类_谷歌机器学习指南/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>文本分类算法是大规模处理文本数据的各种软件系统的核心。 电子邮件软件使用文本分类来确定传入邮件是发送到收件箱还是过滤到垃圾邮件文件夹中。 讨论论坛使用文本分类来确定是否应将评论标记为不合适。</p>
+<p>这是<strong>主题分类</strong>的两个示例，将文本文档分类为预定义的一组主题。 在许多主题分类问题中，此分类主要基于文本中的关键字。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/TextClassificationExample.png" alt=""><br>图 1: 主题分类用于标记传入的垃圾邮件，这些邮件被过滤到垃圾邮件文件夹中。</p>
+<p>另一种常见的文本分类类型是<strong>情感分析</strong>，其目标是识别文本内容的极性：文本表达的意见类型。 这可以采取二进制喜欢/不喜欢评级的形式，或更精细的选项集，例如1到5的星级评级。情绪分析的示例包括分析Twitter帖子以确定人们是否喜欢黑豹电影，或者从沃尔玛评论中推断出公众对耐克新品牌鞋的看法。</p>
+<p>本指南将教您一些解决文本分类问题的关键机器学习最佳实践。这是你将学到的东西：</p>
+<ul>
+<li>使用机器学习解决文本分类问题的高级的、端到端的工作流程</li>
+<li>如何为文本分类问题选择正确的模型</li>
+<li>如何使用TensorFlow实现您的选择模型</li>
+</ul>
+<h3 id="文本分类工作流程"><a href="#文本分类工作流程" class="headerlink" title="文本分类工作流程"></a>文本分类工作流程</h3><p>以下是用于解决机器学习问题的工作流程的高度概述：</p>
+<ul>
+<li>Step 1: Gather Data</li>
+<li>Step 2: Explore Your Data</li>
+<li>Step 2.5: Choose a Model*</li>
+<li>Step 3: Prepare Your Data</li>
+<li>Step 4: Build, Train, and Evaluate Your Model</li>
+<li>Step 5: Tune Hyperparameters</li>
+<li>Step 6: Deploy Your Model</li>
+</ul>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/Workflow.png" alt=""><br>图2：解决机器学习问题的工作流程</p>
+<blockquote>
+<p>“选择模型”不是传统机器学习工作流程的正式步骤;但是，为您的问题选择合适的模型是一项关键任务，可以明确并简化后续步骤中的工作。</p>
+</blockquote>
+<p>以下部分详细介绍了每个步骤，以及如何为文本数据实现它们。</p>
+<h2 id="第1步：收集数据"><a href="#第1步：收集数据" class="headerlink" title="第1步：收集数据"></a>第1步：收集数据</h2><p><strong>收集数据是解决任何监督机器学习问题的最重要步骤，您的文本分类器只能与构建它的数据集一样好</strong>。</p>
+<p>如果您没有想要解决的特定问题并且只对一般的文本分类感兴趣，那么可以使用大量开源数据集。 您可以在我们的<a href="https://github.com/google/eng-edu/blob/master/ml/guides/text_classification/load_data.py" target="_blank" rel="noopener">GitHub仓库</a>中找到其中一些链接。 另一方面，如果您正在解决特定问题，则需要收集必要的数据。 许多组织提供用于访问其数据的公共API。例如，Twitter API或NY Times API。 您可以利用这些来解决您要解决的问题。</p>
+<p>以下是收集数据时需要记住的一些重要事项：</p>
+<ul>
+<li>如果您使用的是公共API，请在使用之前了解API的限制。 例如，某些API会对您进行查询的速率设置限制。</li>
+<li>你拥有的训练样例（在本指南的其余部分称为样本）越多越好。 这将有助于您的模型更好地概括。</li>
+<li>确保每个类或主题的样本数量不会过度失衡。 也就是说，每个类中应该有相当数量的样本。</li>
+<li>确保您的样品充分覆盖可能的输入空间，而不仅仅是常见情况。</li>
+</ul>
+<p>在本指南中，我们将使用<a href="http://ai.stanford.edu/~amaas/data/sentiment/" target="_blank" rel="noopener">Internet电影数据库（IMDb）电影评论数据集</a>来说明工作流程。 该数据集包含人们在IMDb网站上发布的电影评论，以及指示评论者是否喜欢该电影的相应标签（“正面”或“否定”）。 这是情绪分析问题的典型例子。</p>
+<h2 id="第2步：探索您的数据"><a href="#第2步：探索您的数据" class="headerlink" title="第2步：探索您的数据"></a>第2步：探索您的数据</h2><p>构建和训练模型只是工作流程的一部分。事先了解数据的特征将使您能够构建更好的模型。这可能只是意味着获得更高的准确性。它还可能意味着需要更少的数据用于训练或更少的计算资源。</p>
+<h3 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h3><p>首先，让我们将数据集加载到Python中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_imdb_sentiment_analysis_dataset</span><span class="params">(data_path, seed=<span class="number">123</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Loads the IMDb movie reviews sentiment analysis dataset.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        data_path: string, path to the data directory.</span></span><br><span class="line"><span class="string">        seed: int, seed for randomizer.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        A tuple of training and validation data.</span></span><br><span class="line"><span class="string">        Number of training samples: 25000</span></span><br><span class="line"><span class="string">        Number of test samples: 25000</span></span><br><span class="line"><span class="string">        Number of categories: 2 (0 - negative, 1 - positive)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # References</span></span><br><span class="line"><span class="string">        Mass et al., http://www.aclweb.org/anthology/P11-1015</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Download and uncompress archive from:</span></span><br><span class="line"><span class="string">        http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    imdb_data_path = os.path.join(data_path, <span class="string">'aclImdb'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Load the training data</span></span><br><span class="line">    train_texts = []</span><br><span class="line">    train_labels = []</span><br><span class="line">    <span class="keyword">for</span> category <span class="keyword">in</span> [<span class="string">'pos'</span>, <span class="string">'neg'</span>]:</span><br><span class="line">        train_path = os.path.join(imdb_data_path, <span class="string">'train'</span>, category)</span><br><span class="line">        <span class="keyword">for</span> fname <span class="keyword">in</span> sorted(os.listdir(train_path)):</span><br><span class="line">            <span class="keyword">if</span> fname.endswith(<span class="string">'.txt'</span>):</span><br><span class="line">                <span class="keyword">with</span> open(os.path.join(train_path, fname)) <span class="keyword">as</span> f:</span><br><span class="line">                    train_texts.append(f.read())</span><br><span class="line">                train_labels.append(<span class="number">0</span> <span class="keyword">if</span> category == <span class="string">'neg'</span> <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Load the validation data.</span></span><br><span class="line">    test_texts = []</span><br><span class="line">    test_labels = []</span><br><span class="line">    <span class="keyword">for</span> category <span class="keyword">in</span> [<span class="string">'pos'</span>, <span class="string">'neg'</span>]:</span><br><span class="line">        test_path = os.path.join(imdb_data_path, <span class="string">'test'</span>, category)</span><br><span class="line">        <span class="keyword">for</span> fname <span class="keyword">in</span> sorted(os.listdir(test_path)):</span><br><span class="line">            <span class="keyword">if</span> fname.endswith(<span class="string">'.txt'</span>):</span><br><span class="line">                <span class="keyword">with</span> open(os.path.join(test_path, fname)) <span class="keyword">as</span> f:</span><br><span class="line">                    test_texts.append(f.read())</span><br><span class="line">                test_labels.append(<span class="number">0</span> <span class="keyword">if</span> category == <span class="string">'neg'</span> <span class="keyword">else</span> <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Shuffle the training data and labels.</span></span><br><span class="line">    random.seed(seed)</span><br><span class="line">    random.shuffle(train_texts)</span><br><span class="line">    random.seed(seed)</span><br><span class="line">    random.shuffle(train_labels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ((train_texts, np.array(train_labels)),</span><br><span class="line">            (test_texts, np.array(test_labels)))</span><br></pre></td></tr></table></figure>
+<h3 id="检查数据"><a href="#检查数据" class="headerlink" title="检查数据"></a>检查数据</h3><p>加载数据后，最好对其进行一些检查：选择一些样本并手动检查它们是否符合您的预期。 例如，打印一些随机样本以查看情绪标签是否与评论的情绪相对应。以下是我们从IMDb数据集中随机选取的评论：“Ten minutes worth of story stretched out into the better part of two hours. When nothing of any significance had happened at the halfway point I should have left.”预期的情绪（负面）与样本的标签相匹配。</p>
+<h3 id="收集关键指标"><a href="#收集关键指标" class="headerlink" title="收集关键指标"></a>收集关键指标</h3><p>验证数据后，请收集以下有助于表征文本分类问题的重要指标：</p>
+<ol>
+<li>样本数（Number of samples）：数据中的示例总数。</li>
+<li>类别数量（Number of classes）：数据中的主题或类别总数。</li>
+<li>每个类的样本数（Number of samples per class）：每个类的样本数（主题/类别）。 在平衡数据集中，所有类都将具有相似数量的样本; 在不平衡的数据集中，每个类中的样本数量会有很大差异。</li>
+<li>每个样本的单词数（Number of words per sample）：样本中单词数量的中位数。</li>
+<li>单词的频率分布（Frequency distribution of words）：显示数据集中每个单词的频率（出现次数）的分布。</li>
+<li>样本长度分布（Distribution of sample length）：分布显示数据集中每个样本的单词数。</li>
+</ol>
+<p>让我们看看这些指标的值对于IMDb评论数据集是什么（有关字频和样本长度分布的图，请参见图3和图4）。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Metric name    Metric</th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of samples</td>
+<td>25000</td>
+</tr>
+<tr>
+<td>Number of classes</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Number of samples per class</td>
+<td>12500</td>
+</tr>
+<tr>
+<td>Number of words per sample</td>
+<td>174</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>表1：IMDb审查数据集指标</p>
+<p><a href="https://github.com/google/eng-edu/blob/master/ml/guides/text_classification/explore_data.py" target="_blank" rel="noopener">explore_data.py</a>包含用于计算和分析这些指标的函数。以下是几个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_num_words_per_sample</span><span class="params">(sample_texts)</span>:</span></span><br><span class="line">    <span class="string">"""Returns the median number of words per sample given corpus.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        sample_texts: list, sample texts.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        int, median number of words per sample.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    num_words = [len(s.split()) <span class="keyword">for</span> s <span class="keyword">in</span> sample_texts]</span><br><span class="line">    <span class="keyword">return</span> np.median(num_words)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_sample_length_distribution</span><span class="params">(sample_texts)</span>:</span></span><br><span class="line">    <span class="string">"""Plots the sample length distribution.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        samples_texts: list, sample texts.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    plt.hist([len(s) <span class="keyword">for</span> s <span class="keyword">in</span> sample_texts], <span class="number">50</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'Length of a sample'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'Number of samples'</span>)</span><br><span class="line">    plt.title(<span class="string">'Sample length distribution'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/FrequencyDistributionOfWordsIMDb.svg" alt=""><br>图3：IMDb的词的频率分布</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/DistributionOfSampleLengthIMDb.svg" alt=""><br>图4：IMDb的样本长度分布</p>
+<h2 id="步骤2-5：选择一个模型"><a href="#步骤2-5：选择一个模型" class="headerlink" title="步骤2.5：选择一个模型"></a>步骤2.5：选择一个模型</h2><p>此时，我们已经汇总了数据集，并深入了解了数据的关键特征。接下来，根据我们在第2步中收集的指标，我们应该考虑应该使用哪种分类模型。这意味着/提出问题，例如“我们如何将文本数据呈现给期望数字输入的算法？”（这称为数据预处理和矢量化），“我们应该使用什么类型的模型？”，“什么配置参数我们应该使用我们的模型吗？”等。</p>
+<p>经过数十年的研究，我们可以访问大量的数据预处理和模型配置选项。然而，可供选择的大量可行选项的可用性极大地增加了手头的特定问题的复杂性和范围。鉴于最佳选择可能并不明显，一个天真的解决方案是尽力尝试每一种可能的选择，通过直觉修剪一些选择。然而，这将是非常昂贵的。</p>
+<p>在本指南中，我们尝试显着简化选择文本分类模型的过程。对于给定的数据集，我们的目标是找到实现接近最大精度的算法，同时最小化训练所需的计算时间。我们针对不同类型的问题（特别是情感分析和主题分类问题）运行了大量（~450K）实验，使用12个数据集，交替用于不同数据预处理技术和不同模型体系结构之间的每个数据集。这有助于我们识别影响最佳选择的数据集参数。</p>
+<p>下面的模型选择算法和流程图是我们实验的总结。如果您还不理解其中使用的所有术语，请不要担心，本指南的以下部分将对其进行深入解释。</p>
+<h3 id="数据准备与模型构建算法"><a href="#数据准备与模型构建算法" class="headerlink" title="数据准备与模型构建算法"></a>数据准备与模型构建算法</h3><ol>
+<li>计算样本数量/每个样本的单词数的比率（the number of samples/number of words per sample）。</li>
+<li>如果此比率小于1500，则将文本标记为n-gram并使用简单的多层感知器（MLP）模型对它们进行分类（下面的流程图中的左分支）：<br>a. 将样本分成单词n-gram，将n-gram转换为向量。<br>b. 评分向量的重要性，然后使用分数选择前20K。<br>c. 建立MLP模型。</li>
+<li>如果比率大于1500，则将文本标记为序列并使用sepCNN模型对它们进行分类（下面的流程图中的右分支）：<br>a. 将样本分成单词，根据频率选择前20K词。<br>b. 将样本转换为单词序列向量。<br>c. 如果原始样本数/每个样本比率的单词数小于15K，则使用sepCNN模型的微调预训练嵌入可能会提供最佳结果。</li>
+<li>使用不同的超参数值测量模型性能，以找到数据集的最佳模型配置。</li>
+</ol>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/TextClassificationFlowchart.png" alt=""><br>图5：文本分类流程图</p>
+<p>此流程图回答了两个关键问题：</p>
+<ol>
+<li>我们应该使用哪种学习算法或模型？</li>
+<li>我们应该如何准备数据以有效地学习文本和标签之间的关系？</li>
+</ol>
+<p>第二个问题的答案取决于第一个问题的答案，我们预先处理数据的方式将取决于我们选择的模型。 模型可以大致分为两类：使用单词排序信息的那些（序列模型），以及仅将文本视为“bags”（sets）单词（n-gram模型）的模型。 序列模型的类型包括卷积神经网络（CNN），递归神经网络（RNN）及其变体。 n-gram模型的类型包括逻辑回归，简单的多层感知器（MLP或完全连接的神经网络），梯度增强树和支持向量机。</p>
+<p><strong>从我们的实验中，我们观察到“样本数”（S）与“每个样本的单词数”（W）的比率与哪个模型表现良好相关</strong>。</p>
+<p>当该比率的值很小（小于1500）时，以n-gram为输入的小型多层感知器（我们称之为选项A）表现得更好或至少与序列模型一样好。 MLP很容易定义和理解，并且它们比序列模型花费更少的计算时间。当此比率的值很大（大于等于1500）时，使用序列模型（选项B）。 在接下来的步骤中，您可以根据样本/单词样本比率跳过所选模型类型的相关小节（标记为A或B）。</p>
+<p>在我们的IMDb审查数据集的情况下，样本/每个样本的单词比率是~144。 这意味着我们将创建一个MLP模型。</p>
+<p><strong>使用上述流程图时，请注意，由于以下几个原因，它可能不一定会使您获得问题的最佳结果</strong>：</p>
+<ul>
+<li>你的目标可能不同。 我们针对可在尽可能短的计算时间内实现的最佳准确率（accuracy）进行了优化。 替代流程可以产生更好的结果，例如，在优化曲线下面积（AUC）时。</li>
+<li>我们选择了典型和常见的算法选择。 随着该领域的不断发展，新的前言算法和增强功能可能与您的数据相关，并且可能表现更好。</li>
+<li>虽然我们使用多个数据集来推导和验证流程图，但您的数据集可能有一些特定的特征，这些特征有利于使用备用流程。</li>
+</ul>
+<h2 id="第3步：准备数据"><a href="#第3步：准备数据" class="headerlink" title="第3步：准备数据"></a>第3步：准备数据</h2><p>在将数据提供给模型之前，需要将其转换为模型可以理解的格式。</p>
+<p>首先，我们收集的数据样本可能是特定的顺序。 我们不希望任何与样本排序相关的信息影响文本和标签之间的关系。 例如，如果数据集按类排序，然后分成训练/验证集，则这些集将不能代表整体数据分布。</p>
+<p>确保模型不受数据顺序影响的简单最佳实践是在执行任何其他操作之前始终对数据进行混洗。 如果您的数据已经拆分为训练和验证集，请确保转换验证数据的方式与转换训练数据的方式相同。 如果您还没有单独的训练和验证集，您可以在洗牌后拆分样本; 通常使用80％的样本进行训练，20％进行验证。</p>
+<p>其次，机器学习算法将数字作为输入。 这意味着我们需要将文本转换为数字向量。 此过程有两个步骤：</p>
+<ol>
+<li>标记化（Tokenization，广义上的“分词”）：将文本分为单词或较小的子文本，这样可以很好地概括文本和标签之间的关系。 这决定了数据集的“词汇表”，一组唯一的令牌集（unique tokens，令牌集就是储存令牌token和数字之间映射的字典）。</li>
+<li>矢量化：定义一个很好的数值度量来表征这些文本。</li>
+</ol>
+<p>让我们看看如何对n-gram向量和序列向量执行这两个步骤，以及如何使用特征选择和归一化技术优化向量表示。</p>
+<h3 id="N-gram向量-选项A"><a href="#N-gram向量-选项A" class="headerlink" title="N-gram向量[选项A]"></a>N-gram向量[选项A]</h3><p>在随后的段落中，我们将看到如何对n-gram模型进行标记化和矢量化。我们还将介绍如何使用特征选择和规范化技术优化n-gram表示。</p>
+<p>在n-gram向量中，文本被表示为唯一n-gram的集合：n个相邻令牌的组（通常是单词）。 考虑一下文本“The mouse ran up the clock”。 在这里，单词unigrams（n = 1）是 [‘the’，’mouse’，’ran’，’up’，’clock’]，bigrams这个词（n = 2）是 [‘the mouse’, ‘mouse ran’, ‘ran up’, ‘up the’, ‘the clock’]，等等。</p>
+<h4 id="标记化-Tokenization"><a href="#标记化-Tokenization" class="headerlink" title="标记化 Tokenization"></a>标记化 Tokenization</h4><p>我们发现，将单词unigrams + bigrams标记为提供良好的准确性，同时减少计算时间。</p>
+<h4 id="矢量化-Vectorization"><a href="#矢量化-Vectorization" class="headerlink" title="矢量化 Vectorization"></a>矢量化 Vectorization</h4><p>一旦我们将文本样本分成n-gram，我们需要将这些n-gram转换为我们的机器学习模型可以处理的数值向量。下面的示例显示了为两个文本生成的unigrams和bigrams分配的索引。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Texts: &apos;The mouse ran up the clock&apos; and &apos;The mouse ran down&apos;</span><br><span class="line">Index assigned for every token: &#123;&apos;the&apos;: 7, &apos;mouse&apos;: 2, &apos;ran&apos;: 4, &apos;up&apos;: 10,</span><br><span class="line">  &apos;clock&apos;: 0, &apos;the mouse&apos;: 9, &apos;mouse ran&apos;: 3, &apos;ran up&apos;: 6, &apos;up the&apos;: 11, &apos;the</span><br><span class="line">clock&apos;: 8, &apos;down&apos;: 1, &apos;ran down&apos;: 5&#125;</span><br></pre></td></tr></table></figure>
+<p>将索引（indexes）分配给n-gram后，我们通常使用以下选项之一进行矢量化。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>矢量化方法名称</th>
+<th>说明</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>One-hot encoding</strong></td>
+<td>每个示例文本都表示为一个向量，表示文本中是否存在令牌（token）。</td>
+<td>‘The mouse ran up the clock’ = [1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1]</td>
+</tr>
+<tr>
+<td><strong>Count encoding</strong></td>
+<td>每个示例文本都表示为一个向量，指示文本中令牌的计数。请注意，对应于unigrams (n = 1) ，’the’对应的元素现在表示为2，因为单词“the”在文本中出现两次。</td>
+<td>‘The mouse ran up the clock’ = [1, 0, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1]</td>
+</tr>
+<tr>
+<td><strong>tf-idf encoding</strong></td>
+<td>上述两种方法的问题在于，在所有文档中以相似频率出现的常用词（即，对数据集中的文本样本不是特别独特的词）不会受到惩罚。 例如，像“a”这样的单词将在所有文本中频繁出现。 因此，对于“the”而言，比其他更有意义的单词更高的令牌数量并不是非常有用。</td>
+<td>‘The mouse ran up the clock’ = [0.33, 0, 0.23, 0.23, 0.23, 0, 0.33, 0.47, 0.33, 0.23, 0.33, 0.33] (See Scikit-learn TdidfTransformer)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>还有许多其他矢量表示，但以上三种是最常用的。</p>
+<p>我们观察到tf-idf编码在准确性方面略优于其他两个（平均：高出0.25-15％），并建议使用此方法对n-gram进行矢量化。 但是，请记住它占用更多内存（因为它使用浮点表示）并且需要更多时间来计算，特别是对于大型数据集（在某些情况下可能需要两倍的时间）。</p>
+<h4 id="特征选择-Feature-selection"><a href="#特征选择-Feature-selection" class="headerlink" title="特征选择 Feature selection"></a>特征选择 Feature selection</h4><p>当我们将数据集中的所有文本转换为单词uni + bigram标记时，我们最终可能会有数万个标记。 并非所有这些令牌/特征都有助于标签预测。 因此我们可以删除某些令牌，例如在数据集中极少发生的令牌。 我们还可以度量特征重要性（每个标记对标签预测的贡献程度），并且仅包括信息量最大的标记。</p>
+<p>有许多统计函数可以获取特征和相应的标签并输出特征重要性分数。 两个常用的函数是f_classif和chi2。 我们的实验表明，这两个功能同样表现良好。</p>
+<p>更重要的是，我们发现许多数据集的精度达到了大约20,000个特征（见图6）。 在此阈值上添加更多特征的贡献非常小，有时甚至会导致过度拟合并降低性能。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/TopKvsAccuracy.svg" alt=""><br>图6：Top K 特征与准确率。在整个数据集中，精确度达到20K左右的特征。</p>
+<h4 id="标准化-Normalization"><a href="#标准化-Normalization" class="headerlink" title="标准化 Normalization"></a>标准化 Normalization</h4><p>标准化将所有要素/样本值转换为小值和类似值。 这简化了学习算法中的梯度下降收敛。 从我们所看到的情况来看，数据预处理期间的规范化似乎并没有在文本分类问题中增加太多价值，我们建议您跳过此步骤。</p>
+<p>以下代码汇总了上述所有步骤：</p>
+<ul>
+<li>将文本样本标记为单词uni + bigrams，</li>
+<li>使用tf-idf编码进行矢量化，</li>
+<li>通过丢弃出现少于2次的标记并使用f_classif计算特征重要性，仅从标记向量中选择前20,000个特征。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> SelectKBest</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_selection <span class="keyword">import</span> f_classif</span><br><span class="line"></span><br><span class="line"><span class="comment"># Vectorization parameters</span></span><br><span class="line"><span class="comment"># Range (inclusive) of n-gram sizes for tokenizing text.</span></span><br><span class="line">NGRAM_RANGE = (<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Limit on the number of features. We use the top 20K features.</span></span><br><span class="line">TOP_K = <span class="number">20000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Whether text should be split into word or character n-grams.</span></span><br><span class="line"><span class="comment"># One of 'word', 'char'.</span></span><br><span class="line">TOKEN_MODE = <span class="string">'word'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Minimum document/corpus frequency below which a token will be discarded.</span></span><br><span class="line">MIN_DOCUMENT_FREQUENCY = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ngram_vectorize</span><span class="params">(train_texts, train_labels, val_texts)</span>:</span></span><br><span class="line">    <span class="string">"""Vectorizes texts as n-gram vectors.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    1 text = 1 tf-idf vector the length of vocabulary of unigrams + bigrams.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        train_texts: list, training text strings.</span></span><br><span class="line"><span class="string">        train_labels: np.ndarray, training labels.</span></span><br><span class="line"><span class="string">        val_texts: list, validation text strings.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        x_train, x_val: vectorized training and validation texts</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Create keyword arguments to pass to the 'tf-idf' vectorizer.</span></span><br><span class="line">    kwargs = &#123;</span><br><span class="line">            <span class="string">'ngram_range'</span>: NGRAM_RANGE,  <span class="comment"># Use 1-grams + 2-grams.</span></span><br><span class="line">            <span class="string">'dtype'</span>: <span class="string">'int32'</span>,</span><br><span class="line">            <span class="string">'strip_accents'</span>: <span class="string">'unicode'</span>,</span><br><span class="line">            <span class="string">'decode_error'</span>: <span class="string">'replace'</span>,</span><br><span class="line">            <span class="string">'analyzer'</span>: TOKEN_MODE,  <span class="comment"># Split text into word tokens.</span></span><br><span class="line">            <span class="string">'min_df'</span>: MIN_DOCUMENT_FREQUENCY,</span><br><span class="line">    &#125;</span><br><span class="line">    vectorizer = TfidfVectorizer(**kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Learn vocabulary from training texts and vectorize training texts.</span></span><br><span class="line">    x_train = vectorizer.fit_transform(train_texts)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Vectorize validation texts.</span></span><br><span class="line">    x_val = vectorizer.transform(val_texts)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Select top 'k' of the vectorized features.</span></span><br><span class="line">    selector = SelectKBest(f_classif, k=min(TOP_K, x_train.shape[<span class="number">1</span>]))</span><br><span class="line">    selector.fit(x_train, train_labels)</span><br><span class="line">    x_train = selector.transform(x_train).astype(<span class="string">'float32'</span>)</span><br><span class="line">    x_val = selector.transform(x_val).astype(<span class="string">'float32'</span>)</span><br><span class="line">    <span class="keyword">return</span> x_train, x_val</span><br></pre></td></tr></table></figure>
+<p>使用n-gram向量表示，我们丢弃了大量关于单词顺序和语法的信息（当n&gt; 1时，我们可以保留一些部分排序信息）。 这被称为词袋方法。 该表示与不考虑排序的模型结合使用，例如逻辑回归，多层感知器，梯度增强机器，支持向量机。</p>
+<h3 id="序列向量-选项B"><a href="#序列向量-选项B" class="headerlink" title="序列向量 [选项B]"></a>序列向量 [选项B]</h3><p>在随后的段落中，我们将看到如何对序列模型进行标记化和矢量化。 我们还将介绍如何使用特征选择和标准化技术优化序列表示。</p>
+<p>对于某些文本示例，单词顺序对于文本的含义至关重要。 例如，句子，“I used to hate my commute. My new bike changed that completely”只有在按顺序阅读时才能理解。 诸如CNN / RNN之类的模型可以从样本中的单词顺序推断出含义。 对于这些模型，我们将文本表示为一系列标记，保留顺序。</p>
+<h4 id="标记化-Tokenization-1"><a href="#标记化-Tokenization-1" class="headerlink" title="标记化 Tokenization"></a>标记化 Tokenization</h4><p>文本可以表示为字符序列或单词序列。 我们发现使用单词级表示比字符标记提供更好的性能。 这也是工业界遵循的一般规范。 只有当文本有很多拼写错误时才使用字符标记，这通常不是这种情况。</p>
+<h4 id="矢量化-Vectorization-1"><a href="#矢量化-Vectorization-1" class="headerlink" title="矢量化 Vectorization"></a>矢量化 Vectorization</h4><p>一旦我们将文本样本转换为单词序列，我们需要将这些序列转换为数字向量。 下面的示例显示分配给为两个文本生成的unigrams的索引，然后显示转换第一个文本的令牌索引序列。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Texts: &apos;The mouse ran up the clock&apos; and &apos;The mouse ran down&apos;</span><br><span class="line">Index assigned for every token: &#123;&apos;clock&apos;: 5, &apos;ran&apos;: 3, &apos;up&apos;: 4, &apos;down&apos;: 6, &apos;the&apos;: 1, &apos;mouse&apos;: 2&#125;.</span><br><span class="line">NOTE: &apos;the&apos; occurs most frequently, so the index value of 1 is assigned to it.</span><br><span class="line">Some libraries reserve index 0 for unknown tokens, as is the case here.</span><br><span class="line">Sequence of token indexes: &apos;The mouse ran up the clock&apos; = [1, 2, 3, 4, 1, 5]</span><br></pre></td></tr></table></figure>
+<p>有两个选项可用于矢量化标记序列：<br><strong>One-hot encoding</strong> 在n维空间中使用单词向量表示序列，其中n =词汇量的大小。 当我们使用字符级标记化时，这种表示很有效，因为字符词汇量很小。 当我们将其标记为单词时，词汇表通常会有数万个标记，使得单热的向量非常稀疏且效率低下。 例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&apos;The mouse ran up the clock&apos; = [</span><br><span class="line">  [0, 1, 0, 0, 0, 0, 0],</span><br><span class="line">  [0, 0, 1, 0, 0, 0, 0],</span><br><span class="line">  [0, 0, 0, 1, 0, 0, 0],</span><br><span class="line">  [0, 0, 0, 0, 1, 0, 0],</span><br><span class="line">  [0, 1, 0, 0, 0, 0, 0],</span><br><span class="line">  [0, 0, 0, 0, 0, 1, 0]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p><strong>Word embeddings</strong><br>单词之间具有相关的含义。 因此，我们可以在密集的向量空间（〜几百个实数）中表示单词标记，其中单词之间的位置和距离表示它们在语义上有多相似（参见图7）。 这种表示称为单词嵌入（Word embeddings）。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/WordEmbeddings.png" alt=""><br>图7：词嵌入 Word embeddings</p>
+<p>序列模型通常具有这样的嵌入层作为它们的第一层。 该层学习在训练过程中将单词索引序列转换为单词嵌入向量，使得每个单词索引被映射到表示该单词在语义空间中的位置的实数值的密集向量（参见图8）。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/EmbeddingLayer.png" alt=""><br>图8：嵌入层 Embedding layer</p>
+<h4 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h4><p>并非我们数据中的所有单词都有助于标签预测。 我们可以通过从词汇表中丢弃罕见或不相关的单词来优化我们的学习过程。 事实上，我们观察到使用最常见的20,000个特征通常就足够了。 对于n-gram模型也是如此（参见图6）。</p>
+<p>让我们将所有上述步骤放在序列矢量化中。 以下代码执行以下任务：</p>
+<ul>
+<li>将文本标记为单词</li>
+<li>使用前20,000个令牌创建词汇表</li>
+<li>将标记转换为序列向量</li>
+<li>将序列填充到固定的序列长度</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python.keras.preprocessing <span class="keyword">import</span> sequence</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.preprocessing <span class="keyword">import</span> text</span><br><span class="line"></span><br><span class="line"><span class="comment"># Vectorization parameters</span></span><br><span class="line"><span class="comment"># Limit on the number of features. We use the top 20K features.</span></span><br><span class="line">TOP_K = <span class="number">20000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Limit on the length of text sequences. Sequences longer than this</span></span><br><span class="line"><span class="comment"># will be truncated.</span></span><br><span class="line">MAX_SEQUENCE_LENGTH = <span class="number">500</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sequence_vectorize</span><span class="params">(train_texts, val_texts)</span>:</span></span><br><span class="line">    <span class="string">"""Vectorizes texts as sequence vectors.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    1 text = 1 sequence vector with fixed length.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        train_texts: list, training text strings.</span></span><br><span class="line"><span class="string">        val_texts: list, validation text strings.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        x_train, x_val, word_index: vectorized training and validation</span></span><br><span class="line"><span class="string">            texts and word index dictionary.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Create vocabulary with training texts.</span></span><br><span class="line">    tokenizer = text.Tokenizer(num_words=TOP_K)</span><br><span class="line">    tokenizer.fit_on_texts(train_texts)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Vectorize training and validation texts.</span></span><br><span class="line">    x_train = tokenizer.texts_to_sequences(train_texts)</span><br><span class="line">    x_val = tokenizer.texts_to_sequences(val_texts)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Get max sequence length.</span></span><br><span class="line">    max_length = len(max(x_train, key=len))</span><br><span class="line">    <span class="keyword">if</span> max_length &gt; MAX_SEQUENCE_LENGTH:</span><br><span class="line">        max_length = MAX_SEQUENCE_LENGTH</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Fix sequence length to max value. Sequences shorter than the length are</span></span><br><span class="line">    <span class="comment"># padded in the beginning and sequences longer are truncated</span></span><br><span class="line">    <span class="comment"># at the beginning.</span></span><br><span class="line">    x_train = sequence.pad_sequences(x_train, maxlen=max_length)</span><br><span class="line">    x_val = sequence.pad_sequences(x_val, maxlen=max_length)</span><br><span class="line">    <span class="keyword">return</span> x_train, x_val, tokenizer.word_index</span><br></pre></td></tr></table></figure>
+<h3 id="标签矢量化-Label-vectorization"><a href="#标签矢量化-Label-vectorization" class="headerlink" title="标签矢量化 Label vectorization"></a>标签矢量化 Label vectorization</h3><p>我们看到了如何将示例文本数据转换为数字向量。必须对标签应用类似的过程。我们可以简单地将标签转换为范围[0，num_classes - 1]中的值。 例如，如果有3个类，我们可以使用值0,1和2来表示它们。 在内部，网络将使用one-hot来表示这些值（以避免推断标签之间的错误关系）。 这种表示取决于我们在神经网络中使用的损失函数和最后一层激活函数。 我们将在下一节中详细了解这些内容。</p>
+<h2 id="第4步：构建，训练和评估您的模型"><a href="#第4步：构建，训练和评估您的模型" class="headerlink" title="第4步：构建，训练和评估您的模型"></a>第4步：构建，训练和评估您的模型</h2><p>在本节中，我们将致力于构建，训练和评估我们的模型。在第3步中，我们选择使用n-gram模型或序列模型，使用我们的S/W比率。现在，是时候编写我们的分类算法并对其进行训练。我们将使用TensorFlow与tf.keras API进行此操作。</p>
+<p>使用Keras构建机器学习模型就是将层，数据处理构建块组装在一起，就像我们组装乐高积木一样。 这些层允许我们指定我们想要对输入执行的转换序列。 由于我们的学习算法采用单个文本输入并输出单个分类，因此我们可以使用Sequential模型API创建线性图层堆栈。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/LinearStackOfLayers.png" alt=""><br>图9：线性堆叠层</p>
+<p>根据我们是在构建n-gram还是序列模型，输入层和中间层的构造将不同。但无论模型类型如何，最后一层对于给定问题都是相同的。</p>
+<h3 id="构建最后一层"><a href="#构建最后一层" class="headerlink" title="构建最后一层"></a>构建最后一层</h3><p>当我们只有2个类（二进制分类）时，我们的模型应输出单个概率分数。 例如，对于给定的输入样本输出0.2意味着“该样本在0级中的20％置信度，在类1中的80％。”为了输出这样的概率分数，最后一层的激活函数应该是 sigmoid函数，用于训练模型的损失函数应该是二元交叉熵（见图10，左）。</p>
+<p>当有超过2个类（多类分类）时，我们的模型应该为每个类输出一个概率分数。 这些分数的总和应为1.例如，输出{0：0.2,1：0.7,2：0.1}意味着“该样本在0级中的20％置信度，在1级中的70％，以及10 为了输出这些分数，最后一层的激活函数应该是softmax，用于训练模型的损失函数应该是分类交叉熵。 （见图10，右）。</p>
+<p><img src="/2019/06/11/文本分类_谷歌机器学习指南/LastLayer.png" alt=""><br>图10：最后一层</p>
+<p>下面的代码定义了一个函数，它将类的数量作为输入，并输出适当数量的层单元（1个单元用于二进制分类;否则每个类1个单元）和相应的激活函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_last_layer_units_and_activation</span><span class="params">(num_classes)</span>:</span></span><br><span class="line">    <span class="string">"""Gets the # units and activation function for the last network layer.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        num_classes: int, number of classes.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        units, activation values.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> num_classes == <span class="number">2</span>:</span><br><span class="line">        activation = <span class="string">'sigmoid'</span></span><br><span class="line">        units = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        activation = <span class="string">'softmax'</span></span><br><span class="line">        units = num_classes</span><br><span class="line">    <span class="keyword">return</span> units, activation</span><br></pre></td></tr></table></figure>
+<p>以下两节介绍了n-gram模型和序列模型的剩余模型层的创建。</p>
+<p>当S / W比率很小时，我们发现n-gram模型比序列模型表现更好。当存在大量小的密集向量时，序列模型更好。 这是因为在密集空间中学习嵌入关系，这在许多样本中都是最好的。</p>
+<h3 id="构建n-gram模型-选项A"><a href="#构建n-gram模型-选项A" class="headerlink" title="构建n-gram模型[选项A]"></a>构建n-gram模型[选项A]</h3><p>我们将独立处理令牌（不考虑词序）的模型称为n-gram模型。 简单的多层感知器（包括逻辑回归），梯度增强机器和支持向量机模型都属于这一类; 他们无法利用任何有关文本排序的信息。</p>
+<p>我们比较了上面提到的一些n-gram模型的性能，并观察到多层感知器（MLP）通常比其他选项表现更好。MLP易于定义和理解，提供良好的准确性，并且需要相对较少的计算。</p>
+<p>以下代码定义了tf.keras中的两层MLP模型，添加了几个Dropout层用于正则化（以防止过度拟合训练样本）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python.keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Dropout</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mlp_model</span><span class="params">(layers, units, dropout_rate, input_shape, num_classes)</span>:</span></span><br><span class="line">    <span class="string">"""Creates an instance of a multi-layer perceptron model.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        layers: int, number of `Dense` layers in the model.</span></span><br><span class="line"><span class="string">        units: int, output dimension of the layers.</span></span><br><span class="line"><span class="string">        dropout_rate: float, percentage of input to drop at Dropout layers.</span></span><br><span class="line"><span class="string">        input_shape: tuple, shape of input to the model.</span></span><br><span class="line"><span class="string">        num_classes: int, number of output classes.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        An MLP model instance.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    op_units, op_activation = _get_last_layer_units_and_activation(num_classes)</span><br><span class="line">    model = models.Sequential()</span><br><span class="line">    model.add(Dropout(rate=dropout_rate, input_shape=input_shape))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(layers<span class="number">-1</span>):</span><br><span class="line">        model.add(Dense(units=units, activation=<span class="string">'relu'</span>))</span><br><span class="line">        model.add(Dropout(rate=dropout_rate))</span><br><span class="line"></span><br><span class="line">    model.add(Dense(units=op_units, activation=op_activation))</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<h3 id="构建序列模型-选项B"><a href="#构建序列模型-选项B" class="headerlink" title="构建序列模型[选项B]"></a>构建序列模型[选项B]</h3><p>我们将可以从令牌相邻关系中学习的模型称为序列模型。这包括CNN和RNN类型的模型。数据被预处理为这些模型的序列向量。</p>
+<p>序列模型通常具有大量要学习的参数。这些模型中的第一层是嵌入层，它可以学习密集向量空间中单词之间的关系。学习单词关系最适合许多样本。</p>
+<p>给定数据集中的单词很可能不是该数据集唯一的。因此，我们可以使用其他数据集来学习数据集中的单词之间的关系。为此，我们可以将从另一个数据集中学习的嵌入转移到我们的嵌入层中。这些嵌入被称为预训练嵌入。使用预先训练的嵌入使模型在学习过程中处于领先地位。</p>
+<p>有预先训练好的嵌入可以使用大型语料库训练，例如GloVe。 GloVe已经在多个语料库（主要是维基百科）上接受过训练。我们使用GloVe嵌入版本测试了我们的序列模型的训练，并观察到如果我们冻结预训练嵌入的权重并仅训练网络的其余部分，则模型表现不佳。这可能是因为嵌入层被训练的上下文可能与我们使用它的上下文不同。</p>
+<p>在维基百科数据上训练的GloVe嵌入可能与我们的IMDb数据集中的语言模式不一致。 推断的关系可能需要一些更新 - 即，嵌入权重可能需要上下文调整。 我们分两个阶段完成：</p>
+<ol>
+<li>微调嵌入。在第一次运行中，嵌入层权重被冻结，我们允许网络的其余部分学习。 在此运行结束时，模型权重达到比未初始化值更好的状态。 对于第二次运行，我们允许嵌入层也学习，对网络中的所有权重进行微调。 我们将此过程称为使用微调嵌入。</li>
+<li>从新学习嵌入。微调嵌入可以提高精度。 然而，这是以增加训练网络所需的计算能力为代价的。 给定足够数量的样本，我们也可以从头开始学习嵌入。 我们观察到，对于S / W&gt; 15K，从头开始有效地产生与使用微调嵌入相同的精度。</li>
+</ol>
+<p>我们比较了不同的序列模型，如CNN，sepCNN（深度可分离卷积网络），RNN（LSTM和GRU），CNN-RNN和堆叠RNN，改变了模型架构。 我们发现sepCNNs是一种卷积网络变体，通常更具数据效率和计算效率，其性能优于其他模型。</p>
+<blockquote>
+<p>RNN仅与一小部分用例相关。我们没有尝试使用具有注意力的QRNN或RNN等模型，因为它们的准确性改进将被更高的计算成本所抵消。</p>
+</blockquote>
+<p>以下代码构造了一个四层sepCNN模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> tensorflow.python.keras <span class="keyword">import</span> models</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras <span class="keyword">import</span> initializers</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras <span class="keyword">import</span> regularizers</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Dense</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Dropout</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> Embedding</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> SeparableConv1D</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> MaxPooling1D</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.keras.layers <span class="keyword">import</span> GlobalAveragePooling1D</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sepcnn_model</span><span class="params">(blocks,</span></span></span><br><span class="line"><span class="function"><span class="params">                 filters,</span></span></span><br><span class="line"><span class="function"><span class="params">                 kernel_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                 embedding_dim,</span></span></span><br><span class="line"><span class="function"><span class="params">                 dropout_rate,</span></span></span><br><span class="line"><span class="function"><span class="params">                 pool_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                 input_shape,</span></span></span><br><span class="line"><span class="function"><span class="params">                 num_classes,</span></span></span><br><span class="line"><span class="function"><span class="params">                 num_features,</span></span></span><br><span class="line"><span class="function"><span class="params">                 use_pretrained_embedding=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                 is_embedding_trainable=False,</span></span></span><br><span class="line"><span class="function"><span class="params">                 embedding_matrix=None)</span>:</span></span><br><span class="line">    <span class="string">"""Creates an instance of a separable CNN model.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        blocks: int, number of pairs of sepCNN and pooling blocks in the model.</span></span><br><span class="line"><span class="string">        filters: int, output dimension of the layers.</span></span><br><span class="line"><span class="string">        kernel_size: int, length of the convolution window.</span></span><br><span class="line"><span class="string">        embedding_dim: int, dimension of the embedding vectors.</span></span><br><span class="line"><span class="string">        dropout_rate: float, percentage of input to drop at Dropout layers.</span></span><br><span class="line"><span class="string">        pool_size: int, factor by which to downscale input at MaxPooling layer.</span></span><br><span class="line"><span class="string">        input_shape: tuple, shape of input to the model.</span></span><br><span class="line"><span class="string">        num_classes: int, number of output classes.</span></span><br><span class="line"><span class="string">        num_features: int, number of words (embedding input dimension).</span></span><br><span class="line"><span class="string">        use_pretrained_embedding: bool, true if pre-trained embedding is on.</span></span><br><span class="line"><span class="string">        is_embedding_trainable: bool, true if embedding layer is trainable.</span></span><br><span class="line"><span class="string">        embedding_matrix: dict, dictionary with embedding coefficients.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        A sepCNN model instance.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    op_units, op_activation = _get_last_layer_units_and_activation(num_classes)</span><br><span class="line">    model = models.Sequential()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add embedding layer. If pre-trained embedding is used add weights to the</span></span><br><span class="line">    <span class="comment"># embeddings layer and set trainable to input is_embedding_trainable flag.</span></span><br><span class="line">    <span class="keyword">if</span> use_pretrained_embedding:</span><br><span class="line">        model.add(Embedding(input_dim=num_features,</span><br><span class="line">                            output_dim=embedding_dim,</span><br><span class="line">                            input_length=input_shape[<span class="number">0</span>],</span><br><span class="line">                            weights=[embedding_matrix],</span><br><span class="line">                            trainable=is_embedding_trainable))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        model.add(Embedding(input_dim=num_features,</span><br><span class="line">                            output_dim=embedding_dim,</span><br><span class="line">                            input_length=input_shape[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(blocks<span class="number">-1</span>):</span><br><span class="line">        model.add(Dropout(rate=dropout_rate))</span><br><span class="line">        model.add(SeparableConv1D(filters=filters,</span><br><span class="line">                                  kernel_size=kernel_size,</span><br><span class="line">                                  activation=<span class="string">'relu'</span>,</span><br><span class="line">                                  bias_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                                  depthwise_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                                  padding=<span class="string">'same'</span>))</span><br><span class="line">        model.add(SeparableConv1D(filters=filters,</span><br><span class="line">                                  kernel_size=kernel_size,</span><br><span class="line">                                  activation=<span class="string">'relu'</span>,</span><br><span class="line">                                  bias_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                                  depthwise_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                                  padding=<span class="string">'same'</span>))</span><br><span class="line">        model.add(MaxPooling1D(pool_size=pool_size))</span><br><span class="line"></span><br><span class="line">    model.add(SeparableConv1D(filters=filters * <span class="number">2</span>,</span><br><span class="line">                              kernel_size=kernel_size,</span><br><span class="line">                              activation=<span class="string">'relu'</span>,</span><br><span class="line">                              bias_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                              depthwise_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                              padding=<span class="string">'same'</span>))</span><br><span class="line">    model.add(SeparableConv1D(filters=filters * <span class="number">2</span>,</span><br><span class="line">                              kernel_size=kernel_size,</span><br><span class="line">                              activation=<span class="string">'relu'</span>,</span><br><span class="line">                              bias_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                              depthwise_initializer=<span class="string">'random_uniform'</span>,</span><br><span class="line">                              padding=<span class="string">'same'</span>))</span><br><span class="line">    model.add(GlobalAveragePooling1D())</span><br><span class="line">    model.add(Dropout(rate=dropout_rate))</span><br><span class="line">    model.add(Dense(op_units, activation=op_activation))</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+<h3 id="训练你的模型"><a href="#训练你的模型" class="headerlink" title="训练你的模型"></a>训练你的模型</h3><p>现在我们已经构建了模型架构，我们需要训练模型。训练涉及基于模型的当前状态进行预测，计算预测的不正确程度，以及更新网络的权重或参数以最小化该误差并使模型更好地预测。我们重复这个过程，直到我们的模型融合并且无法再学习。该过程有三个关键参数（见表2）。</p>
+<ul>
+<li>度量标准 Metric：如何使用度量标准衡量模型的性能。我们在实验中使用精度作为度量标准。</li>
+<li>损失函数 Loss function：用于计算损失值的函数，训练过程然后通过调整网络权重来尝试最小化该损失值。对于分类问题，交叉熵损失效果很好。</li>
+<li>优化器 Optimizer：一种函数，用于根据损失函数的输出决定如何更新网络权重。我们在实验中使用了流行的Adam优化器。</li>
+</ul>
+<p>在Keras中，我们可以使用compile方法将这些学习参数传递给模型。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Learning parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Metric</td>
+<td>accuracy</td>
+</tr>
+<tr>
+<td>Loss function - binary classification</td>
+<td>binary_crossentropy</td>
+</tr>
+<tr>
+<td>Loss function - multi class classification</td>
+<td>sparse_categorical_crossentropy</td>
+</tr>
+<tr>
+<td>Optimizer</td>
+<td>adam</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>表2：学习参数</p>
+<p>使用fit方法进行实际训练。 根据数据集的大小，这是大多数计算周期将花费的方法。 在每次训练迭代中，使用来自训练数据的batch_size样本数来计算损失，并根据此值更新权重一次。 一旦模型看到整个训练数据集，训练过程就完成了一个时代。 在每个时代结束时，我们使用验证数据集来评估模型的学习效果。 我们使用数据集重复训练预定数量的时期。 我们可以通过提前停止来优化这一点，当验证准确度在连续的时期之间稳定时，表明模型不再训练。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Training hyperparameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning rate</td>
+<td>1e-3</td>
+</tr>
+<tr>
+<td>Epochs</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>Batch size</td>
+<td>512</td>
+</tr>
+<tr>
+<td>Early stopping</td>
+<td>parameter: val_loss, patience: 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>表3：训练超参数</p>
+<p>以下Keras代码使用上面表2和表3中选择的参数实现了训练过程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_ngram_model</span><span class="params">(data,</span></span></span><br><span class="line"><span class="function"><span class="params">                      learning_rate=<span class="number">1e-3</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                      epochs=<span class="number">1000</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                      batch_size=<span class="number">128</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                      layers=<span class="number">2</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                      units=<span class="number">64</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                      dropout_rate=<span class="number">0.2</span>)</span>:</span></span><br><span class="line">    <span class="string">"""Trains n-gram model on the given dataset.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        data: tuples of training and test texts and labels.</span></span><br><span class="line"><span class="string">        learning_rate: float, learning rate for training model.</span></span><br><span class="line"><span class="string">        epochs: int, number of epochs.</span></span><br><span class="line"><span class="string">        batch_size: int, number of samples per batch.</span></span><br><span class="line"><span class="string">        layers: int, number of `Dense` layers in the model.</span></span><br><span class="line"><span class="string">        units: int, output dimension of Dense layers in the model.</span></span><br><span class="line"><span class="string">        dropout_rate: float: percentage of input to drop at Dropout layers.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Raises</span></span><br><span class="line"><span class="string">        ValueError: If validation data has label values which were not seen</span></span><br><span class="line"><span class="string">            in the training data.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Get the data.</span></span><br><span class="line">    (train_texts, train_labels), (val_texts, val_labels) = data</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Verify that validation labels are in the same range as training labels.</span></span><br><span class="line">    num_classes = explore_data.get_num_classes(train_labels)</span><br><span class="line">    unexpected_labels = [v <span class="keyword">for</span> v <span class="keyword">in</span> val_labels <span class="keyword">if</span> v <span class="keyword">not</span> <span class="keyword">in</span> range(num_classes)]</span><br><span class="line">    <span class="keyword">if</span> len(unexpected_labels):</span><br><span class="line">        <span class="keyword">raise</span> ValueError(<span class="string">'Unexpected label values found in the validation set:'</span></span><br><span class="line">                         <span class="string">' &#123;unexpected_labels&#125;. Please make sure that the '</span></span><br><span class="line">                         <span class="string">'labels in the validation set are in the same range '</span></span><br><span class="line">                         <span class="string">'as training labels.'</span>.format(</span><br><span class="line">                             unexpected_labels=unexpected_labels))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Vectorize texts.</span></span><br><span class="line">    x_train, x_val = vectorize_data.ngram_vectorize(</span><br><span class="line">        train_texts, train_labels, val_texts)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create model instance.</span></span><br><span class="line">    model = build_model.mlp_model(layers=layers,</span><br><span class="line">                                  units=units,</span><br><span class="line">                                  dropout_rate=dropout_rate,</span><br><span class="line">                                  input_shape=x_train.shape[<span class="number">1</span>:],</span><br><span class="line">                                  num_classes=num_classes)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Compile model with learning parameters.</span></span><br><span class="line">    <span class="keyword">if</span> num_classes == <span class="number">2</span>:</span><br><span class="line">        loss = <span class="string">'binary_crossentropy'</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        loss = <span class="string">'sparse_categorical_crossentropy'</span></span><br><span class="line">    optimizer = tf.keras.optimizers.Adam(lr=learning_rate)</span><br><span class="line">    model.compile(optimizer=optimizer, loss=loss, metrics=[<span class="string">'acc'</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create callback for early stopping on validation loss. If the loss does</span></span><br><span class="line">    <span class="comment"># not decrease in two consecutive tries, stop training.</span></span><br><span class="line">    callbacks = [tf.keras.callbacks.EarlyStopping(</span><br><span class="line">        monitor=<span class="string">'val_loss'</span>, patience=<span class="number">2</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Train and validate model.</span></span><br><span class="line">    history = model.fit(</span><br><span class="line">            x_train,</span><br><span class="line">            train_labels,</span><br><span class="line">            epochs=epochs,</span><br><span class="line">            callbacks=callbacks,</span><br><span class="line">            validation_data=(x_val, val_labels),</span><br><span class="line">            verbose=<span class="number">2</span>,  <span class="comment"># Logs once per epoch.</span></span><br><span class="line">            batch_size=batch_size)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Print results.</span></span><br><span class="line">    history = history.history</span><br><span class="line">    print(<span class="string">'Validation accuracy: &#123;acc&#125;, loss: &#123;loss&#125;'</span>.format(</span><br><span class="line">            acc=history[<span class="string">'val_acc'</span>][<span class="number">-1</span>], loss=history[<span class="string">'val_loss'</span>][<span class="number">-1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Save model.</span></span><br><span class="line">    model.save(<span class="string">'IMDb_mlp_model.h5'</span>)</span><br><span class="line">    <span class="keyword">return</span> history[<span class="string">'val_acc'</span>][<span class="number">-1</span>], history[<span class="string">'val_loss'</span>][<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="第5步：调整超参数"><a href="#第5步：调整超参数" class="headerlink" title="第5步：调整超参数"></a>第5步：调整超参数</h2><p>我们必须选择一些超参数来定义和训练模型。我们依靠直觉，例子和最佳实践建议。但是，我们首选的超参数值可能无法产生最佳结果。它只为我们提供了良好的训练起点。每个问题都是不同的，调整这些超参数将有助于改进我们的模型，以更好地代表手头问题的特殊性。让我们来看看我们使用的一些超参数以及调整它们的含义：</p>
+<ul>
+<li>模型中的层数 Number of layers in the model：神经网络中的层数是其复杂性的指标。我们在选择这个值时一定要小心。太多的图层将允许模型学习太多关于训练数据的信息，从而导致过度拟合。太少的图层会限制模型的学习能力，导致不合适。对于文本分类数据集，我们使用一层，两层和三层MLP进行了实验。具有两层的模型表现良好，并且在一些情况下优于三层模型。同样，我们尝试了四层和六层的sepCNNs，四层模型表现良好。</li>
+<li>每层的单位数 Number of units per layer：图层中的单位必须包含图层执行的变换的信息。对于第一层，这是由功能的数量驱动的。在后续层中，单元的数量取决于从前一层扩展或收缩表示的选择。尽量减少图层之间的信息丢失。我们尝试了[8,16,32,64]范围内的单位值，并且32/64单位运行良好。</li>
+<li>丢失率 Dropout rate：模型中使用辍学层进行正则化。它们定义要丢弃的输入分数作为过度拟合的预防措施。推荐范围：0.2-0.5。</li>
+<li>学习率 Learning rate：这是神经网络权重在迭代之间变化的速率。较大的学习率可能会导致权重大幅波动，我们可能永远找不到最佳值。低学习率是好的，但该模型将需要更多迭代才能收敛。从1e-4开始，从低位开始是一个好主意。如果训练非常缓慢，请增加此值。如果您的模型没有学习，请尝试降低学习率。</li>
+</ul>
+<p>我们调整了几个特定于我们的sepCNN模型的额外超参数：</p>
+<ul>
+<li>卷积核大小 Kernel size：卷积窗口的大小。 推荐值：3或5。</li>
+<li>嵌入维度 Embedding dimensions：我们想要用来表示字嵌入的维数，即每个单词向量的大小。 推荐值：50-300。 在我们的实验中，我们使用了具有200维度的GloVe嵌入和预先训练的嵌入层。</li>
+</ul>
+<p>尝试这些超参数，看看什么效果最好。 一旦为您的用例选择了性能最佳的超参数，您的模型就可以部署了。</p>
+<h2 id="第6步：部署模型"><a href="#第6步：部署模型" class="headerlink" title="第6步：部署模型"></a>第6步：部署模型</h2><p>您可以在Google Cloud上训练，调整和部署机器学习模型。 有关将模型部署到生产的指导，请参阅以下资源：</p>
+<ul>
+<li>有关如何使用TensorFlow服务部署Keras模型的<a href="https://blog.keras.io/keras-as-a-simplified-interface-to-tensorflow-tutorial.html#exporting-a-model-with-tensorflow-serving" target="_blank" rel="noopener">教程</a>。</li>
+<li>TensorFlow服务<a href="https://www.tensorflow.org/serving/?utm_source=DevSite&amp;utm_campaign=Text-Class-Guide&amp;utm_medium=referral&amp;utm_content=tensorflow&amp;utm_term=documentation" target="_blank" rel="noopener">文档</a>。</li>
+<li>在Google Cloud上训练和部署模型的<a href="https://cloud.google.com/ml-engine/docs/how-tos?utm_source=DevSite&amp;utm_campaign=Text-Class-Guide&amp;utm_medium=referral&amp;utm_content=cloud&amp;utm_term=guide" target="_blank" rel="noopener">指南</a>。</li>
+</ul>
+<p>部署模型时请记住以下关键事项：</p>
+<ul>
+<li>确保您的生产数据遵循与训练和评估数据相同的分布。</li>
+<li>通过收集更多训练数据定期重新评估。</li>
+<li>如果您的数据分布发生变化，请重新训练模型。</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>文本分类是各种产品中应用程序的基本机器学习问题。在本指南中，我们将文本分类工作流分解为几个步骤。 对于每个步骤，我们都根据您的特定数据集的特征建议了一种自定义方法。特别是，使用样本数与每个样本的单词数的比率，我们建议一种模型类型，使您更快地接近最佳性能。其他步骤围绕这个选择而设计。我们希望遵循指南，随附的<a href="https://github.com/google/eng-edu/tree/master/ml/guides/text_classification" target="_blank" rel="noopener">代码</a>和<a href="https://developers.google.com/machine-learning/guides/text-classification/step-2-5#figure-5" target="_blank" rel="noopener">流程图</a>将帮助您学习，理解并快速获得有关文本分类问题的首要解决方案。</p>
+<h2 id="附录：批量训练"><a href="#附录：批量训练" class="headerlink" title="附录：批量训练"></a>附录：批量训练</h2><p>非常大的数据集可能不适合分配给您的进程的内存。 在前面的步骤中，我们设置了一个管道，我们将整个数据集引入内存，准备数据，并将工作集传递给训练函数。 相反，Keras提供了另一种训练函数（fit_generator），可以批量提取数据。 这允许我们将数据管道中的转换仅应用于数据的一小部分（batch_size的一部分）。 在我们的实验中，我们使用批处理（GitHub中的代码）来处理数据集，例如DBPedia，Amazon评论，Ag新闻和Yelp评论。</p>
+<p>以下代码说明了如何生成数据批并将其提供给fit_generator。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_data_generator</span><span class="params">(x, y, num_features, batch_size)</span>:</span></span><br><span class="line">    <span class="string">"""Generates batches of vectorized texts for training/validation.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Arguments</span></span><br><span class="line"><span class="string">        x: np.matrix, feature matrix.</span></span><br><span class="line"><span class="string">        y: np.ndarray, labels.</span></span><br><span class="line"><span class="string">        num_features: int, number of features.</span></span><br><span class="line"><span class="string">        batch_size: int, number of samples per batch.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    # Returns</span></span><br><span class="line"><span class="string">        Yields feature and label data in batches.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    num_samples = x.shape[<span class="number">0</span>]</span><br><span class="line">    num_batches = num_samples // batch_size</span><br><span class="line">    <span class="keyword">if</span> num_samples % batch_size:</span><br><span class="line">        num_batches += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(num_batches):</span><br><span class="line">            start_idx = i * batch_size</span><br><span class="line">            end_idx = (i + <span class="number">1</span>) * batch_size</span><br><span class="line">            <span class="keyword">if</span> end_idx &gt; num_samples:</span><br><span class="line">                end_idx = num_samples</span><br><span class="line">            x_batch = x[start_idx:end_idx]</span><br><span class="line">            y_batch = y[start_idx:end_idx]</span><br><span class="line">            <span class="keyword">yield</span> x_batch, y_batch</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create training and validation generators.</span></span><br><span class="line">training_generator = _data_generator(</span><br><span class="line">    x_train, train_labels, num_features, batch_size)</span><br><span class="line">validation_generator = _data_generator(</span><br><span class="line">    x_val, val_labels, num_features, batch_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get number of training steps. This indicated the number of steps it takes</span></span><br><span class="line"><span class="comment"># to cover all samples in one epoch.</span></span><br><span class="line">steps_per_epoch = x_train.shape[<span class="number">0</span>] // batch_size</span><br><span class="line"><span class="keyword">if</span> x_train.shape[<span class="number">0</span>] % batch_size:</span><br><span class="line">    steps_per_epoch += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get number of validation steps.</span></span><br><span class="line">validation_steps = x_val.shape[<span class="number">0</span>] // batch_size</span><br><span class="line"><span class="keyword">if</span> x_val.shape[<span class="number">0</span>] % batch_size:</span><br><span class="line">    validation_steps += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Train and validate model.</span></span><br><span class="line">history = model.fit_generator(</span><br><span class="line">    generator=training_generator,</span><br><span class="line">    steps_per_epoch=steps_per_epoch,</span><br><span class="line">    validation_data=validation_generator,</span><br><span class="line">    validation_steps=validation_steps,</span><br><span class="line">    callbacks=callbacks,</span><br><span class="line">    epochs=epochs,</span><br><span class="line">    verbose=<span class="number">2</span>)  <span class="comment"># Logs once per epoch.</span></span><br></pre></td></tr></table></figure>
+<h2 id="相关内容"><a href="#相关内容" class="headerlink" title="相关内容"></a>相关内容</h2><ul>
+<li>对应的代码 <a href="https://github.com/yuanxiaosc/Hands-on-deep-learning" target="_blank" rel="noopener">https://github.com/yuanxiaosc/Hands-on-deep-learning</a></li>
+<li>英文版本指南 <a href="https://developers.google.com/machine-learning/guides/text-classification/" target="_blank" rel="noopener">Google machine-learning </a></li>
+</ul>
+<hr>
+<h2 id="进一步学习文本分类的方法"><a href="#进一步学习文本分类的方法" class="headerlink" title="进一步学习文本分类的方法"></a>进一步学习文本分类的方法</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>内容</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.52nlp.cn/%e5%a6%82%e4%bd%95%e7%94%a8%e6%b7%b1%e5%ba%a6%e5%ad%a6%e4%b9%a0%e5%81%9a%e5%a5%bd%e9%95%bf%e6%96%87%e6%9c%ac%e5%88%86%e7%b1%bb%e4%b8%8e%e6%b3%95%e5%be%8b%e6%96%87%e4%b9%a6%e6%99%ba%e8%83%bd%e5%8c%96" target="_blank" rel="noopener">达观数据曾彦能：如何用深度学习做好长文本分类与法律文书智能化处理</a></td>
+<td>文本分类领域走过路过不可错过的深度学习模型主要有FastText，TextCNN，HAN，DPCNN。本文试图在实践之后总结一下这些这些分类模型的理论框架，把这些模型相互联系起来，让大家在选择模型与调参的时候能有一些直觉与灵感。</td>
+<td>20190901</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/10/Multi-Task_Deep_Neural_Networks/" rel="next" title="Multi-Task Deep Neural Networks (MT-DNN)">
+                <i class="fa fa-chevron-left"></i> Multi-Task Deep Neural Networks (MT-DNN)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/13/希尔伯特空间/" rel="prev" title="希尔伯特空间">
+                希尔伯特空间 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文本分类工作流程"><span class="nav-number">1.1.</span> <span class="nav-text">文本分类工作流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第1步：收集数据"><span class="nav-number">2.</span> <span class="nav-text">第1步：收集数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第2步：探索您的数据"><span class="nav-number">3.</span> <span class="nav-text">第2步：探索您的数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加载数据"><span class="nav-number">3.1.</span> <span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查数据"><span class="nav-number">3.2.</span> <span class="nav-text">检查数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收集关键指标"><span class="nav-number">3.3.</span> <span class="nav-text">收集关键指标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#步骤2-5：选择一个模型"><span class="nav-number">4.</span> <span class="nav-text">步骤2.5：选择一个模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据准备与模型构建算法"><span class="nav-number">4.1.</span> <span class="nav-text">数据准备与模型构建算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第3步：准备数据"><span class="nav-number">5.</span> <span class="nav-text">第3步：准备数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#N-gram向量-选项A"><span class="nav-number">5.1.</span> <span class="nav-text">N-gram向量[选项A]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标记化-Tokenization"><span class="nav-number">5.1.1.</span> <span class="nav-text">标记化 Tokenization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#矢量化-Vectorization"><span class="nav-number">5.1.2.</span> <span class="nav-text">矢量化 Vectorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特征选择-Feature-selection"><span class="nav-number">5.1.3.</span> <span class="nav-text">特征选择 Feature selection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准化-Normalization"><span class="nav-number">5.1.4.</span> <span class="nav-text">标准化 Normalization</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#序列向量-选项B"><span class="nav-number">5.2.</span> <span class="nav-text">序列向量 [选项B]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标记化-Tokenization-1"><span class="nav-number">5.2.1.</span> <span class="nav-text">标记化 Tokenization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#矢量化-Vectorization-1"><span class="nav-number">5.2.2.</span> <span class="nav-text">矢量化 Vectorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特征选择"><span class="nav-number">5.2.3.</span> <span class="nav-text">特征选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标签矢量化-Label-vectorization"><span class="nav-number">5.3.</span> <span class="nav-text">标签矢量化 Label vectorization</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第4步：构建，训练和评估您的模型"><span class="nav-number">6.</span> <span class="nav-text">第4步：构建，训练和评估您的模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建最后一层"><span class="nav-number">6.1.</span> <span class="nav-text">构建最后一层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建n-gram模型-选项A"><span class="nav-number">6.2.</span> <span class="nav-text">构建n-gram模型[选项A]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建序列模型-选项B"><span class="nav-number">6.3.</span> <span class="nav-text">构建序列模型[选项B]</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练你的模型"><span class="nav-number">6.4.</span> <span class="nav-text">训练你的模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第5步：调整超参数"><span class="nav-number">7.</span> <span class="nav-text">第5步：调整超参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第6步：部署模型"><span class="nav-number">8.</span> <span class="nav-text">第6步：部署模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">9.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附录：批量训练"><span class="nav-number">10.</span> <span class="nav-text">附录：批量训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关内容"><span class="nav-number">11.</span> <span class="nav-text">相关内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步学习文本分类的方法"><span class="nav-number">12.</span> <span class="nav-text">进一步学习文本分类的方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

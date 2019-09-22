@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,神经网络架构,二次代价函数,梯度下降算法,随机梯度下降算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：CHAPTER 1 Using neural nets to recognize handwritten digits  神经网络的架构假设我们有这样的网络：  前面提过，这个网络中最左边的称为输入层，其中的神经元称为输入神经元。最右边的，即输出层包含有输出神经元，在本例中，输出层只有一个神经元。中间层，既然这层中的神经元既不是输入也不是输出，则被称为隐藏层。“隐藏”这一术语也许听上去">
+<meta name="keywords" content="深度学习,神经网络架构,二次代价函数,梯度下降算法,随机梯度下降算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用神经网络识别手写数字——梯度下降算法">
+<meta property="og:url" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 1 Using neural nets to recognize handwritten digits  神经网络的架构假设我们有这样的网络：  前面提过，这个网络中最左边的称为输入层，其中的神经元称为输入神经元。最右边的，即输出层包含有输出神经元，在本例中，输出层只有一个神经元。中间层，既然这层中的神经元既不是输入也不是输出，则被称为隐藏层。“隐藏”这一术语也许听上去">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/8.png">
+<meta property="og:updated_time" content="2018-11-24T07:31:14.340Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用神经网络识别手写数字——梯度下降算法">
+<meta name="twitter:description" content="原文链接：CHAPTER 1 Using neural nets to recognize handwritten digits  神经网络的架构假设我们有这样的网络：  前面提过，这个网络中最左边的称为输入层，其中的神经元称为输入神经元。最右边的，即输出层包含有输出神经元，在本例中，输出层只有一个神经元。中间层，既然这层中的神经元既不是输入也不是输出，则被称为隐藏层。“隐藏”这一术语也许听上去">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/"/>
+
+
+
+
+
+  <title>使用神经网络识别手写数字——梯度下降算法 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/18/使用神经网络识别手写数字——梯度下降算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用神经网络识别手写数字——梯度下降算法</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-18T20:22:42+08:00">
+                2018-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap1.html" target="_blank" rel="noopener">CHAPTER 1 Using neural nets to recognize handwritten digits</a></p>
+</blockquote>
+<h2 id="神经网络的架构"><a href="#神经网络的架构" class="headerlink" title="神经网络的架构"></a>神经网络的架构</h2><p>假设我们有这样的网络：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/1.png" alt=""></p>
+<p>前面提过，这个网络中最左边的称为输入层，其中的神经元称为输入神经元。最右边的，即输出层包含有输出神经元，在本例中，输出层只有一个神经元。中间层，既然这层中的神经元既不是输入也不是输出，则被称为隐藏层。“隐藏”这一术语也许听上去有些神秘，我第一次听到这个词，以为它必然有一些深层的哲学或数学涵意，但它实际上仅仅意味着“既非输入也非输出”。上面的网络仅有一个隐藏层，但有些网络有多个隐藏层。例如，下面的四层网络<br>有两个隐藏层：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/2.png" alt=""></p>
+<p><strong>有些令人困惑的是，由于历史的原因，尽管是由  S 型神经元而不是感知器构成，这种多层网络有时被称为多层感知器或者 MLP。</strong> 在这本书中我不会使用 MLP 这个术语，因为我认为这会引起混淆，但这里想提醒你它的存在。</p>
+<p>目前为止，我们讨论的神经网络，都是以上一层的输出作为下一层的输入。这种网络被称为前馈神经网络。这意味着网络中是没有回路的，信息总是向前传播，从不反向回馈。如果确实有回路，我们最终会有这样的情况：$\sigma$ 函数的输入依赖于输出。这将难于理解，所以我们不允许这样的环路。</p>
+<p>然而，也有一些人工神经网络的模型，其中反馈环路是可行的。它们原理上比前馈网络更接近我们大脑的实际工作。并且循环网络能解决一些重要的问题，这些问题如果仅仅用前馈网络来解决，则更加困难。然而为了篇幅，本书将专注于使用更广泛的前馈网络。</p>
+<h2 id="一个简单的分类手写数字的网络"><a href="#一个简单的分类手写数字的网络" class="headerlink" title="一个简单的分类手写数字的网络"></a>一个简单的分类手写数字的网络</h2><p>我们将使用一个三层神经网络来识别单个数字：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/3.png" alt=""></p>
+<p>网络的输入层包含给输入像素的值进行编码的神经元。就像下一节会讨论的，我们给网络的训练数据会有很多扫描得到的 $28 \times 28$ 的手写数字的图像组成，所有输入层包含有 $784 = 28 \times 28$ 个神经元。为了简化，上图中我已经忽略了 $784$ 中大部分的输入神经元。输入像素是灰度级的，值为 $0.0$ 表示白色，值为 $1.0$ 表示黑色，中间数值表示逐渐暗淡的灰色。</p>
+<p>网络的第二层是一个隐藏层。我们用 $n$ 来表示神经元的数量，我们将给 $n$ 实验不同的数值。示例中用一个小的隐藏层来说明，仅仅包含 $n=15$ 个神经元。</p>
+<p>网络的输出层包含有 $10$ 个神经元。如果第一个神经元激活，即输出 $\approx 1$，那么表明网络认为数字是一个 $0$。如果第二个神经元激活，就表明网络认为数字是一个 $1$。依此类推。更确切地说，我们把输出神经元的输出赋予编号 $0$ 到 $9$，并计算出那个神经元有最高的激活值。比如，如果编号为 $6$ 的神经元激活，那么我们的网络会猜到输入的数字是 $6$。其它神经元相同。</p>
+<h3 id="为什么用-10-个输出神经元"><a href="#为什么用-10-个输出神经元" class="headerlink" title="为什么用 10 个输出神经元"></a>为什么用 10 个输出神经元</h3><p>你可能会好奇为什么我们用 $10$ 个输出神经元。毕竟我们的任务是能让神经网络告诉我们哪个数字（ $0, 1, 2, \ldots, 9$ ）能和输入图片匹配。一个看起来更自然的方式就是使用 $4$ 个输出神经元，把每一个当做一个二进制值，结果取决于它的输出更靠近 $0$ 还是$1$。四个神经元足够编码这个问题了，因为 $2^4 = 16$ 大于 $10$ 种可能的输入。为什么我们反而要用 $10$ 个神经元呢？这样做难道效率不低吗？ <strong>最终的判断是基于经验主义的：我们可以实验两种不同的网络设计，结果证明对于这个特定的问题而言，$10$ 个输出神经元的神经网络比4个的识别效果更好。但是令我们好奇的是为什么使用 $10$ 个输出神经元的神经网络更有效呢。</strong> 有没有什么启发性的方法能提前告诉我们用10个输出编码比使用 $4$个输出编码更有好呢？</p>
+<p>为了理解为什么我们这么做，我们需要从根本原理上理解神经网络究竟在做些什么。首先考虑有 $10$ 个神经元的情况。我们首先考虑第一个输出神经元，它告诉我们一个数字是不是0。它能那么做是因为可以权衡从隐藏层来的信息。隐藏层的神经元在做什么呢？假设隐藏层的第一个神经元只是用于检测如下的图像是否存在：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/4.png" alt=""></p>
+<p>为了达到这个目的，它通过对此图像对应部分的像素赋予较大权重，对其它部分赋予较小的权重。同理，我们可以假设隐藏层的第二，第三，第四个神经元是为检测下列图片是否存在：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/5.png" alt=""></p>
+<p>就像你能猜到的，这四幅图像组合在一起构成了前面显示的一行数字图像中的 $0$：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/6.png" alt=""></p>
+<p>假设神经网络以上述方式运行，我们可以给出一个貌似合理的理由去解释为什么用 $10$ 个输出而不是 $4$ 个。如果我们有 $4$ 个输出，那么第一个输出神经元将会尽力去判断数字的最高有效位是什么。 <strong>把数字的最高有效位和数字的形状联系起来并不是一个简单的问题。很难想象出有什么恰当的历史原因，一个数字的形状要素会和一个数字的最高有效位有什么紧密联系。</strong></p>
+<p>上面我们说的只是一个启发性的方法。没有什么理由表明这个三层的神经网络必须按照我所描述的方式运行，即隐藏层是用来探测数字的组成形状。可能一个聪明的学习算法将会找到一些合适的权重能让我们仅仅用4个输出神经元就行。但是这个启发性的方法通常很有效，它会节省你大量时间去设计一个好的神经网络结构。</p>
+<h2 id="使用梯度下降算法进行学习"><a href="#使用梯度下降算法进行学习" class="headerlink" title="使用梯度下降算法进行学习"></a>使用梯度下降算法进行学习</h2><p>现在我们有了神经网络的设计，它怎样可以学习识别数字呢？我们需要的第一样东西是一个用来学习的数据集称为训练数据集。我们将使用 MNIST 数据集。</p>
+<p>我们将用符号 $x$ 来表示一个训练输入。为了方便，把每个训练输入 $x$ 看作一个 $28<br>\times 28 = 784$ 维的向量。每个向量中的项目代表图像中单个像素的灰度值。我们用 $y<br>= y(x)$ 表示对应的期望输出，这里 $y$ 是一个 $10$ 维的向量。例如，如果有一个特定的画成 $6$ 的训练图像，$x$ ，那么 $y(x) = (0, 0, 0, 0, 0, 0, 1, 0, 0, 0)^T$ 则是网络的期望输出。注意这里 $T$ 是转置操作，把一个行向量转换成一个列向量。</p>
+<h3 id="二次代价函数"><a href="#二次代价函数" class="headerlink" title="二次代价函数"></a>二次代价函数</h3><p>我们希望有一个算法，能让我们找到权重和偏置，以至于网络的输出$y(x)$ 能够拟合所有的训练输入$x$。为了量化我们如何实现这个目标，我们定义一个代价函数（有时被称为损失或目标函数。我们在这本书中可能会交换使用这几个术语）：</p>
+<script type="math/tex; mode=display">C(w,b) \equiv \frac{1}{2n} \sum_x \| y(x) - a\|^2</script><p>这里 $w$ 表示所有的网络中权重的集合，$b$ 是所有的偏置，$n$ 是训练输入数据的个数，$a$ 是表示当输入为 $x$ 时输出的向量，求和则是在总的训练输入$x$ 上进行的。当然，输出 $a$ 取决于 $x$, $w$ 和 $b$，但是为了保持符号的简洁性，我没有明确地指出这种依赖关系。符号 $|v|$ 是指向量 $v$ 的模。我们把 $C$ 称为二次代价函数；有时也被称为均方误差或者 MSE。观察二次代价函数的形式我们可以看到 $C(w,b)$ 是非负的，因为求和公式中的每一项都是非负的。此外，代价函数$C(w,b)$ 的值相当小，即 $C(w,b) \approx 0$，精确地说，是当对于所有的训练输入 $x$，$y(x)$ 接近于输出 $a$ 时。因此如果我们的学习算法能找到合适的权重和偏置，使得 $C(w,b) \approx 0$，它就能很好地工作。相反，当 $C(w,b)$ 很大时就不怎么好了，那意味着对于大量地输入， $y(x)$ 与输出 $a$ 相差很大。因此我们的训练算法的目的，是最小化权重和偏置的代价函数 $C(w,b)$。换句话说，我们想要找到一系列能让代价尽可能小的权重和偏置。我们将采用称为梯度下降的算法来达到这个目的。</p>
+<h3 id="为什么使用二次代价函数"><a href="#为什么使用二次代价函数" class="headerlink" title="为什么使用二次代价函数"></a>为什么使用二次代价函数</h3><p>为什么要介绍二次代价呢？毕竟我们最初感兴趣的内容不是能正确分类的图像数量吗？为什么不试着直接最大化这个数量，而是去最小化一个类似二次代价的间接评量呢？这么做是因为在神经网络中，被正确分类的图像数量所关于权重和偏置的函数并不是一个平滑的函数。 <strong>大多数情况下，对权重和偏置做出的微小变动完全不会影响被正确分类的图像的数量。这会导致我们很难去解决如何改变权重和偏置来取得改进的性能。而用一个类似二次代价的平滑代价函数则能更好地去解决如何用权重和偏置中的微小的改变来取得更好的效果。</strong> 这就是为什么我们首先专注于最小化二次代价，只有这样，我们之后才能测试分类精度。</p>
+<p>即使已经知道我们需要使用一个平滑的代价函数，你可能仍然想知道为什么我们选择二次函数。这是临时想出来的吗？是不是我们选择另一个不同的代价函数将会得到完全不同的最小化的权重和偏置呢？这种顾虑是合理的，我们后面会再次回到这个代价函数，并做一些修改。尽管如此，二次代价函数让我们更好地理解神经网络中学习算法的基础，所以目前我们会一直使用它。</p>
+<p>重复一下，我们训练神经网络的目的是找到能最小化二次代价函数 $C(w,b)$ 的权重和偏置。这是一个适定问题，但是现在它有很多让我们分散精力的结构，对权重 $w$ 和偏置 $b$的解释，晦涩不清的 $\sigma$ 函数，神经网络结构的选择，MNIST 等等。事实证明我们可以忽略结构中大部分，把精力集中在最小化方面来理解它。现在我们打算忘掉所有关于代价函数的具体形式、神经网络的连接等等。现在让我们想象只要最小化一个给定的多元函数。我们打算使用一种被称为梯度下降的技术来解决这样的最小化问题。然后我们回到在神经网络中要最小化的特定函数上来。</p>
+<h2 id="梯度下降算法"><a href="#梯度下降算法" class="headerlink" title="梯度下降算法"></a>梯度下降算法</h2><p>好了，假设我们要最小化某些函数，$C(v)$。它可以是任意的多元实值函数，$v = v_1,<br>v_2, \ldots$。注意我们用 $v$ 代替了 $w$ 和 $b$ 以强调它可能是任意的函数，我们现在先不局限于神经网络的环境。为了最小化 $C(v)$，想象 $C$ 是一个只有两个变量$v1$ 和 $v2$ 的函数：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/7.png" alt=""></p>
+<h3 id="为什么要使用梯度下降算法"><a href="#为什么要使用梯度下降算法" class="headerlink" title="为什么要使用梯度下降算法"></a>为什么要使用梯度下降算法</h3><p>一种解决这个问题的方式是用微积分来解析最小值。我们可以计算导数去寻找 $C$ 的极值点。运气好的话，$C$ 是一个只有一个或少数几个变量的函数。但是变量过多的话那就是噩梦。而且神经网络中我们经常需要大量的变量——最大的神经网络有依赖数亿权重和偏置的代价函数，极其复杂。用微积分来计算最小值已经不可行了。</p>
+<p>好吧，微积分是不能用了。幸运的是，有一个漂亮的推导法暗示有一种算法能得到很好的效果。首先把我们的函数想象成一个山谷。只要瞄一眼上面的绘图就不难理解。我们想象有一个小球从山谷的斜坡滚落下来。我们的日常经验告诉我们这个球最终会滚到谷底。也许我们可以用这一想法来找到函数的最小值？我们会为一个（假想的）球体随机选择一个起始位置，然后模拟球体滚落到谷底的运动。我们可以通过计算 $C$ 的导数（或者二阶导数）来简单模拟——这些导数会告诉我们山谷中局部“形状”的一切，由此知道我们的球将怎样滚动。 <strong>注意小球不必遵常规的循物理学理论，我们在这里就是上帝，能够支配球体可以如何滚动，那么我们将会采取什么样的运动学定律来让球体能够总是滚落到谷底呢？我们让小球要往代价函数梯度的反方向滚动。</strong></p>
+<h3 id="为什么小球要往梯度的反方向滚动"><a href="#为什么小球要往梯度的反方向滚动" class="headerlink" title="为什么小球要往梯度的反方向滚动"></a>为什么小球要往梯度的反方向滚动</h3><p>为了更精确地描述这个问题，让我们思考一下，当我们在 $v1$ 和 $v2$ 方向分别将球体移动一个很小的量，即 $\Delta v1$ 和 $\Delta v2$ 时，球体将会发生什么情况。微积分告诉我们 $C$ 将会有如下变化：</p>
+<script type="math/tex; mode=display">
+\Delta C \approx \frac{\partial C}{\partial v_1} \Delta v_1 +
+  \frac{\partial C}{\partial v_2} \Delta v_2</script><p>我们要寻找一种选择 $\Delta v_1$ 和 $\Delta v_2$ 的方法使得 $\Delta C$ 为负；即，我们选择它们是为了让球体滚落。为了弄明白如何选择，需要定义 $\Delta v$ 为 $v$ 变化的向量，$\Delta v \equiv (\Delta v_1, \Delta v_2)^T$，$T$ 是转置符号。我们也定义 $C$ 的梯度为偏导数的向量，$\left(\frac{\partial C}{\partial v_1},\frac{\partial C}{\partial v_2}\right)^T$。我们用 $\nabla C$ 来表示梯度向量，即：</p>
+<script type="math/tex; mode=display">
+\nabla C \equiv \left( \frac{\partial C}{\partial v_1}, \frac{\partial
+      C}{\partial v_2} \right)^T</script><p>有了这些定义，$\Delta C$ 的表达式可以被重写为：</p>
+<script type="math/tex; mode=display">\Delta C \approx \nabla C \cdot \Delta v</script><p>这个表达式解释了为什么 $\nabla C$ 被称为梯度向量：$\nabla C$ 把 $v$ 的变化关联为 $C$ 的变化，正如我们期望的用梯度来表示。但是这个方程真正让我们兴奋的是它让我们看到了如何选取 $\Delta v$ 才能让 $\Delta C$ 为负数。假设我们选取：</p>
+<script type="math/tex; mode=display">\Delta v = -\eta \nabla C</script><p>这里的 $\eta$ 是个很小的正数（称为学习率）。方程$\Delta v = -\eta \nabla C$告诉我们 $\Delta C \approx -\eta \nabla C \cdot \nabla C = -\eta |\nabla C|^2$。由于 $| \nabla C |^2 \geq 0$，这保证了$\Delta C \leq 0$，即，如果我们按照方程$\Delta v = -\eta \nabla C$的规则去改变 $v$，那么 $C$ 会一直减小，不会增加。（当然，要在方程$\Delta C \approx \nabla C \cdot \Delta v$的近似约束下）。这正是我们想要的特性！因此我们把方程$\Delta v = -\eta \nabla C$ 用于定义球体在梯度下降算法下的“运动定律”。也就是说，我们用方程$\Delta v = -\eta \nabla C$计算 $\Delta v$，来移动球体的位置 $v$：</p>
+<script type="math/tex; mode=display">v \rightarrow v' = v -\eta \nabla C</script><p>然后我们用它再次更新规则来计算下一次移动。如果我们反复持续这样做，我们将持续减小$C$ 直到,正如我们希望的,获得一个全局的最小值。</p>
+<p>总结一下，梯度下降算法工作的方式就是重复计算梯度 $\nabla C$，然后沿着相反的方向移动，沿着山谷“滚落”。我们可以想象它像这样：</p>
+<p><img src="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/8.png" alt=""></p>
+<p>注意具有这一规则的梯度下降并不是模仿实际的物理运动。在现实中一个球体有动量，使得它岔开斜坡滚动，甚至（短暂地）往山上滚。只有在克服摩擦力的影响，球体才能保证滚到山谷。相比之下，我们选择 $\Delta v$ 规则只是说：“往下，现在”。这仍然是一个寻找最小值的非常好的规则！</p>
+<p>为了使梯度下降能够正确地运行，我们需要选择足够小的学习率 $\eta$ 使得方程$\Delta C \approx \nabla C \cdot \Delta v$ 能得到很好的近似。如果不这样，我们会以 $\Delta C &gt; 0$ 结束，这显然不好。同时，我们也不想 $\eta$ 太小，因为这会使 $\Delta v$ 的变化极小，梯度下降算法就会运行得非常缓慢。在真正的实现中，$\eta$ 通常是变化的，以至方程$\Delta C \approx \nabla C \cdot \Delta v$能保持很好的近似度，但算法又不会太慢。我们后面会看这是如何工作的。</p>
+<h3 id="梯度下降算法的形式化证明"><a href="#梯度下降算法的形式化证明" class="headerlink" title="梯度下降算法的形式化证明"></a>梯度下降算法的形式化证明</h3><p>我已经解释了具有两个变量的函数 $C$ 的梯度下降。但事实上，即使 $C$ 是一个具有更多变量的函数也能很好地工作。我们假设 $C$ 是一个有 $m$ 个变量 $v_1,\ldots,v_m$ 的多元函数。那么对 $C$ 中自变量的变化 $\Delta v = (\Delta v_1, \ldots, \Delta v_m)^T$，$\Delta C$ 将会变为：</p>
+<script type="math/tex; mode=display">\Delta C \approx \nabla C \cdot \Delta v</script><p>这里的梯度 $\nabla C$ 是向量</p>
+<script type="math/tex; mode=display">\nabla C \equiv \left(\frac{\partial C}{\partial v_1}, \ldots,
+    \frac{\partial C}{\partial v_m}\right)^T</script><p>正如两个变量的情况，我们可以选取</p>
+<script type="math/tex; mode=display">\Delta v = -\eta \nabla C</script><p>而且 $\Delta C$ 的（近似）表达式 $\Delta C \approx \nabla C \cdot \Delta v$ 保证是负数。这给了我们一种方式从梯度中去取得最小值，即使 $C$ 是任意的多元函数，我们也能重复运用更新规则</p>
+<script type="math/tex; mode=display">v \rightarrow v' = v-\eta \nabla C</script><p>你可以把这个更新规则看做定义梯度下降算法。这给我们提供了一种方式去通过重复改变 $v$ 来找到函数 $C$ 的最小值。这个规则并不总是有效的，有几件事能导致错误，让我们无法从梯度下降来求得函数 $C$ 的全局最小值，这个观点我们会在后面的章节中去探讨。但在实践中，梯度下降算法通常工作地非常好，在神经网络中这是一种非常有效的方式去求代价函数的最小值，进而促进网络自身的学习。</p>
+<p>事实上，甚至有一种观点认为梯度下降法是求最小值的最优策略。假设我们正在努力去改变 $\Delta v$ 来让 $C$ 尽可能地减小。这相当于最小化 $\Delta C \approx \nabla C \cdot \Delta v$。我们首先限制步长为小的固定值，即 $| \Delta v | = \epsilon$，$ \epsilon &gt; 0$。当步长固定时，我们要找到使得 $C$ 减小最大的下降方向。可以证明，使得 $\nabla C \cdot \Delta v$ 取得最小值的 $\Delta v$ 为 $\Delta v = - \eta \nabla C$，这里 $\eta = \epsilon / |\nabla C|$ 是由步长限制 $|\Delta v| = \epsilon$ 所决定的。因此，梯度下降法可以被视为一种在 $C$ 下降最快的方向上做微小变化的方法。</p>
+<p><strong>人们已经研究出很多梯度下降的变化形式，包括一些更接近真实模拟球体物理运动的变化形式。这些模拟球体的变化形式有很多优点，但是也有一个主要的缺点：它最终必需去计算$C$ 的二阶偏导，这代价可是非常大的。</strong> 为了理解为什么这种做法代价高，假设我们想求所有的二阶偏导 $\partial^2 C/ \partial v_j \partial v_k$。如果我们有上百万的变量$v_j$，那我们必须要计算数万亿（即百万次的平方）级别的二阶偏导（实际上，更接近万亿次的一半，因为$\partial^2 C/ \partial v_j \partial v_k = \partial^2 C/ \partial v_k \partial v_j$。同样，你知道怎么做。！）这会造成很大的计算代价。不过也有一些避免这类问题的技巧，寻找梯度下降算法的替代品也是个很活跃的研究领域。但在这本书中我们将主要用梯度下降算法（包括变化形式）使神经网络学习。</p>
+<h2 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h2><h3 id="神经网络中如何使用梯度下降算法"><a href="#神经网络中如何使用梯度下降算法" class="headerlink" title="神经网络中如何使用梯度下降算法"></a>神经网络中如何使用梯度下降算法</h3><p>我们怎么在神经网络中用梯度下降算法去学习呢？其思想就是利用梯度下降算法去寻找能使得方程代价函数取得最小值的权重 $w_k$ 和偏置 $b_l$。为了清楚这是如何工作的，我们将用权重和偏置代替变量 $v_j$。也就是说，现在“位置”变量有两个分量组成：$w_k$ 和 $b_l$，而梯度向量 $\nabla C$ 则有相应的分量 $\partial C / \partial w_k$和$\partial C / \partial b_l$。用这些分量来写梯度下降的更新规则，我们得到：</p>
+<script type="math/tex; mode=display">w_k \rightarrow w_k' = w_k-\eta \frac{\partial C}{\partial w_k}</script><script type="math/tex; mode=display">b_l \rightarrow b_l' = b_l-\eta \frac{\partial C}{\partial b_l}</script><p>通过重复应用这一更新规则我们就能“让球体滚下山”，并且有望能找到代价函数的最小值。换句话说，这是一个能让神经网络学习的规则。</p>
+<h3 id="为什么使用随机梯度下降算法"><a href="#为什么使用随机梯度下降算法" class="headerlink" title="为什么使用随机梯度下降算法"></a>为什么使用随机梯度下降算法</h3><p>应用梯度下降规则有很多挑战。我们将在下一章深入讨论。但是现在只提及一个问题。为了理解问题是什么，我们先回顾 $C(w,b) \equiv \frac{1}{2n} \sum_x | y(x) - a|^2$ 中的二次代价函数。注意这个代价函数有着这样的形式 $C = \frac{1}{n} \sum_x C_x$，即，它是遍及每个训练样本代价 $C_x \equiv \frac{|y(x)-a|^2}{2}$ 的平均值。在实践中，为了计算梯度 $\nabla C$，我们需要为每个训练输入 $x$ 单独地计算梯度值 $\nabla C_x$，然后求平均值，$\nabla C = \frac{1}{n} \sum_x \nabla C_x$。不幸的是，当训练输入的数量过大时会花费很长时间，这样会使学习变得相当缓慢。</p>
+<p><strong>有种叫做随机梯度下降的算法能够加速学习。其思想就是通过随机选取小量训练输入样本来计算 $\nabla C_x$，进而估算梯度 $\nabla C$。通过计算少量样本的平均值我们可以快速得到一个对于实际梯度 $\nabla C$ 的很好的估算，这有助于加速梯度下降，进而加速学习过程。</strong></p>
+<h3 id="怎么使用随机梯度下降算法"><a href="#怎么使用随机梯度下降算法" class="headerlink" title="怎么使用随机梯度下降算法"></a>怎么使用随机梯度下降算法</h3><p>准确地说，随机梯度下降通过随机选取小量的 $m$ 个训练输入来工作。我们将这些随机的训练输入标记为$X_1, X_2, \ldots, X_m$，并把它们称为一个小批次。假设样本数量 $m$ 足够大，我们期望 $\nabla C_{X_j}$ 的平均值大致相等于整个 $\nabla C_x$的平均值，即，</p>
+<script type="math/tex; mode=display">\frac{\sum_{j=1}^m \nabla C_{X_{j}}}{m} \approx \frac{\sum_x \nabla C_x}{n} = \nabla C</script><p>这里的第二个求和符号是在整个训练数据上进行的。交换两边我们得到</p>
+<script type="math/tex; mode=display">\nabla C \approx \frac{1}{m} \sum_{j=1}^m \nabla C_{X_{j}}</script><p>证实了<strong>我们可以通过仅仅计算随机选取的小批量数据的梯度来估算整体的梯度。</strong></p>
+<p>为了将其明确地和神经网络的学习联系起来，假设 $w_k$ 和 $b_l$ 表示我们神经网络中权重和偏置。随机梯度下降通过随机地选取并训练输入的小批量数据来工作，</p>
+<script type="math/tex; mode=display">w_k \rightarrow w_k' = w_k-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial w_k}</script><script type="math/tex; mode=display">b_l \rightarrow b_l' = b_l-\frac{\eta}{m}\sum_j \frac{\partial C_{X_j}}{\partial b_l}</script><p>其中两个求和符号是在当前小批量数据中的所有训练样本 $X_j$ 上进行的。然后我们再挑选另一随机选定的小批量数据去训练。直到我们用完了所有的训练输入，这被称为完成了一个训练周期。然后我们就会开始一个新的训练周期。</p>
+<p>另外值得提一下，对于改变代价函数大小的参数，和用于计算权重和偏置 的小批量数据的更新规则，会有不同的约定。在方程$C(w,b) \equiv \frac{1}{2n} \sum_x | y(x) - a|^2$ 中，我们通过因子 $\frac{1}{n}$ 来改变整个代价函数的大小。人们有时候忽略 $\frac{1}{n}$，直接取单个训练样本的代价总和，而不是取平均值。这对我们不能提前知道训练数据数量的情况下特别有效。例如，这可能发生在有更多的训练数据是实时产生的情况下。同样，小批量数据的更新规则有时也会舍弃前面的 $\frac{1}{m}$。从概念上这会有一点区别，因为它等价于改变了学习率 $\eta$ 的大小。但在对不同工作进行详细对比时，需要对它警惕。</p>
+<h3 id="随机梯度下降算法与梯度下降算法比较"><a href="#随机梯度下降算法与梯度下降算法比较" class="headerlink" title="随机梯度下降算法与梯度下降算法比较"></a>随机梯度下降算法与梯度下降算法比较</h3><p>我们可以把随机梯度下降想象成一次民意调查：在一个小批量数据上采样比对一个完整数据集进行梯度下降分析要容易得多，正如进行一次民意调查比举行一次全民选举要更容易。例如，如果我们有一个规模为 $n = 60,000$ 的训练集，就像 MNIST，并选取 小批量数据大小为 $m = 10$，这意味着在估算梯度过程中加速了 $6,000$ 倍！当然，这个估算并不是完美的，存在统计波动，但是没必要完美：我们实际关心的是在某个方向上移动来减少 $C$，而这意味着我们不需要梯度的精确计算。在实践中，随机梯度下降是在神经网络的学习中被广泛使用、十分有效的技术，它也是本书中展开的大多数学习技术的基础。</p>
+<p>梯度下降算法一个极端的版本是把小批量数据的大小设为 $1$。即，假设一个训练输入 $x$，我们按照规则 $w_k \rightarrow w_k’ = w_k - \eta \partial C_x / \partial w_k$ 和 $b_l \rightarrow b_l’ = b_l - \eta \partial C_x / \partial<br>b_l$ 更新我们的权重和偏置。然后我们选取另一个训练输入，再一次更新权重和偏置。如此重复。这个过程被称为在线、online、on-line、或者递增学习。在 online 学习中，神经网络在一个时刻只学习一个训练输入（正如人类做的）。</p>
+<h2 id="理解梯度和导数"><a href="#理解梯度和导数" class="headerlink" title="理解梯度和导数"></a>理解梯度和导数</h2><p><a href="https://blog.csdn.net/walilk/article/details/50978864" target="_blank" rel="noopener">CSDN ： [机器学习] ML重要概念：梯度（Gradient）与梯度下降法（Gradient Descent）</a></p>
+<p><a href="https://www.zhihu.com/question/36301367" target="_blank" rel="noopener">知乎 ： 如何直观形象的理解方向导数与梯度以及它们之间的关系？</a></p>
+<p><a href="https://www.zhihu.com/question/26966355/answer/154857139" target="_blank" rel="noopener">知乎 ： 什么是全导数？</a></p>
+<h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><p><a href="https://www.jiqizhixin.com/articles/100703" target="_blank" rel="noopener">全局最优解？为什么 SGD 能令神经网络的损失降到零</a></p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen. CHAPTER 1 Using neural nets to recognize handwritten digits[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap1.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap1.html</a>, 2018-06-18.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL]. <a href="https://github.com/zhanggyb/nndl/blob/master/chap1.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap1.tex</a>, 2018-06-18.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/神经网络架构/" rel="tag"># 神经网络架构</a>
+          
+            <a href="/tags/二次代价函数/" rel="tag"># 二次代价函数</a>
+          
+            <a href="/tags/梯度下降算法/" rel="tag"># 梯度下降算法</a>
+          
+            <a href="/tags/随机梯度下降算法/" rel="tag"># 随机梯度下降算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/17/使用神经网络识别手写数字——感知器/" rel="next" title="使用神经网络识别手写数字——感知器">
+                <i class="fa fa-chevron-left"></i> 使用神经网络识别手写数字——感知器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/19/使用神经网络识别手写数字——代码实现/" rel="prev" title="使用神经网络识别手写数字——代码实现">
+                使用神经网络识别手写数字——代码实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络的架构"><span class="nav-number">1.</span> <span class="nav-text">神经网络的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的分类手写数字的网络"><span class="nav-number">2.</span> <span class="nav-text">一个简单的分类手写数字的网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么用-10-个输出神经元"><span class="nav-number">2.1.</span> <span class="nav-text">为什么用 10 个输出神经元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用梯度下降算法进行学习"><span class="nav-number">3.</span> <span class="nav-text">使用梯度下降算法进行学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二次代价函数"><span class="nav-number">3.1.</span> <span class="nav-text">二次代价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用二次代价函数"><span class="nav-number">3.2.</span> <span class="nav-text">为什么使用二次代价函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#梯度下降算法"><span class="nav-number">4.</span> <span class="nav-text">梯度下降算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用梯度下降算法"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要使用梯度下降算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么小球要往梯度的反方向滚动"><span class="nav-number">4.2.</span> <span class="nav-text">为什么小球要往梯度的反方向滚动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降算法的形式化证明"><span class="nav-number">4.3.</span> <span class="nav-text">梯度下降算法的形式化证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机梯度下降算法"><span class="nav-number">5.</span> <span class="nav-text">随机梯度下降算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络中如何使用梯度下降算法"><span class="nav-number">5.1.</span> <span class="nav-text">神经网络中如何使用梯度下降算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用随机梯度下降算法"><span class="nav-number">5.2.</span> <span class="nav-text">为什么使用随机梯度下降算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么使用随机梯度下降算法"><span class="nav-number">5.3.</span> <span class="nav-text">怎么使用随机梯度下降算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机梯度下降算法与梯度下降算法比较"><span class="nav-number">5.4.</span> <span class="nav-text">随机梯度下降算法与梯度下降算法比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理解梯度和导数"><span class="nav-number">6.</span> <span class="nav-text">理解梯度和导数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓展阅读"><span class="nav-number">7.</span> <span class="nav-text">拓展阅读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

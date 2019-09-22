@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,超参数,Broad strategy,Learning rate,Early stopping," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  为什么选择神经网络的超参数是个难题直到现在，我们还没有解释对诸如学习率 $\eta$，正则化参数 $\lambda$ 等等超参数选择的方法。我只是给出那些效果很好的值而已。实践中，当你使用神经网络解决问题时，寻找好的超参数其实是很困难的一件事。例如，我们要解决 MNIST 问题，开始时">
+<meta name="keywords" content="深度学习,超参数,Broad strategy,Learning rate,Early stopping">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改进神经网络的学习方法——如何选择神经网络的超参数">
+<meta property="og:url" content="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  为什么选择神经网络的超参数是个难题直到现在，我们还没有解释对诸如学习率 $\eta$，正则化参数 $\lambda$ 等等超参数选择的方法。我只是给出那些效果很好的值而已。实践中，当你使用神经网络解决问题时，寻找好的超参数其实是很困难的一件事。例如，我们要解决 MNIST 问题，开始时">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/2.png">
+<meta property="og:updated_time" content="2019-08-04T14:54:01.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改进神经网络的学习方法——如何选择神经网络的超参数">
+<meta name="twitter:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  为什么选择神经网络的超参数是个难题直到现在，我们还没有解释对诸如学习率 $\eta$，正则化参数 $\lambda$ 等等超参数选择的方法。我只是给出那些效果很好的值而已。实践中，当你使用神经网络解决问题时，寻找好的超参数其实是很困难的一件事。例如，我们要解决 MNIST 问题，开始时">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/"/>
+
+
+
+
+
+  <title>改进神经网络的学习方法——如何选择神经网络的超参数 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">改进神经网络的学习方法——如何选择神经网络的超参数</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T09:00:00+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote>
+<h2 id="为什么选择神经网络的超参数是个难题"><a href="#为什么选择神经网络的超参数是个难题" class="headerlink" title="为什么选择神经网络的超参数是个难题"></a>为什么选择神经网络的超参数是个难题</h2><p>直到现在，我们还没有解释对诸如学习率 $\eta$，正则化参数 $\lambda$ 等等超参数选择的方法。我只是给出那些效果很好的值而已。实践中，当你使用神经网络解决问题时，寻找好的超参数其实是很困难的一件事。例如，我们要解决 MNIST 问题，开始时对于选择什么样的超参数一无所知。假设，刚开始的实验中选择前面章节的参数都是运气较好。但在使用学习率 $\eta=10.0$ 而正则化参数 $\lambda=1000.0$。下面是我们的一个尝试：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> mnist_loader</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>training_data, validation_data, test_data = \</span><br><span class="line"><span class="meta">... </span>mnist_loader.load_data_wrapper()</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> network2</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network2.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">10.0</span>, lmbda = <span class="number">1000.0</span>,</span><br><span class="line"><span class="meta">... </span>evaluation_data=validation_data, monitor_evaluation_accuracy=<span class="keyword">True</span>)</span><br><span class="line">Epoch <span class="number">0</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">1030</span> / <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">Epoch <span class="number">1</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">990</span> / <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">Epoch <span class="number">2</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">1009</span> / <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Epoch <span class="number">27</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">1009</span> / <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">Epoch <span class="number">28</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">983</span> / <span class="number">10000</span></span><br><span class="line"></span><br><span class="line">Epoch <span class="number">29</span> training complete</span><br><span class="line">Accuracy on evaluation data: <span class="number">967</span> / <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+<p>我们分类准确率并不比随机选择更好。网络就像随机噪声产生器一样。</p>
+<p>你可能会说，“这好办，降低学习率和正则化参数就好了。”不幸的是，你并不先验地知道这些就是需要调整的超参数。可能真正的问题出在 $30$ 个隐藏元中，本身就不能很有效，不管我们如何调整其他的超参数都没有作用的？可能我们真的需要至少 $100$ 个隐藏神经元？或者是 $300$ 个隐藏神经元？或者更多层的网络？或者不同输出编码方式？可能我们的网络一直在学习，只是学习的回合还不够？可能 minibatch 设的太小了？可能我们需要切换成二次代价函数？可能我们需要尝试不同的权重初始化方法？等等。很容易就在超参数的选择中迷失了方向。如果你的网络规模很大，或者使用了很多的训练数据，这种情况就很令人失望了，因为一次训练可能就要几个小时甚至几天乃至几周，最终什么都没有获得。如果这种情况一直发生，就会打击你的自信心。可能你会怀疑神经网络是不是适合你所遇到的问题？可能就应该放弃这种尝试了？</p>
+<p>本节，我会给出一些用于设定超参数的启发式想法。目的是帮你发展出一套工作流来确保很好地设置超参数。当然，我不会覆盖超参数优化的每个方法。那是太繁重的问题，而且也不会是一个能够完全解决的问题，也不存在一种通用的关于正确策略的共同认知。总是会有一些新的技巧可以帮助你提高一点性能。但是本节的启发式想法能帮你开个好头。</p>
+<h2 id="宽泛策略（Broad-strategy）"><a href="#宽泛策略（Broad-strategy）" class="headerlink" title="宽泛策略（Broad strategy）"></a>宽泛策略（Broad strategy）</h2><p>在使用神经网络来解决新的问题时，一个挑战就是获得任何一种非寻常的学习，也就是说，达到比随机的情况更好的结果。这个实际上会很困难，尤其是遇到一种新类型的问题时。让我们看看有哪些策略可以在面临这类困难时候尝试。</p>
+<p>假设，我们第一次遇到 MNIST 分类问题。刚开始，你很有激情，但是当第一个神经网络完全失效时，你会觉得有些沮丧。此时就可以将问题简化。丢开训练和验证集合中的那些除了$0$ 和 $1$ 的那些图像。然后试着训练一个网络来区分 $0$ 和 $1$。不仅仅问题比 $10$个分类的情况简化了，同样也会减少 80% 的训练数据，这样就给出了 $5$ 倍的加速。这样可以保证更快的实验，也能给予你关于如何构建好的网络更快的洞察。</p>
+<p>你通过简化网络来加速实验进行更有意义的学习。如果你相信 $[784, 10]$ 的网络更可能比随机更加好的分类效果，那么就从这个网络开始实验。这会比训练一个 $[784, 30 ,10]$的网络更快，你可以进一步尝试后一个。</p>
+<p>你可以通过提高监控的频率来在试验中获得另一个加速了。</p>
+<p>我们可以继续，逐个调整每个超参数，慢慢提升性能。一旦我们找到一种提升性能的 $\eta$ 值，我们就可以尝试寻找好的值。然后按照一个更加复杂的网络架构进行实验，假设是一个有 $10$ 个隐藏元的网络。然后继续调整 $\eta$ 和 $\lambda$。接着调整成 $20$ 个隐藏元。然后将其他的超参数调整再调整。如此进行，在每一步使用我们 hold out 验证数据集来评价性能，使用这些度量来找到越来越好的超参数。当我们这么做的时候，一般都需要花费更多时间来发现由于超参数改变带来的影响，这样就可以一步步减少监控的频率。</p>
+<p>所有这些作为一种宽泛的策略看起来很有前途。然而，我想要回到寻找超参数的原点。实际上，即使是上面的讨论也传达出过于乐观的观点。实际上，很容易会遇到神经网络学习不到任何知识的情况。你可能要花费若干天在调整参数上，仍然没有进展。 <strong>所以我想要再重申一下在前期你应该从实验中尽可能早的获得快速反馈。</strong> 直觉上看，这看起来简化问题和架构仅仅会降低你的效率。实际上，这样能够将进度加快，因为你能够更快地找到传达出有意义的信号的网络。一旦你获得这些信号，你可以尝尝通过微调超参数获得快速的性能提升。这和人生中很多情况一样，万事开头难。</p>
+<p>好了，上面就是宽泛的策略。现在我们看看一些具体的设置超参数的推荐。我会聚焦在学习率 $\eta$，L2 regularization参数 $\lambda$，和小批量数据大小。然而，很多的观点同样可以应用在其他的超参数的选择上，包括一些关于网络架构的、其他类型的regularization和一些本书后面遇到的如 momentum co-efficient 这样的超参数。</p>
+<h2 id="学习速率（Learning-rate）"><a href="#学习速率（Learning-rate）" class="headerlink" title="学习速率（Learning rate）"></a>学习速率（Learning rate）</h2><p>假设我们运行了三个不同学习速率（$\eta=0.025$、$\eta=0.25$、$\eta=2.5$）的 MNIST 网络。我们会像前面介绍的实验那样设置其他的超参数，进行 $30$ 回合，minibatch 大小为 $10$，然后 $\lambda = 5.0$。我们同样会使用整个 $50,000$ 幅训练图像。下面是一副展示了训练代价的变化情况的图：</p>
+<p><img src="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/1.png" alt=""></p>
+<p>使用 $\eta=0.025$，代价函数平滑下降到最后的回合。使用 $\eta=0.25$，代价刚开始下降，在大约 $20$ 回合后接近饱和状态，后面就是微小的震荡和随机抖动。最终使用 $\eta=2.5$ 代价从始至终都震荡得非常明显。为了理解震荡的原因，回想一下随机梯度下降其实是期望我们能够逐渐地抵达代价函数的谷底的，</p>
+<p><img src="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/2.png" alt=""></p>
+<p>然而，如果 $\eta$ 太大的话，步长也会变大可能会使得算法在接近最小值时候又越过了谷底。这在 $\eta=2.5$ 时非常可能发生。当我们选择 $\eta=0.25$ 时，初始几步将我们带到了谷底附近，但一旦到达了谷底，又很容易跨越过去。而在我们选择 $\eta=0.025$ 时，在前 $30$ 回合的训练中不再受到这个情况的影响。当然，选择太小的%学习速率，也会带来另一个题,\gls*{sgd}算法变慢了。一种更加好的策略其实是，在开始时使用 $\eta=0.25$，随着越来越接近谷底，就换成$\eta=0.025$。这种可变学习速率的方法我们后面会介绍。现在，我们就聚焦在找出一个单独的好的学习速率的选择，$\eta$。</p>
+<p>所以，有了这样的想法，我们可以如下设置 $\eta$。</p>
+<ul>
+<li><p>首先，我们选择在训练数据上的代价立即开始下降而非震荡或者增加时作为 $\eta$ 的阈值的估计。这个估计并不需要太过精确。你可以估计这个值的量级，比如说从 $\eta=0.01$ 开始。如果代价在训练的前面若干回合开始下降，你就可以逐步地尝试 $\eta=0.1, 1.0,…$，直到你找到一个 $\eta$ 的值使得在开始若干回合代价就开始震荡或者增加。</p>
+</li>
+<li><p>相反，如果代价在 $\eta=0.01$ 时就开始震荡或者增加，那就尝试 $\eta=0.001, 0.0001,…$ 直到你找到代价在开始回合就下降的设定。按照这样的方法，我们可以掌握学习速率的阈值的量级的估计。你可以选择性地优化估计，选择那些最大的 $\eta$，比方说 $\eta=0.5$ 或者 $\eta=0.2$（这里也不需要过于精确）。</p>
+</li>
+<li><p>显然，$\eta$ 实际值不应该比阈值大。实际上，如果 $\eta$ 的值重复使用很多回合的话，你更应该使用稍微小一点的值，例如，阈值的一半这样的选择。这样的选择能够允许你训练更多的回合，不会减慢学习的速度。</p>
+</li>
+</ul>
+<p>在 MNIST 数据中，使用这样的策略会给出一个关于学习速率 $\eta$ 的一个量级的估计，大概是 $0.1$。在一些改良后，我们得到了阈值 $\eta=0.5$。所以，我们按照刚刚的取一半的策略就确定了学习速率为 $\eta=0.25$。实际上，我发现使用 $\eta=0.5$ 在 $30$ 回合内表现是很好的，所以选择更低的学习速率，也没有什么问题。</p>
+<h3 id="为什么使用代价函数来选择学习速率？而不是验证集"><a href="#为什么使用代价函数来选择学习速率？而不是验证集" class="headerlink" title="为什么使用代价函数来选择学习速率？而不是验证集"></a>为什么使用代价函数来选择学习速率？而不是验证集</h3><p>这看起来相当直接。然而，使用训练代价函数来选择 $\eta$ 看起来和我们之前提到的通过验证集来确定超参数的观点有点矛盾。实际上，我们会使用验证准确率来选择正则化超参数，minibatch 大小，和层数及隐藏元个数这些网络参数，等等。为何对学习速率要用不同的方法呢？坦白地说，这些选择其实是我个人美学偏好，个人习惯罢了。<strong>原因就是其他的超参数倾向于提升最终的测试集上的分类准确率，所以将他们通过验证准确率来选择更合理一些。然而，学习速率仅仅是偶然地影响最终的分类准确率的。学习率主要的目的是控制梯度下降的步长，监控训练代价是最好的检测步长过大的方法。</strong> 所以，这其实就是个人的偏好。在学习的前期，如果验证准确率提升，训练代价通常都在下降。所以在实践中使用那种衡量方式并不会对判断的影响太大。</p>
+<h3 id="学习速率调整"><a href="#学习速率调整" class="headerlink" title="学习速率调整"></a>学习速率调整</h3><p>我们一直都将学习速率设置为常量。但是，通常采用可变的学习速率更加有效。在学习的前期，权重可能非常糟糕。所以最好是使用一个较大的学习速率让权重变化得更快。越往后，我们可以降低学习速率，这样可以作出更加精良的调整。</p>
+<p>我们要如何设置学习速率呢？其实有很多方法。一种自然的观点是使用提前终止的想法。就是保持学习速率为一个常量直到验证准确率开始变差。然后按照某个量下降学习速率，比如说按照$10$ 或者 $2$。我们重复此过程若干次，直到学习速率是初始值的 $1/1024$（或者$1/1000$）。那时就终止。</p>
+<p>可变学习速率可以提升性能，但是也会产生大量可能的选择。这些选择会让人头疼~——~你可能需要花费很多精力才能优化学习规则。对刚开始实验，我建议使用单一的常量作为学习速率的选择。这会给你一个比较好的近似。后面，如果你想获得更好的性能，值得按照某种规则进行实验，根据我已经给出的资料。</p>
+<h2 id="提前停止-来确定训练的周期的数量"><a href="#提前停止-来确定训练的周期的数量" class="headerlink" title="提前停止 来确定训练的周期的数量"></a>提前停止 来确定训练的周期的数量</h2><p>正如我们在本章前面讨论的那样，提前停止表示在每个回合的最后，我们都要计算验证集上的分类准确率。当准确率不再提升，就终止它。这让选择回合数变得很简单。特别地，也意味着我们不再需要担心显式地掌握回合数和其他超参数的关联。而且，这个过程还是自动的。另外，提前停止也能够帮助我们避免过拟合。尽管在实验前期不采用提前停止，这样可以看到任何过匹配的信号，使用这些来选择正则化方法，但提前停止仍然是一件很棒的事。</p>
+<p>我们需要再明确一下什么叫做分类准确率不再提升，这样方可实现提前停止。正如我们已经看到的，分类准确率在整体趋势下降的时候仍旧会抖动或者震荡。如果我们在准确度刚开始下降的时候就停止，那么肯定会错过更好的选择。一种不错的解决方案是如果分类准确率在一段时间内不再提升的时候终止。例如，我们要解决 MNIST 问题。如果分类准确度在近$10$ 个回合都没有提升的时候，我们将其终止。这样不仅可以确保我们不会终止得过快，也能够使我们不要一直干等直到出现提升。</p>
+<p>这种 $10$ 回合不提升就终止的规则很适合 MNIST 问题的一开始的探索。然而，网络有时候会在很长时间内于一个特定的分类准确率附近形成平缓的局面，然后才会有提升。如果你尝试获得相当好的性能，这个规则可能就会太过激进了~——~停止得太草率。所以，我建议在你更加深入地理解网络训练的方式时，仅仅在初始阶段使用 $10$ 回合不提升规则，然后逐步地选择更久的回合，比如说：$20$ 回合不提升就终止，$50$ 回合不提升就终止，以此类推。当然，这就引入了一种新的需要优化的超参数！实践中，其实比较容易设置这个超参数来获得相当好的结果。类似地，对不同于 MNIST 的问题，$10$ 回合不提升就终止的规则会太过激进或者太过保守，这都取决于问题本身的特质。然而，进行一些小的实验，发现好的提前终止的策略还是非常简单的。</p>
+<p>我们还没有在我们的 MNIST 实验中使用提前终止。原因是我们已经比较了不同的学习观点。这样的比较其实比较适合使用同样的训练回合。但是，在 <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network2.py" target="_blank" rel="noopener">network2.py</a> 中实现提前终止还是很有价值的：</p>
+<h2 id="小批量数据的大小"><a href="#小批量数据的大小" class="headerlink" title="小批量数据的大小"></a>小批量数据的大小</h2><p>我们应该如何设置小批量数据的大小？为了回答这个问题，让我们先假设正在进行在线学习，也就是说使用大小为 $1$ 的小批量数据。</p>
+<p>一个关于在线学习的担忧是使用只有一个样本的小批量数据会带来关于梯度的错误估计。实际上，误差并不会真的产生这个问题。原因在于单一的梯度估计不需要绝对精确。我们需要的是确保代价函数保持下降的足够精确的估计。就像你现在要去北极点，但是只有一个不大精确的（差个 $10-20$ 度）指南针。如果你不断频繁地检查指南针，指南针会在平均状况下给出正确的方向，所以最后你也能抵达北极点。</p>
+<p>基于这个观点，这看起来好像我们需要使用在线学习。实际上，情况会变得更加复杂。在上一章的问题中我指出我们可以使用矩阵技术来对所有在小批量数据中的样本同时计算梯度更新，而不是进行循环。所以，取决于硬件和线性代数库的实现细节，这会比循环方式进行梯度更新快好多。也许是 $50$ 和 $100$ 倍的差别。</p>
+<p>现在，看起来这对我们帮助不大。我们使用 $100$ 的小批量数据的学习规则如下;</p>
+<script type="math/tex; mode=display">w \rightarrow w' = w-\eta \frac{1}{100} \sum_x \nabla C_x</script><p>这里是对小批量数据中所有训练样本求和。而在线学习是</p>
+<script type="math/tex; mode=display">w \rightarrow w' = w-\eta \nabla C_x</script><p>即使它仅仅是 $50$ 倍的时间，结果仍然比直接在线学习更好，因为我们在线学习更新得太过频繁了。假设，在小批量数据下，我们将学习率扩大了 $100$ 倍，更新规则就是</p>
+<script type="math/tex; mode=display">w \rightarrow w' = w-\eta \sum_x \nabla C_x</script><p><strong>这看起来像做了 $100$ 次独立的在线学习。但是仅仅花费了 $50$ 次在线学习的时间。当然，其实不是同样的 100 次在线学习，因为小批量数据中 $\nabla C_x$ 是都对同样的权重进行衡量的，而在线学习中是累加的学习。使用更大的小批量数据看起来还是显著地能够进行训练加速的。</strong></p>
+<p>所以，选择最好的小批量数据大小也是一种折衷。太小了，你不会用上很好的矩阵库的快速计算。太大，你是不能够足够频繁地更新权重的。你所需要的是选择一个折衷的值，可以最大化学习的速度。 <strong>幸运的是，小批量数据大小的选择其实是相对独立的一个超参数（网络整体架构外的参数），所以你不需要优化那些参数来寻找好的小批量数据大小。</strong>因此，可以选择的方式就是使用某些可以接受的值（不需要是最优的）作为其他参数的选择，然后进行不同小批量数据大小的尝试，像上面那样调整 $\eta$。画出验证准确率的值随时间（非回合）变化的图，选择哪个得到最快性能的提升的小批量数据大小。得到了小批量数据大小，也就可以对其他的超参数进行优化了。</p>
+<p>当然，你也发现了，我这里并没有做到这么多。实际上，我们的实现并没有使用到小批量数据更新快速方法。就是简单使用了小批量数据大小为 $10$。所以，我们其实可以通过降低小批量数据大小来进行提速。我也没有这样做，因为我希望展示小批量数据大于$1$ 的使用，也因为我实践经验表示提升效果其实不明显。在实践中，我们大多数情况肯定是要实现更快的小批量数据更新策略，然后花费时间精力来优化小批量数据大小，来达到总体的速度提升。</p>
+<h2 id="自动技术："><a href="#自动技术：" class="headerlink" title="自动技术："></a>自动技术：</h2><p>我已经给出很多在手动进行超参数优化时的启发式规则。手动选择当然是种理解网络行为的方法。不过，现实是，很多工作已经使用自动化过程进行。通常的技术就是网格搜索，可以系统化地对超参数的参数空间的网格进行搜索。网格搜索的成就和限制（易于实现的变体）在 James Bergstra 和 Yoshua Bengio $2012$年的论文作者为 James Bergstra 和 Yoshua Bengio（2012）。中已经给出了综述。很多更加精细的方法也被大家提出来了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>跟随上面的经验并不能帮助你的网络给出绝对最优的结果。但是很可能给你一个好的开始和一个改进的基础。特别地，我已经非常独立地讨论了超参数的选择。实践中，超参数之间存在着很多关系。你可能使用 $\eta$ 进行试验，发现效果不错，然后去优化 $\lambda$，发现这里又和 $\eta$ 混在一起了。在实践中，一般是来回往复进行的，最终逐步地选择到好的值。总之，启发式规则其实都是经验，不是金规玉律。你应该注意那些没有效果的尝试的信号，然后乐于尝试更多试验。特别地，这意味着需要更加细致地监控神经网络的行为，特别是验证集上的准确率。</p>
+<p>选择超参数的难度在于如何选择超参数的方法太分散, 这些方法分散在许多的研究论文，软件程序甚至仅仅在一些研究人员的大脑中, 因而变得更加困难。很多很多的论文给出了（有时候矛盾的）建议。</p>
+<p>设定超参数的挑战让一些人抱怨神经网络相比较其他的机器学习算法需要大量的工作进行参数选择。我也听到很多不同的版本：“的确，参数完美的神经网络可能会在这问题上获得最优的性能。但是，我可以尝试一下随机森林（或者 SVM 或者……这里脑补自己偏爱的技术）也能够工作的。我没有时间搞清楚那个最好的神经网络。” 当然，从一个实践者角度，肯定是应用更加容易的技术。这在你刚开始处理某个问题时尤其如此，因为那时候，你都不确定一个机器学习算法能够解决那个问题。但是，如果获得最优的性能是最重要的目标的话，你就可能需要尝试更加复杂精妙的知识的方法了。如果机器学习总是简单的话那是太好不过了，但也没有什么理由说机器学习非得这么简单。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen. CHAPTER 3 Improving the way neural networks learn[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap3.html</a>, 2018-06-28.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman. Another Chinese Translation of Neural Networks and Deep Learning[DB/OL]. <a href="https://github.com/zhanggyb/nndl/blob/master/chap3.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap3.tex</a>, 2018-06-28.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/超参数/" rel="tag"># 超参数</a>
+          
+            <a href="/tags/Broad-strategy/" rel="tag"># Broad strategy</a>
+          
+            <a href="/tags/Learning-rate/" rel="tag"># Learning rate</a>
+          
+            <a href="/tags/Early-stopping/" rel="tag"># Early stopping</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/27/改进神经网络的学习方法——代码实现/" rel="next" title="改进神经网络的学习方法——代码实现">
+                <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——代码实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/29/神经网络可以计算任何函数的可视化证明/" rel="prev" title="神经网络可以计算任何函数的可视化证明">
+                神经网络可以计算任何函数的可视化证明 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么选择神经网络的超参数是个难题"><span class="nav-number">1.</span> <span class="nav-text">为什么选择神经网络的超参数是个难题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#宽泛策略（Broad-strategy）"><span class="nav-number">2.</span> <span class="nav-text">宽泛策略（Broad strategy）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习速率（Learning-rate）"><span class="nav-number">3.</span> <span class="nav-text">学习速率（Learning rate）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么使用代价函数来选择学习速率？而不是验证集"><span class="nav-number">3.1.</span> <span class="nav-text">为什么使用代价函数来选择学习速率？而不是验证集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习速率调整"><span class="nav-number">3.2.</span> <span class="nav-text">学习速率调整</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提前停止-来确定训练的周期的数量"><span class="nav-number">4.</span> <span class="nav-text">提前停止 来确定训练的周期的数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小批量数据的大小"><span class="nav-number">5.</span> <span class="nav-text">小批量数据的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动技术："><span class="nav-number">6.</span> <span class="nav-text">自动技术：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近邻回归 Nearest neighbor regression首先回归和分类最要得区别就是：回归的目标数据是连续的，分类的目标数据是离散的。最近邻回归的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。 这些点的数量可以是用户自定义的常量（K-最近邻学习），也可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量： standard">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最近邻方法 Nearest Neighbor Methords">
+<meta property="og:url" content="http://yoursite.com/2018/11/23/最近邻算法/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="最近邻回归 Nearest neighbor regression首先回归和分类最要得区别就是：回归的目标数据是连续的，分类的目标数据是离散的。最近邻回归的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。 这些点的数量可以是用户自定义的常量（K-最近邻学习），也可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量： standard">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/23/最近邻算法/a1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/11/23/最近邻算法/output_19_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/23/最近邻算法/output_17_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/23/最近邻算法/a2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/11/23/最近邻算法/output_11_0.png">
+<meta property="og:updated_time" content="2018-11-23T02:49:25.640Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最近邻方法 Nearest Neighbor Methords">
+<meta name="twitter:description" content="最近邻回归 Nearest neighbor regression首先回归和分类最要得区别就是：回归的目标数据是连续的，分类的目标数据是离散的。最近邻回归的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。 这些点的数量可以是用户自定义的常量（K-最近邻学习），也可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量： standard">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/23/最近邻算法/a1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/23/最近邻算法/"/>
+
+
+
+
+
+  <title>最近邻方法 Nearest Neighbor Methords | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/23/最近邻算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">最近邻方法 Nearest Neighbor Methords</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-23T16:30:15+08:00">
+                2018-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/最近邻算法/" itemprop="url" rel="index">
+                    <span itemprop="name">最近邻算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/23/最近邻算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/23/最近邻算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="最近邻回归-Nearest-neighbor-regression"><a href="#最近邻回归-Nearest-neighbor-regression" class="headerlink" title="最近邻回归 Nearest neighbor regression"></a><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm#k-NN_regression" target="_blank" rel="noopener">最近邻回归 Nearest neighbor regression</a></h1><p>首先回归和分类最要得区别就是：回归的目标数据是连续的，分类的目标数据是离散的。最近邻回归的原理是从训练样本中找到与新点在距离上最近的预定数量的几个点，并从这些点中预测标签。 这些点的数量可以是用户自定义的常量（K-最近邻学习），也可以根据不同的点的局部密度（基于半径的最近邻学习）。距离通常可以通过任何方式来度量： standard Euclidean distance（标准欧式距离）是最常见的选择。Neighbors-based（基于邻居的）方法被称为 非泛化 机器学习方法， 因为它们只是简单地”记住”了其所有的训练数据（可能转换为一个快速索引结构，如 Ball Tree或 KD Tree）</p>
+<h1 id="Nearest-Neighbor-Methords"><a href="#Nearest-Neighbor-Methords" class="headerlink" title="Nearest Neighbor Methords"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods" target="_blank" rel="noopener">Nearest Neighbor Methords</a></h1><p>Nearest Neighbor methods are a very popular ML algorithm. We show how to implement k-Nearest Neighbors, weighted k-Nearest Neighbors, and k-Nearest Neighbors with mixed distance functions. In this chapter we also show how to use the Levenshtein distance (edit distance) in TensorFlow, and use it to calculate the distance between strings. We end this chapter with showing how to use k-Nearest Neighbors for categorical prediction with the MNIST handwritten digit recognition.</p>
+<p>Nearest neighbor methods are based on a distance-based conceptual idea. We consider our training set as the model and make predictions on new points based on how close they are to points in the training set. A naïve way is to make the prediction as the closest training data point class. But since most datasets contain a degree of noise, a more common method would be to take a weighted average of a set of k nearest neighbors. This method is called k-nearest neighbors (k-NN).</p>
+<p>Given a training dataset (x1, x2, …, xn),  with corresponding targets (y1, y2, …, yn), we can make a prediction on a point, z, by looking at a set of nearest neighbors. The actual method of prediction depends on whether or not we are doing regression (continuous y) or classification (discrete y).</p>
+<p>For discrete classification targets, the prediction may be given by a maximum voting scheme weighted by the distance to the prediction point:</p>
+<p>prediction(z) = max ( weighted sum of distances of points in each class )</p>
+<ul>
+<li>see jupyter notebook for the formula</li>
+</ul>
+<p>Here, our prediction is the maximum weighted value over all classes (j), where the weighted distance from the prediction point is usually given by the L1 or L2 distance functions.</p>
+<p>Continuous targets are very similar, but we usually just compute a weighted average of the target variable (y) by distance.</p>
+<p>There are many different specifications of distance metrics that we can choose. In this chapter, we will explore the L1 and L2 metrics as well as edit and textual distances.</p>
+<p>We also have to choose how to weight the distances. A straight forward way to weight the distances is by the distance itself. Points that are further away from our prediction should have less impact than nearer points. The most common way to weight is by the normalized inverse of the distance. We will implement this method in the next recipe.</p>
+<p>Note that k-NN is an aggregating method. For regression, we are performing a weighted average of neighbors. Because of this, predictions will be less extreme and less varied than the actual targets. The magnitude of this effect will be determined by k, the number of neighbors in the algorithm.</p>
+<h2 id="1-k-Nearest-Neighbor"><a href="#1-k-Nearest-Neighbor" class="headerlink" title="1. k-Nearest Neighbor"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods/02_Working_with_Nearest_Neighbors" target="_blank" rel="noopener">1. k-Nearest Neighbor</a></h2><p>This function illustrates how to use k-nearest neighbors in tensorflow</p>
+<p>We will use the 1970s Boston housing dataset which is available through the UCI ML data repository.</p>
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data:"></a>Data:</h3><p>—————x-values—————-</p>
+<ul>
+<li>CRIM   : per capita crime rate by town</li>
+<li>ZN     : prop. of res. land zones</li>
+<li>INDUS  : prop. of non-retail business acres</li>
+<li>CHAS   : Charles river dummy variable</li>
+<li>NOX    : nitrix oxides concentration / 10 M</li>
+<li>RM     : Avg. # of rooms per building</li>
+<li>AGE    : prop. of buildings built prior to 1940</li>
+<li>DIS    : Weighted distances to employment centers</li>
+<li>RAD    : Index of radian highway access</li>
+<li>TAX    : Full tax rate value per $10k</li>
+<li>PTRATIO: Pupil/Teacher ratio by town</li>
+<li>B      : 1000*(Bk-0.63)^2, Bk=prop. of blacks</li>
+<li>LSTAT  : % lower status of pop</li>
+</ul>
+<p>——————y-value—————-</p>
+<ul>
+<li>MEDV   : Median Value of homes in $1,000’s</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># import required libraries</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<h3 id="Create-graph"><a href="#Create-graph" class="headerlink" title="Create graph"></a>Create graph</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<h3 id="Load-the-data"><a href="#Load-the-data" class="headerlink" title="Load the data"></a>Load the data</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">housing_url = <span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data'</span></span><br><span class="line">housing_header = [<span class="string">'CRIM'</span>, <span class="string">'ZN'</span>, <span class="string">'INDUS'</span>, <span class="string">'CHAS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'AGE'</span>, <span class="string">'DIS'</span>, <span class="string">'RAD'</span>, <span class="string">'TAX'</span>, <span class="string">'PTRATIO'</span>, <span class="string">'B'</span>, <span class="string">'LSTAT'</span>, <span class="string">'MEDV'</span>]</span><br><span class="line">cols_used = [<span class="string">'CRIM'</span>, <span class="string">'INDUS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'AGE'</span>, <span class="string">'DIS'</span>, <span class="string">'TAX'</span>, <span class="string">'PTRATIO'</span>, <span class="string">'B'</span>, <span class="string">'LSTAT'</span>]</span><br><span class="line">num_features = len(cols_used)</span><br><span class="line">housing_file = requests.get(housing_url)</span><br><span class="line">housing_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> y.split(<span class="string">' '</span>) <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> housing_file.text.split(<span class="string">'\n'</span>) <span class="keyword">if</span> len(y)&gt;=<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">y_vals = np.transpose([np.array([y[<span class="number">13</span>] <span class="keyword">for</span> y <span class="keyword">in</span> housing_data])])</span><br><span class="line">x_vals = np.array([[x <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(y) <span class="keyword">if</span> housing_header[i] <span class="keyword">in</span> cols_used] <span class="keyword">for</span> y <span class="keyword">in</span> housing_data])</span><br><span class="line"></span><br><span class="line"><span class="comment">## Min-Max Scaling</span></span><br><span class="line">x_vals = (x_vals - x_vals.min(<span class="number">0</span>)) / x_vals.ptp(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x_vals.shape</span><br></pre></td></tr></table></figure>
+<pre><code>(506, 10)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y_vals.shape</span><br></pre></td></tr></table></figure>
+<pre><code>(506, 1)
+</code></pre><h3 id="Split-the-data-into-train-and-test-sets"><a href="#Split-the-data-into-train-and-test-sets" class="headerlink" title="Split the data into train and test sets"></a>Split the data into train and test sets</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">13</span>)  <span class="comment">#make results reproducible</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<h3 id="Parameters-to-control-run"><a href="#Parameters-to-control-run" class="headerlink" title="Parameters to control run"></a>Parameters to control run</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare k-value and batch size</span></span><br><span class="line">k = <span class="number">4</span></span><br><span class="line">batch_size=len(x_vals_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Placeholders</span></span><br><span class="line">x_data_train = tf.placeholder(shape=[<span class="keyword">None</span>, num_features], dtype=tf.float32)</span><br><span class="line">x_data_test = tf.placeholder(shape=[<span class="keyword">None</span>, num_features], dtype=tf.float32)</span><br><span class="line">y_target_train = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target_test = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<h2 id="Declare-distance-metric"><a href="#Declare-distance-metric" class="headerlink" title="Declare distance metric"></a>Declare distance metric</h2><h3 id="L1-Distance-Metric"><a href="#L1-Distance-Metric" class="headerlink" title="L1 Distance Metric"></a>L1 Distance Metric</h3><p>Uncomment following line and comment L2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distance = tf.reduce_sum(tf.abs(tf.subtract(x_data_train, tf.expand_dims(x_data_test,<span class="number">1</span>))), axis=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="L2-Distance-Metric"><a href="#L2-Distance-Metric" class="headerlink" title="L2 Distance Metric"></a>L2 Distance Metric</h3><p>Uncomment following line and comment L1 above</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#distance = tf.sqrt(tf.reduce_sum(tf.square(tf.subtract(x_data_train, tf.expand_dims(x_data_test,1))), reduction_indices=1))</span></span><br></pre></td></tr></table></figure>
+<h2 id="Predict-Get-min-distance-index-Nearest-neighbor"><a href="#Predict-Get-min-distance-index-Nearest-neighbor" class="headerlink" title="Predict: Get min distance index (Nearest neighbor)"></a>Predict: Get min distance index (Nearest neighbor)</h2><p><img src="/2018/11/23/最近邻算法/a1.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#prediction = tf.arg_min(distance, 0)</span></span><br><span class="line">top_k_xvals, top_k_indices = tf.nn.top_k(tf.negative(distance), k=k)</span><br><span class="line">top_k_xvals = tf.truediv(<span class="number">1.0</span>, top_k_xvals)</span><br><span class="line">x_sums = tf.expand_dims(tf.reduce_sum(top_k_xvals, <span class="number">1</span>),<span class="number">1</span>)</span><br><span class="line">x_sums_repeated = tf.matmul(x_sums,tf.ones([<span class="number">1</span>, k], tf.float32))</span><br><span class="line">x_val_weights = tf.expand_dims(tf.div(top_k_xvals,x_sums_repeated), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">top_k_yvals = tf.gather(y_target_train, top_k_indices)</span><br><span class="line">prediction = tf.squeeze(tf.matmul(x_val_weights,top_k_yvals), axis=[<span class="number">1</span>])</span><br><span class="line"><span class="comment">#prediction = tf.reduce_mean(top_k_yvals, 1)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate MSE</span></span><br><span class="line">mse = tf.div(tf.reduce_sum(tf.square(tf.subtract(prediction, y_target_test))), batch_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate how many loops over training data</span></span><br><span class="line">num_loops = int(np.ceil(len(x_vals_test)/batch_size))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_loops):</span><br><span class="line">    min_index = i*batch_size</span><br><span class="line">    max_index = min((i+<span class="number">1</span>)*batch_size,len(x_vals_train))</span><br><span class="line">    x_batch = x_vals_test[min_index:max_index]</span><br><span class="line">    y_batch = y_vals_test[min_index:max_index]</span><br><span class="line">    predictions = sess.run(prediction, feed_dict=&#123;x_data_train: x_vals_train, x_data_test: x_batch,</span><br><span class="line">                                         y_target_train: y_vals_train, y_target_test: y_batch&#125;)</span><br><span class="line">    batch_mse = sess.run(mse, feed_dict=&#123;x_data_train: x_vals_train, x_data_test: x_batch,</span><br><span class="line">                                         y_target_train: y_vals_train, y_target_test: y_batch&#125;)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Batch #'</span> + str(i+<span class="number">1</span>) + <span class="string">' MSE: '</span> + str(np.round(batch_mse,<span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>Batch #1 MSE: 10.625
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot prediction and actual distribution</span></span><br><span class="line">bins = np.linspace(<span class="number">5</span>, <span class="number">50</span>, <span class="number">45</span>)</span><br><span class="line"></span><br><span class="line">plt.hist(predictions, bins, alpha=<span class="number">0.5</span>, label=<span class="string">'Prediction'</span>)</span><br><span class="line">plt.hist(y_batch, bins, alpha=<span class="number">0.5</span>, label=<span class="string">'Actual'</span>)</span><br><span class="line">plt.title(<span class="string">'Histogram of Predicted and Actual Values'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Med Home Value in $1,000s'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Frequency'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/23/最近邻算法/output_19_0.png" alt="png"></p>
+<hr>
+<h2 id="2-MNIST-Digit-Prediction-with-k-Nearest-Neighbors"><a href="#2-MNIST-Digit-Prediction-with-k-Nearest-Neighbors" class="headerlink" title="2. MNIST Digit Prediction with k-Nearest Neighbors"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods/06_Nearest_Neighbors_for_Image_Recognition" target="_blank" rel="noopener">2. MNIST Digit Prediction with k-Nearest Neighbors</a></h2><p>This script will load the MNIST data, and split it into test/train and perform prediction with nearest neighbors.</p>
+<p>For each test integer, we will return the closest image/integer.</p>
+<p>Integer images are represented as 28x28 matrices of floating point numbers.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<h3 id="Create-graph-1"><a href="#Create-graph-1" class="headerlink" title="Create graph"></a>Create graph</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<h3 id="Load-the-data-1"><a href="#Load-the-data-1" class="headerlink" title="Load the data"></a>Load the data</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mnist = input_data.read_data_sets(<span class="string">"MNIST_data"</span>, one_hot=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-random-sample"><a href="#Generate-random-sample" class="headerlink" title="Generate random sample"></a>Generate random sample</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">13</span>)  <span class="comment"># set seed for reproducibility</span></span><br><span class="line">train_size = <span class="number">1000</span></span><br><span class="line">test_size = <span class="number">102</span></span><br><span class="line">rand_train_indices = np.random.choice(len(mnist.train.images), train_size, replace=<span class="keyword">False</span>)</span><br><span class="line">rand_test_indices = np.random.choice(len(mnist.test.images), test_size, replace=<span class="keyword">False</span>)</span><br><span class="line">x_vals_train = mnist.train.images[rand_train_indices]</span><br><span class="line">x_vals_test = mnist.test.images[rand_test_indices]</span><br><span class="line">y_vals_train = mnist.train.labels[rand_train_indices]</span><br><span class="line">y_vals_test = mnist.test.labels[rand_test_indices]</span><br></pre></td></tr></table></figure>
+<h3 id="Declare-k-value-and-batch-size"><a href="#Declare-k-value-and-batch-size" class="headerlink" title="Declare k-value and batch size"></a>Declare k-value and batch size</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">k = <span class="number">4</span></span><br><span class="line">batch_size=<span class="number">6</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Placeholders</span></span><br><span class="line">x_data_train = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">784</span>], dtype=tf.float32)</span><br><span class="line">x_data_test = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">784</span>], dtype=tf.float32)</span><br><span class="line">y_target_train = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">10</span>], dtype=tf.float32)</span><br><span class="line">y_target_test = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">10</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<h3 id="Declare-distance-metric-1"><a href="#Declare-distance-metric-1" class="headerlink" title="Declare distance metric"></a>Declare distance metric</h3><h4 id="L1-metric-uncomment-following-line-and-comment-L2-metric-below"><a href="#L1-metric-uncomment-following-line-and-comment-L2-metric-below" class="headerlink" title="L1 metric - uncomment following line and comment L2 metric below"></a>L1 metric - uncomment following line and comment L2 metric below</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">distance = tf.reduce_sum(tf.abs(tf.subtract(x_data_train, tf.expand_dims(x_data_test,<span class="number">1</span>))), axis=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="L2-metric-uncomment-following-line-and-comment-the-L1-metric-above"><a href="#L2-metric-uncomment-following-line-and-comment-the-L1-metric-above" class="headerlink" title="L2 metric - uncomment following line and comment the L1 metric above"></a>L2 metric - uncomment following line and comment the L1 metric above</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#distance = tf.sqrt(tf.reduce_sum(tf.square(tf.subtract(x_data_train, tf.expand_dims(x_data_test,1))), reduction_indices=1))</span></span><br></pre></td></tr></table></figure>
+<h3 id="Predict-Get-min-distance-index-Nearest-neighbor-1"><a href="#Predict-Get-min-distance-index-Nearest-neighbor-1" class="headerlink" title="Predict: Get min distance index (Nearest neighbor)"></a>Predict: Get min distance index (Nearest neighbor)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get min distance index (Nearest neighbor)</span></span><br><span class="line">top_k_xvals, top_k_indices = tf.nn.top_k(tf.negative(distance), k=k)</span><br><span class="line">prediction_indices = tf.gather(y_target_train, top_k_indices)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Predict the mode category</span></span><br><span class="line">count_of_predictions = tf.reduce_sum(prediction_indices, axis=<span class="number">1</span>)</span><br><span class="line">prediction = tf.argmax(count_of_predictions, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate how many loops over training data</span></span><br><span class="line">num_loops = int(np.ceil(len(x_vals_test)/batch_size))</span><br><span class="line"></span><br><span class="line">test_output = []</span><br><span class="line">actual_vals = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_loops):</span><br><span class="line">    min_index = i*batch_size</span><br><span class="line">    max_index = min((i+<span class="number">1</span>)*batch_size,len(x_vals_train))</span><br><span class="line">    x_batch = x_vals_test[min_index:max_index]</span><br><span class="line">    y_batch = y_vals_test[min_index:max_index]</span><br><span class="line">    predictions = sess.run(prediction, feed_dict=&#123;x_data_train: x_vals_train, x_data_test: x_batch,</span><br><span class="line">                                         y_target_train: y_vals_train, y_target_test: y_batch&#125;)</span><br><span class="line">    test_output.extend(predictions)</span><br><span class="line">    actual_vals.extend(np.argmax(y_batch, axis=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">accuracy = sum([<span class="number">1.</span>/test_size <span class="keyword">for</span> i <span class="keyword">in</span> range(test_size) <span class="keyword">if</span> test_output[i]==actual_vals[i]])</span><br><span class="line">print(<span class="string">'Accuracy on test set: '</span> + str(accuracy))</span><br></pre></td></tr></table></figure>
+<pre><code>Accuracy on test set: 0.8823529411764696
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot the last batch results:</span></span><br><span class="line">actuals = np.argmax(y_batch, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">Nrows = <span class="number">2</span></span><br><span class="line">Ncols = <span class="number">3</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(actuals)):</span><br><span class="line">    plt.subplot(Nrows, Ncols, i+<span class="number">1</span>)</span><br><span class="line">    plt.imshow(np.reshape(x_batch[i], [<span class="number">28</span>,<span class="number">28</span>]), cmap=<span class="string">'Greys_r'</span>)</span><br><span class="line">    plt.title(<span class="string">'Actual: '</span> + str(actuals[i]) + <span class="string">' Pred: '</span> + str(predictions[i]),</span><br><span class="line">                               fontsize=<span class="number">10</span>)</span><br><span class="line">    frame = plt.gca()</span><br><span class="line">    frame.axes.get_xaxis().set_visible(<span class="keyword">False</span>)</span><br><span class="line">    frame.axes.get_yaxis().set_visible(<span class="keyword">False</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/23/最近邻算法/output_17_0.png" alt="png"></p>
+<hr>
+<h2 id="3-Text-Distances"><a href="#3-Text-Distances" class="headerlink" title="3. Text Distances"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods/03_Working_with_Text_Distances" target="_blank" rel="noopener">3. Text Distances</a></h2><p>This notebook illustrates how to use the Levenstein distance (edit distance) in TensorFlow.</p>
+<p>Get required libarary and start tensorflow session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<h3 id="First-compute-the-edit-distance-between-‘bear’-and-‘beers’"><a href="#First-compute-the-edit-distance-between-‘bear’-and-‘beers’" class="headerlink" title="First compute the edit distance between ‘bear’ and ‘beers’"></a>First compute the edit distance between ‘bear’ and ‘beers’</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hypothesis = list(<span class="string">'bear'</span>)</span><br><span class="line">truth = list(<span class="string">'beers'</span>)</span><br><span class="line">h1 = tf.SparseTensor([[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>]],</span><br><span class="line">                     hypothesis,</span><br><span class="line">                     [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">t1 = tf.SparseTensor([[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>],[<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>]],</span><br><span class="line">                     truth,</span><br><span class="line">                     [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">print(sess.run(tf.edit_distance(h1, t1, normalize=<span class="keyword">False</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>[[2.]]
+</code></pre><h3 id="Compute-the-edit-distance-between-‘bear’-’beer’-and-‘beers’"><a href="#Compute-the-edit-distance-between-‘bear’-’beer’-and-‘beers’" class="headerlink" title="Compute the edit distance between (‘bear’,’beer’) and ‘beers’:"></a>Compute the edit distance between (‘bear’,’beer’) and ‘beers’:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hypothesis2 = list(<span class="string">'bearbeer'</span>)</span><br><span class="line">truth2 = list(<span class="string">'beersbeers'</span>)</span><br><span class="line">h2 = tf.SparseTensor([[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>]],</span><br><span class="line">                     hypothesis2,</span><br><span class="line">                     [<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">t2 = tf.SparseTensor([[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>], [<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>], [<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>]],</span><br><span class="line">                     truth2,</span><br><span class="line">                     [<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>])</span><br><span class="line"></span><br><span class="line">print(sess.run(tf.edit_distance(h2, t2, normalize=<span class="keyword">True</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>[[0.4 0.2]]
+</code></pre><h3 id="Now-compute-distance-between-four-words-and-‘beers’-more-efficiently"><a href="#Now-compute-distance-between-four-words-and-‘beers’-more-efficiently" class="headerlink" title="Now compute distance between four words and ‘beers’ more efficiently:"></a>Now compute distance between four words and ‘beers’ more efficiently:</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">hypothesis_words = [<span class="string">'bear'</span>,<span class="string">'bar'</span>,<span class="string">'tensor'</span>,<span class="string">'beers'</span>]</span><br><span class="line">truth_word = [<span class="string">'beers'</span>]</span><br><span class="line"></span><br><span class="line">num_h_words = len(hypothesis_words)</span><br><span class="line">h_indices = [[xi, <span class="number">0</span>, yi] <span class="keyword">for</span> xi,x <span class="keyword">in</span> enumerate(hypothesis_words) <span class="keyword">for</span> yi,y <span class="keyword">in</span> enumerate(x)]</span><br><span class="line">h_chars = list(<span class="string">''</span>.join(hypothesis_words))</span><br><span class="line"></span><br><span class="line">h3 = tf.SparseTensor(h_indices, h_chars, [num_h_words,<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">truth_word_vec = truth_word*num_h_words</span><br><span class="line">t_indices = [[xi, <span class="number">0</span>, yi] <span class="keyword">for</span> xi,x <span class="keyword">in</span> enumerate(truth_word_vec) <span class="keyword">for</span> yi,y <span class="keyword">in</span> enumerate(x)]</span><br><span class="line">t_chars = list(<span class="string">''</span>.join(truth_word_vec))</span><br><span class="line"></span><br><span class="line">t3 = tf.SparseTensor(t_indices, t_chars, [num_h_words,<span class="number">1</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">print(sess.run(tf.edit_distance(h3, t3, normalize=<span class="keyword">True</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>[[0.4]
+ [0.6]
+ [1. ]
+ [0. ]]
+</code></pre><hr>
+<h2 id="4-Mixed-Distance-Functions-for-k-Nearest-Neighbor"><a href="#4-Mixed-Distance-Functions-for-k-Nearest-Neighbor" class="headerlink" title="4. Mixed Distance Functions for  k-Nearest Neighbor"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods/04_Computing_with_Mixed_Distance_Functions" target="_blank" rel="noopener">4. Mixed Distance Functions for  k-Nearest Neighbor</a></h2><p>This function shows how to use different distance metrics on different features for kNN.</p>
+<h4 id="Data-1"><a href="#Data-1" class="headerlink" title="Data:"></a>Data:</h4><p>—————x-values—————-</p>
+<ul>
+<li>CRIM   : per capita crime rate by town</li>
+<li>ZN     : prop. of res. land zones</li>
+<li>INDUS  : prop. of non-retail business acres</li>
+<li>CHAS   : Charles river dummy variable</li>
+<li>NOX    : nitrix oxides concentration / 10 M</li>
+<li>RM     : Avg. # of rooms per building</li>
+<li>AGE    : prop. of buildings built prior to 1940</li>
+<li>DIS    : Weighted distances to employment centers</li>
+<li>RAD    : Index of radian highway access</li>
+<li>TAX    : Full tax rate value per $10k</li>
+<li>PTRATIO: Pupil/Teacher ratio by town</li>
+<li>B      : 1000*(Bk-0.63)^2, Bk=prop. of blacks</li>
+<li>LSTAT  : % lower status of pop</li>
+</ul>
+<p>——————y-value—————-</p>
+<ul>
+<li>MEDV   : Median Value of homes in $1,000’s</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<h3 id="Create-graph-2"><a href="#Create-graph-2" class="headerlink" title="Create graph"></a>Create graph</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<h3 id="Load-the-data-2"><a href="#Load-the-data-2" class="headerlink" title="Load the data"></a>Load the data</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">housing_url = <span class="string">'https://archive.ics.uci.edu/ml/machine-learning-databases/housing/housing.data'</span></span><br><span class="line">housing_header = [<span class="string">'CRIM'</span>, <span class="string">'ZN'</span>, <span class="string">'INDUS'</span>, <span class="string">'CHAS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'AGE'</span>, <span class="string">'DIS'</span>, <span class="string">'RAD'</span>, <span class="string">'TAX'</span>, <span class="string">'PTRATIO'</span>, <span class="string">'B'</span>, <span class="string">'LSTAT'</span>, <span class="string">'MEDV'</span>]</span><br><span class="line">cols_used = [<span class="string">'CRIM'</span>, <span class="string">'INDUS'</span>, <span class="string">'NOX'</span>, <span class="string">'RM'</span>, <span class="string">'AGE'</span>, <span class="string">'DIS'</span>, <span class="string">'TAX'</span>, <span class="string">'PTRATIO'</span>, <span class="string">'B'</span>, <span class="string">'LSTAT'</span>]</span><br><span class="line">num_features = len(cols_used)</span><br><span class="line">housing_file = requests.get(housing_url)</span><br><span class="line">housing_data = [[float(x) <span class="keyword">for</span> x <span class="keyword">in</span> y.split(<span class="string">' '</span>) <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>] <span class="keyword">for</span> y <span class="keyword">in</span> housing_file.text.split(<span class="string">'\n'</span>) <span class="keyword">if</span> len(y)&gt;=<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">y_vals = np.transpose([np.array([y[<span class="number">13</span>] <span class="keyword">for</span> y <span class="keyword">in</span> housing_data])])</span><br><span class="line">x_vals = np.array([[x <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(y) <span class="keyword">if</span> housing_header[i] <span class="keyword">in</span> cols_used] <span class="keyword">for</span> y <span class="keyword">in</span> housing_data])</span><br><span class="line"></span><br><span class="line"><span class="comment">## Min-Max Scaling</span></span><br><span class="line">x_vals = (x_vals - x_vals.min(<span class="number">0</span>)) / x_vals.ptp(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create distance metric weight matrix weighted by standard deviation</span></span><br><span class="line">weight_diagonal = x_vals.std(<span class="number">0</span>)</span><br><span class="line">weight_matrix = tf.cast(tf.diag(weight_diagonal), dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split the data into train and test sets</span></span><br><span class="line">np.random.seed(<span class="number">13</span>)  <span class="comment">#make results reproducible</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<h3 id="Declare-k-value-and-batch-size-1"><a href="#Declare-k-value-and-batch-size-1" class="headerlink" title="Declare k-value and batch size"></a>Declare k-value and batch size</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">k = <span class="number">4</span></span><br><span class="line">batch_size=len(x_vals_test)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Placeholders</span></span><br><span class="line">x_data_train = tf.placeholder(shape=[<span class="keyword">None</span>, num_features], dtype=tf.float32)</span><br><span class="line">x_data_test = tf.placeholder(shape=[<span class="keyword">None</span>, num_features], dtype=tf.float32)</span><br><span class="line">y_target_train = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target_test = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare weighted distance metric</span></span><br><span class="line"><span class="comment"># Weighted - L2 = sqrt((x-y)^T * A * (x-y))</span></span><br><span class="line">subtraction_term =  tf.subtract(x_data_train, tf.expand_dims(x_data_test,<span class="number">1</span>))</span><br><span class="line">first_product = tf.matmul(subtraction_term, tf.tile(tf.expand_dims(weight_matrix,<span class="number">0</span>), [batch_size,<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">second_product = tf.matmul(first_product, tf.transpose(subtraction_term, perm=[<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>]))</span><br><span class="line"><span class="comment"># matrix_diag_part(...): Returns the batched diagonal part of a batched tensor.</span></span><br><span class="line">distance = tf.sqrt(tf.matrix_diag_part(second_product))</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/23/最近邻算法/a2.jpg" alt=""></p>
+<h3 id="Predict-Get-min-distance-index-Nearest-neighbor-2"><a href="#Predict-Get-min-distance-index-Nearest-neighbor-2" class="headerlink" title="Predict: Get min distance index (Nearest neighbor)"></a>Predict: Get min distance index (Nearest neighbor)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">top_k_xvals, top_k_indices = tf.nn.top_k(tf.negative(distance), k=k)</span><br><span class="line">x_sums = tf.expand_dims(tf.reduce_sum(top_k_xvals, <span class="number">1</span>),<span class="number">1</span>)</span><br><span class="line">x_sums_repeated = tf.matmul(x_sums,tf.ones([<span class="number">1</span>, k], tf.float32))</span><br><span class="line">x_val_weights = tf.expand_dims(tf.div(top_k_xvals,x_sums_repeated), <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">top_k_yvals = tf.gather(y_target_train, top_k_indices)</span><br><span class="line">prediction = tf.squeeze(tf.matmul(x_val_weights,top_k_yvals), axis=[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate MSE</span></span><br><span class="line">mse = tf.div(tf.reduce_sum(tf.square(tf.subtract(prediction, y_target_test))), batch_size)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate how many loops over training data</span></span><br><span class="line">num_loops = int(np.ceil(len(x_vals_test)/batch_size))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_loops):</span><br><span class="line">    min_index = i*batch_size</span><br><span class="line">    max_index = min((i+<span class="number">1</span>)*batch_size,len(x_vals_train))</span><br><span class="line">    x_batch = x_vals_test[min_index:max_index]</span><br><span class="line">    y_batch = y_vals_test[min_index:max_index]</span><br><span class="line">    predictions = sess.run(prediction, feed_dict=&#123;x_data_train: x_vals_train, x_data_test: x_batch,</span><br><span class="line">                                         y_target_train: y_vals_train, y_target_test: y_batch&#125;)</span><br><span class="line">    batch_mse = sess.run(mse, feed_dict=&#123;x_data_train: x_vals_train, x_data_test: x_batch,</span><br><span class="line">                                         y_target_train: y_vals_train, y_target_test: y_batch&#125;)</span><br><span class="line"></span><br><span class="line">    print(<span class="string">'Batch #'</span> + str(i+<span class="number">1</span>) + <span class="string">' MSE: '</span> + str(np.round(batch_mse,<span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
+<pre><code>Batch #1 MSE: 18.847
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot prediction and actual distribution</span></span><br><span class="line">bins = np.linspace(<span class="number">5</span>, <span class="number">50</span>, <span class="number">45</span>)</span><br><span class="line"></span><br><span class="line">plt.hist(predictions, bins, alpha=<span class="number">0.5</span>, label=<span class="string">'Prediction'</span>)</span><br><span class="line">plt.hist(y_batch, bins, alpha=<span class="number">0.5</span>, label=<span class="string">'Actual'</span>)</span><br><span class="line">plt.title(<span class="string">'Histogram of Predicted and Actual Values'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Med Home Value in $1,000s'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Frequency'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/23/最近邻算法/output_11_0.png" alt="png"></p>
+<hr>
+<h2 id="5-Address-Matching-with-k-Nearest-Neighbors"><a href="#5-Address-Matching-with-k-Nearest-Neighbors" class="headerlink" title="5. Address Matching with k-Nearest Neighbors"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/05_Nearest_Neighbor_Methods/05_An_Address_Matching_Example" target="_blank" rel="noopener">5. Address Matching with k-Nearest Neighbors</a></h2><p>This function illustrates a way to perform address matching between two data sets.</p>
+<p>For each test address, we will return the closest reference address to it.</p>
+<p>We will consider two distance functions:</p>
+<ol>
+<li>Edit distance for street number/name and</li>
+<li>Euclidian distance (L2) for the zip codes</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<h3 id="First-we-generate-the-data-sets-we-will-need"><a href="#First-we-generate-the-data-sets-we-will-need" class="headerlink" title="First we generate the data sets we will need"></a>First we generate the data sets we will need</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># n = Size of created data sets</span></span><br><span class="line">n = <span class="number">10</span></span><br><span class="line">street_names = [<span class="string">'abbey'</span>, <span class="string">'baker'</span>, <span class="string">'canal'</span>, <span class="string">'donner'</span>, <span class="string">'elm'</span>]</span><br><span class="line">street_types = [<span class="string">'rd'</span>, <span class="string">'st'</span>, <span class="string">'ln'</span>, <span class="string">'pass'</span>, <span class="string">'ave'</span>]</span><br><span class="line"></span><br><span class="line">random.seed(<span class="number">31</span>)  <span class="comment">#make results reproducible</span></span><br><span class="line">rand_zips = [random.randint(<span class="number">65000</span>,<span class="number">65999</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to randomly create one typo in a string w/ a probability</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_typo</span><span class="params">(s, prob=<span class="number">0.75</span>)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> random.uniform(<span class="number">0</span>,<span class="number">1</span>) &lt; prob:</span><br><span class="line">        rand_ind = random.choice(range(len(s)))</span><br><span class="line">        s_list = list(s)</span><br><span class="line">        s_list[rand_ind]=random.choice(string.ascii_lowercase)</span><br><span class="line">        s = <span class="string">''</span>.join(s_list)</span><br><span class="line">    <span class="keyword">return</span>(s)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate the reference dataset</span></span><br><span class="line">numbers = [random.randint(<span class="number">1</span>, <span class="number">9999</span>) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">streets = [random.choice(street_names) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">street_suffs = [random.choice(street_types) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">zips = [random.choice(rand_zips) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line">full_streets = [str(x) + <span class="string">' '</span> + y + <span class="string">' '</span> + z <span class="keyword">for</span> x,y,z <span class="keyword">in</span> zip(numbers, streets, street_suffs)]</span><br><span class="line">reference_data = [list(x) <span class="keyword">for</span> x <span class="keyword">in</span> zip(full_streets,zips)]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Generate test dataset with some typos</span></span><br><span class="line">typo_streets = [create_typo(x) <span class="keyword">for</span> x <span class="keyword">in</span> streets]</span><br><span class="line">typo_full_streets = [str(x) + <span class="string">' '</span> + y + <span class="string">' '</span> + z <span class="keyword">for</span> x,y,z <span class="keyword">in</span> zip(numbers, typo_streets, street_suffs)]</span><br><span class="line">test_data = [list(x) <span class="keyword">for</span> x <span class="keyword">in</span> zip(typo_full_streets,zips)]</span><br></pre></td></tr></table></figure>
+<h3 id="Now-we-can-perform-address-matching"><a href="#Now-we-can-perform-address-matching" class="headerlink" title="Now we can perform address matching"></a>Now we can perform address matching</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create graph</span></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Placeholders</span></span><br><span class="line">test_address = tf.sparse_placeholder( dtype=tf.string)</span><br><span class="line">test_zip = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">ref_address = tf.sparse_placeholder(dtype=tf.string)</span><br><span class="line">ref_zip = tf.placeholder(shape=[<span class="keyword">None</span>, n], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare Zip code distance for a test zip and reference set</span></span><br><span class="line">zip_dist = tf.square(tf.subtract(ref_zip, test_zip))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare Edit distance for address</span></span><br><span class="line">address_dist = tf.edit_distance(test_address, ref_address, normalize=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create similarity scores</span></span><br><span class="line">zip_max = tf.gather(tf.squeeze(zip_dist), tf.argmax(zip_dist, <span class="number">1</span>))</span><br><span class="line">zip_min = tf.gather(tf.squeeze(zip_dist), tf.argmin(zip_dist, <span class="number">1</span>))</span><br><span class="line">zip_sim = tf.div(tf.subtract(zip_max, zip_dist), tf.subtract(zip_max, zip_min))</span><br><span class="line">address_sim = tf.subtract(<span class="number">1.</span>, address_dist)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Combine distance functions</span></span><br><span class="line">address_weight = <span class="number">0.5</span></span><br><span class="line">zip_weight = <span class="number">1.</span> - address_weight</span><br><span class="line">weighted_sim = tf.add(tf.transpose(tf.multiply(address_weight, address_sim)), tf.multiply(zip_weight, zip_sim))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Predict: Get max similarity entry</span></span><br><span class="line">top_match_index = tf.argmax(weighted_sim, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to Create a character-sparse tensor from strings</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sparse_from_word_vec</span><span class="params">(word_vec)</span>:</span></span><br><span class="line">    num_words = len(word_vec)</span><br><span class="line">    indices = [[xi, <span class="number">0</span>, yi] <span class="keyword">for</span> xi,x <span class="keyword">in</span> enumerate(word_vec) <span class="keyword">for</span> yi,y <span class="keyword">in</span> enumerate(x)]</span><br><span class="line">    chars = list(<span class="string">''</span>.join(word_vec))</span><br><span class="line">    <span class="keyword">return</span>(tf.SparseTensorValue(indices, chars, [num_words,<span class="number">1</span>,<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Loop through test indices</span></span><br><span class="line">reference_addresses = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> reference_data]</span><br><span class="line">reference_zips = np.array([[x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> reference_data]])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create sparse address reference set</span></span><br><span class="line">sparse_ref_set = sparse_from_word_vec(reference_addresses)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">    test_address_entry = test_data[i][<span class="number">0</span>]</span><br><span class="line">    test_zip_entry = [[test_data[i][<span class="number">1</span>]]]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create sparse address vectors</span></span><br><span class="line">    test_address_repeated = [test_address_entry] * n</span><br><span class="line">    sparse_test_set = sparse_from_word_vec(test_address_repeated)</span><br><span class="line"></span><br><span class="line">    feeddict=&#123;test_address: sparse_test_set,</span><br><span class="line">               test_zip: test_zip_entry,</span><br><span class="line">               ref_address: sparse_ref_set,</span><br><span class="line">               ref_zip: reference_zips&#125;</span><br><span class="line">    best_match = sess.run(top_match_index, feed_dict=feeddict)</span><br><span class="line">    best_street = reference_addresses[best_match[<span class="number">0</span>]]</span><br><span class="line">    [best_zip] = reference_zips[<span class="number">0</span>][best_match]</span><br><span class="line">    [[test_zip_]] = test_zip_entry</span><br><span class="line">    print(<span class="string">'Address: '</span> + str(test_address_entry) + <span class="string">', '</span> + str(test_zip_))</span><br><span class="line">    print(<span class="string">'Match  : '</span> + str(best_street) + <span class="string">', '</span> + str(best_zip))</span><br></pre></td></tr></table></figure>
+<pre><code>Address: 2308 bakar rd, 65480
+Match  : 2308 baker rd, 65480
+Address: 709 bakeo pass, 65480
+Match  : 709 baker pass, 65480
+Address: 2273 glm ln, 65782
+Match  : 2273 elm ln, 65782
+Address: 1843 donner st, 65402
+Match  : 1843 donner st, 65402
+Address: 8769 klm st, 65402
+Match  : 8769 elm st, 65402
+Address: 3798 dpnner ln, 65012
+Match  : 3798 donner ln, 65012
+Address: 2288 bajer pass, 65012
+Match  : 2288 baker pass, 65012
+Address: 2416 epm ln, 65480
+Match  : 2416 elm ln, 65480
+Address: 543 abgey ave, 65115
+Match  : 543 abbey ave, 65115
+Address: 994 abbey st, 65480
+Match  : 994 abbey st, 65480
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/22/支持向量机/" rel="next" title="支持向量机">
+                <i class="fa fa-chevron-left"></i> 支持向量机
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/24/线性回归/" rel="prev" title="线性回归 Linear_Regression">
+                线性回归 Linear_Regression <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最近邻回归-Nearest-neighbor-regression"><span class="nav-number">1.</span> <span class="nav-text">最近邻回归 Nearest neighbor regression</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nearest-Neighbor-Methords"><span class="nav-number">2.</span> <span class="nav-text">Nearest Neighbor Methords</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-k-Nearest-Neighbor"><span class="nav-number">2.1.</span> <span class="nav-text">1. k-Nearest Neighbor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data"><span class="nav-number">2.1.1.</span> <span class="nav-text">Data:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-graph"><span class="nav-number">2.1.2.</span> <span class="nav-text">Create graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-the-data"><span class="nav-number">2.1.3.</span> <span class="nav-text">Load the data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Split-the-data-into-train-and-test-sets"><span class="nav-number">2.1.4.</span> <span class="nav-text">Split the data into train and test sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameters-to-control-run"><span class="nav-number">2.1.5.</span> <span class="nav-text">Parameters to control run</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Declare-distance-metric"><span class="nav-number">2.2.</span> <span class="nav-text">Declare distance metric</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#L1-Distance-Metric"><span class="nav-number">2.2.1.</span> <span class="nav-text">L1 Distance Metric</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#L2-Distance-Metric"><span class="nav-number">2.2.2.</span> <span class="nav-text">L2 Distance Metric</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Predict-Get-min-distance-index-Nearest-neighbor"><span class="nav-number">2.3.</span> <span class="nav-text">Predict: Get min distance index (Nearest neighbor)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-MNIST-Digit-Prediction-with-k-Nearest-Neighbors"><span class="nav-number">2.4.</span> <span class="nav-text">2. MNIST Digit Prediction with k-Nearest Neighbors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-graph-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">Create graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-the-data-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">Load the data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-random-sample"><span class="nav-number">2.4.3.</span> <span class="nav-text">Generate random sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declare-k-value-and-batch-size"><span class="nav-number">2.4.4.</span> <span class="nav-text">Declare k-value and batch size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declare-distance-metric-1"><span class="nav-number">2.4.5.</span> <span class="nav-text">Declare distance metric</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#L1-metric-uncomment-following-line-and-comment-L2-metric-below"><span class="nav-number">2.4.5.1.</span> <span class="nav-text">L1 metric - uncomment following line and comment L2 metric below</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#L2-metric-uncomment-following-line-and-comment-the-L1-metric-above"><span class="nav-number">2.4.5.2.</span> <span class="nav-text">L2 metric - uncomment following line and comment the L1 metric above</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Predict-Get-min-distance-index-Nearest-neighbor-1"><span class="nav-number">2.4.6.</span> <span class="nav-text">Predict: Get min distance index (Nearest neighbor)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Text-Distances"><span class="nav-number">2.5.</span> <span class="nav-text">3. Text Distances</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#First-compute-the-edit-distance-between-‘bear’-and-‘beers’"><span class="nav-number">2.5.1.</span> <span class="nav-text">First compute the edit distance between ‘bear’ and ‘beers’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compute-the-edit-distance-between-‘bear’-’beer’-and-‘beers’"><span class="nav-number">2.5.2.</span> <span class="nav-text">Compute the edit distance between (‘bear’,’beer’) and ‘beers’:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Now-compute-distance-between-four-words-and-‘beers’-more-efficiently"><span class="nav-number">2.5.3.</span> <span class="nav-text">Now compute distance between four words and ‘beers’ more efficiently:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Mixed-Distance-Functions-for-k-Nearest-Neighbor"><span class="nav-number">2.6.</span> <span class="nav-text">4. Mixed Distance Functions for  k-Nearest Neighbor</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-1"><span class="nav-number">2.6.0.1.</span> <span class="nav-text">Data:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-graph-2"><span class="nav-number">2.6.1.</span> <span class="nav-text">Create graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Load-the-data-2"><span class="nav-number">2.6.2.</span> <span class="nav-text">Load the data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Declare-k-value-and-batch-size-1"><span class="nav-number">2.6.3.</span> <span class="nav-text">Declare k-value and batch size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Predict-Get-min-distance-index-Nearest-neighbor-2"><span class="nav-number">2.6.4.</span> <span class="nav-text">Predict: Get min distance index (Nearest neighbor)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Address-Matching-with-k-Nearest-Neighbors"><span class="nav-number">2.7.</span> <span class="nav-text">5. Address Matching with k-Nearest Neighbors</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#First-we-generate-the-data-sets-we-will-need"><span class="nav-number">2.7.1.</span> <span class="nav-text">First we generate the data sets we will need</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Now-we-can-perform-address-matching"><span class="nav-number">2.7.2.</span> <span class="nav-text">Now we can perform address matching</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

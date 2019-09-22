@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Natural Language ProcessingUp to this point, we have only considered machine learning algorithms that mostly operate on numerical inputs. If we want to use text, we must find a way to convert the text">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow cookbook 自然语言处理">
+<meta property="og:url" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Natural Language ProcessingUp to this point, we have only considered machine learning algorithms that mostly operate on numerical inputs. If we want to use text, we must find a way to convert the text">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/output_9_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/output_27_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/output_25_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/output_25_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/04_skipgram_model.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/05_cbow_model.png">
+<meta property="og:updated_time" content="2019-01-07T09:17:30.808Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow cookbook 自然语言处理">
+<meta name="twitter:description" content="Natural Language ProcessingUp to this point, we have only considered machine learning algorithms that mostly operate on numerical inputs. If we want to use text, we must find a way to convert the text">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/output_9_0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/"/>
+
+
+
+
+
+  <title>tensorflow cookbook 自然语言处理 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/26/tensorflow_cookbook_自然语言处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tensorflow cookbook 自然语言处理</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-26T20:50:15+08:00">
+                2018-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/自然语言处理/" itemprop="url" rel="index">
+                    <span itemprop="name">自然语言处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/26/tensorflow_cookbook_自然语言处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/26/tensorflow_cookbook_自然语言处理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Natural-Language-Processing"><a href="#Natural-Language-Processing" class="headerlink" title="Natural Language Processing"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/07_Natural_Language_Processing" target="_blank" rel="noopener">Natural Language Processing</a></h1><p>Up to this point, we have only considered machine learning algorithms that mostly operate on numerical inputs. If we want to use text, we must find a way to convert the text into numbers. There are many ways to do this and we will explore a few common ways this is achieved.”</p>
+<p>If we consider the sentence “tensorflow makes m<br>achine learning easy”, we could convert the words t<br>o numbers in the order that we observe them. This would make the sentence become “1 2 3 4 5”. Then when we see a new sentence, “machine learning is easy”, we can translate this as “3 4 0 5”. Denoting words we haven’t seen bore with an index of zero. With these two examples, we have limited our vocabulary to 6 numbers. With large texts we can choose how many words we want to keep, and usually keep the most frequent words, labeling everything else with the index of zero.</p>
+<p>If the word “learning” has a numerical value of 4, and the word “makes” has a numerical value of 2, then it would be natural to assume that “learning” is twice “makes”. Since we do not want this type of numerical relationship between words, we assume these numbers represent categories and not relational numbers.</p>
+<p>Another problem is that these two sentences are of different size. Each observation we make (sentences in this case) need to have the same size input to a model we wish to create. To get around this, we create each sentence into a sparse vector that has that value of one in a specific index if that word occurs in that index.</p>
+<h2 id="Natural-Language-Processing-NLP-Introduction"><a href="#Natural-Language-Processing-NLP-Introduction" class="headerlink" title="Natural Language Processing (NLP) Introduction"></a>Natural Language Processing (NLP) Introduction</h2><p>In this chapter we cover the following topics:</p>
+<ul>
+<li>Working with Bag of Words</li>
+<li>Implementing TF-IDF</li>
+<li>Working with Skip-gram Embeddings</li>
+<li>Working with CBOW Embeddings</li>
+<li>Making Predictions with Word2vec</li>
+<li><p>Using Doc2vec for Sentiment Analysis</p>
+<p>Up to this point, we have only considered machine learning algorithms that mostly operate on numerical inputs.  If we want to use text, we must find a way to convert the text into numbers.  There are many ways to do this and we will explore a few common ways this is achieved.</p>
+</li>
+</ul>
+<p>If we consider the sentence <strong>“tensorflow makes machine learning easy”</strong>, we could convert the words to numbers in the order that we observe them.  This would make the sentence become “1 2 3 4 5”.  Then when we see a new sentence, <strong>“machine learning is easy”</strong>, we can translate this as “3 4 0 5”. Denoting words we haven’t seen bore with an index of zero.  With these two examples, we have limited our vocabulary to 6 numbers.  With large texts we can choose how many words we want to keep, and usually keep the most frequent words, labeling everything else with the index of zero.</p>
+<p>If the word “learning” has a numerical value of 4, and the word “makes” has a numerical value of 2, then it would be natural to assume that “learning” is twice “makes”.  Since we do not want this type of numerical relationship between words, we assume these numbers represent categories and not relational numbers.<br>Another problem is that these two sentences are of different size. Each observation we make (sentences in this case) need to have the same size input to a model we wish to create.  To get around this, we create each sentence into a sparse vector that has that value of one in a specific index if that word occurs in that index.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">word —&gt;</th>
+<th style="text-align:center">tensorflow</th>
+<th style="text-align:center">makes</th>
+<th style="text-align:center">machine</th>
+<th style="text-align:center">learning</th>
+<th style="text-align:center">easy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">word index —&gt;</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The occurrence vector would then be:</p>
+<pre><code>sentence1 = [0, 1, 1, 1, 1, 1]
+</code></pre><p>This is a vector of length 6 because we have 5 words in our vocabulary and we reserve the 0-th index for unknown or rare words</p>
+<p>Now consider the sentence, <strong>‘machine learning is easy’</strong>.</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">word —&gt;</th>
+<th style="text-align:center">machine</th>
+<th style="text-align:center">learning</th>
+<th style="text-align:center">is</th>
+<th style="text-align:center">easy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">word index —&gt;</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The occurrence vector for this sentence is now:</p>
+<pre><code>sentence2 = [1, 0, 0, 1, 1, 1]
+</code></pre><p>Notice that we now have a procedure that converts any sentence to a fixed length numerical vector.</p>
+<p>A disadvantage to this method is that we lose any indication of word order.  The two sentences “tensorflow makes machine learning easy” and “machine learning makes tensorflow easy” would result in the same sentence vector.<br>It is also worthwhile to note that the length of these vectors is equal to the size of our vocabulary that we pick.<br>It is common to pick a very large vocabulary, so these sentence vectors can be very sparse.  This type of embedding that we have covered in this introduction is called “bag of words”.  We will implement this in the next section.</p>
+<p>Another drawback is that the words “is” and “tensorflow” have the same numerical index value of one.  We can imagine that the word “is” might be less important that the occurrence of the word “tensorflow”.<br>We will explore different types of embeddings in this chapter that attempt to address these ideas, but first we start with an implementation of bag of words.</p>
+<h2 id="Working-with-Bag-of-Words"><a href="#Working-with-Bag-of-Words" class="headerlink" title="Working with Bag of Words"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/07_Natural_Language_Processing/02_Working_with_Bag_of_Words" target="_blank" rel="noopener">Working with Bag of Words</a></h2><p>In this example, we will download and preprocess the ham/spam text data.  We will then use a one-hot-encoding to make a bag of words set of features to use in logistic regression.</p>
+<p>We will use these one-hot-vectors for logistic regression to predict if a text is spam or ham.</p>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">from</span> zipfile <span class="keyword">import</span> ZipFile</span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib <span class="keyword">import</span> learn</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>We start a computation graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start a graph session</span></span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Check if data was downloaded, otherwise download it and save for future use</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">save_file_name = os.path.join(<span class="string">'temp'</span>,<span class="string">'temp_spam_data.csv'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create directory if it doesn't exist</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(<span class="string">'temp'</span>):</span><br><span class="line">    os.makedirs(<span class="string">'temp'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> os.path.isfile(save_file_name):</span><br><span class="line">    text_data = []</span><br><span class="line">    <span class="keyword">with</span> open(save_file_name, <span class="string">'r'</span>) <span class="keyword">as</span> temp_output_file:</span><br><span class="line">        reader = csv.reader(temp_output_file)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">            <span class="keyword">if</span> len(row)==<span class="number">2</span>:</span><br><span class="line">                text_data.append(row)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    zip_url = <span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip'</span></span><br><span class="line">    r = requests.get(zip_url)</span><br><span class="line">    z = ZipFile(io.BytesIO(r.content))</span><br><span class="line">    file = z.read(<span class="string">'SMSSpamCollection'</span>)</span><br><span class="line">    <span class="comment"># Format Data</span></span><br><span class="line">    text_data = file.decode()</span><br><span class="line">    text_data = text_data.encode(<span class="string">'ascii'</span>,errors=<span class="string">'ignore'</span>)</span><br><span class="line">    text_data = text_data.decode().split(<span class="string">'\n'</span>)</span><br><span class="line">    text_data = [x.split(<span class="string">'\t'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> text_data <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># And write to csv</span></span><br><span class="line">    <span class="keyword">with</span> open(save_file_name, <span class="string">'w'</span>) <span class="keyword">as</span> temp_output_file:</span><br><span class="line">        writer = csv.writer(temp_output_file)</span><br><span class="line">        writer.writerows(text_data)</span><br><span class="line"></span><br><span class="line">texts = [x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> text_data]</span><br><span class="line">target = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> text_data]</span><br></pre></td></tr></table></figure>
+<p>To reduce the potential vocabulary size, we normalize the text. To do this, we remove the influence of capitalization and numbers in the text.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Relabel 'spam' as 1, 'ham' as 0</span></span><br><span class="line">target = [<span class="number">1</span> <span class="keyword">if</span> x==<span class="string">'spam'</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">for</span> x <span class="keyword">in</span> target]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize text</span></span><br><span class="line"><span class="comment"># Lower case</span></span><br><span class="line">texts = [x.lower() <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove punctuation</span></span><br><span class="line">texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> string.punctuation) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove numbers</span></span><br><span class="line">texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">'0123456789'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Trim extra whitespace</span></span><br><span class="line">texts = [<span class="string">' '</span>.join(x.split()) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br></pre></td></tr></table></figure>
+<p>To determine a good sentence length to pad/crop at, we plot a histogram of text lengths (in words).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot histogram of text lengths</span></span><br><span class="line">text_lengths = [len(x.split()) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line">text_lengths = [x <span class="keyword">for</span> x <span class="keyword">in</span> text_lengths <span class="keyword">if</span> x &lt; <span class="number">50</span>]</span><br><span class="line">plt.hist(text_lengths, bins=<span class="number">25</span>)</span><br><span class="line">plt.title(<span class="string">'Histogram of # of Words in Texts'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/output_9_0.png" alt="png"></p>
+<p>We crop/pad all texts to be 25 words long.  We also will filter out any words that do not appear at least 3 times.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Choose max text word length at 25</span></span><br><span class="line">sentence_size = <span class="number">25</span></span><br><span class="line">min_word_freq = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>TensorFlow has a built in text processing function called <code>VocabularyProcessor()</code>. We use this function to process the texts.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Setup vocabulary processor</span></span><br><span class="line">vocab_processor = learn.preprocessing.VocabularyProcessor(sentence_size, min_frequency=min_word_freq)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Have to fit transform to get length of unique words.</span></span><br><span class="line">vocab_processor.transform(texts)</span><br><span class="line">transformed_texts = np.array([x <span class="keyword">for</span> x <span class="keyword">in</span> vocab_processor.transform(texts)])</span><br><span class="line">embedding_size = len(np.unique(transformed_texts))</span><br></pre></td></tr></table></figure>
+<p>To test our logistic model (predicting spam/ham), we split the texts into a train and test set.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Split up data set into train/test</span></span><br><span class="line">train_indices = np.random.choice(len(texts), round(len(texts)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(texts))) - set(train_indices)))</span><br><span class="line">texts_train = [x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(texts) <span class="keyword">if</span> ix <span class="keyword">in</span> train_indices]</span><br><span class="line">texts_test = [x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(texts) <span class="keyword">if</span> ix <span class="keyword">in</span> test_indices]</span><br><span class="line">target_train = [x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(target) <span class="keyword">if</span> ix <span class="keyword">in</span> train_indices]</span><br><span class="line">target_test = [x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(target) <span class="keyword">if</span> ix <span class="keyword">in</span> test_indices]</span><br></pre></td></tr></table></figure>
+<p>For one-hot-encoding, we setup an identity matrix for the TensorFlow embedding lookup.</p>
+<p>We also create the variables and placeholders for the logistic regression we will perform.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Setup Index Matrix for one-hot-encoding</span></span><br><span class="line">identity_mat = tf.diag(tf.ones(shape=[embedding_size]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for logistic regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[embedding_size,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[sentence_size], dtype=tf.int32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="number">1</span>, <span class="number">1</span>], dtype=tf.float32)</span><br></pre></td></tr></table></figure>
+<p>Next, we create the text-word embedding lookup with the prior identity matrix.</p>
+<p>Our logistic regression will use the counts of the words as the input.  The counts are created by summing the embedding output across the rows.</p>
+<p>Then we declare the logistic regression operations. Note that we do not wrap the logistic operations in the sigmoid function because this will be done in the loss function later on.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Text-Vocab Embedding</span></span><br><span class="line">x_embed = tf.nn.embedding_lookup(identity_mat, x_data)</span><br><span class="line">x_col_sums = tf.reduce_sum(x_embed, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">x_col_sums_2D = tf.expand_dims(x_col_sums, <span class="number">0</span>)</span><br><span class="line">model_output = tf.add(tf.matmul(x_col_sums_2D, A), b)</span><br></pre></td></tr></table></figure>
+<p>Now we declare our loss function (which has the sigmoid built in), prediction operations, optimizer, and initialize the variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare loss function (Cross Entropy loss)</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=model_output, labels=y_target))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prediction operation</span></span><br><span class="line">prediction = tf.sigmoid(model_output)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.001</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Intitialize Variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Now we loop through the iterations and fit the logistic regression on wether or not the text is spam or ham.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Start Logistic Regression</span></span><br><span class="line">print(<span class="string">'Starting Training Over &#123;&#125; Sentences.'</span>.format(len(texts_train)))</span><br><span class="line">loss_vec = []</span><br><span class="line">train_acc_all = []</span><br><span class="line">train_acc_avg = []</span><br><span class="line"><span class="keyword">for</span> ix, t <span class="keyword">in</span> enumerate(vocab_processor.fit_transform(texts_train)):</span><br><span class="line">    y_data = [[target_train[ix]]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: t, y_target: y_data&#125;)</span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: t, y_target: y_data&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ix+<span class="number">1</span>)%<span class="number">50</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Training Observation #'</span> + str(ix+<span class="number">1</span>) + <span class="string">': Loss = '</span> + str(temp_loss))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Keep trailing average of past 50 observations accuracy</span></span><br><span class="line">    <span class="comment"># Get prediction of single observation</span></span><br><span class="line">    [[temp_pred]] = sess.run(prediction, feed_dict=&#123;x_data:t, y_target:y_data&#125;)</span><br><span class="line">    <span class="comment"># Get True/False if prediction is accurate</span></span><br><span class="line">    train_acc_temp = target_train[ix]==np.round(temp_pred)</span><br><span class="line">    train_acc_all.append(train_acc_temp)</span><br><span class="line">    <span class="keyword">if</span> len(train_acc_all) &gt;= <span class="number">50</span>:</span><br><span class="line">        train_acc_avg.append(np.mean(train_acc_all[<span class="number">-50</span>:]))</span><br></pre></td></tr></table></figure>
+<pre><code>Starting Training Over 4459 Sentences.
+Training Observation #50: Loss = 4.7342416e-14
+...
+Training Observation #4450: Loss = 3.811978e-11
+</code></pre><p>Now that we have a logistic model, we can evaluate the accuracy on the test dataset.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get test set accuracy</span></span><br><span class="line">print(<span class="string">'Getting Test Set Accuracy For &#123;&#125; Sentences.'</span>.format(len(texts_test)))</span><br><span class="line">test_acc_all = []</span><br><span class="line"><span class="keyword">for</span> ix, t <span class="keyword">in</span> enumerate(vocab_processor.fit_transform(texts_test)):</span><br><span class="line">    y_data = [[target_test[ix]]]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ix+<span class="number">1</span>)%<span class="number">100</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Test Observation #'</span> + str(ix+<span class="number">1</span>))    </span><br><span class="line"></span><br><span class="line">    <span class="comment"># Keep trailing average of past 50 observations accuracy</span></span><br><span class="line">    <span class="comment"># Get prediction of single observation</span></span><br><span class="line">    [[temp_pred]] = sess.run(prediction, feed_dict=&#123;x_data:t, y_target:y_data&#125;)</span><br><span class="line">    <span class="comment"># Get True/False if prediction is accurate</span></span><br><span class="line">    test_acc_temp = target_test[ix]==np.round(temp_pred)</span><br><span class="line">    test_acc_all.append(test_acc_temp)</span><br><span class="line"></span><br><span class="line">print(<span class="string">'\nOverall Test Accuracy: &#123;&#125;'</span>.format(np.mean(test_acc_all)))</span><br></pre></td></tr></table></figure>
+<pre><code>Getting Test Set Accuracy For 1115 Sentences.
+Test Observation #100
+Test Observation #200
+Test Observation #300
+Test Observation #400
+Test Observation #500
+Test Observation #600
+</code></pre><p>Let’s look at the training accuracy over all the iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot training accuracy over time</span></span><br><span class="line">plt.plot(range(len(train_acc_avg)), train_acc_avg, <span class="string">'k-'</span>, label=<span class="string">'Train Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Avg Training Acc Over Past 50 Iterations'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Iterations'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Training Accuracy'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/output_27_0.png" alt="png"></p>
+<p>It is worthwhile to mention the motivation of limiting the sentence (or text) size.  In this example we limited the text size to 25 words.  This is a common practice with bag of words because it limits the effect of text length on the prediction.  You can imagine that if we find a word, “meeting” for example, that is predictive of a text being ham (not spam), then a spam message might get through by putting in many occurrences of that word at the end.  In fact, this is a common problem with imbalanced target data.  Imbalanced data might occur in this situation, since spam may be hard to find and ham may be easy to find.  Because of this fact, our vocabulary that we create might be heavily skewed toward words represented in the ham part of our data (more ham means more words are represented in ham than spam).  If we allow unlimited length of texts, then spammers might take advantage of this and create very long texts, which have a higher probability of triggering non-spam word factors in our logistic model.</p>
+<p>In the next section, we attempt to tackle this problem in a better way using the frequency of word occurrence to determine the values of the word embeddings.</p>
+<hr>
+<h2 id="Implementing-TF-IDF"><a href="#Implementing-TF-IDF" class="headerlink" title="Implementing TF-IDF"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/07_Natural_Language_Processing/03_Implementing_tf_idf" target="_blank" rel="noopener">Implementing TF-IDF</a></h2><p>TF-IDF is an acronym that stands for Text Frequency – Inverse Document Frequency.  This term is essentially the product of text frequency and inverse document frequency for each word.</p>
+<p>In the prior recipe, we introduced the bag of words methodology, which assigned a value of one for every occurrence of a word in a sentence. This is probably not ideal as each category of sentence (spam and ham for the prior recipe example) most likely has the same frequency of “the”, “and” and other words, whereas words like “viagra” and “sale” probably should have increased importance in figuring out whether or not the text is spam.</p>
+<p>We first want to take into consideration the word frequency.  Here we consider the frequency that a word occurs in an individual entry. The purpose of this part (TF), is to find terms that appear to be important in each entry.</p>
+<p>But words like “the” and “and” may appear very frequently in every entry. We want to down weight the importance of these words, so we can imagine that multiplying the above text frequency (TF) by the inverse of the whole document frequency might help find important words.  But since a collection of texts (a corpus) may be quite large, it is common to take the logarithm of the inverse document frequency.  This leaves us with the following formula for TF-IDF for each word in each document entry.</p>
+<script type="math/tex; mode=display">
+w_{tf-idf}=w_{tf} \cdot \frac{1}{log(w_{df})}</script><p>Where $w_{tf}$ is the word frequency by document, and $w_{df}$ is the total frequency of such word across all documents.  We can imagine that high values of TF-IDF might indicate words that are very important to determining what a document is about.</p>
+<p>Here we implement TF-IDF, (Text Frequency - Inverse Document Frequency) for the spam-ham text data.</p>
+<p>We will use a hybrid approach of encoding the texts with sci-kit learn’s TFIDF vectorizer.  Then we will use the regular TensorFlow logistic algorithm outline.</p>
+<p>Creating the TF-IDF vectors requires us to load all the text into memory and count the occurrences of each word before we can start training our model.  Because of this, it is not implemented fully in Tensorflow, so we will use Scikit-learn for creating our TF-IDF embedding, but use Tensorflow to fit the logistic model.</p>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> csv</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> nltk</span><br><span class="line"><span class="keyword">from</span> zipfile <span class="keyword">import</span> ZipFile</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Start a computational graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>We set two parameters, <code>batch_size</code> and <code>max_features</code>.  <code>batch_size</code> is the size of the batch we will train our logistic model on, and <code>max_features</code> is the maximum number of tf-idf textual words we will use in our logistic regression.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">200</span></span><br><span class="line">max_features = <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>Check if data was downloaded, otherwise download it and save for future use</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">save_file_name = <span class="string">'temp_spam_data.csv'</span></span><br><span class="line"><span class="keyword">if</span> os.path.isfile(save_file_name):</span><br><span class="line">    text_data = []</span><br><span class="line">    <span class="keyword">with</span> open(save_file_name, <span class="string">'r'</span>) <span class="keyword">as</span> temp_output_file:</span><br><span class="line">        reader = csv.reader(temp_output_file)</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">            text_data.append(row)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    zip_url = <span class="string">'http://archive.ics.uci.edu/ml/machine-learning-databases/00228/smsspamcollection.zip'</span></span><br><span class="line">    r = requests.get(zip_url)</span><br><span class="line">    z = ZipFile(io.BytesIO(r.content))</span><br><span class="line">    file = z.read(<span class="string">'SMSSpamCollection'</span>)</span><br><span class="line">    <span class="comment"># Format Data</span></span><br><span class="line">    text_data = file.decode()</span><br><span class="line">    text_data = text_data.encode(<span class="string">'ascii'</span>,errors=<span class="string">'ignore'</span>)</span><br><span class="line">    text_data = text_data.decode().split(<span class="string">'\n'</span>)</span><br><span class="line">    text_data = [x.split(<span class="string">'\t'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> text_data <span class="keyword">if</span> len(x)&gt;=<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># And write to csv</span></span><br><span class="line">    <span class="keyword">with</span> open(save_file_name, <span class="string">'w'</span>) <span class="keyword">as</span> temp_output_file:</span><br><span class="line">        writer = csv.writer(temp_output_file)</span><br><span class="line">        writer.writerows(text_data)</span><br></pre></td></tr></table></figure>
+<p>We now clean our texts. This will decrease our vocabulary size by converting everything to lower case, removing punctuation and getting rid of numbers.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">texts = [x[<span class="number">1</span>] <span class="keyword">for</span> x <span class="keyword">in</span> text_data]</span><br><span class="line">target = [x[<span class="number">0</span>] <span class="keyword">for</span> x <span class="keyword">in</span> text_data]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Relabel 'spam' as 1, 'ham' as 0</span></span><br><span class="line">target = [<span class="number">1.</span> <span class="keyword">if</span> x==<span class="string">'spam'</span> <span class="keyword">else</span> <span class="number">0.</span> <span class="keyword">for</span> x <span class="keyword">in</span> target]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Normalize text</span></span><br><span class="line"><span class="comment"># Lower case</span></span><br><span class="line">texts = [x.lower() <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove punctuation</span></span><br><span class="line">texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> string.punctuation) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Remove numbers</span></span><br><span class="line">texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">'0123456789'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Trim extra whitespace</span></span><br><span class="line">texts = [<span class="string">' '</span>.join(x.split()) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br></pre></td></tr></table></figure>
+<p>Define tokenizer function and create the TF-IDF vectors with SciKit-Learn.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tokenizer</span><span class="params">(text)</span>:</span></span><br><span class="line">    words = nltk.word_tokenize(text)</span><br><span class="line">    <span class="keyword">return</span> words</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create TF-IDF of texts</span></span><br><span class="line">tfidf = TfidfVectorizer(tokenizer=tokenizer, stop_words=<span class="string">'english'</span>, max_features=max_features)</span><br><span class="line">sparse_tfidf_texts = tfidf.fit_transform(texts)</span><br></pre></td></tr></table></figure>
+<p>Split up data set into train/test.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">texts[:<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>[&#39;go until jurong point crazy available only in bugis n great world la e buffet cine there got amore wat&#39;,
+ &#39;ok lar joking wif u oni&#39;,
+ &#39;free entry in a wkly comp to win fa cup final tkts st may text fa to to receive entry questionstd txt ratetcs apply overs&#39;]
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sparse_tfidf_texts[:<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;3x1000 sparse matrix of type &#39;&lt;class &#39;numpy.float64&#39;&gt;&#39;
+    with 26 stored elements in Compressed Sparse Row format&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">train_indices = np.random.choice(sparse_tfidf_texts.shape[<span class="number">0</span>], round(<span class="number">0.8</span>*sparse_tfidf_texts.shape[<span class="number">0</span>]), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(sparse_tfidf_texts.shape[<span class="number">0</span>])) - set(train_indices)))</span><br><span class="line">texts_train = sparse_tfidf_texts[train_indices]</span><br><span class="line">texts_test = sparse_tfidf_texts[test_indices]</span><br><span class="line">target_train = np.array([x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(target) <span class="keyword">if</span> ix <span class="keyword">in</span> train_indices])</span><br><span class="line">target_test = np.array([x <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(target) <span class="keyword">if</span> ix <span class="keyword">in</span> test_indices])</span><br></pre></td></tr></table></figure>
+<p>Now we create the variables and placeholders necessary for logistic regression.  After which, we declare our logistic regression operation.  Remember that the sigmoid part of the logistic regression will be in the loss function.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create variables for logistic regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[max_features,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, max_features], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare logistic model (sigmoid in loss function)</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br></pre></td></tr></table></figure>
+<p>Next, we declare the loss function (which has the sigmoid in it), and the prediction function.  The prediction function will have to have a sigmoid inside of it because it is not in the model output.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare loss function (Cross Entropy loss)</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(logits=model_output, labels=y_target))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prediction</span></span><br><span class="line">prediction = tf.round(tf.sigmoid(model_output))</span><br><span class="line">predictions_correct = tf.cast(tf.equal(prediction, y_target), tf.float32)</span><br><span class="line">accuracy = tf.reduce_mean(predictions_correct)</span><br></pre></td></tr></table></figure>
+<p>Now we create the optimization function and initialize the model variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.0025</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Intitialize Variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Finally, we perform our logisitic regression on the 1000 TF-IDF features.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">train_loss = []</span><br><span class="line">test_loss = []</span><br><span class="line">train_acc = []</span><br><span class="line">test_acc = []</span><br><span class="line">i_data = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10000</span>):</span><br><span class="line">    rand_index = np.random.choice(texts_train.shape[<span class="number">0</span>], size=batch_size)</span><br><span class="line">    rand_x = texts_train[rand_index].todense()</span><br><span class="line">    rand_y = np.transpose([target_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Only record loss and accuracy every 100 generations</span></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">100</span>==<span class="number">0</span>:</span><br><span class="line">        i_data.append(i+<span class="number">1</span>)</span><br><span class="line">        train_loss_temp = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">        train_loss.append(train_loss_temp)</span><br><span class="line"></span><br><span class="line">        test_loss_temp = sess.run(loss, feed_dict=&#123;x_data: texts_test.todense(), y_target: np.transpose([target_test])&#125;)</span><br><span class="line">        test_loss.append(test_loss_temp)</span><br><span class="line"></span><br><span class="line">        train_acc_temp = sess.run(accuracy, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">        train_acc.append(train_acc_temp)</span><br><span class="line"></span><br><span class="line">        test_acc_temp = sess.run(accuracy, feed_dict=&#123;x_data: texts_test.todense(), y_target: np.transpose([target_test])&#125;)</span><br><span class="line">        test_acc.append(test_acc_temp)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">500</span>==<span class="number">0</span>:</span><br><span class="line">        acc_and_loss = [i+<span class="number">1</span>, train_loss_temp, test_loss_temp, train_acc_temp, test_acc_temp]</span><br><span class="line">        acc_and_loss = [np.round(x,<span class="number">2</span>) <span class="keyword">for</span> x <span class="keyword">in</span> acc_and_loss]</span><br><span class="line">        print(<span class="string">'Generation # &#123;&#125;. Train Loss (Test Loss): &#123;:.2f&#125; (&#123;:.2f&#125;). Train Acc (Test Acc): &#123;:.2f&#125; (&#123;:.2f&#125;)'</span>.format(*acc_and_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Generation # 500. Train Loss (Test Loss): 1.07 (1.08). Train Acc (Test Acc): 0.36 (0.35)
+...
+Generation # 9500. Train Loss (Test Loss): 0.39 (0.46). Train Acc (Test Acc): 0.88 (0.85)
+Generation # 10000. Train Loss (Test Loss): 0.52 (0.46). Train Acc (Test Acc): 0.80 (0.85)
+</code></pre><p>Here is matplotlib code to plot the loss and accuracies.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(i_data, train_loss, <span class="string">'k-'</span>, label=<span class="string">'Train Loss'</span>)</span><br><span class="line">plt.plot(i_data, test_loss, <span class="string">'r--'</span>, label=<span class="string">'Test Loss'</span>, linewidth=<span class="number">4</span>)</span><br><span class="line">plt.title(<span class="string">'Cross Entropy Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Cross Entropy Loss'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot train and test accuracy</span></span><br><span class="line">plt.plot(i_data, train_acc, <span class="string">'k-'</span>, label=<span class="string">'Train Set Accuracy'</span>)</span><br><span class="line">plt.plot(i_data, test_acc, <span class="string">'r--'</span>, label=<span class="string">'Test Set Accuracy'</span>, linewidth=<span class="number">4</span>)</span><br><span class="line">plt.title(<span class="string">'Train and Test Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/output_25_0.png" alt="png"><br><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/output_25_1.png" alt="png"></p>
+<hr>
+<h2 id="Word2Vec-Skipgram-Model"><a href="#Word2Vec-Skipgram-Model" class="headerlink" title="Word2Vec: Skipgram Model"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/07_Natural_Language_Processing/04_Working_With_Skip_Gram_Embeddings" target="_blank" rel="noopener">Word2Vec: Skipgram Model</a></h2><p><strong>Working with Skip Gram Embeddings</strong></p>
+<p>Prior to this recipe, we have not considered the order of words to be relevant in creating word embeddings. In early 2013, Tomas Mikolov and other researchers at Google authored a paper about creating word embeddings that address this issue (<a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener">https://arxiv.org/abs/1301.3781</a>), and they named their methods “word2vec”.</p>
+<p>The basic idea is to create word embeddings that capture a relational aspect of words.  We seek to understand how various words are related to each other. Some examples of how these embeddings might behave are as follows.</p>
+<ul>
+<li>“king” – “man” + “woman” = “queen”</li>
+<li>“india pale ale” – “hops” + “malt” = “stout”</li>
+</ul>
+<p>We might achieve such numerical representation of words if we only consider their positional relationship to each other.  If we could analyse a large enough source of coherent documents, we might find that the words “king”, “man”, and “queen” are mentioned closely to each other in our texts.  If we also know that “man” and “woman” are related in a different way, then we might conclude that “man” is to “king” as “woman” is to “queen” and so on.</p>
+<p>To go about finding such an embedding, we will use a neural network that predicts surrounding words giving an input word.  We could, just as easily, switched that and tried to predict a target word given a set of surrounding words, but we will start with the prior method.  Both are variations of the word2vec procedure. But the prior method of predicting the surrounding words (the context) from a target word is called the skip-gram model.  In the next recipe, we will implement the other method, predicting the target word from the context, which is called the continuous bag of words method (CBOW).</p>
+<p>See below figure for an illustration.</p>
+<p><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/04_skipgram_model.png" alt="Skipgram" title="Word2Vec-SkipGram Example"></p>
+<p>In this example, we will download and preprocess the movie review data.</p>
+<p>From this data set we will compute/fit the skipgram model of the Word2Vec Algorithm</p>
+<p>Skipgram: based on predicting the surrounding words from the</p>
+<p>Ex sentence “the cat in the hat”</p>
+<ul>
+<li>context word:  [“hat”]</li>
+<li>target words: [“the”, “cat”, “in”, “the”]</li>
+<li>context-target pairs: (“hat”, “the”), (“hat”, “cat”), (“hat”, “in”), (“hat”, “the”)</li>
+</ul>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="keyword">import</span> io</span><br><span class="line"><span class="keyword">import</span> tarfile</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"><span class="keyword">from</span> nltk.corpus <span class="keyword">import</span> stopwords</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Start a computational graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Declare model parameters</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">100</span>         <span class="comment"># How many sets of words to train on at once.</span></span><br><span class="line">embedding_size = <span class="number">100</span>    <span class="comment"># The embedding size of each word to train.</span></span><br><span class="line">vocabulary_size = <span class="number">5000</span> <span class="comment"># How many words we will consider for training.</span></span><br><span class="line">generations = <span class="number">100000</span>    <span class="comment"># How many iterations we will perform the training on.</span></span><br><span class="line">print_loss_every = <span class="number">500</span>  <span class="comment"># Print the loss every so many iterations</span></span><br><span class="line"></span><br><span class="line">num_sampled = int(batch_size/<span class="number">2</span>) <span class="comment"># Number of negative examples to sample.</span></span><br><span class="line">window_size = <span class="number">2</span>         <span class="comment"># How many words to consider left and right.</span></span><br></pre></td></tr></table></figure>
+<p>We will remove stop words and create a test validation set of words.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare stop words</span></span><br><span class="line">stops = stopwords.words(<span class="string">'english'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># We pick five test words. We are expecting synonyms to appear</span></span><br><span class="line">print_valid_every = <span class="number">10000</span></span><br><span class="line">valid_words = [<span class="string">'cliche'</span>, <span class="string">'love'</span>, <span class="string">'hate'</span>, <span class="string">'silly'</span>, <span class="string">'sad'</span>]</span><br><span class="line"><span class="comment"># Later we will have to transform these into indices</span></span><br></pre></td></tr></table></figure>
+<p>Next, we load the movie review data.  We check if the data was downloaded, and not, download and save it.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_movie_data</span><span class="params">()</span>:</span></span><br><span class="line">    save_folder_name = <span class="string">'temp'</span></span><br><span class="line">    pos_file = os.path.join(save_folder_name, <span class="string">'rt-polaritydata'</span>, <span class="string">'rt-polarity.pos'</span>)</span><br><span class="line">    neg_file = os.path.join(save_folder_name, <span class="string">'rt-polaritydata'</span>, <span class="string">'rt-polarity.neg'</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(save_folder_name):</span><br><span class="line">        os.mkdir(save_folder_name)</span><br><span class="line">    <span class="comment"># Check if files are already downloaded</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(os.path.join(save_folder_name, <span class="string">'rt-polaritydata'</span>)):</span><br><span class="line">        movie_data_url = <span class="string">'http://www.cs.cornell.edu/people/pabo/movie-review-data/rt-polaritydata.tar.gz'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Save tar.gz file</span></span><br><span class="line">        req = requests.get(movie_data_url, stream=<span class="keyword">True</span>)</span><br><span class="line">        <span class="keyword">with</span> open(os.path.join(save_folder_name,<span class="string">'temp_movie_review_temp.tar.gz'</span>), <span class="string">'wb'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            <span class="keyword">for</span> chunk <span class="keyword">in</span> req.iter_content(chunk_size=<span class="number">1024</span>):</span><br><span class="line">                <span class="keyword">if</span> chunk:</span><br><span class="line">                    f.write(chunk)</span><br><span class="line">                    f.flush()</span><br><span class="line">        <span class="comment"># Extract tar.gz file into temp folder</span></span><br><span class="line">        tar = tarfile.open(os.path.join(save_folder_name,<span class="string">'temp_movie_review_temp.tar.gz'</span>), <span class="string">"r:gz"</span>)</span><br><span class="line">        tar.extractall(path=<span class="string">'temp'</span>)</span><br><span class="line">        tar.close()</span><br><span class="line"></span><br><span class="line">    pos_data = []</span><br><span class="line">    <span class="keyword">with</span> open(pos_file, <span class="string">'r'</span>, encoding=<span class="string">'latin-1'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            pos_data.append(line.encode(<span class="string">'ascii'</span>,errors=<span class="string">'ignore'</span>).decode())</span><br><span class="line">    f.close()</span><br><span class="line">    pos_data = [x.rstrip() <span class="keyword">for</span> x <span class="keyword">in</span> pos_data]</span><br><span class="line"></span><br><span class="line">    neg_data = []</span><br><span class="line">    <span class="keyword">with</span> open(neg_file, <span class="string">'r'</span>, encoding=<span class="string">'latin-1'</span>) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            neg_data.append(line.encode(<span class="string">'ascii'</span>,errors=<span class="string">'ignore'</span>).decode())</span><br><span class="line">    f.close()</span><br><span class="line">    neg_data = [x.rstrip() <span class="keyword">for</span> x <span class="keyword">in</span> neg_data]</span><br><span class="line"></span><br><span class="line">    texts = pos_data + neg_data</span><br><span class="line">    target = [<span class="number">1</span>]*len(pos_data) + [<span class="number">0</span>]*len(neg_data)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>(texts, target)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">texts, target = load_movie_data()</span><br></pre></td></tr></table></figure>
+<p>Now we create a function that normalizes/cleans the text.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Normalize text</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normalize_text</span><span class="params">(texts, stops)</span>:</span></span><br><span class="line">    <span class="comment"># Lower case</span></span><br><span class="line">    texts = [x.lower() <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Remove punctuation</span></span><br><span class="line">    texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> string.punctuation) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Remove numbers</span></span><br><span class="line">    texts = [<span class="string">''</span>.join(c <span class="keyword">for</span> c <span class="keyword">in</span> x <span class="keyword">if</span> c <span class="keyword">not</span> <span class="keyword">in</span> <span class="string">'0123456789'</span>) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Remove stopwords</span></span><br><span class="line">    texts = [<span class="string">' '</span>.join([word <span class="keyword">for</span> word <span class="keyword">in</span> x.split() <span class="keyword">if</span> word <span class="keyword">not</span> <span class="keyword">in</span> (stops)]) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Trim extra whitespace</span></span><br><span class="line">    texts = [<span class="string">' '</span>.join(x.split()) <span class="keyword">for</span> x <span class="keyword">in</span> texts]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>(texts)</span><br><span class="line"></span><br><span class="line">texts = normalize_text(texts, stops)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Texts must contain at least 3 words</span></span><br><span class="line">target = [target[ix] <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(texts) <span class="keyword">if</span> len(x.split()) &gt; <span class="number">2</span>]</span><br><span class="line">texts = [x <span class="keyword">for</span> x <span class="keyword">in</span> texts <span class="keyword">if</span> len(x.split()) &gt; <span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<p>With the normalized movie reviews, we now build a dictionary of words.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Build dictionary of words</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_dictionary</span><span class="params">(sentences, vocabulary_size)</span>:</span></span><br><span class="line">    <span class="comment"># Turn sentences (list of strings) into lists of words</span></span><br><span class="line">    split_sentences = [s.split() <span class="keyword">for</span> s <span class="keyword">in</span> sentences]</span><br><span class="line">    words = [x <span class="keyword">for</span> sublist <span class="keyword">in</span> split_sentences <span class="keyword">for</span> x <span class="keyword">in</span> sublist]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Initialize list of [word, word_count] for each word, starting with unknown</span></span><br><span class="line">    count = [[<span class="string">'RARE'</span>, <span class="number">-1</span>]]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Now add most frequent words, limited to the N-most frequent (N=vocabulary size)</span></span><br><span class="line">    count.extend(collections.Counter(words).most_common(vocabulary_size<span class="number">-1</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Now create the dictionary</span></span><br><span class="line">    word_dict = &#123;&#125;</span><br><span class="line">    <span class="comment"># For each word, that we want in the dictionary, add it, then make it</span></span><br><span class="line">    <span class="comment"># the value of the prior dictionary length</span></span><br><span class="line">    <span class="keyword">for</span> word, word_count <span class="keyword">in</span> count:</span><br><span class="line">        word_dict[word] = len(word_dict)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>(word_dict)</span><br></pre></td></tr></table></figure>
+<p>With the above dictionary, we can turn text data into lists of integers from such dictionary.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">text_to_numbers</span><span class="params">(sentences, word_dict)</span>:</span></span><br><span class="line">    <span class="comment"># Initialize the returned data</span></span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> sentence <span class="keyword">in</span> sentences:</span><br><span class="line">        sentence_data = []</span><br><span class="line">        <span class="comment"># For each word, either use selected index or rare word index</span></span><br><span class="line">        <span class="keyword">for</span> word <span class="keyword">in</span> sentence.split(<span class="string">' '</span>):</span><br><span class="line">            <span class="keyword">if</span> word <span class="keyword">in</span> word_dict:</span><br><span class="line">                word_ix = word_dict[word]</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                word_ix = <span class="number">0</span></span><br><span class="line">            sentence_data.append(word_ix)</span><br><span class="line">        data.append(sentence_data)</span><br><span class="line">    <span class="keyword">return</span>(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Build our data set and dictionaries</span></span><br><span class="line">word_dictionary = build_dictionary(texts, vocabulary_size)</span><br><span class="line">word_dictionary_rev = dict(zip(word_dictionary.values(), word_dictionary.keys()))</span><br><span class="line">text_data = text_to_numbers(texts, word_dictionary)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get validation word keys</span></span><br><span class="line">valid_examples = [word_dictionary[x] <span class="keyword">for</span> x <span class="keyword">in</span> valid_words]</span><br></pre></td></tr></table></figure>
+<p>Let us now build a function that will generate random data points from our text and parameters.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate data randomly (N words behind, target, N words ahead)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_batch_data</span><span class="params">(sentences, batch_size, window_size, method=<span class="string">'skip_gram'</span>)</span>:</span></span><br><span class="line">    <span class="comment"># Fill up data batch</span></span><br><span class="line">    batch_data = []</span><br><span class="line">    label_data = []</span><br><span class="line">    <span class="keyword">while</span> len(batch_data) &lt; batch_size:</span><br><span class="line">        <span class="comment"># select random sentence to start</span></span><br><span class="line">        rand_sentence = np.random.choice(sentences)</span><br><span class="line">        <span class="comment"># Generate consecutive windows to look at</span></span><br><span class="line">        window_sequences = [rand_sentence[max((ix-window_size),<span class="number">0</span>):(ix+window_size+<span class="number">1</span>)] <span class="keyword">for</span> ix, x <span class="keyword">in</span> enumerate(rand_sentence)]</span><br><span class="line">        <span class="comment"># Denote which element of each window is the center word of interest</span></span><br><span class="line">        label_indices = [ix <span class="keyword">if</span> ix&lt;window_size <span class="keyword">else</span> window_size <span class="keyword">for</span> ix,x <span class="keyword">in</span> enumerate(window_sequences)]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Pull out center word of interest for each window and create a tuple for each window</span></span><br><span class="line">        <span class="keyword">if</span> method==<span class="string">'skip_gram'</span>:</span><br><span class="line">            batch_and_labels = [(x[y], x[:y] + x[(y+<span class="number">1</span>):]) <span class="keyword">for</span> x,y <span class="keyword">in</span> zip(window_sequences, label_indices)]</span><br><span class="line">            <span class="comment"># Make it in to a big list of tuples (target word, surrounding word)</span></span><br><span class="line">            tuple_data = [(x, y_) <span class="keyword">for</span> x,y <span class="keyword">in</span> batch_and_labels <span class="keyword">for</span> y_ <span class="keyword">in</span> y]</span><br><span class="line">        <span class="keyword">elif</span> method==<span class="string">'cbow'</span>:</span><br><span class="line">            batch_and_labels = [(x[:y] + x[(y+<span class="number">1</span>):], x[y]) <span class="keyword">for</span> x,y <span class="keyword">in</span> zip(window_sequences, label_indices)]</span><br><span class="line">            <span class="comment"># Make it in to a big list of tuples (target word, surrounding word)</span></span><br><span class="line">            tuple_data = [(x_, y) <span class="keyword">for</span> x,y <span class="keyword">in</span> batch_and_labels <span class="keyword">for</span> x_ <span class="keyword">in</span> x]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'Method &#123;&#125; not implemented yet.'</span>.format(method))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># extract batch and labels</span></span><br><span class="line">        batch, labels = [list(x) <span class="keyword">for</span> x <span class="keyword">in</span> zip(*tuple_data)]</span><br><span class="line">        batch_data.extend(batch[:batch_size])</span><br><span class="line">        label_data.extend(labels[:batch_size])</span><br><span class="line">    <span class="comment"># Trim batch and label at the end</span></span><br><span class="line">    batch_data = batch_data[:batch_size]</span><br><span class="line">    label_data = label_data[:batch_size]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Convert to numpy array</span></span><br><span class="line">    batch_data = np.array(batch_data)</span><br><span class="line">    label_data = np.transpose(np.array([label_data]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span>(batch_data, label_data)</span><br></pre></td></tr></table></figure>
+<p>Next we define our model and placeholders.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define Embeddings:</span></span><br><span class="line">embeddings = tf.Variable(tf.random_uniform([vocabulary_size, embedding_size], <span class="number">-1.0</span>, <span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># NCE loss parameters</span></span><br><span class="line">nce_weights = tf.Variable(tf.truncated_normal([vocabulary_size, embedding_size],</span><br><span class="line">                                               stddev=<span class="number">1.0</span> / np.sqrt(embedding_size)))</span><br><span class="line">nce_biases = tf.Variable(tf.zeros([vocabulary_size]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create data/target placeholders</span></span><br><span class="line">x_inputs = tf.placeholder(tf.int32, shape=[batch_size])</span><br><span class="line">y_target = tf.placeholder(tf.int32, shape=[batch_size, <span class="number">1</span>])</span><br><span class="line">valid_dataset = tf.constant(valid_examples, dtype=tf.int32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Lookup the word embedding:</span></span><br><span class="line">embed = tf.nn.embedding_lookup(embeddings, x_inputs)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">embed</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor &#39;embedding_lookup/Identity:0&#39; shape=(100, 100) dtype=float32&gt;
+</code></pre><p>Here is our loss function, optimizer, cosine similarity, and initialization of the model variables.</p>
+<p>For the loss function we will minimize the average of the NCE loss (noise-contrastive estimation).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get loss from prediction</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.nce_loss(weights=nce_weights,</span><br><span class="line">                                     biases=nce_biases,</span><br><span class="line">                                     labels=y_target,</span><br><span class="line">                                     inputs=embed,</span><br><span class="line">                                     num_sampled=num_sampled,</span><br><span class="line">                                     num_classes=vocabulary_size))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create optimizer</span></span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=<span class="number">1.0</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cosine similarity between words</span></span><br><span class="line">norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), <span class="number">1</span>, keepdims=<span class="keyword">True</span>))</span><br><span class="line">normalized_embeddings = embeddings / norm</span><br><span class="line">valid_embeddings = tf.nn.embedding_lookup(normalized_embeddings, valid_dataset)</span><br><span class="line">similarity = tf.matmul(valid_embeddings, normalized_embeddings, transpose_b=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#Add variable initializer.</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<pre><code>WARNING:tensorflow:From &lt;ipython-input-18-90dede70073c&gt;:13: calling reduce_sum (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sim_init = sess.run(similarity)</span><br></pre></td></tr></table></figure>
+<p>Now we can train our skip-gram model.</p>
+<blockquote>
+<p>Note that we have the line: <code>nearest = (-sim[j, :]).argsort()[1:top_k+1]</code> below. The negative of the similarity matrix is used because <code>argsort()</code> sorts the values from least to greatest.  Since we want to take the greatest numbers, we sort in the opposite direction by taking the negative of the similarity matrix, then calling the <code>argsort()</code> method.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Run the skip gram model.</span></span><br><span class="line">loss_vec = []</span><br><span class="line">loss_x_vec = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(generations):</span><br><span class="line">    batch_inputs, batch_labels = generate_batch_data(text_data, batch_size, window_size)</span><br><span class="line">    feed_dict = &#123;x_inputs : batch_inputs, y_target : batch_labels&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run the train step</span></span><br><span class="line">    sess.run(optimizer, feed_dict=feed_dict)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Return the loss</span></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) % print_loss_every == <span class="number">0</span>:</span><br><span class="line">        loss_val = sess.run(loss, feed_dict=feed_dict)</span><br><span class="line">        loss_vec.append(loss_val)</span><br><span class="line">        loss_x_vec.append(i+<span class="number">1</span>)</span><br><span class="line">        print(<span class="string">"Loss at step &#123;&#125; : &#123;&#125;"</span>.format(i+<span class="number">1</span>, loss_val))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Validation: Print some random words and top 5 related words</span></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) % print_valid_every == <span class="number">0</span>:</span><br><span class="line">        sim = sess.run(similarity)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(valid_words)):</span><br><span class="line">            valid_word = word_dictionary_rev[valid_examples[j]]</span><br><span class="line">            top_k = <span class="number">5</span> <span class="comment"># number of nearest neighbors</span></span><br><span class="line">            nearest = (-sim[j, :]).argsort()[<span class="number">1</span>:top_k+<span class="number">1</span>]</span><br><span class="line">            log_str = <span class="string">"Nearest to &#123;&#125;:"</span>.format(valid_word)</span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> range(top_k):</span><br><span class="line">                close_word = word_dictionary_rev[nearest[k]]</span><br><span class="line">                score = sim[j,nearest[k]]</span><br><span class="line">                log_str = <span class="string">"%s %s,"</span> % (log_str, close_word)</span><br><span class="line">            print(log_str)</span><br></pre></td></tr></table></figure>
+<pre><code>Loss at step 500 : 19.154987335205078
+...
+Nearest to cliche: sparkling, chosen, duty, thoughtful, pile,
+Nearest to love: shimmering, transcend, economical, review, affable,
+Nearest to hate: tried, recycled, anybody, complexity, enthusiasm,
+Nearest to silly: denis, audacity, gutwrenching, irritating, callar,
+Nearest to sad: adequately, surreal, paint, human, exploitative,
+Loss at step 60500 : 3.153820514678955
+</code></pre><h2 id="Working-with-CBOW-Embeddings"><a href="#Working-with-CBOW-Embeddings" class="headerlink" title="Working with CBOW Embeddings"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/07_Natural_Language_Processing/05_Working_With_CBOW_Embeddings" target="_blank" rel="noopener">Working with CBOW Embeddings</a></h2><p>In this recipe we will implement the CBOW (continuous bag of words) method of word2vec. It is very similar to the skip-gram method, except we are predicting a single target word from a surrounding window of context words.</p>
+<p>In the prior example we treated each combination of window and target as a group of paired inputs and outputs, but with CBOW we will add the surrounding window embeddings together to get one embedding to predict the target word embedding.</p>
+<p>Most of the code will stay the same, except we will need to change how we create the embeddings and how we generate the data from the sentences.</p>
+<p>To make the code easier to read, we have moved all the major functions to a separate file, called ‘text_helpers.py’ in the same directory.  This function holds the data loading, text normalization, dictionary creation, and batch generation functions.  This functions are exactly as they appear in the prior recipe, “Working with Skip-gram Embeddings”, except where noted.</p>
+<p>See the following illustration of a CBOW example.</p>
+<p><img src="/2018/11/26/tensorflow_cookbook_自然语言处理/05_cbow_model.png" alt="CBOW" title="Word2Vec-CBOW Example"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'Creating Model'</span>)</span><br><span class="line"><span class="comment"># Define Embeddings:</span></span><br><span class="line">embeddings = tf.Variable(tf.random_uniform([vocabulary_size, embedding_size], <span class="number">-1.0</span>, <span class="number">1.0</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># NCE loss parameters</span></span><br><span class="line">nce_weights = tf.Variable(tf.truncated_normal([vocabulary_size, embedding_size],</span><br><span class="line">                                               stddev=<span class="number">1.0</span> / np.sqrt(embedding_size)))</span><br><span class="line">nce_biases = tf.Variable(tf.zeros([vocabulary_size]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create data/target placeholders</span></span><br><span class="line">x_inputs = tf.placeholder(tf.int32, shape=[batch_size, <span class="number">2</span>*window_size])</span><br><span class="line">y_target = tf.placeholder(tf.int32, shape=[batch_size, <span class="number">1</span>])</span><br><span class="line">valid_dataset = tf.constant(valid_examples, dtype=tf.int32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Lookup the word embedding</span></span><br><span class="line"><span class="comment"># Add together window embeddings:</span></span><br><span class="line">embed = tf.zeros([batch_size, embedding_size])</span><br><span class="line"><span class="keyword">for</span> element <span class="keyword">in</span> range(<span class="number">2</span>*window_size):</span><br><span class="line">    embed += tf.nn.embedding_lookup(embeddings, x_inputs[:, element])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Get loss from prediction</span></span><br><span class="line">loss = tf.reduce_mean(tf.nn.nce_loss(weights=nce_weights,</span><br><span class="line">                                     biases=nce_biases,</span><br><span class="line">                                     labels=y_target,</span><br><span class="line">                                     inputs=embed,</span><br><span class="line">                                     num_sampled=num_sampled,</span><br><span class="line">                                     num_classes=vocabulary_size))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create optimizer</span></span><br><span class="line">optimizer = tf.train.GradientDescentOptimizer(learning_rate=model_learning_rate).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Cosine similarity between words</span></span><br><span class="line">norm = tf.sqrt(tf.reduce_sum(tf.square(embeddings), <span class="number">1</span>, keep_dims=<span class="keyword">True</span>))</span><br><span class="line">normalized_embeddings = embeddings / norm</span><br><span class="line">valid_embeddings = tf.nn.embedding_lookup(normalized_embeddings, valid_dataset)</span><br><span class="line">similarity = tf.matmul(valid_embeddings, normalized_embeddings, transpose_b=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/25/正则表达式/" rel="next" title="正则表达式">
+                <i class="fa fa-chevron-left"></i> 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/27/Efficient Estimation of Word Representations in Vector Space/" rel="prev" title="Efficient Estimation of Word Representations in Vector Space">
+                Efficient Estimation of Word Representations in Vector Space <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Natural-Language-Processing"><span class="nav-number">1.</span> <span class="nav-text">Natural Language Processing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Natural-Language-Processing-NLP-Introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Natural Language Processing (NLP) Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-with-Bag-of-Words"><span class="nav-number">1.2.</span> <span class="nav-text">Working with Bag of Words</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-TF-IDF"><span class="nav-number">1.3.</span> <span class="nav-text">Implementing TF-IDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Word2Vec-Skipgram-Model"><span class="nav-number">1.4.</span> <span class="nav-text">Word2Vec: Skipgram Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Working-with-CBOW-Embeddings"><span class="nav-number">1.5.</span> <span class="nav-text">Working with CBOW Embeddings</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

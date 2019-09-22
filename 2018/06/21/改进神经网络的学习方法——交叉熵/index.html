@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,交叉熵," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="交叉熵交叉熵 百度百科 交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，主要用于度量两个概率分布间的差异性信息。 交叉熵的定义 交叉熵的应用  交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学">
+<meta name="keywords" content="深度学习,交叉熵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改进神经网络的学习方法——交叉熵">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="交叉熵交叉熵 百度百科 交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，主要用于度量两个概率分布间的差异性信息。 交叉熵的定义 交叉熵的应用  交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/交叉熵定义.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_4.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_5.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/one_3.png">
+<meta property="og:updated_time" content="2019-08-04T10:23:18.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改进神经网络的学习方法——交叉熵">
+<meta name="twitter:description" content="交叉熵交叉熵 百度百科 交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，主要用于度量两个概率分布间的差异性信息。 交叉熵的定义 交叉熵的应用  交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/交叉熵定义.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/"/>
+
+
+
+
+
+  <title>改进神经网络的学习方法——交叉熵 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/21/改进神经网络的学习方法——交叉熵/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">改进神经网络的学习方法——交叉熵</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-21T19:30:07+08:00">
+                2018-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/21/改进神经网络的学习方法——交叉熵/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/21/改进神经网络的学习方法——交叉熵/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h2><p><a href="https://baike.baidu.com/item/交叉熵/8983241" target="_blank" rel="noopener">交叉熵 百度百科</a></p>
+<p>交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，主要用于度量两个概率分布间的差异性信息。</p>
+<p>交叉熵的定义<br><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/交叉熵定义.png" alt=""></p>
+<p>交叉熵的应用</p>
+<ul>
+<li>交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学习速率降低的问题，因为学习速率可以被输出的误差所控制。</li>
+<li>在特征工程中，可以用来衡量两个随机变量之间的相似度。</li>
+<li>在语言模型中（NLP）中，由于真实的分布p是未知的，在语言模型中，模型是通过训练集得到的，交叉熵就是衡量这个模型在测试集上的正确率。</li>
+</ul>
+<hr>
+<blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote>
+<h2 id="为什么需要交叉熵代价函数"><a href="#为什么需要交叉熵代价函数" class="headerlink" title="为什么需要交叉熵代价函数"></a>为什么需要交叉熵代价函数</h2><p>人类却能够根据明显的犯错快速地学习到正确的东西。相反，在我们的错误不是很好地定义的时候，学习的过程会变得更加缓慢。但神经网络却不一定如此，这种行为看起来和人类学习行为差异很大。人工神经元在其犯错较大的情况下其实学习很有难度。</p>
+<p>为了理解这个问题的源头，想想我们的神经元是通过改变权重和偏置，并以一个代价函数的偏导数 $\partial C/\partial w$ 和 $\partial C/\partial b$ 决定的速度学习。所以，我们在说“学习缓慢”时，实际上就是说这些偏导数很小。</p>
+<p>用上一章<a href="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/#more" target="_blank" rel="noopener">《反向传播算法》</a>的符号定义，对于二次代价函数,输出层的权重的偏导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L_{jk}} = \frac{1}{n}
+   \sum_x a^{L-1}_k  (a^L_j-y_j) \sigma'(z^L_j)</script><p>项 $\sigma’(z^L_j)$ 会在一个输出神经元困在错误值时导致学习速度的下降。</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_1.png" alt=""></p>
+<p>我们可以从这幅图看出，当神经元的输出接近 $1$ 的时候，曲线变得相当平，所以$\sigma’(z)$ 就很小了。上面式子中的 $\frac{\partial C}{\partial w^L_{jk}}$ 也会非常小。这其实就是学习缓慢的原因所在。而且，我们后面也会提到，这种学习速度下降的原因实际上也是更加一般的神经网络学习缓慢的原因，并不仅仅是在这个特例中特有的。</p>
+<p>注意，在输出层使用线性神经元时使用二次代价函数。假设我们有一个多层多神经元网络，最终输出层的神经元都是线性神经元，输出不再是$S$型函数作用的结果，而是 $a^L_j = z^L_j$。如果我们使用二次代价函数，那么对单个训练样本 $x$ 的输出误差就是</p>
+<script type="math/tex; mode=display">
+    \delta^L = a^L-y</script><p>这表明如果输出神经元是线性的那么二次代价不再会导致学习速度下降的问题。在此情形下，二次代价函数就是一种合适的选择。</p>
+<p>但是如果输出神经元是$S$型函数作用的结果，我们就最好考虑其他的代价函数。</p>
+<h2 id="交叉熵代价函数的定义"><a href="#交叉熵代价函数的定义" class="headerlink" title="交叉熵代价函数的定义"></a>交叉熵代价函数的定义</h2><p>那么我们如何解决这个问题呢？研究表明，我们可以通过使用交叉熵函数来替换二次代价函数。为了理解什么是交叉熵，我们稍微改变一下之前的简单例子。假设，我们现在要训练一个包含若干输入变量的的神经元，$x_1, x_2, \ldots$ 对应的权重为 $w_1,w_2, \ldots$ 和偏置 $b$：</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_2.png" alt=""></p>
+<p>神经元的输出就是 $a = \sigma(z)$，其中 $z = \sum_j w_j x_j+b$ 是输入的带权和。我<br>们如下定义这个神经元的交叉熵代价函数：</p>
+<script type="math/tex; mode=display">
+  C = -\frac{1}{n} \sum_x \left[y \ln a + (1-y ) \ln (1-a) \right]</script><p>其中 $n$ 是训练数据的总数，求和是在所有的训练输入 $x$ 上进行的，$y$ 是对应的目标输出。</p>
+<p>对于交叉熵代价函数，针对一个训练样本 $x$ 的输出误差 $\delta^L$为</p>
+<script type="math/tex; mode=display">
+    \delta^L = a^L-y</script><p>关于输出层的权重的偏导数为</p>
+<script type="math/tex; mode=display">
+    \frac{\partial C}{\partial w^L_{jk}} = \frac{1}{n} \sum_x
+    a^{L-1}_k  (a^L_j-y_j)</script><p>这里 $\sigma’(z^L_j)$ 就消失了，所以交叉熵避免了学习缓慢的问题。</p>
+<p>那么我们应该在什么时候用交叉熵来替换二次代价函数？实际上，如果在输出神经元是$S$时，交叉熵一般都是更好的选择。为什么？考虑一下我们初始化网络的权重和偏置的时候通常使用某种随机方法。可能会发生这样的情况，这些初始选择会对某些训练输入误差相当明显，比如说，目标输出是 $1$，而实际值是$0$，或者完全反过来。如果我们使用二次代价函数，那么这就会导致学习速度的下降。它并不会完全终止学习的过程，因为这些权重会持续从其他的样本中进行学习，但是显然这不是我们想要的效果。</p>
+<h2 id="交叉熵在分类问题中的应用"><a href="#交叉熵在分类问题中的应用" class="headerlink" title="交叉熵在分类问题中的应用"></a>交叉熵在分类问题中的应用</h2><p>交叉熵损失函数应用在分类问题中时，不管是单分类还是多分类，类别的标签都只能是 0 或者 1。</p>
+<h3 id="交叉熵在单类别问题中的应用"><a href="#交叉熵在单类别问题中的应用" class="headerlink" title="交叉熵在单类别问题中的应用"></a>交叉熵在单类别问题中的应用</h3><p>这里的单类别是指，每一张图像样本只能有一个类别，比如只能是狗或只能是猫。交叉熵在单分类问题上基本是标配的方法  </p>
+<script type="math/tex; mode=display">
+loss = -\sum_{i=1}^ny_i log(\hat{y}_i)</script><p>上式为一张样本的 $loss$ 计算方法。式中 $n$ 代表着 $n$ 种类别。举例如下，</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_4.png" alt=""></p>
+<h3 id="交叉熵在多标签问题中的应用"><a href="#交叉熵在多标签问题中的应用" class="headerlink" title="交叉熵在多标签问题中的应用"></a>交叉熵在多标签问题中的应用</h3><p>这里的多类别是指，每一张图像样本可以有多个类别，比如同时包含一只猫和一只狗和单分类问题的标签不同，多分类的标签是n-hot。</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_5.png" alt=""></p>
+<p>值得注意的是，这里的Pred采用的是sigmoid函数计算。将每一个节点的输出归一化到[0,1]之间。所有Pred值的和也不再为1。换句话说，就是每一个Label都是独立分布的，相互之间没有影响。所以交叉熵在这里是单独对每一个节点进行计算，每一个节点只有两种可能值，所以是一个二项分布。前面说过对于二项分布这种特殊的分布，熵的计算可以进行简化。</p>
+<p>同样的，交叉熵的计算也可以简化，即</p>
+<script type="math/tex; mode=display">
+loss =-ylog(\hat{y})-(1-y)log(1-\hat{y})</script><p>注意，上式只是针对一个节点的计算公式。这一点一定要和单分类loss区分开来。</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_6.png" alt=""></p>
+<h2 id="交叉熵代价函数对权重求导的证明"><a href="#交叉熵代价函数对权重求导的证明" class="headerlink" title="交叉熵代价函数对权重求导的证明"></a>交叉熵代价函数对权重求导的证明</h2><p>交叉熵代价函数的定义：</p>
+<script type="math/tex; mode=display">
+  C = -\frac{1}{n} \sum_x \left[y \ln a + (1-y ) \ln (1-a) \right]</script><p>代价函数 $C$ 对 $w^L_{jk}$ 求偏导</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial C}{\partial w_{jk}^L} &= -\frac{1}{n} \sum_x \left(
+  \frac{y^L_j }{\sigma(z^L_j)} -\frac{(1-y^L_j)}{1-\sigma(z^L_j)} \right)
+  \frac{\partial \sigma(z^L_j)}{\partial w_{jk}^L} \\
+  &= -\frac{1}{n} \sum_x \left(
+  \frac{y^L_j }{\sigma(z^L_j)} -\frac{(1-y^L_j)}{1-\sigma(z^L_j)} \right)\sigma'(z^L_j) a_k^{L-1} \\
+&=\frac{1}{n} \sum_x \frac{\sigma'(z^L_j)
+    a_k^{L-1}}{\sigma(z^L_j) (1-\sigma(z^L_j))} (\sigma(z^L_j)-y_j)
+\end{aligned}</script><p>其中$\frac{\partial z^l_j}{\partial w^l_{jk}} = a_k^{l-1}$ 来自，根据 $z_j^l$ 定义</p>
+<script type="math/tex; mode=display">z^l_j=\sum_k w^l_{jk} a^{l-1}_k+b^l_j</script><p>所以</p>
+<script type="math/tex; mode=display">
+\frac{\partial z^l_j}{\partial w^l_{jk}} = a_k^{l-1}</script><p>根据 $\sigma(z) = 1/(1+e^{-z})$ 的定义，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sigma'(z) &= (\frac{1}{1+e^{-z}})'
+\\
+&= \frac{e^{-z}}{(1+e^{-z})^{2}}
+\\
+&= \frac{1+e^{-z}-1}{(1+e^{-z})^{2}}  
+\\
+&= \frac{1}{(1+e^{-z})}(1-\frac{1}{(1+e^{-z})})
+\\
+&= \sigma(z)(1-\sigma(z))
+\\
+\end{aligned}</script><p>把 $\sigma’(z)$ 带入 $\frac{\partial C}{\partial w_j}$ 可得</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L_{jk}} = \frac{1}{n} \sum_xa^{L-1}_k  (a^L_j-y_j)</script><p>其向量形式是</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L} =  \frac{1}{n} \sum_x a^{L-1}(\sigma(z^L)-y)</script><p>对偏置用同样的方法可得</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^L_{j}} = \frac{1}{n} \sum_x (a^L_j-y_j)</script><h2 id="交叉熵的含义和来源"><a href="#交叉熵的含义和来源" class="headerlink" title="交叉熵的含义和来源"></a>交叉熵的含义和来源</h2><p>我们对于交叉熵的讨论聚焦在代数分析和代码实现。这虽然很有用，但是也留下了一个未能回答的更加宽泛的概念上的问题，如：交叉熵究竟表示什么？存在一些直觉上的思考交叉熵的方法吗？我们如何想到这个概念？</p>
+<p>让我们从最后一个问题开始回答：什么能够激发我们想到交叉熵？假设我们发现学习速度下降了，并理解其原因是因为对于二次代价函数,输出层的权重的偏导数为</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^L_{jk}} = \frac{1}{n}
+   \sum_x a^{L-1}_k  (a^L_j-y_j) \sigma'(z^L_j)</script><p>项 $\sigma’(z^L_j)$ 会在一个输出神经元困在错误值时导致学习速度的下降。在研究了这些公式后，我们可能就会想到选择一个不包含 $\sigma’(z)$ 的代价函数。所以，这时候对一个训练样本 $x$，其代价 $C = C_x$ 满足：</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w_j} = a_j^{L-1}(a^L_j-y)</script><script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b } = (a-y)</script><p>如果我们选择的损失函数满足这些条件，那么它们就能以简单的方式呈现这样的特性：初始误差越大，神经元学习得越快。这也能够解决学习速度下降的问题。实际上，从这些公式开始，现在我们就看看凭着我们数学的直觉推导出交叉熵的形式是可行的。我们来推一下，由链式法则，我们有</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b} = \frac{\partial C}{\partial a}
+  \sigma'(z)</script><p>使用 $\sigma’(z) = \sigma(z)(1-\sigma(z)) = a(1-a)$，上个等式就变成</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b} = \frac{\partial C}{\partial a}a(1-a)</script><p>对比等式，我们有</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial a} = \frac{a-y}{a(1-a)}</script><p>对此方程关于 $a$ 进行积分，得到</p>
+<script type="math/tex; mode=display">
+  C = -[y \ln a + (1-y) \ln (1-a)]+ {\rm constant}</script><p>其中 constant 是积分常量。这是一个单独的训练样本 $x$ 对损失函数的贡献。为了得到整个的损失函数，我们需要对所有的训练样本进行平均，得到了</p>
+<script type="math/tex; mode=display">
+  C = -\frac{1}{n} \sum_x [y \ln a +(1-y) \ln(1-a)] + {\rm constant}</script><p>而这里的常量就是所有单独的常量的平均。所以我们看到方程</p>
+<script type="math/tex; mode=display">
+  \frac{\partial C}{\partial w_j} = a_j^{L-1}(a^L_j-y)</script><script type="math/tex; mode=display">
+  \frac{\partial C}{\partial b } = (a-y)</script><p>唯一确定了交叉熵的形式，并加上了一个常量的项。这个交叉熵并不是凭空产生的。而是一种我们以自然和简单的方法获得的结果。</p>
+<p>那么交叉熵直觉含义又是什么？我们如何看待它？深入解释这一点会将我们带到一个不大愿意讨论的领域。然而，还是值得提一下，有一种源自信息论的解释交叉熵的标准方式。粗略地说，交叉熵是“不确定性”的一种度量。特别地，我们的神经元想要计算函数 $x \rightarrow y = y(x)$。但是，它用函数$x\rightarrow a = a(x)$ 进行了替换。假设我们将 $a$ 想象成我们神经元估计为 $y = 1$ 的概率，而 $1-a$ 则是 $y=0$ 的概率。那么交叉熵衡量我们学习到 $y$ 的正确值的平均起来的不确定性。 如果输出我们期望的结果，不确定性就会小一点；反之，不确定性就大一些。当然，我这里没有严格地给出“不确定性”到底意味着什么，所以看起来像在夸夸其谈。但是实际上，在信息论中有一种准确的方式来定义不确定性究竟是什么。详细内容请看交叉熵（cross-entropy）的数学历史。</p>
+<h2 id="交叉熵（cross-entropy）的数学历史"><a href="#交叉熵（cross-entropy）的数学历史" class="headerlink" title="交叉熵（cross-entropy）的数学历史"></a>交叉熵（cross-entropy）的数学历史</h2><p>通用的说，熵(Entropy)被用于描述一个系统中的不确定性(the uncertainty of a system)。在不同领域熵有不同的解释，比如热力学的定义和信息论也不大相同。</p>
+<p>先给出一个”不严谨”的概念表述：</p>
+<ul>
+<li>熵：可以表示一个事件A的自信息量，也就是A包含多少信息。</li>
+<li>KL散度：可以用来表示从事件A的角度来看，事件B有多大不同。</li>
+<li>交叉熵：可以用来表示从事件A的角度来看，如何描述事件B。</li>
+</ul>
+<p>一句话总结的话：KL散度可以被用于计算代价，而在特定情况下最小化KL散度等价于最小化交叉熵。而交叉熵的运算更简单，所以用交叉熵来当做代价。</p>
+<p><strong>信息量</strong></p>
+<p>首先是信息量。假设我们听到了两件事，分别如下：<br>事件A：巴西队进入了2018世界杯决赛圈。<br>事件B：中国队进入了2018世界杯决赛圈。<br>仅凭直觉来说，显而易见事件B的信息量比事件A的信息量要大。究其原因，是因为事件A发生的概率很大，事件B发生的概率很小。所以当越不可能的事件发生了，我们获取到的信息量就越大。越可能发生的事件发生了，我们获取到的信息量就越小。那么信息量应该和事件发生的概率有关。</p>
+<p>假设 $X$ 是一个离散型随机变量，其取值集合为 $\chi$ ,概率分布函数 $p(x)=Pr(X=x),x\in\chi$ ,则定义事件 $X=x_0$ 的信息量为：</p>
+<script type="math/tex; mode=display">
+I(x_0)=-log(p(x_0))</script><p>由于是概率所以$p(x_0)$的取值范围是[0,1], 绘制为图形如下：</p>
+<p><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/one_3.png" alt=""></p>
+<p><strong>什么是熵(Entropy)？</strong></p>
+<p>放在信息论的语境里面来说，就是一个事件所包含的信息量。我们现在有了信息量的定义，而熵用来表示所有信息量的期望，即：</p>
+<p>因此熵被定义为 $S(x)=-\sum_{i}P(x_{i})log_{b}P(x_{i})$</p>
+<p><strong>如何衡量两个事件/分布之间的不同：KL散度</strong></p>
+<p>我们上面说的是对于一个随机变量x的事件A的自信息量，如果我们有另一个独立的随机变量x相关的事件B，该怎么计算它们之间的区别？</p>
+<p>此处我们介绍默认的计算方法：KL散度，有时候也叫KL距离，一般被用于计算两个分布之间的不同。看名字似乎跟计算两个点之间的距离也很像，但实则不然，因为KL散度不具备有对称性。在距离上的对称性指的是A到B的距离等于B到A的距离。</p>
+<p><strong>KL散度的数学定义：</strong></p>
+<p>相对熵又称KL散度,如果我们对于同一个随机变量 x 有两个单独的概率分布 P(x) 和 Q(x)，我们可以使用 KL 散度（Kullback-Leibler (KL) divergence）来衡量这两个分布的差异</p>
+<p>维基百科对相对熵的定义</p>
+<blockquote>
+<p>In the context of machine learning, DKL(P‖Q) is often called the information gain achieved if P is used instead of Q.</p>
+</blockquote>
+<p>对于离散事件我们可以定义事件A和B的差别为：</p>
+<script type="math/tex; mode=display">D_{KL}(A||B) = \sum_{i}P_{A}(x_i) log\bigg(\frac{P_{A}(x_i)}{P_{B}(x_i)} \bigg) = \sum_{i}P_{A}(x_i)log(P_{A}(x_i ))- P_{A}(x_i)log(P_{B}(x_i))</script><p>对于连续事件，那么我们只是把求和改为求积分而已。</p>
+<script type="math/tex; mode=display">D_{KL}(A||B) = \int a(x) log\bigg(\frac{a(x)}{b(x)} \bigg)</script><p>从公式中可以看出：</p>
+<ul>
+<li>如果 $P_A=P_B$，即两个事件分布完全相同，那么KL散度等于0。</li>
+<li>观察公式，可以发现减号左边的就是事件A的熵，请记住这个发现。</li>
+<li>如果颠倒一下顺序求 $D_{KL}(B||A)$，那么就需要使用B的熵，答案就不一样了。所以KL散度来计算两个分布A与B的时候是不是对称的，有“坐标系”的问题**，$D_{KL}(A||B)\ne D_{KL}(B||A)$</li>
+</ul>
+<p>换句话说，KL散度由A自己的熵与B在A上的期望共同决定。当使用KL散度来衡量两个事件(连续或离散)，上面的公式意义就是求 A与B之间的对数差 在 A上的期望值。</p>
+<p><strong>KL散度 = 交叉熵 - 熵？</strong></p>
+<p>如果我们默认了用KL散度来计算两个分布间的不同，那还要交叉熵做什么？</p>
+<p>事实上交叉熵和KL散度的公式非常相近，其实就是KL散度的后半部分(公式2.1)：A和B的交叉熵 = A与B的KL散度 - A的熵。 $D_{KL}(A||B) = -S(A)+H(A,B) $</p>
+<p>对比一下这是KL散度的公式：</p>
+<p>$D_{KL}(A||B) = \sum_{i}P_{A}(x_i) log\bigg(\frac{P_{A}(x_i)}{P_{B}(x_i)} \bigg) = \sum_{i}P_{A}(x_i)log(P_{A}(x_i ))- P_{A}(x_i)log(P_{B}(x_i)) $</p>
+<p>这是熵的公式：</p>
+<p>$S(A) = -\sum_{i}P_A(x_{i})logP_A(x_{i})$</p>
+<p>这是交叉熵公式：</p>
+<p>$H(A,B)= -\sum_{i}P_{A}(x_i)log(P_{B}(x_i)) $</p>
+<p>此处最重要的观察是，如果 $S(A)$是一个常量，那么$D_{KL}(A||B) = H(A,B) $ ，也就是说KL散度和交叉熵在特定条件下等价。</p>
+<p><strong>为什么交叉熵可以用作代价？</strong></p>
+<p>接着上一点说，最小化模型分布 $P(model)$ 与 训练数据上的分布 $P(training)$ 的差异 等价于 最小化这两个分布间的KL散度，也就是最小化 $KL(P(training)||P(model))$。</p>
+<p>比照第四部分的公式：</p>
+<ul>
+<li>此处的A就是数据的真实分布： $P(training)$</li>
+<li>此处的B就是模型从训练数据上学到的分布： $P(model)$</li>
+</ul>
+<p>巧的是，训练数据的分布A是给定的。那么根据我们在第四部分说的，因为A固定不变，那么求 $D_{KL}(A||B)$等价于求 $H(A,B)$ ，也就是A与B的交叉熵。得证，交叉熵可以用于计算“学习模型的分布”与“训练数据分布”之间的不同。当交叉熵最低时(等于训练数据分布的熵)，我们学到了“最好的模型”。</p>
+<p>但是，完美的学到了训练数据分布往往意味着过拟合，因为训练数据不等于真实数据，我们只是假设它们是相似的，而一般还要假设存在一个高斯分布的误差，是模型的泛化误差下线。</p>
+<p>因此在评价机器学习模型时，我们往往不能只看训练数据上的误分率和交叉熵，还是要关注测试数据上的表现。如果在测试集上的表现也不错，才能保证这不是一个过拟合或者欠拟合的模型。交叉熵比照误分率还有更多的优势，因为它可以和很多概率模型完美的结合。</p>
+<p>所以逻辑思路是，为了让学到的模型分布更贴近真实数据分布，我们最小化 模型数据分布 与 训练数据之间的KL散度，而因为训练数据的分布是固定的，因此最小化KL散度等价于最小化交叉熵。</p>
+<p>因为等价，而且交叉熵更简单更好计算，当然用它。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen.CHAPTER 3 Improving the way neural networks learn[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap3.html</a>, 2018-06-21.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL].<a href="https://github.com/zhanggyb/nndl/blob/master/chap3.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap3.tex</a>, 2018-06-21.</p>
+<p>[3] 微调. 为什么交叉熵（cross-entropy）可以用于计算代价？[DB/OL]. <a href="https://www.zhihu.com/question/65288314/answer/244557337" target="_blank" rel="noopener">https://www.zhihu.com/question/65288314/answer/244557337</a>. 2018-06-21.</p>
+<p>[4] 史丹利复合田. 一文搞懂交叉熵在机器学习中的使用，透彻理解交叉熵背后的直觉[DB/OL]. <a href="https://blog.csdn.net/tsyccnh/article/details/79163834" target="_blank" rel="noopener">https://blog.csdn.net/tsyccnh/article/details/79163834</a>. 2018-06-22.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/交叉熵/" rel="tag"># 交叉熵</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/21/反向传播算法/" rel="next" title="反向传播算法">
+                <i class="fa fa-chevron-left"></i> 反向传播算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/22/改进神经网络的学习方法——Softmax/" rel="prev" title="改进神经网络的学习方法——Softmax">
+                改进神经网络的学习方法——Softmax <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵"><span class="nav-number">1.</span> <span class="nav-text">交叉熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要交叉熵代价函数"><span class="nav-number">2.</span> <span class="nav-text">为什么需要交叉熵代价函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵代价函数的定义"><span class="nav-number">3.</span> <span class="nav-text">交叉熵代价函数的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵在分类问题中的应用"><span class="nav-number">4.</span> <span class="nav-text">交叉熵在分类问题中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵在单类别问题中的应用"><span class="nav-number">4.1.</span> <span class="nav-text">交叉熵在单类别问题中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵在多标签问题中的应用"><span class="nav-number">4.2.</span> <span class="nav-text">交叉熵在多标签问题中的应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵代价函数对权重求导的证明"><span class="nav-number">5.</span> <span class="nav-text">交叉熵代价函数对权重求导的证明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵的含义和来源"><span class="nav-number">6.</span> <span class="nav-text">交叉熵的含义和来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉熵（cross-entropy）的数学历史"><span class="nav-number">7.</span> <span class="nav-text">交叉熵（cross-entropy）的数学历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

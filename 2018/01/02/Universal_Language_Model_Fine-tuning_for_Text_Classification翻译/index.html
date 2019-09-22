@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Language Model," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Universal Language Model Fine-tuning for Text Classification用于文本分类的微调语言模型 Abstract迁移学习为计算机视觉带来了巨大改变，但是现有的NLP技术仍需要针对具体任务改进模型，并且从零开始训练。我们提出了一种有效的迁移学习方法，可以应用到NLP领域的任何一种任务上，同时提出的技术对调整语言模型来说非常关键。我们的方法在六种文本">
+<meta name="keywords" content="Language Model">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Universal Language Model Fine-tuning for Text Classification翻译">
+<meta property="og:url" content="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Universal Language Model Fine-tuning for Text Classification用于文本分类的微调语言模型 Abstract迁移学习为计算机视觉带来了巨大改变，但是现有的NLP技术仍需要针对具体任务改进模型，并且从零开始训练。我们提出了一种有效的迁移学习方法，可以应用到NLP领域的任何一种任务上，同时提出的技术对调整语言模型来说非常关键。我们的方法在六种文本">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/a1.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/c2.png">
+<meta property="og:image" content="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/c3.png">
+<meta property="og:updated_time" content="2019-01-02T11:53:24.171Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Universal Language Model Fine-tuning for Text Classification翻译">
+<meta name="twitter:description" content="Universal Language Model Fine-tuning for Text Classification用于文本分类的微调语言模型 Abstract迁移学习为计算机视觉带来了巨大改变，但是现有的NLP技术仍需要针对具体任务改进模型，并且从零开始训练。我们提出了一种有效的迁移学习方法，可以应用到NLP领域的任何一种任务上，同时提出的技术对调整语言模型来说非常关键。我们的方法在六种文本">
+<meta name="twitter:image" content="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/a1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/"/>
+
+
+
+
+
+  <title>Universal Language Model Fine-tuning for Text Classification翻译 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Universal Language Model Fine-tuning for Text Classification翻译</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T09:00:00+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/论文阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">论文阅读</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Universal-Language-Model-Fine-tuning-for-Text-Classification"><a href="#Universal-Language-Model-Fine-tuning-for-Text-Classification" class="headerlink" title="Universal Language Model Fine-tuning for Text Classification"></a>Universal Language Model Fine-tuning for Text Classification</h2><p>用于文本分类的微调语言模型</p>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>迁移学习为计算机视觉带来了巨大改变，但是现有的NLP技术仍需要针对具体任务改进模型，并且从零开始训练。我们提出了一种有效的迁移学习方法，可以应用到NLP领域的任何一种任务上，同时提出的技术对调整语言模型来说非常关键。我们的方法在六种文本分类任务上比现有的技术都要优秀，除此之外，这种方法仅用100个带有标签的样本进行训练，最终的性能就达到了从零开始、拥有上万个训练数据的模型性能。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>迁移学习对计算机视觉（CV）产生了很大影响。应用CV模型（包括对象检测，分类和分割）很少从头开始训练，而是通过在ImageNet，MS-COCO和其他数据集上预训练的模型进行微调，Sharif Razavian等。（2014）; 龙等人。（2015a）; 他等人。（2016）; 黄等人。（2017）。</p>
+<p>文本分类是自然语言处理（NLP）任务的一个类别，具有许多重要的实际应用程序，如垃圾邮件，欺诈和机器人检测Jindal和Liu（2007）; Ngai等。（2011）; 楚等人。（2012），紧急响应Caragea等。（2011），和商业文件分类，如法律发现Roitblat等。（2010年）。</p>
+<p>虽然深度学习模型已经在许多NLP任务中实现了最先进的技术，但这些模型从头开始训练，需要大量数据集，并且需要数天才能收敛。NLP迁移学习的采用率落后于CV。微调预训练词嵌入Mikolov等。（2013）; Pennington等。（2014），一种仅针对模型第一层的简单迁移学习技术，在实践中产生了巨大的影响，并在大多数最先进的模型中使用。鉴于预训练Erhan等人的好处。（2010），我们应该能够比随机初始化模型的其余参数做得更好。</p>
+<p>最近的方法将来自其他任务（例如语言建模或机器翻译）的嵌入与不同层的输入相连接.Peters等人。（2017）; 麦肯等人。（2017）; 匿名（2018）。然而，这些方法仍然从头开始训练主要任务模型，并将预训练嵌入作为固定参数处理，限制了它们的实用性。</p>
+<p>可以说，成功的NLP迁移学习技术应该满足与CV对应类似的标准：a）该方法应该能够利用大量可用数据; b）它应该利用可以独立优化的任务，从而进一步改善下游; c）它应该依赖于可以按原样用于大多数NLP任务的单个模型; d）在实践中应该易于使用。</p>
+<p>我们建议使用微调语言模型（FitLaM）作为满足上述标准的NLP迁移学习的有效形式。我们的方法使用语言建模，这是一项具有几乎无限量数据的任务，以及推动最新技术发展的最新进展。它通过预训练无缝集成了大量外部数据和域内数据。</p>
+<p>FitLaM依赖于简单的递归神经网络（RNN）而无需任何额外的修改; 我们只使用一个或多个任务特定的线性层来扩充模型，相对于现有方法占少量参数。我们提出了一种新的微调技术，即区分性微调，它可以在较低层次上对较低层进行微调，以保留通过语言建模获得的知识。我们还介绍了几种技术，这些技术对于良好的微调性能和更快的培训至关重要。</p>
+<p>我们在五种广泛研究的不同大小和类型的文本分类任务中评估我们的迁移学习方法，在这些任务上我们明显优于高度任务特定的先前工作和现有的迁移学习方法。</p>
+<p>我们的贡献如下：</p>
+<ol>
+<li>我们在CV和NLP中绘制了迁移学习的相似之处，并为NLP提供了一种有效的迁移学习方法。</li>
+<li>我们提出了微调语言模型（FitLaM），这种方法可用于为NLP的任何任务实现类似CV的迁移学习。</li>
+<li>我们建议使用判别性微调来保留先前的知识并避免在微调期间发生灾难性的遗忘。</li>
+<li>我们引入了通过时间进行反向传播的文本分类（BPT3C），这是一种通过线性层将分类器丢失反向传播到任何序列大小的RNN输出的新方法。</li>
+<li>我们介绍了对预训练语言模型进行微调的关键技术。</li>
+<li>我们在五个代表性文本分类数据集上的表现明显优于最新技术，大多数数据集的误差降低了18-24％。</li>
+<li>我们制作预训练模型和代码，以实现更广泛的采用。</li>
+</ol>
+<h3 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a>Related work</h3><h4 id="TRANSFER-LEARNING-IN-CV-计算机视觉中的迁移学习"><a href="#TRANSFER-LEARNING-IN-CV-计算机视觉中的迁移学习" class="headerlink" title="TRANSFER LEARNING IN CV 计算机视觉中的迁移学习"></a>TRANSFER LEARNING IN CV 计算机视觉中的迁移学习</h4><p><strong>已经观察到CV中的深度神经网络中的特征从任务特定性迁移一般性从第一层到最后一层递减Yosinski等人</strong>。（2014年）。出于这个原因，CV中的大部分工作都集中在转移模型Long等人的最后几层。（2015b）。sharif2014cnn使用ImageNet模型的特征作为简单分类器的输入来实现最先进的结果。近年来，这种方法已被最后Donahue等人的微调所取代。（2014年）或预训练模型的最后几层，并留下其余层冻结Long等。（2015a）。</p>
+<h4 id="Hypercolumns-超级列"><a href="#Hypercolumns-超级列" class="headerlink" title="Hypercolumns 超级列"></a>Hypercolumns 超级列</h4><p>在NLP中，最近才提出的方法不仅仅是迁移字嵌入。流行的方法是预先嵌入通过其他任务捕获额外上下文的嵌入。然后将嵌入与单词嵌入或中间层的输入连接起来。<strong>这种方法在CV Hariharan等人中被称为超级列</strong>。（2015）并由 peters2017semi， deepcontext2017和 Mccann2017分别使用语言建模和机器翻译（MT）进行预训练。使用类似的方法Conneau2017用于学习句子表示。在CV中，超级列几乎完全被端到端的微调Long等人所取代。（2015a）。</p>
+<h4 id="MULTI-TASK-LEARNING-多任务学习"><a href="#MULTI-TASK-LEARNING-多任务学习" class="headerlink" title="MULTI-TASK LEARNING 多任务学习"></a>MULTI-TASK LEARNING 多任务学习</h4><p>一个相关的方向是多任务学习（MTL）（Caruana,1993）。这个方法被 Rei,2017 和 Liu 2018 所采用，他们把语言模型的目标添加到主任务模型目标中联合训练。多任务学习要求每次都从头开始训练，所以它比较低效。而且多任务学习需要仔细权衡任务模型目标的权重。</p>
+<h4 id="Fine-tuning-微调"><a href="#Fine-tuning-微调" class="headerlink" title="Fine-tuning 微调"></a>Fine-tuning 微调</h4><p>微调已经在相似任务之间的迁移学习中获得了成功，比如 （Min 等，2017）在问答任务中，远程监督情感分析（Severyn and Moschitti, 2015），亦或是机器翻译领域（(Sennrich et al., 2015）。但是也有在不相关领域迁移失败的例子（(Mou et al.,2016）。Dai and Le (2015)也微调了一个语言模型，但是在 10K 标记样本集上过拟合了，而且需要数百万同领域文档来获得更好的表现。相反，ULMFiT 利用通用领域的文档进行预训练，同时提出新的微调技术来阻止过拟合当仅仅只有 100 个标签的样本集，并且取得了最优的效果在小数据集上。</p>
+<h3 id="Universal-Language-Model-Fine-tuning"><a href="#Universal-Language-Model-Fine-tuning" class="headerlink" title="Universal Language Model Fine-tuning"></a>Universal Language Model Fine-tuning</h3><p>我们对自然语言处理最通用场景下的迁移学习感兴趣：考虑一个静态的原任务 $T_S$ 和任何一个目标任务 $T_T$，其中 $T_S \ne T_T$，并且我们想提高在 $T_T$ 中的表现。语言模型可以被视作一个理想的原任务就像是自然语言处理界的 ImageNet：语言模型可以为下游任务捕获许多语言方面的特征，比如长短期依赖，层次关系，情感等等。不像机器翻译模型，语言模型在大多数领域和语言上有几乎无限的数据。此外，一个预训练的语言模型可以很容易地适应目标任务的特质，我们将在第五小节展示这种语言模型带来的显著提升。同时，语言模型还是现存任务的重要组成成分，比如机器翻译和对话模型。形式上，语言模型引入了一个假设空间 $H$ 可以对其它许多自然语言处理任务有用(Vapnik and Kotz, 1982; Baxter, 2000)。</p>
+<p>我们提出的统一微调语言模型（ULMFiT），它先在大规模通用领域语料上预训练然后使用新的技术在目标任务上微调。这个新的方法在某种程度上是通用的，因为它满足以下实践标准：1)它在不同大小、数量和标签类型的任务中都有效；2）它使用单一的结构和简单的训练过程；3）它不需要特征工程和特殊的预处理；4）它不需要额外的任务领域内的文档和标签数据。</p>
+<p><strong>在我们的实验中，我们使用最优语言模型 AWD-LSTM (Merity et al.,2017a)</strong>，一个普通的 LSTM （它没有注意力机制、捷径连接、精致复杂的附加结构），只是含有可以改变 dropout 率。类似于计算机视觉，我们期待未来下游的表现可以显著地提高通过使用表现优异的语言模型。</p>
+<p>ULMFiT 含有以下步骤：我们在图 1 中展示：a）通用领域语言模型预训练3.1；b）目标领域语言模型微调3.2；c）目标任务分类任务微调3.3。我们将在下面几个小节中讨论它们。<br><img src="/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/a1.png" alt=""></p>
+<h4 id="General-domain-LM-pretraining"><a href="#General-domain-LM-pretraining" class="headerlink" title="General-domain LM pretraining"></a>General-domain LM pretraining</h4><p>我们在Wikitext-103 Merity等人上预先训练了语言模型。（2017b）由28,595个预处理的维基百科文章组成。预先训练更多和更多样化的数据集可以提高性能。这个阶段是最昂贵的，但因为它只需要执行一次，所以通过改进下游模型的性能和融合，它在以下阶段中受益匪浅。我们使预训练模型的权重可用于促进实验。</p>
+<h4 id="Target-task-LM-fine-tuning"><a href="#Target-task-LM-fine-tuning" class="headerlink" title="Target task LM fine-tuning"></a>Target task LM fine-tuning</h4><p>无论用于预训练的通用域数据多么多样，目标任务的数据可能来自不同的分布。因此，我们在目标任务的训练示例上微调语言模型。给定一个预训练的通用域LM，这个阶段收敛得更快，因为它只需要适应目标数据的特性，它允许我们训练一个强大的LM，即使对于小数据集。我们提出 discriminative fine-tuning 判别性微调 和 slanted triangular learning rates 斜三角形学习率为微调语言模型, 接下来我们逐一介绍。</p>
+<p><strong>Discriminative fine-tuning</strong><br>因为不同的层捕获不同类型的信息(Yosinski et al., 2014)，它们应该被不同程度的微调。为了这个目的，我们提出了一个新的微调方法，判别性微调。</p>
+<p>不是对模型所有的层使用相同的学习率，我们为模型每一层使用有区别的微调学习率。通常使用随机梯度下降在时间步 $t$ 来更新模型参数 $\theta$ 就像下面这样(Ruder, 2016)：</p>
+<script type="math/tex; mode=display">\theta_t=\theta_{t-1} - \eta \nabla_{\theta}J(\theta)</script><p>其中 $\eta$ 是学习率，$\nabla_{\theta}J(\theta)$ 是模型的目标函数对参数的梯度。为了判别式微调我们把模型参数 $\theta$ 分为 $\{\theta^1,…,\theta^L\}$ 其中 $\theta^l$ 包含模型第 $l$ 层的参数。同样我们使用 $\{\eta^1,…,\eta^L\}$，其中 $\eta^l$ 是模型第 $l$ 层的学习率。</p>
+<p>这样随机梯度下降更新使用判别式微调之后就像下面这样：</p>
+<script type="math/tex; mode=display">\theta_t^l=\theta_{t-1}^l - \eta^l \nabla_{\theta^l}J(\theta)</script><p>我们经验地发现模型工作地很好当首先为模型最后一层选择 $\eta^L$ 进行微调，然后层与层之间使用 $\eta^{l-1}=\eta^l/2.6$ 的规律计算。</p>
+<p><strong>Slanted triangular learning rates</strong><br>为了让参数适用于特定任务的特征，我们想让模型参数在训练的开始阶段迅速地汇聚到合适的参数空间然后再精调参数。使用相同的学习率或者一个退火学习率在训练模型时不是一个最佳的方式。我们提出一个斜三角形学习率，它首先线性增加然后线性递减根据安排的时间表，就如图 2所示：<br><img src="/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/c2.png" alt=""></p>
+<p>Slanted triangular learning rates 计算式子如下：<br><img src="/2018/01/02/Universal_Language_Model_Fine-tuning_for_Text_Classification翻译/c3.png" alt=""><br>其中 $T$ 是训练迭代次数（4In other words, the number of epochs times the number of updates per epoch）；$cut_frac$ 是我们增加学习率的部占比；$cut$ 是学习率由增到减的转折点，$p$ 是我们分别增加或减少学习率的迭代次数的分数；$ratio$ 指定最小学习率比最大学习率小的比率；$\eta_t$ 是学习率的第 $t$ 次迭代。我们通常的设定是 $cut_frac = 0.1, ratio = 32, \eta_{max} = 0.01$。</p>
+<h3 id="Target-task-classifier-fine-tuning"><a href="#Target-task-classifier-fine-tuning" class="headerlink" title="Target task classifier fine-tuning"></a>Target task classifier fine-tuning</h3><p>对于目标任务分类器微调，我们使用一个或多个附加线性块来扩充预训练语言模型。就像计算机视觉中的标准实践，每一个块使用批次正则化 normalization 和 dropout ，使用 ReLU 激活函数给中间连接层，并且softmax激活在最后一层的目标任务类上输出概率分布。请注意，这些特定于任务的分类器层中的参数是唯一需要从头学习的参数。第一个线性层将合并的最后隐藏层状态作为输入。</p>
+<p><strong>Concat pooling</strong><br>文本分类任务中的信号通常包含在几个单词中，这些单词可能出现在文档中的任何位置。由于输入文档可能包含数百个单词，如果我们只考虑模型的最后隐藏状态，信息可能会丢失。出于这个原因，我们将文档的最后一个步骤 $H={h_1,..,h_T}$ 的隐藏状态与隐藏状态的 max-pooled 和 mean-pooled 表示相结合，在GPU内存中适合尽可能多的时间步长。</p>
+<script type="math/tex; mode=display">h_c = [h_T, maxpool(H), meanpool(H)]</script><p>其中 [] 表示连接操作。</p>
+<p>微调分类模型是迁移学习中最关键的一个部分。过度激进的微调会造成灾难性的遗忘，会消除了语言模型捕捉的信息的好处；太谨慎的微调会收敛的很慢而且会导致过拟合。除了判别性微调和斜三角形学习率，我们提出逐层解冻为分类微调。</p>
+<p><strong>Gradual unfreezing</strong><br>不是一下微调所有的层，它可能导致灾难性遗忘。我们从最后一层到第一层提出逐层解冻，因为最后一层包含最少的一般性知识(Yosinski et al., 2014)：我们解冻最后一层然后微调所有解冻的层。我们然后解冻倒数第二层重复开始的过程直到我们微调了所有的层。这和“链式解冻”很相似(Felbo et al.,2017)，除了每次我们增加一个已经解冻的层，而不是每次训练一个层。</p>
+<p>虽然模型能从 discriminative fine-tuning, slanted triangular learning rates, and gradual unfreezing 单独获益，如第五小节，这些方法会相互补充，联合起来让我们在不同的数据集上获益。</p>
+<p><strong>BPTT for Text Classification (BPT3C)</strong><br>通过时间反向传播（BPTT）训练语言模型，以实现大输入序列的梯度传播。为了使大型文档的分类器微调可行，我们提出了BPTT for Text Classification（BPT3C）：我们将文档划分为大小为<br>b的固定长度批次。在每个批次的开头，模型初始化为前一批次的最终状态; 我们跟踪平均值和最大池的隐藏状态; 梯度被反向传播到批次，其隐藏状态有助于文档末尾的分类器预测。在实践中，我们使用可变长度反向传播序列Merity等。（2017a）。</p>
+<p><strong>Bidirectional language model</strong><br>与Peters等人的现有工作相似。（2017）; 匿名（2018），我们不仅限于微调单向语言模型。对于我们所有的实验，我们预先训练前向和后向LM。我们使用BPT3C独立微调每个LM的分类器并平均其预测。</p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>虽然我们的方法同样适用于序列标记任务，但由于其重要的实际应用，我们专注于此工作中的文本分类任务。</p>
+<h4 id="Experimental-setup"><a href="#Experimental-setup" class="headerlink" title="Experimental setup"></a>Experimental setup</h4><p><strong>Datasets and tasks</strong><br>我们在五个广泛研究的不同大小的数据集上评估我们的方法，这些数据集由最先进的文本分类和迁移学习方法使用Johnson和Zhang（2017）; 麦肯等人。（2017）作为三个常见文本分类任务的实例：情感分析，问题分类和主题分类。我们显示表1中每个数据集和任务的统计数据</p>
+<p><strong>Sentiment Analysis</strong><br>对于情绪分析，我们评估我们对二元电影评论IMDb数据集  Maas等人的方法。（2011）和由 zhang2015character 编译的二进制Yelp审查数据集。</p>
+<p><strong>Question Classification</strong><br>我们使用六类版本的小型TREC数据集  Voorhees和Tice（1999）将开放域，基于事实的问题数据集划分为广泛的语义类别。</p>
+<p><strong>Topic classification</strong><br>对于主题分类，我们评估由 zhang2015character 创建的大型AG-News和DBpedia本体数据集。</p>
+<p><strong>Pre-processing</strong><br>我们使用与早期工作相同的预处理Johnson和Zhang（2017）; 麦肯等人。（2017）。此外，为了使语言模型能够捕获可能与分类相关的方面，我们为大写单词，伸长和重复添加了特殊标记。</p>
+<p><strong>Hyperparameters</strong><br>We are interested in a model that performs robustly across a diverse set of tasks. To this end, if not mentioned otherwise, we use the same set of hyperparameters across tasks, which we tune on the IMDb validation set. We use the AWD-LSTM language model (Merity et al., 2017a) with an embedding size of 400, 3 layers, 1150 hidden activations per layer, and a BPTT batch size of 70. We apply dropout of 0.4 to layers, 0.3 to RNN layers, 0.4 to input embed-ding layers, 0.05 to embedding layers, and weight dropout of 0.5 to the RNN hidden-to-hidden ma-trix. The classifier has a hidden layer of size 50. We use Adam with β1 = 0.7 instead of the de-fault β1 = 0.9 and β2 = 0.99, similar to (Dozat and Manning, 2017). We use a batch size of 64, a base learning rate of 0.004 and 0.01 for fine-tuning the LM and the classifier respectively, and tune the number of epochs on the validation set of each task7. We otherwise use the same practices used in (Merity et al., 2017a).</p>
+<p><strong>Baselines and comparison models</strong><br>对于每项任务，我们都会与当前最先进的技术进行比较。对于IMDb和TREC-6数据集，我们与CoVe McCann等人进行了比较。（2017），NLP的最先进的迁移学习方法。对于 AG, Yelp 和 DBpeadia 数据集我们与由Johnson and Zhang (2017) 提出的最先进的文本分类方法比较。</p>
+<h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p>我们在表2中的 Mccann2017 使用的IMDb和TREC-6数据集上显示测试准确度分数。我们的方法优于CoVe，这是一种基于超级列的最先进的迁移学习方法，以及两个数据集的最新技术。在IMDb上，我们分别在CoVe和最新技术方面将误差显着降低了43.9％和22％。这是特别有希望的，因为现有的现有技术需要复杂的架构Anonymous（2018），多种形式的关注McCann等人。（2017）和复杂的嵌入方案Johnson和Zhang（2016），而我们的方法采用标准的Bi-LSTM，具有压差。</p>
+<p>在TREC-6上，我们的改进 - 与最先进方法的改进类似 - 在统计上并不显着，因为测试的尺寸很小，仅包含500个例子。我们建议停止使用此数据集来评估文本分类算法。然而，小型TREC-6数据集的竞争性表现仍然表明，即使对于小型数据集，微调语言模型和目标任务分类器也是可行的。请注意，尽管预训练的数据比\ newcite Mccann2017 使用的700万个句子对的数据少两个数量级，但我们在两个数据集上的表现始终优于他们的方法。</p>
+<p>我们在表3中的 johnson2017deep 使用的较大的AG-News，DBpedia和Yelp-bi数据集上显示测试错误率。我们的方法再次显着优于最先进的技术。在AG-News上，我们观察到与现有技术相比，同样显着的误差减少了23.7％。在DBpedia和Yelp-bi上，我们将误差分别减少了4.8％和18.2％。</p>
+<h3 id="Discussion-and-future-directions"><a href="#Discussion-and-future-directions" class="headerlink" title="Discussion and future directions"></a>Discussion and future directions</h3><p>虽然我们的方法仍然需要一些技巧和手动调整学习率和辍学权重来实现最佳性能，但我们认为它类似于AlexNet Krizhevsky等人。（2012）作为必将的第一步，将导致创新浪潮。我们相信，随着越来越多的研究专注于改善NLP的迁移学习，微调语言模型将变得更加健壮。在这条道路上迈出的重要一步将是仔细消融研究，以了解这里描述的模型和培训程序的每个组成部分的影响。</p>
+<p>鉴于NLP的迁移学习（尤其是微调）未得到充分研究，未来的许多方向都是可能的。一个可能的方向是改进语言模型预训练任务并使其更具可扩展性：对于ImageNet，预测更少的类只会导致性能下降小Huh等。（2016） -专注于预测最频繁的单词可能会保留大部分性能，同时加快培训速度。语言建模还可以通过多任务学习方式Caruana（1993）中的其他任务来增强，或者通过额外的监督来丰富，例如语法敏感的依赖性Linzen等。（2016） 创建一个更通用或更适合某些下游任务的模型。</p>
+<p>另一个方向是将该方法应用于新颖的任务和模型。虽然序列标记任务的扩展很简单，但其他任务（例如蕴涵和问答）使用更复杂的交互，这需要新颖的方式来预训练和微调。</p>
+<p>最后，虽然微调是迁移学习的一个组成部分，但它很少受到关注，即使在计算机视觉中（至少在学术界 - 它是商业系统如Clarifai的关键基础）。所有常见基准测试仍然评估我们从头开始训练模型的能力，而不是微调预训练模型。创建微调基准将使我们能够开发更复杂的微调方法，这将使我们能够充分挖掘预训练模型的新潜力。</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>我们已经提出了ULMFiT，一种可以应用到任何 NLP 的有效的迁移学习方法。以及一种有效的微调方法，一种有效的微调方法，可以将不同的层调整到不同的程度，以避免灾难性的遗忘和让模型在不同范围的任务中更加鲁棒性的学习。我们的方法明显优于现有的迁移学习技术和六个具有代表性文本分类任务的最新技术。我们希望我们的结果能够促进 NLP 迁移学习的新发展。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Language-Model/" rel="tag"># Language Model</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/02/元学习/" rel="prev" title="元学习">
+                元学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Universal-Language-Model-Fine-tuning-for-Text-Classification"><span class="nav-number">1.</span> <span class="nav-text">Universal Language Model Fine-tuning for Text Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Related-work"><span class="nav-number">1.3.</span> <span class="nav-text">Related work</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TRANSFER-LEARNING-IN-CV-计算机视觉中的迁移学习"><span class="nav-number">1.3.1.</span> <span class="nav-text">TRANSFER LEARNING IN CV 计算机视觉中的迁移学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hypercolumns-超级列"><span class="nav-number">1.3.2.</span> <span class="nav-text">Hypercolumns 超级列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MULTI-TASK-LEARNING-多任务学习"><span class="nav-number">1.3.3.</span> <span class="nav-text">MULTI-TASK LEARNING 多任务学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fine-tuning-微调"><span class="nav-number">1.3.4.</span> <span class="nav-text">Fine-tuning 微调</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Universal-Language-Model-Fine-tuning"><span class="nav-number">1.4.</span> <span class="nav-text">Universal Language Model Fine-tuning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#General-domain-LM-pretraining"><span class="nav-number">1.4.1.</span> <span class="nav-text">General-domain LM pretraining</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Target-task-LM-fine-tuning"><span class="nav-number">1.4.2.</span> <span class="nav-text">Target task LM fine-tuning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Target-task-classifier-fine-tuning"><span class="nav-number">1.5.</span> <span class="nav-text">Target task classifier fine-tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Experiments"><span class="nav-number">1.6.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Experimental-setup"><span class="nav-number">1.6.1.</span> <span class="nav-text">Experimental setup</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Results"><span class="nav-number">1.7.</span> <span class="nav-text">Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Discussion-and-future-directions"><span class="nav-number">1.8.</span> <span class="nav-text">Discussion and future directions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conclusion"><span class="nav-number">1.9.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

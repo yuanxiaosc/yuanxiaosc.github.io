@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorFlow,分类," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="原文 Auto-classification of NAVER Shopping Product Categories using TensorFlow  背景NAVER Shopping是NAVER提供的购物门户服务。 NAVER Shopping将产品与类别相匹配，以便系统地组织产品并允许更轻松地搜索用户。 当然，每天将超过2000万个新注册产品与大约5,000个类别相匹配的任务是不可能手动">
+<meta name="keywords" content="TensorFlow,分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用TensorFlow自动分类NAVER购物产品类别">
+<meta property="og:url" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文 Auto-classification of NAVER Shopping Product Categories using TensorFlow  背景NAVER Shopping是NAVER提供的购物门户服务。 NAVER Shopping将产品与类别相匹配，以便系统地组织产品并允许更轻松地搜索用户。 当然，每天将超过2000万个新注册产品与大约5,000个类别相匹配的任务是不可能手动">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/NAVER购物的主屏幕.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/类别匹配的一个例子.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/类别自动匹配系统架构.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/用于类别自动匹配的产品功能.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/从产品名称中提取术语的结果示例.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/CNN-LSTM模型.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/MobileNet深度卷积滤波器.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/多输入模型.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/log方法规范化数据.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/产品按类别分布.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/长期准确性分析.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/数据管道性能比较.png">
+<meta property="og:updated_time" content="2019-07-13T02:22:05.166Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用TensorFlow自动分类NAVER购物产品类别">
+<meta name="twitter:description" content="原文 Auto-classification of NAVER Shopping Product Categories using TensorFlow  背景NAVER Shopping是NAVER提供的购物门户服务。 NAVER Shopping将产品与类别相匹配，以便系统地组织产品并允许更轻松地搜索用户。 当然，每天将超过2000万个新注册产品与大约5,000个类别相匹配的任务是不可能手动">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/NAVER购物的主屏幕.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/"/>
+
+
+
+
+
+  <title>使用TensorFlow自动分类NAVER购物产品类别 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用TensorFlow自动分类NAVER购物产品类别</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-13T09:00:00+08:00">
+                2019-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/" itemprop="url" rel="index">
+                    <span itemprop="name">TF</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/商业应用案例/" itemprop="url" rel="index">
+                    <span itemprop="name">商业应用案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文 <a href="https://medium.com/tensorflow/auto-classification-of-naver-shopping-product-categories-using-tensorflow-225f1fdb6f09" target="_blank" rel="noopener">Auto-classification of NAVER Shopping Product Categories using TensorFlow</a></p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a href="https://shopping.naver.com/home/p/index.nhn" target="_blank" rel="noopener">NAVER Shopping</a>是<a href="https://www.naver.com/" target="_blank" rel="noopener">NAVER</a>提供的购物门户服务。 NAVER Shopping将产品与类别相匹配，以便系统地组织产品并允许更轻松地搜索用户。 当然，每天将超过2000万个新注册产品与大约5,000个类别相匹配的任务是不可能手动完成的。</p>
+<p>本文介绍了使用TensorFlow自动匹配NAVER购物产品类别的过程，并解释了我们如何解决在将机器学习应用于我们的服务所使用的实际数据的过程中出现的一些问题。</p>
+<h2 id="NAVER购物和产品类别"><a href="#NAVER购物和产品类别" class="headerlink" title="NAVER购物和产品类别"></a>NAVER购物和产品类别</h2><p>NAVER Shopping是一个购物门户服务，提供产品搜索，类别分类，价格比较和购物内容，以便用户可以轻松访问在NAVER Shopping上注册的卖家以及NAVER Smart Store中的产品。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/NAVER购物的主屏幕.png" alt=""></p>
+<p>NAVER Shopping系统地组织产品并将产品分类，以便更轻松地搜索用户。类别分为上类&gt;中类&gt;下类，例如时尚商品&gt;女鞋&gt;平底鞋&gt;休闲鞋。</p>
+<p>目前，NAVER Shopping管理的大约5,000个类别。当用户输入关键字以在NAVER Shopping上搜索产品时，它识别输入的关键字的类别，然后根据搜索逻辑列出与关键字类别匹配的产品。为了使用户能够快速找到产品并获得所需的搜索结果，产品应与相应的类别相匹配。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/类别匹配的一个例子.png" alt=""></p>
+<p>在NAVER Shopping上注册的卖家在测试文件中创建各种产品信息，包括根据EP（引擎页面）指南的卖家类别信息，这是NAVER Shopping上产品注册的数据表格，并将其发送给NAVER Shopping。<br>在发送给NAVER Shopping的各种产品信息中，卖家使用的类别系统可能会有所不同。因此，如上面的类别匹配示例所示，相同的服装可以具有非常不同的类别信息。</p>
+<p>为了通过提高搜索准确度来提高购物搜索质量，有必要将卖家使用的类别与适合NAVER购物的类别相匹配。问题是，一个人不可能逐个将新产品与500个NAVER购物类别相匹配。</p>
+<p>虽然我们还使用了基于规则的类别匹配，例如卖家的“桌面硬盘”类别如何映射到NAVER Shopping的“HDD”类别，但随着卖家和产品数量的增加，我们再也无法使用基于规则的类别，并且因为NAVER Shopping中的类别经常被重组。相反，可以通过应用自然语言处理（NLP）和计算机视觉等技术来自动化类别匹配。</p>
+<p>在为Naver购物服务调整NLP时，很少有事情需要考虑。在大多数情况下，当使用现成的软件时，产品的属性（例如300ml / 500GB）或代码名称（例如SL-M2029，PIXMA-MX922）被归类为停用词并在此过程中被忽略。但是，这些术语对商业服务有意义。为了分析这些词，应该定制NLP过程以满足服务的需要。</p>
+<h2 id="类别自动匹配系统架构"><a href="#类别自动匹配系统架构" class="headerlink" title="类别自动匹配系统架构"></a>类别自动匹配系统架构</h2><p>目前，NAVER Shopping在类别自动匹配系统中使用如下架构进行学习和分类。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/类别自动匹配系统架构.png" alt=""></p>
+<p>关系数据库中大约15亿条产品信息作为搜索结果集提供给用户。监控中心在搜索结果中查找与错误类别匹配的产品，并将其与正确的类别相匹配。由于监控中心匹配的产品的数据由人检查，因此将其视为精炼数据，然后从分布式数据库中提取为学习数据。除了精炼数据之外，还通过考虑产品的各种特征来提取学习数据。</p>
+<p>训练服务器通过从分布式数据库读取数据来训练模型，并将增强模型分发到推理服务器。推理服务器每天读取大约2000万个产品的信息（尚未与NAVER类别匹配的产品）以匹配类别，然后更新到数据库。</p>
+<h2 id="类别自动匹配模型"><a href="#类别自动匹配模型" class="headerlink" title="类别自动匹配模型"></a>类别自动匹配模型</h2><p>NAVER Shopping的类别自动匹配模型分析产品数据的特征并通过以下过程训练模型。</p>
+<ol>
+<li>发现产品的特征：从产品信息中寻找有用的特征。</li>
+<li>形态分析：从产品信息中分析和提取术语。</li>
+<li>Word嵌入：将产品功能转换为矢量。</li>
+<li>CNN-LSTM 模型 - 产品名称：将CNN-LSTM型号应用于产品名称。</li>
+<li>MobileNetV2 - 产品图片：将MobileNetV2模型应用于产品图片。</li>
+<li>多输入模型：通过产品中的各种数据连接模型以提高准确性。</li>
+</ol>
+<h3 id="产品特征"><a href="#产品特征" class="headerlink" title="产品特征"></a>产品特征</h3><p>下图中标记的部分是用于自动匹配类别的特征。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/用于类别自动匹配的产品功能.png" alt=""></p>
+<p>从上面的例子中，产品名称没有提到它是女性的T恤还是其他类别的T恤。但是，<strong>通过查看图像很容易看到，“产品名称”和“图像”是用户在购买产品时首先看到的元素</strong>。当从搜索结果中找到具有不正确类别匹配的产品时，监控中心应仔细查看产品名称和图像，以将产品移动到正确的类别。</p>
+<p>因此，<strong>产品名称和图像也用作类别自动匹配的主要特征</strong>。不仅产品名称和图像，而且卖家使用的类别，产品的最低价格，品牌，制造商，原始图像比例也被用作卖家提供的数十条产品信息中的附加特征。</p>
+<h3 id="形态分析"><a href="#形态分析" class="headerlink" title="形态分析"></a>形态分析</h3><p>用作主要特征的产品名称具有以下特征。</p>
+<ol>
+<li>产品名称由名词组成；</li>
+<li>混合韩语和英语的产品名称；</li>
+<li>包含组合字母和数字的产品/型号代码的产品名称；</li>
+<li>产品名称包含用于描述产品概念的词语（例如宽松合体）；</li>
+<li>没有空格分隔的产品名称。由于韩国人的特点，即使没有空格分隔也可以理解意义（汉语也具体有该特点）。</li>
+</ol>
+<p><strong>为了使产品名称具有适合购物领域的含义，描述概念的单词、模型代码和产品属性不应分开，而不带空格的产品名称则以术语单位提取</strong>。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/从产品名称中提取术语的结果示例.png" alt=""></p>
+<h3 id="词嵌入"><a href="#词嵌入" class="headerlink" title="词嵌入"></a>词嵌入</h3><p>我们尝试使用带有维基百科内容的预训练矢量，但认为产品数据的特征没有用于构建词嵌入。 因此，我们使用Word2vec方法直接构建了包含产品数据特征的字嵌入。是否正确构建嵌入向量（Word2vec的结果）可以使用TensorFlow的可视化工具TensorBoard进行探索。</p>
+<h3 id="CNN-LSTM-Model-—-产品名称"><a href="#CNN-LSTM-Model-—-产品名称" class="headerlink" title="CNN-LSTM Model — 产品名称"></a>CNN-LSTM Model — 产品名称</h3><p>通过按以下顺序应用CNN-LSTM模型来解析产品名称，即文本数据。</p>
+<ol>
+<li>CNN模型：从产品名称中提取特定文本区域的功能。</li>
+<li>LSTM模型：根据长产品名称中的附近单词识别当前单词的含义。</li>
+<li>CNN-LSTM模型：CNN提取的局部特征依次集成在LSTM中。</li>
+</ol>
+<p><a href="https://www.aclweb.org/anthology/P16-2037" target="_blank" rel="noopener">Dimensional Sentiment Analysis Using a Regional CNN-LSTM Model</a></p>
+<p>CNN滤波器可以在图像处理中提取特定图像区域的特征，并在文本处理中提取特定文本区域的特征。在NAVER Shopping的产品名称中，您可以看到出现的产品的主要关键字，无论位置如何。</p>
+<p>通常，文本中的单词的含义（例如，反讽）基于附近的单词（单词之前和之后）来理解。既然如此，LSTM模型被称为适合于数据处理的模型，如本文中那样顺序出现。在NAVER Shopping的产品名称中，您可以看到仅在查看周围的关键字时才能进行分类的产品名称。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/CNN-LSTM模型.png" alt=""></p>
+<p>CNN-LSTM模型表现出更优越的性能。这是一种通过输入字嵌入（矢量）来提取局部特征然后使用LSTM模型顺序地集成特征来通过卷积层和最大池层的方法。</p>
+<p>CNN模型可以通过将输入数据划分为多个区域来提取特定的本地信息，但是不能确定长句中的单词之间的依赖性。通过将CNN模型与LSTM模型组合以在句子中顺序地整合本地信息，可以解决这些限制。</p>
+<h3 id="MobileNetV2-产品图片"><a href="#MobileNetV2-产品图片" class="headerlink" title="MobileNetV2 - 产品图片"></a>MobileNetV2 - 产品图片</h3><p>MobileNet是一种可用于图像分类和对象检测的模型。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/MobileNet深度卷积滤波器.png" alt=""></p>
+<p>与VGG相比，MobileNet的准确性相似。但是，与VGG相比，MobileNet的计算和参数数量为1/10，因此适用于没有GPU设备或需要实时性能的服务的服务器。</p>
+<h3 id="多输入模型-产品混合信息"><a href="#多输入模型-产品混合信息" class="headerlink" title="多输入模型 - 产品混合信息"></a>多输入模型 - 产品混合信息</h3><p>对于类别的自动匹配，可以单独训练使用产品名称的模型和使用产品图像的模型。但是，由于产品名称和图像是单一产品的属性，因此集成训练实际上提高了模型的准确性。</p>
+<p>如果您不仅对产品名称和图像进行综合培训，还要对品牌，制造商，原始图像比例，业务运营中使用的类别以及产品的最低价格进行综合培训，如下图所示，然后可以训练与产品相关的属性的相关性。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/多输入模型.png" alt=""></p>
+<h2 id="类别自动匹配和解决方案中发现的问题"><a href="#类别自动匹配和解决方案中发现的问题" class="headerlink" title="类别自动匹配和解决方案中发现的问题"></a>类别自动匹配和解决方案中发现的问题</h2><p>将类别自动匹配应用于实际服务数据时发现了一些问题。</p>
+<h3 id="特征可视化"><a href="#特征可视化" class="headerlink" title="特征可视化"></a>特征可视化</h3><p>在应用类别自动匹配之前，必须有一种方法来验证匹配结果是否已正确分配。如果您上传适合的特征向量和标签到TensorFlow’s embedding projector，则可以轻松检查类别分布和类别之间的距离。通过单击一个点（类别），您可以看到该点附近的点（类似类别）是什么。如果该点位于可视化结果中的附近，但根本不在相关类别中，则表示它是具有错误匹配概率的类别。</p>
+<h3 id="数据规范化"><a href="#数据规范化" class="headerlink" title="数据规范化"></a>数据规范化</h3><p>时装&gt;女装&gt;连衣裙的产品数量比率，NAVER购物的热门类别，生活/健康&gt; DVD&gt;文化/纪录片，不是一个流行的类别约1000：1，使数据高度不平衡。如果使用像这样的不平衡产品分布中的学习数据进行训练，则可能导致问题，其中适当的结果偏向具有更多产品的类别以提高整体准确性。<br>左下图是应用数据标准化之前，按类别的产品分布显示索引函数的形状。因此，我们将以下日志函数应用于数据规范化的学习数据：</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/log方法规范化数据.png" alt=""></p>
+<p>通过应用数据规范化，产品数量按类别均匀分布，如右图所示，并且已经解决了偏向流行类别的适当结果的问题。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/产品按类别分布.png" alt=""></p>
+<h3 id="反映趋势"><a href="#反映趋势" class="headerlink" title="反映趋势"></a>反映趋势</h3><p>在线购物中心的产品寿命很短，对趋势非常敏感。特别是，由于每个季节都会生产服装等产品，因此存在产品不断被删除和创造的趋势。例如，仅使用文本学习的模型将发现仅在添加新趋势产品时读取单词时难以理解其类别，例如“Anorak”。学习文本和图像的模型可以通过使用图像添加一个名为“Anorak”的新产品时将其分类为夹克。</p>
+<p>在这种情况下，我们应该分析长期准确性，如下图所示，以验证模型是否能够继续准确地预测，并让它跟随产品的趋势，同时不断更新学习数据和模型以满足趋势。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/长期准确性分析.png" alt=""></p>
+<h3 id="训练数据管道"><a href="#训练数据管道" class="headerlink" title="训练数据管道"></a>训练数据管道</h3><p>通常，为了更新学习数据，我们必须从HDFS中提取SQL语法，将其保存为学习服务器中的文件，然后在代码中加载数据并重新训练模型。在这种通用方法中，随着学习数据变大，保存为文件和加载所花费的时间变得更长，以及占用服务的大量磁盘空间，使其效率低下。</p>
+<p><img src="/2019/07/13/使用TensorFlow自动分类NAVER购物产品类别/数据管道性能比较.png" alt=""></p>
+<p>TensorFlow提供了一种使用tf.data管道直接从HDFS读取学习数据的方法。当使用该Dataset.prefetch()方法时，如下面的示例所使用的那样，由于它以块的形式读取数据，因此它可以在学习GPU中的第一个数据的同时在CPU中准备第二个数据，从而减少资源的空闲状态。</p>
+<h3 id="模棱两可的分类"><a href="#模棱两可的分类" class="headerlink" title="模棱两可的分类"></a>模棱两可的分类</h3><p>NAVER Shopping的类别是为了方便用户而构建的，由于同名的许多较低类别，很难区分上层类别。由于允许模型学习并不是一个好的结构，因此有必要选择需要额外学习的类别来改变模型易于学习的结构，或管理标准类别（例如<a href="https://www.unspsc.org/" target="_blank" rel="noopener">UNSPSC</a>，联合国标准产品和服务代码）在商业环境中分开并让它学习。</p>
+<h3 id="卖家提供的信息不正确"><a href="#卖家提供的信息不正确" class="headerlink" title="卖家提供的信息不正确"></a>卖家提供的信息不正确</h3><p>在某些情况下，卖方通过将产品类别与NAVER购物类别进行第一手匹配来发送产品信息。该信息也是用于学习数据的条件，因为它是由人匹配的数据。但是，有时用于学习的主要产品元素包含错误。为了从学习数据中删除错误数据，我们应该使用诸如通过选择发送高质量产品信息的卖家来增加学习重量的方法。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们已经讨论了在NAVER Shopping中运行的类别自动匹配模型以及相关问题和解决方案。首先，我们从产品中发现了有用的特征，在文本数据的情况下分析了语素，并使用了CNN和LSTM模型。对于图像数据，我们使用MobileNet模型开发了类别自动匹配模型。</p>
+<p>此外，我们还研究了使用TensorBoard的数据可视化，以及如何使用数据规范化和TensorFlow管道。</p>
+<p>在提供这个项目的过程中，我们能够更全面地理解机器学习和深度学习的问题，在识别存在的其他问题的过程中，而不是仅仅考虑模型的准确性，将模型应用于实际服务环境。</p>
+<p>目前，自动匹配的准确率约为85％。我们的目标是通过使用各种方法继续改进模型以实现更高的准确性，例如产品名称的日期细化，图像特征提取的效率和精确的验证集构建。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+            <a href="/tags/分类/" rel="tag"># 分类</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/11/短视频分类技术/" rel="next" title="短视频分类技术">
+                <i class="fa fa-chevron-left"></i> 短视频分类技术
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/17/Python/" rel="prev" title="Python">
+                Python <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAVER购物和产品类别"><span class="nav-number">2.</span> <span class="nav-text">NAVER购物和产品类别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别自动匹配系统架构"><span class="nav-number">3.</span> <span class="nav-text">类别自动匹配系统架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别自动匹配模型"><span class="nav-number">4.</span> <span class="nav-text">类别自动匹配模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#产品特征"><span class="nav-number">4.1.</span> <span class="nav-text">产品特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#形态分析"><span class="nav-number">4.2.</span> <span class="nav-text">形态分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#词嵌入"><span class="nav-number">4.3.</span> <span class="nav-text">词嵌入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN-LSTM-Model-—-产品名称"><span class="nav-number">4.4.</span> <span class="nav-text">CNN-LSTM Model — 产品名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MobileNetV2-产品图片"><span class="nav-number">4.5.</span> <span class="nav-text">MobileNetV2 - 产品图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多输入模型-产品混合信息"><span class="nav-number">4.6.</span> <span class="nav-text">多输入模型 - 产品混合信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类别自动匹配和解决方案中发现的问题"><span class="nav-number">5.</span> <span class="nav-text">类别自动匹配和解决方案中发现的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征可视化"><span class="nav-number">5.1.</span> <span class="nav-text">特征可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据规范化"><span class="nav-number">5.2.</span> <span class="nav-text">数据规范化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反映趋势"><span class="nav-number">5.3.</span> <span class="nav-text">反映趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练数据管道"><span class="nav-number">5.4.</span> <span class="nav-text">训练数据管道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模棱两可的分类"><span class="nav-number">5.5.</span> <span class="nav-text">模棱两可的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卖家提供的信息不正确"><span class="nav-number">5.6.</span> <span class="nav-text">卖家提供的信息不正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

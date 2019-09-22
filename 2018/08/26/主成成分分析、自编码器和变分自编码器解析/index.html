@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="变分自编码器,主成成分分析,自编码器," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍主成分分析（PCA）和自编码器（AutoEncoders, AE）是无监督学习中的两种代表性方法。  PCA 的地位不必多说，只要是讲到降维的书，一定会把 PCA 放到最前面，它与 LDA 同为机器学习中最基础的线性降维算法，SVM/Logistic Regression、PCA/LDA 也是最常被拿来作比较的两组算法。  自编码器虽然不像 PCA 那般在教科书上随处可见，但是在早期被拿来做深">
+<meta name="keywords" content="变分自编码器,主成成分分析,自编码器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="主成成分分析、自编码器和变分自编码器解析">
+<meta property="og:url" content="http://yoursite.com/2018/08/26/主成成分分析、自编码器和变分自编码器解析/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="介绍主成分分析（PCA）和自编码器（AutoEncoders, AE）是无监督学习中的两种代表性方法。  PCA 的地位不必多说，只要是讲到降维的书，一定会把 PCA 放到最前面，它与 LDA 同为机器学习中最基础的线性降维算法，SVM/Logistic Regression、PCA/LDA 也是最常被拿来作比较的两组算法。  自编码器虽然不像 PCA 那般在教科书上随处可见，但是在早期被拿来做深">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-12T09:15:35.600Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="主成成分分析、自编码器和变分自编码器解析">
+<meta name="twitter:description" content="介绍主成分分析（PCA）和自编码器（AutoEncoders, AE）是无监督学习中的两种代表性方法。  PCA 的地位不必多说，只要是讲到降维的书，一定会把 PCA 放到最前面，它与 LDA 同为机器学习中最基础的线性降维算法，SVM/Logistic Regression、PCA/LDA 也是最常被拿来作比较的两组算法。  自编码器虽然不像 PCA 那般在教科书上随处可见，但是在早期被拿来做深">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/26/主成成分分析、自编码器和变分自编码器解析/"/>
+
+
+
+
+
+  <title>主成成分分析、自编码器和变分自编码器解析 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/26/主成成分分析、自编码器和变分自编码器解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">主成成分分析、自编码器和变分自编码器解析</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-26T20:39:42+08:00">
+                2018-08-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/变分自编码器/" itemprop="url" rel="index">
+                    <span itemprop="name">变分自编码器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/26/主成成分分析、自编码器和变分自编码器解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/26/主成成分分析、自编码器和变分自编码器解析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>主成分分析（PCA）和自编码器（AutoEncoders, AE）是无监督学习中的两种代表性方法。 </p>
+<p>PCA 的地位不必多说，只要是讲到降维的书，一定会把 PCA 放到最前面，它与 LDA 同为机器学习中最基础的线性降维算法，SVM/Logistic Regression、PCA/LDA 也是最常被拿来作比较的两组算法。 </p>
+<p>自编码器虽然不像 PCA 那般在教科书上随处可见，但是在早期被拿来做深度网络的逐层预训练，其地位可见一斑。尽管在 ReLU、Dropout 等技术出现之后，人们不再使用 AutoEncoders 来预训练，但它延伸出的稀疏 AutoEncoders，降噪 AutoEncoders 等仍然被广泛用于表示学习。2017 年 Kaggle 比赛 <strong>Porto Seguro’s Safe Driver Prediction</strong> 的冠军就是使用了降噪 AutoEncoders 来做表示学习，最终以绝对优势击败了手工特征工程的选手们。 </p>
+<p>PCA 和 AutoEncoders 都是非概率的方法，它们分别有一种对应的概率形式叫做概率 PCA (Probabilistic PCA) 和变分自编码器（Variational AE, VAE），<strong>本文的主要目的就是整理一下 PCA、概率 PCA、AutoEncoders、变分 AutoEncoders 这四者的关系</strong>。 </p>
+<p>先放结论，后面就围绕这个表格展开：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>降维方法</th>
+<th>线性</th>
+<th>非线性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成式</td>
+<td>概率PCA</td>
+<td>变分自编码器</td>
+</tr>
+<tr>
+<td>非生成式</td>
+<td>PCA</td>
+<td>自编码器</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="降维的线性方法和非线性方法"><a href="#降维的线性方法和非线性方法" class="headerlink" title="降维的线性方法和非线性方法"></a>降维的线性方法和非线性方法</h2><p>降维分为线性降维和非线性降维，这是最普遍的分类方法。 </p>
+<p><strong>PCA 和 LDA 是最常见的线性降维方法</strong>，它们按照某种准则为数据集找到一个最优投影方向 W 和截距 b，然后做变换得到降维后的数据集。因为是一个线性变换（严格来说叫仿射变换，因为有截距项），所以这两种方法叫做线性降维。 </p>
+<p>LDA是一种监督学习的降维技术，也就是说它的数据集的每个样本是有类别输出的。这点和PCA不同。PCA是不考虑样本类别输出的无监督降维技术。LDA的思想可以用一句话概括，就是“投影后类内方差最小，类间方差最大”。</p>
+<p>PCA 与 LDA 相同点：</p>
+<ol>
+<li>两者均可以对数据进行降维。</li>
+<li>两者在降维时均使用了矩阵特征分解的思想。</li>
+<li>两者都假设数据符合高斯分布。</li>
+</ol>
+<p>PCA 与 LDA 不同点：</p>
+<ol>
+<li>LDA是有监督的降维方法，而PCA是无监督的降维方法</li>
+<li>LDA降维最多降到类别数k-1的维数，而PCA没有这个限制。</li>
+<li>LDA除了可以用于降维，还可以用于分类。</li>
+<li>LDA选择分类性能最好的投影方向，而PCA选择样本点投影具有最大方差的方向。</li>
+</ol>
+<p><strong>非线性降维的两类代表方法是流形降维和 AutoEncoders，这两类方法也体现出了两种不同角度的“非线性”</strong>。流形方法的非线性体现在它认为数据分布在一个低维流形上，而流形本身就是非线性的，流形降维的代表方法是两篇 2000 年的 Science 论文提出的：多维放缩（multidimensional scaling, MDS）和局部线性嵌入（locally linear embedding, LLE）。两种流形方法发表在同一年的 Science 上。</p>
+<p>AutoEncoders 的非线性和神经网络的非线性是一回事，都是利用堆叠非线性激活函数来近似任意连续函数。<strong>事实上，AutoEncoders 就是一种神经网络，只不过它的输入和输出相同，真正有意义的地方不在于网络的输出，而是在于网络的权重。</strong></p>
+<h2 id="降维的生成式方法和非生成式方法"><a href="#降维的生成式方法和非生成式方法" class="headerlink" title="降维的生成式方法和非生成式方法"></a>降维的生成式方法和非生成式方法</h2><p><strong>两类方法</strong></p>
+<p>降维还可以分为生成式方法（概率方法）和非生成式方法（非概率方法）。</p>
+<p>教科书对 PCA 的推导一般是基于最小化重建误差或者最大化可分性的，或者说是通过提取数据集的结构信息来建模一个约束最优化问题来推导的。事实上，PCA 还有一种概率形式的推导，那就是概率 PCA，PRML 里面有对概率 PCA 的详细讲解，感兴趣的读者可以去阅读。需要注意的是，<strong>概率 PCA 不是 PCA 的变体，它就是 PCA 本身，概率 PCA 是从另一种角度来推导和理解 PCA，它把 PCA 纳入了生成式的框架。</strong>  </p>
+<p>设 $X$ 是我们拿到的数据集，我们的目的是得到数据集中每个样本的低维表示 $Z$，其中 $dim(z) &lt; dim(x)$。 </p>
+<p>降维的非生成式方法不需要概率知识，而是直接利用数据集 $X$ 的结构信息建模一个最优化问题，然后求解这个问题得到 $X$ 对应的 $Z$。 </p>
+<p>降维的生成式方法认为数据集 $X$ 是对一个随机变量 x 的 n 次采样，而随机变量 x 依赖于随机变量 z ，对 z 进行建模：</p>
+<script type="math/tex; mode=display">z \sim p_\theta(Z)</script><p>再对这个依赖关系进行建模：</p>
+<script type="math/tex; mode=display">x|z \sim p_\theta(x|z)</script><p>有了这两个公式，我们就可以表达出随机变量 x 的分布：</p>
+<script type="math/tex; mode=display">x \sim p_\theta(x)=\int_Zp_\theta(x|z)p_\theta(z)dz</script><p>随后我们利用数据集对分布的参数 θ 进行估计，就得到这几个分布。好了，设定了这么多，可是降维降在哪里了呢，为什么没有看到？</p>
+<p>回想一下降维的定义：<strong>降维就是给定一个高维样本 x，给出对应的低维表示 z，这恰好就是 p(z|x) 的含义。所以我们只要应用 Bayes 定理求出这个概率即可：</strong></p>
+<script type="math/tex; mode=display">p_\theta(z|x)=\dfrac{p_\theta(x|z)p_\theta(z)dz}{\int_Zp_\theta(x|z)p_\theta(z)dz}</script><p>这样我们就可以得到每个样本点 x 上的 z 的分布 p(z|X=x) ，可以选择这个分布的峰值点作为 z，降维就完成了。 </p>
+<p><strong>Q：那么问题来了，生成式方法和非生成式方法哪个好呢？</strong></p>
+<p><strong>A：或许是非生成式方法好，一两行就能设定完，君不见生成式方法你设定了一大段？</strong></p>
+<p>应该会有很多人这样想吧？事实也的确如此，上面这个回答<strong>在一定意义上</strong>是正确的。如果你只是为了对现有的数据进行降维，而没有其他需求，那么简单粗暴的非生成式方法当然是更好的选择。 </p>
+<p>那么，在什么情况下，或者说什么需求下，生成式方法是更好的选择更好呢？答案就蕴含在“生成式”这个名称中：<strong>在需要生成新样本的情况下，生成式方法是更好的选择。</strong></p>
+<p>在需要生成新样本时，非生成式方法需要对 z 的概率分布进行代价巨大的数值逼近，然后才能从分布中采样；生成式方法本身就对 z 的概率分布进行了建模，因此可以直接从分布中进行采样。所以，在需要生成新样本时，生成式方法是更好的选择，甚至是必然的选择。</p>
+<h2 id="概率-PCA-和-VAE"><a href="#概率-PCA-和-VAE" class="headerlink" title="概率 PCA 和 VAE"></a>概率 PCA 和 VAE</h2><p>下面简单整理一下这四种降维方法。注意一些术语，编码=降维，解码=重建，原数据=观测变量，降维后的数据=隐变量。</p>
+<h3 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h3><p>原数据：</p>
+<script type="math/tex; mode=display">X=\{x|x\in R^d\}</script><p>编码后的数据：</p>
+<script type="math/tex; mode=display">z = W^T(x+b), z\in R^c</script><p>解码后的数据：</p>
+<script type="math/tex; mode=display">\hat x = Wz - b, x\in R^d</script><p>重建误差：</p>
+<script type="math/tex; mode=display">\sum||x-\hat x||^p_p</script><p>最小化重建误差，就可以得到 W 和 b 的最优解和解析解，PCA 的求解就完成了。</p>
+<p>补充说明： </p>
+<p>PCA 中的 p=2 ，即最小化二范数意义下的重建误差，如果 p=1 的话我们就得到了鲁棒 PCA (Robust PCA)。而最小化误差的二范数等价于对高斯噪声的 MLE，最小化误差的一范数等价于对拉普拉斯噪声的 MLE。</p>
+<p>因此，PCA 其实是在假设存在高斯噪声的条件下对数据集进行重建，这个高斯误差就是我们将要在下面概率 PCA 一节中提到的 ϵ。你看，即使不是概率 PCA，其中也隐含着概率的思想。 </p>
+<p>编码和解码用到的 W 和 b 是一样的，即编码过程和解码过程是对称的，这一点与下面要讲的 AutoEncoders 是不同的。 </p>
+<p>求解上述最优化问题可以得到 b，这恰好是样本均值的相反数。也就是说，PCA 中截距项的含义是让每个样本都减去样本均值，这正是“样本中心化”的含义。</p>
+<p>既然我们已经知道求出来的截距就是样本均值，所以干脆一开始就对样本进行中心化，这样在使用 PCA 的时候就可以忽略截距项 b 而直接使用，变量就只剩下 W 了。教科书上讲解 PCA 时一般都是上来就说“使用 PCA 之前需要进行样本中心化”，但是没有人告诉我们为什么要这样做，现在大家应该明白为什么要进行中心化了吧。</p>
+<h3 id="AutoEncoders"><a href="#AutoEncoders" class="headerlink" title="AutoEncoders"></a>AutoEncoders</h3><p>原数据：</p>
+<script type="math/tex; mode=display">X=\{x|x\in R^d\}</script><p>编码后的数据：</p>
+<script type="math/tex; mode=display">z = \sigma(Wx+b), z\in R^c</script><p>解码后的数据：</p>
+<script type="math/tex; mode=display">\hat x = \sigma(\hat Wz + \hat b), z\in R^d</script><p>重建误差：</p>
+<script type="math/tex; mode=display">\sum||x-\hat x||^p_p</script><p>最小化重建误差，利用反向传播算法可以得到的局部最优解&amp;数值解，AutoEncoders 的求解完成。 </p>
+<p>补充说明： 这里可以使用任意范数，每一个范数都代表我们对数据的一种不同的假设。为了和 PCA 对应，我们也取 p=2。 </p>
+<p>σ(·) 是非线性激活函数。AutoEncoder 一般都会堆叠多层，方便起见我们只写了一层。 </p>
+<p>$W$ 和 $\hat W$ 是不同的权重矩阵，这是因为经过非线性变换之后我们已经无法将样本再用原来的基 W 进行表示了，必须要重新训练解码的基 。甚至，AutoEncoders 的编码器和解码器堆叠的层数都可以不同，例如可以用 4 层来编码，用 3 层来解码。</p>
+<h3 id="概率PCA"><a href="#概率PCA" class="headerlink" title="概率PCA"></a>概率PCA</h3><p>隐变量边缘分布：</p>
+<script type="math/tex; mode=display">p(z)=N(z|0,I)</script><p>观测变量条件分布：</p>
+<script type="math/tex; mode=display">p_\theta (x|z) = N(x|f(z;\theta),{\sigma}^2 I)</script><p>均值函数：</p>
+<script type="math/tex; mode=display">f(z;\theta)=Wz+\mu</script><p>x 的生成过程：</p>
+<script type="math/tex; mode=display">x=f(z;\theta)+\epsilon, \epsilon \in N(0,{\sigma}^2 I))</script><p><strong>因为 $p(z)$ 和 $p_θ(x|z)$ 都是高斯分布，且 $p_θ(x|z)$ 的均值 $f(z;θ) = Wz+μ$ 是 z 的线性函数，所以这是一个线性高斯模型。</strong> 线性高斯模型有一个非常重要的性质： $p_θ(x)$ 和$p_θ(z|x)$ 也都是高斯分布。这个性质保证了我们能够使用极大似然估计或者EM算法来求解PCA。</p>
+<p>如果没有这个性质的话，我们就只能借助变分法（变分 AE 采用的）或者对抗训练（GAN 采用的）来近似 $p_θ(x)$ 和 $p_θ(z|x)$ 了。有了这个优秀的性质之后，我们至少有三种方法可以求解概率 PCA：</p>
+<ol>
+<li>是一个形式已知，仅参数未知的高斯分布，因此可以用极大似然估计来求解 θ。<script type="math/tex; mode=display">p_\theta(x)=\int_Zp_\theta(x|z)p_\theta(z)dz</script></li>
+<li>也是一个形式已知，仅参数未知的高斯分布，因此可以用 EM 算法来求解 θ，顺便还能得到隐变量 z。 <script type="math/tex; mode=display">p_\theta(z|x)=\dfrac{p_\theta(x|z)p_\theta(z)dz}{\int_Zp_\theta(x|z)p_\theta(z)dz}</script></li>
+<li>甚至也可以引入一个变分分布 $q_Φ(z|x)$ 来求解概率 PCA。</li>
+</ol>
+<p>一旦求出了 θ，我们就得到了所有的四个概率：</p>
+<script type="math/tex; mode=display">p(z), p_\theta(x|z), p_\theta(x), p_\theta(z|x)</script><p>有了这四个概率，我们就可以做这些事情了： </p>
+<ol>
+<li>降维：给定样本 x ，就得到了分布 $p_θ(z|X=x)$ ，取这个分布的峰值点 z 就是降维后的数据； </li>
+<li>重建：给定降维后的样本 z ，就得到了分布 $p_θ(x|Z=z)$，取这个分布的峰值点 x 就是重建后的数据；</li>
+<li>生成：从分布 p(z) 中采样一个，就得到了分布，取这个分布的峰值点就是新生成的数据； </li>
+<li>密度估计：给定样本 x ，就得到了这一点的概率密度 pθ(X=x) 。 </li>
+</ol>
+<p>PCA 只能做到 1 和 2，对 3 和 4无力，这一点我们已经分析过了。</p>
+<p><strong>Q：为什么隐变量要取单位高斯分布（标准正态分布）？</strong></p>
+<p><strong>A：这是两个问题。</strong></p>
+<p><strong>subQ1：为什么要取高斯分布？</strong></p>
+<p><strong>subA1：为了求解方便</strong>，如果不取高斯分布，那么 $p_θ(x)$ 有很大的可能没有解析解，这会给求解带来很大的麻烦。还有一个原因，回想生成新样本的过程，要首先从 p(z) 中采样一个，高斯分布采样简单。 </p>
+<p><strong>subQ2：为什么是零均值单位方差的？</strong></p>
+<p><strong>subA2：完全可以取任意均值和方差</strong>，但是我们要将 $p(z)$ 和 $p_θ(x|z)$ 相乘，均值和方差部分可以挪到 $f(z;θ)$ 中，所以 $p(z)$ 的均值和方差取多少都无所谓，方便起见就取单位均值方差了。</p>
+<p><strong>Q：$p_θ(x|z)$ 为什么选择了高斯分布呢？</strong></p>
+<p><strong>A：因为简单</strong>，和上一个问题的一样。还有一个直觉的解释是 $p_θ(x|z)$ 认为 x 是由 f(z;θ) 和噪声 ϵ 加和而成的，如果 ϵ 是高斯分布的话，恰好和 PCA 的二范数重建误差相对应，这也算是一个佐证吧。</p>
+<p><strong>Q：$p_θ(x|z)$ 的方差为什么选择了各向同性的，而不是更一般的 ∑ 呢？</strong></p>
+<p>A：方差可以选择一般的 ∑ ，但是个参数一定会给求解带来困难，所导出的方法虽然也是线性降维，但它已经不是 PCA 了，而是另外的方法。方差也可以选择成一个的各向异性的对角阵 λ，这样只有 d 个参数，事实上这就是因子分析，另一种线性降维方法。只有当方差选择成各向同性的对角阵时，导出来的方法才叫主成分分析，这个地方 PRML 里有介绍。</p>
+<h3 id="变分AutoEncoders"><a href="#变分AutoEncoders" class="headerlink" title="变分AutoEncoders"></a>变分AutoEncoders</h3><p>隐变量边缘分布：</p>
+<script type="math/tex; mode=display">p(z)=N(z|0,I)</script><p>观测变量条件分布：</p>
+<script type="math/tex; mode=display">p_\theta (x|z) = N(x|f(z;\theta),{\sigma}^2 I)</script><p>均值函数：</p>
+<script type="math/tex; mode=display">f(z;\theta)=\sigma(Wz+\mu)</script><p>x 的生成过程：</p>
+<script type="math/tex; mode=display">x=f(z;\theta)+\epsilon, \epsilon \in N(0,{\sigma}^2 I))</script><p>因为 f(z;θ) 是 z 的非线性函数，所以这不再是一个线性高斯模型。观测变量的边缘分布：</p>
+<script type="math/tex; mode=display">p_\theta(x)=\int_Zp_\theta(x|z)p_\theta(z)dz</script><p>没有解析形式。这就意味着我们无法直接使用极大似然估计来求解参数 θ。隐变量的后验分布：</p>
+<script type="math/tex; mode=display">p_\theta(z|x)=\dfrac{p_\theta(x|z)p_\theta(z)dz}{\int_Zp_\theta(x|z)p_\theta(z)dz}</script><p>也没有解析形式（这是当然，因为分母没有解析形式了）。这就意味着我们也无法通过 EM 算法来估计参数和求解隐变量。 </p>
+<p>那么，建出来的模型该怎么求解呢？这就需要上变分推断（Variational Inference），又称变分贝叶斯（Variational Bayes）了。本文不打算细讲变分推断，仅仅讲一下大致的流程。更多关于 VAE 的内容见<a href="https://yuanxiaosc.github.io/2018/08/14/变分自编码器/" target="_blank" rel="noopener">《变分自编码器》。</a></p>
+<p>变分推断会引入一个变分分布 $q_Φ(z|x)$ 来近似没有解析形式的后验概率 $p_θ(z|x)$ 。在变分 AE 的原文中，作者使用了 SGD 来同时优化参数 θ 和 Φ。一旦求出了这两个参数就可以得到这些概率：</p>
+<script type="math/tex; mode=display">p(z), p_\theta(x|z), q_\phi(z|x)</script><p>注意因为 $p_θ(x)$ 和 $p_θ(z|x)$ 没有解析形式，所以即使求出了 θ 我们也无法获得这两个概率。但是，正如上面说的， $q_Φ(z|x)$ 就是 $p_θ(z|x)$ 的近似，所以需要用 $p_θ(z|x)$ 的地方都可以用 $q_Φ(z|x)$ 代替。</p>
+<p>有了这三个概率，我们就可以做这些事情了： </p>
+<ol>
+<li>降维：给定样本 x，就得到了分布 $q_Φ(z|X=x)$ ，取这个分布的峰值点 z 就是降维后的数据； </li>
+<li>重建：给定降维后的样本 z，就得到了分布 $p_θ(x|Z=z)$，取这个分布的峰值点 x 就是重建后的数据；</li>
+<li>生成：从分布 $ p(z)$ 中采样一个，就得到了分布，取这个分布的峰值点就是新生成的数据。 </li>
+</ol>
+<p>与概率 PCA 不同的是，这里无法解析地得到 $p_θ(x)$ ，进行密度估计需要进行另外的设计，通过采样得到，计算代价还是比较大的，具体步骤变分 AE 的原文中有介绍。</p>
+<p> AutoEncoders 只能做到 1 、2 和 3，对 4无力。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>从 PCA 和 AutoEncoders 这两节可以看出，PCA 实际上就是线性 Autoencoders。两者无论是编码解码形式还是重建误差形式都完全一致，只有是否线性的区别。线性与否给优化求解带来了不同性质：PCA 可以直接得到最优的解析解，而 AutoEncoders 只能通过反向传播得到局部最优的数值解。 </li>
+<li>从概率 PCA 和变分 AutoEncoders 这两节可以看出，概率 PCA 和变分 AutoEncoders 的唯一区别就是 f(z;θ) 是否是 z 的线性函数，但是这个区别给优化求解带来了巨大的影响。在概率 PCA 中，f(z;θ) 是线性的，所以我们得到了一个线性高斯模型，线性高斯模型的优秀性质是牵扯到的 4 个概率都是高斯分布，所以我们可以直接给出边缘分布和编码分布的解析形式，极大似然估计和 EM 算法都可以使用，一切处理都非常方便。在变分AutoEncoders中，f(z;θ) 是非线性的，所以边缘分布不再有解析形式，极大似然估计无法使用；编码分布也不再有解析形式，EM 算法无法使用，我们只能求助于变分推断，得到编码分布的近似 $q_Φ(z|x)$ ，再利用别的技巧得到边缘分布 $pθ(x)$ 的估计。 </li>
+<li>从 PCA 和概率 PCA 两小节可以看出，PCA 和概率 PCA 中 x 都是 z 的线性函数，只不过概率 PCA 显式地把高斯噪声 ϵ 写在了表达式中；PCA 没有显式写出噪声，而是把高斯噪声隐含在了二范数重建误差中。 </li>
+<li>从 AutoEncoders 和变分 AutoEncoders 这两节可以看出，<strong>AE 和 VAE 的最重要的区别在于 VAE 迫使隐变量 z 满足高斯分布 p(z)=N(z|0,I) ，而 AE 对 z 的分布没有做任何假设。</strong> 这个区别使得在生成新样本时，AE 需要先数值拟合 p(z) ，才能生成符合数据集分布的隐变量，而 VAE 直接从 N(z|0,I) 中采样一个 z ，它天然就符合数据集分布。事实上，这是因为在使用变分推断进行优化时，VAE 迫使 z 的分布向 N(z|0,I) 靠近，不过本文中没有讲优化细节，VAE 的原文中有详细的解释。 </li>
+<li>PCA 求解简单，但是都是线性降维，提取信息的能力有限；非线性的 AE 提取信息的能力强，但是求解复杂。要根据不同的场景选择不同的降维算法。 </li>
+<li>要生成新样本时，不能选择 PCA 或 AE，而是要选择概率 PCA 或 VAE。</li>
+</ol>
+<h2 id="对自编码器和变分自编码器的进一步理解"><a href="#对自编码器和变分自编码器的进一步理解" class="headerlink" title="对自编码器和变分自编码器的进一步理解"></a>对自编码器和变分自编码器的进一步理解</h2><p><a href="http://www.atyun.com/17888.html" target="_blank" rel="noopener">《从自编码器到变分自编码器（其一）》</a><br><a href="http://www.atyun.com/17976.html" target="_blank" rel="noopener">《从自编码器到变分自编码器（其二）》</a></p>
+<p>自编码器将数据作为输入并发现数据的一些潜在状态表示的模型（欠完备，稀疏，降噪，压缩）。也就是说，我们的输入数据被转换成一个编码向量，其中每个维度表示一些学到的关于数据的属性。在这里，最重要的细节是我们的编码器网络为每个编码维度输出单个值，而解码器网络随后接收这些值并尝试重构原始输入。</p>
+<p>变分自编码器（VAE）以概率的方式描述潜在空间观察。因此，我们不会构建一个输出单个值来描述每个潜在状态属性的编码器，而是用编码器来描述每个潜在属性的概率分布。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/变分自编码器/" rel="tag"># 变分自编码器</a>
+          
+            <a href="/tags/主成成分分析/" rel="tag"># 主成成分分析</a>
+          
+            <a href="/tags/自编码器/" rel="tag"># 自编码器</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/26/变分自编码器/" rel="next" title="变分自编码器（Variational Auto-Encoder，VAE）">
+                <i class="fa fa-chevron-left"></i> 变分自编码器（Variational Auto-Encoder，VAE）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/11/Generative Adversarial Networks/" rel="prev" title="Generative Adversarial Networks">
+                Generative Adversarial Networks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降维的线性方法和非线性方法"><span class="nav-number">2.</span> <span class="nav-text">降维的线性方法和非线性方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#降维的生成式方法和非生成式方法"><span class="nav-number">3.</span> <span class="nav-text">降维的生成式方法和非生成式方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概率-PCA-和-VAE"><span class="nav-number">4.</span> <span class="nav-text">概率 PCA 和 VAE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PCA"><span class="nav-number">4.1.</span> <span class="nav-text">PCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AutoEncoders"><span class="nav-number">4.2.</span> <span class="nav-text">AutoEncoders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#概率PCA"><span class="nav-number">4.3.</span> <span class="nav-text">概率PCA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变分AutoEncoders"><span class="nav-number">4.4.</span> <span class="nav-text">变分AutoEncoders</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对自编码器和变分自编码器的进一步理解"><span class="nav-number">6.</span> <span class="nav-text">对自编码器和变分自编码器的进一步理解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

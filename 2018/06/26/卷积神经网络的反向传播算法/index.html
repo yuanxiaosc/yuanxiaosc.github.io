@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="卷积神经网络,深度学习,前向传播算法,反向传播算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。 卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。 我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果">
+<meta name="keywords" content="卷积神经网络,深度学习,前向传播算法,反向传播算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络的反向传播算法">
+<meta property="og:url" content="http://yoursite.com/2018/06/26/卷积神经网络的反向传播算法/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。 卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。 我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/one_2.png">
+<meta property="og:updated_time" content="2018-06-26T01:45:38.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络的反向传播算法">
+<meta name="twitter:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。 卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。 我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/one_2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/26/卷积神经网络的反向传播算法/"/>
+
+
+
+
+
+  <title>卷积神经网络的反向传播算法 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/26/卷积神经网络的反向传播算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">卷积神经网络的反向传播算法</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-26T08:22:42+08:00">
+                2018-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/26/卷积神经网络的反向传播算法/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/26/卷积神经网络的反向传播算法/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>阅读本篇前，最好先阅读多层感知机的<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法" target="_blank" rel="noopener">反向传播算法</a>。反向传播的基础知识和符号定义都在该文章中。</p>
+<h2 id="卷积神经网络：前向传播算法"><a href="#卷积神经网络：前向传播算法" class="headerlink" title="卷积神经网络：前向传播算法"></a>卷积神经网络：前向传播算法</h2><h3 id="CNN输入层前向传播到卷积层"><a href="#CNN输入层前向传播到卷积层" class="headerlink" title="CNN输入层前向传播到卷积层"></a>CNN输入层前向传播到卷积层</h3><p>输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。</p>
+<p>我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本都是有 RGB 的彩色图片，这样输入 $X$ 就是 3 个矩阵，即分别对应 R，G 和 B 的矩阵，或者说是一个张量。这时和卷积层相连的卷积核$W$就也是张量，对应的最后一维的维度为 3 .即每个卷积核都是 3 个子矩阵组成。同样的方法，对于 3D 的彩色图片之类的样本，我们的输入 $X$ 可以是 4 维，5 维的张量，那么对应的卷积核 $W$ 也是个高维的张量。</p>
+<p>不管维度多高，对于我们的输入，前向传播的过程可以表示为：<script type="math/tex">a^2= \sigma(z^2) = \sigma(a^1*W^2 +b^2)</script></p>
+<p>其中，上标代表层数，星号代表卷积，而b代表我们的偏倚, $\sigma$为激活函数，这里一般都是ReLU。和多层感知机的前向传播比较一下，其实形式非常的像，只是我们这儿是张量的卷积，而不是矩阵的乘法。同时由于$W$是张量，那么同样的位置，$W$参数的个数就比多层感知机多很多了。</p>
+<p>为了简化我们的描述，本文后面如果没有特殊说明，我们都默认输入是3维的张量，即用RBG可以表示的彩色图片。</p>
+<p>这里需要我们自己定义的CNN模型参数是：</p>
+<ol>
+<li><p>一般我们的卷积核不止一个，比如有K个，那么我们输入层的输出，或者说第二层卷积层的对应的输入就K个。</p>
+</li>
+<li><p>卷积核中每个子矩阵的的大小，一般我们都用子矩阵为方阵的卷积核，比如FxF的子矩阵。</p>
+</li>
+<li><p>填充padding（以下简称P），我们卷积的时候，为了可以更好的识别边缘，一般都会在输入矩阵在周围加上若干圈的0再进行卷积，加多少圈则P为多少。</p>
+</li>
+<li><p>步幅stride（以下简称S），即在卷积过程中每次移动的像素距离大小。</p>
+</li>
+</ol>
+<p>　　　</p>
+<h3 id="隐藏层前向传播到卷积层"><a href="#隐藏层前向传播到卷积层" class="headerlink" title="隐藏层前向传播到卷积层"></a>隐藏层前向传播到卷积层</h3><p>现在我们再来看普通隐藏层前向传播到卷积层时的前向传播算法。</p>
+<p>假设隐藏层的输出是M个矩阵对应的三维张量，则输出到卷积层的卷积核也是M个子矩阵对应的三维张量。这时表达式和输入层的很像，也是</p>
+<script type="math/tex; mode=display">a^l= \sigma(z^l) = \sigma(a^{l-1}*W^l +b^l)</script><p>其中，上标代表层数，星号代表卷积，而 $b$ 代表我们的偏倚, $\sigma$ 为激活函数，这里一般都是ReLU。</p>
+<p>也可以写成M个子矩阵子矩阵卷积后对应位置相加的形式，即：</p>
+<script type="math/tex; mode=display">a^l= \sigma(z^l) = \sigma(\sum\limits_{k=1}^{M}z_k^l) = \sigma(\sum\limits_{k=1}^{M}a_k^{l-1}*W_k^l +b^l)</script><p>和CNN输入层前向传播到卷积层的区别仅仅在于，这里的输入是隐藏层来的，而不是我们输入的原始图片样本形成的矩阵。</p>
+<h3 id="隐藏层前向传播到池化层"><a href="#隐藏层前向传播到池化层" class="headerlink" title="隐藏层前向传播到池化层"></a>隐藏层前向传播到池化层</h3><p>池化层的处理逻辑是比较简单的，我们的目的就是对输入的矩阵进行缩小概括。比如输入的若干矩阵是NxN维的，而我们的池化大小是 $k \times k$的区域，则输出的矩阵都是 $\frac{N}{k} \times \frac{N}{k}$ 维的。</p>
+<p>这里需要需要我们定义的CNN模型参数是：</p>
+<p>!. 池化区域的大小 k</p>
+<ol>
+<li>池化的标准，一般是 MAX 或者 Average。</li>
+</ol>
+<h3 id="隐藏层前向传播到全连接层"><a href="#隐藏层前向传播到全连接层" class="headerlink" title="隐藏层前向传播到全连接层"></a>隐藏层前向传播到全连接层</h3><p>由于全连接层就是普通的 多层感知机 模型结构，因此我们可以直接使用 多层感知机 的前向传播算法逻辑，即：</p>
+<script type="math/tex; mode=display">a^l = \sigma(z^l) = \sigma(W^la^{l-1} + b^l)</script><p>这里的激活函数一般是 sigmoid 或者 tanh。</p>
+<p>经过了若干全连接层之后，最后的一层为Softmax输出层。此时输出层和普通的全连接层唯一的区别是，激活函数是softmax函数。</p>
+<p>这里需要需要我们定义的CNN模型参数是：</p>
+<ol>
+<li><p>全连接层的激活函数</p>
+</li>
+<li><p>全连接层各层神经元的个数</p>
+</li>
+</ol>
+<h3 id="CNN前向传播算法小结"><a href="#CNN前向传播算法小结" class="headerlink" title="CNN前向传播算法小结"></a>CNN前向传播算法小结</h3><p>有了上面的基础，我们现在总结下CNN的前向传播算法。</p>
+<p>　输入：1 个图片样本，CNN 模型的层数L和所有隐藏层的类型，对于卷积层，要定义卷积核的大小 K，卷积核子矩阵的维度 F，填充大小 P，步幅 S。对于池化层，要定义池化区域大小 k 和池化标准（MAX或Average），对于全连接层，要定义全连接层的激活函数（输出层除外）和各层的神经元个数。</p>
+<p>输出：CNN模型的输出$a^L$</p>
+<ol>
+<li><p>根据输入层的填充大小P，填充原始图片的边缘，得到输入张量$a^1$。</p>
+</li>
+<li><p>初始化所有隐藏层的参数$W,b$　　</p>
+</li>
+<li><p>for $l$=2 to $L-1$:<br>3.1 如果第$l$层是卷积层,则输出为</p>
+<script type="math/tex; mode=display">a^l= ReLU(z^l) = ReLU(a^{l-1}*W^l +b^l)</script><p>3.2 如果第$l$层是池化层,则输出为$ a^l= pool(a^{l-1})$, 这里的pool指按照池化区域大小k和池化标准将输入张量缩小的过程。<br>3.3 如果第$l$层是全连接层,则输出为</p>
+<script type="math/tex; mode=display">a^l= \sigma(z^l) = \sigma(W^la^{l-1} +b^l)</script></li>
+<li><p>对于输出层第L层:</p>
+<script type="math/tex; mode=display">a^L= softmax(z^L) = softmax(W^La^{L-1} +b^L)</script></li>
+</ol>
+<p>以上就是 CNN 前向传播算法的过程总结。有了 CNN 前向传播算法的基础，我们后面再来理解CNN的反向传播算法就简单多了。</p>
+<h2 id="卷积神经网络：反向传播算法计算"><a href="#卷积神经网络：反向传播算法计算" class="headerlink" title="卷积神经网络：反向传播算法计算"></a>卷积神经网络：反向传播算法计算</h2><h3 id="池化层的误差-delta-l"><a href="#池化层的误差-delta-l" class="headerlink" title="池化层的误差 $\delta^l$"></a>池化层的误差 $\delta^l$</h3><script type="math/tex; mode=display">
+{\delta ^l} = {upsample}\left( \delta ^{l + 1} \right) \odot \sigma '\left(  \right)</script><p>池化层用于削减数据量，在这一层上前向传播的数据会有损失，则在反向传播时，传播来的梯度也会有所损失。一般来说，池化层没有参数，于是仅需要计算梯度反向传播的结果。</p>
+<p>池化层的反向传播的方法是upsample，先将矩阵还原成原大小，之后：</p>
+<ul>
+<li>对于最大值池化，将梯度放置于每个池化区域取得最大值的位置，其他位置为0</li>
+<li>对于平均值池化，则把的所有子矩阵的各个池化局域的值取平均后放在还原后的子矩阵位置(在池化的正向计算过程中需记录每个小区域内最大值的位置)</li>
+</ul>
+<p>下面是一个upsample的例子：</p>
+<p>例如对于矩阵：</p>
+<script type="math/tex; mode=display">\left( \begin{array}{} 1& 2 \\ 3& 4 \end{array} \right)</script><p>假设经过2*2的池化，还原为原来大小：</p>
+<script type="math/tex; mode=display">\left( \begin{array}{ccc} 0&0&0&0 \\ 0&1& 2&0 \\ 0&3&4&0 \\ 0&0&0&0 \end{array} \right)</script><p>若是最大值池化，假设每个窗口的最大值位置都是左上，则传播结果为：</p>
+<script type="math/tex; mode=display">\left( \begin{array}{ccc} 1&0&2&0 \\ 0&0& 0&0 \\ 3&0&4&0 \\ 0&0&0&0 \end{array} \right)</script><p>若是经过平均值池化，则传播结果为：</p>
+<script type="math/tex; mode=display">\left( \begin{array}{ccc} 0.25&0.25&0.5&0.5 \\ 0.25&0.25& 0.5&0.5 \\ 0.75&0.75&1&1 \\ 0.75&0.75&1&1 \end{array} \right)</script><h3 id="卷积层的误差-delta-l"><a href="#卷积层的误差-delta-l" class="headerlink" title="卷积层的误差 $\delta^l$"></a>卷积层的误差 $\delta^l$</h3><script type="math/tex; mode=display">\delta^{l-1} = \delta^{l}*rot180(w^{l}) \odot  \sigma'(z^{l-1})</script><p>其中 $rot180(w^{l})$ 为卷积核旋转 180 度的函数，* 为卷积符号。</p>
+<p>举一个例子来说，对于以下卷积等式：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} a_{11}&a_{12}&a_{13} \\ a_{21}&a_{22}&a_{23}\\ a_{31}&a_{32}&a_{33} \end{array} \right)    *  \left( \begin{array}{ccc} w_{11}&w_{12}\\ w_{21}&w_{22} \end{array} \right) = \left( \begin{array}{ccc} z_{11}&z_{12}\\ z_{21}&z_{22} \end{array} \right)</script><p>对于 $a_11$，有 $z_{11} = a_{11}w_{11} + a_{12}w_{12} + a_{21}w_{21} +   a_{22}w_{22}$ ，仅 $z_11$ 与其有关，则有 $\nabla a_{11} = \delta_{11}w_{11}$。<br>对于 $a_22$，所有 $z$ 项都和该数有关，有 $\nabla a_{22} = \delta_{11}w_{22} + \delta_{12}w_{21} + \delta_{21}w_{12} + \delta_{22}w_{11}$。</p>
+<p>依次类推，可得：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} 0&0&0&0 \\ 0&\delta_{11}& \delta_{12}&0 \\ 0&\delta_{21}&\delta_{22}&0 \\ 0&0&0&0 \end{array} \right) * \left( \begin{array}{ccc} w_{22}&w_{21}\\ w_{12}&w_{11} \end{array} \right)  = \left( \begin{array}{ccc} \nabla a_{11}&\nabla a_{12}&\nabla a_{13} \\ \nabla a_{21}&\nabla a_{22}&\nabla a_{23}\\ \nabla a_{31}&\nabla a_{32}&\nabla a_{33} \end{array} \right)</script><h3 id="卷积层的权重梯度-partial-C-partial-w"><a href="#卷积层的权重梯度-partial-C-partial-w" class="headerlink" title="卷积层的权重梯度 $\partial C / \partial w$"></a>卷积层的权重梯度 $\partial C / \partial w$</h3><p>对权重的梯度为：</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^{l}} = rot180(\delta^l*a^{l-1})</script><p>同样对于前向传播：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} a_{11}&a_{12}&a_{13} \\ a_{21}&a_{22}&a_{23}\ a_{31}&a_{32}&a_{33} \end{array} \right)    *  \left( \begin{array}{ccc} w_{11}&w_{12}\\ w_{21}&w_{22} \end{array} \right) = \left( \begin{array}{ccc} z_{11}&z_{12}\\ z_{21}&z_{22} \end{array} \right)</script><p>对于z，有以下：</p>
+<ul>
+<li>$z_{11} = a_{11}w_{11} + a_{12}w_{12} + a_{21}w_{21} +   a_{22}w_{22}$</li>
+<li>$z_{12} = a_{12}w_{11} + a_{13}w_{12} + a_{22}w_{21} +   a_{23}w_{22}$</li>
+<li>$z_{21} = a_{21}w_{11} + a_{22}w_{12} + a_{31}w_{21} +   a_{32}w_{22}$</li>
+<li>$z_{22} = a_{22}w_{11} + a_{23}w_{12} + a_{32}w_{21} +   a_{33}w_{22}$</li>
+</ul>
+<p>有梯度：</p>
+<ul>
+<li>$\nabla w_{11} = \delta_{11}a_{11} + \delta_{12}a_{12} + \delta_{21}a_{21} + \delta_{22}a_{22}$</li>
+<li>$\nabla w_{12} = \delta_{11}a_{12} + \delta_{12}a_{13} + \delta_{21}a_{22} + \delta_{22}a_{12}$</li>
+<li>$\nabla w_{21} = \delta_{11}a_{21} + \delta_{12}a_{22} + \delta_{21}a_{31} + \delta_{22}a_{32}$</li>
+<li>$\nabla w_{22} = \delta_{11}a_{22} + \delta_{12}a_{23} + \delta_{32}a_{21} + \delta_{33}a_{22}$</li>
+</ul>
+<p>反向传播为：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} 0&0&0&0 \\ 0&\delta_{11}& \delta_{12}&0 \\ 0&\delta_{21}&\delta_{22}&0 \\ 0&0&0&0 \end{array} \right) * \left( \begin{array}{ccc} a_{11}&a_{12}&a_{13}\\ a_{21}&a_{22}&a_{23}\\ a_{31}&a_{32}&a_{33} \end{array} \right)  = \left( \begin{array}{ccc} \nabla w_{22}&\nabla w_{21}\\ \nabla w_{12}&\nabla w_{11} \end{array} \right)</script><h3 id="卷积层的权重梯度-partial-C-partial-b"><a href="#卷积层的权重梯度-partial-C-partial-b" class="headerlink" title="卷积层的权重梯度 $\partial C / \partial b$"></a>卷积层的权重梯度 $\partial C / \partial b$</h3><p>偏置梯度较为简单，为上一层梯度和：</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}</script><h2 id="卷积神经网络：反向传播算法思想"><a href="#卷积神经网络：反向传播算法思想" class="headerlink" title="卷积神经网络：反向传播算法思想"></a>卷积神经网络：反向传播算法思想</h2><p>卷积神经网络相比于多层感知机，增加了两种新的层次——卷积层与池化层。由现在我们想把同样的思想用到CNN中，很明显，CNN有些不同的地方，不能直接去套用多层感知机的反向传播算法的公式。</p>
+<p>多层感知机反向传播的四个基本方程：</p>
+<p><img src="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/one_2.png" alt=""></p>
+<p>要套用多层感知机的反向传播算法到CNN，有几个问题需要解决：</p>
+<ol>
+<li><p>池化层没有激活函数，这个问题倒比较好解决，我们可以令池化层的激活函数为 $\sigma(z)=z$，即激活后就是自己本身。这样池化层激活函数的导数为 1.</p>
+</li>
+<li><p>池化层在前向传播的时候，对输入进行了压缩，那么我们现在需要向前反向推导 $\delta^{l-1}$，这个推导方法和多层感知机完全不同。</p>
+</li>
+<li><p>卷积层是通过张量卷积，或者说若干个矩阵卷积求和而得的当前层的输出，这和多层感知机很不相同，多层感知机的全连接层是直接进行矩阵乘法得到当前层的输出。这样在卷积层反向传播的时候，上一层的 $\delta^{l-1}$ 递推计算方法肯定有所不同。</p>
+</li>
+<li><p>对于卷积层，由于 $w$ 使用的运算是卷积，那么从 $\delta$ 推导出该层的所有卷积核的 $w, b$ 的方式也不同。</p>
+</li>
+</ol>
+<p>从上面可以看出，问题1比较好解决，但是问题 2, 3, 4 就需要好好的动一番脑筋了，而问题 2, 3, 4也是解决 CNN 反向传播算法的关键所在。另外大家要注意到的是，多层感知机中的 $a^l, z^l$ 都只是一个向量，而我们 CNN 中的 $a^l, z^l$ 都是一个张量，这个张量是三维的，即由若干个输入的子矩阵组成。</p>
+<p>下面我们就针对问题 2, 3, 4 来一步步研究CNN的反向传播算法。</p>
+<p>在研究过程中，需要注意的是，<strong>由于卷积层可以有多个卷积核，各个卷积核的处理方法是完全相同且独立的，为了简化算法公式的复杂度，我们下面提到卷积核都是卷积层中若干卷积核中的一个。</strong></p>
+<h2 id="卷积神经网络：反向传播计算公式的证明"><a href="#卷积神经网络：反向传播计算公式的证明" class="headerlink" title="卷积神经网络：反向传播计算公式的证明"></a>卷积神经网络：反向传播计算公式的证明</h2><script type="math/tex; mode=display">
+{\delta ^l} = {upsample}\left( \delta ^{l + 1} \right) \odot \sigma '\left( {z^l} \right)</script><script type="math/tex; mode=display">\delta^{l-1} = \delta^{l}*rot180(w^{l}) \odot  \sigma'(z^{l-1})</script><script type="math/tex; mode=display">\frac{\partial C}{\partial w^{l}} = rot180(\delta^l*a^{l-1})</script><script type="math/tex; mode=display">\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}</script><h3 id="证明-delta-l-upsample-left-delta-l-1-right-odot-sigma-‘-left-z-l-right"><a href="#证明-delta-l-upsample-left-delta-l-1-right-odot-sigma-‘-left-z-l-right" class="headerlink" title="证明 ${\delta ^l} = {upsample}\left( \delta ^{l + 1} \right) \odot \sigma ‘ \left( {z^l} \right)$"></a>证明 ${\delta ^l} = {upsample}\left( \delta ^{l + 1} \right) \odot \sigma ‘ \left( {z^l} \right)$</h3><p>我们首先解决上面的问题2，如果已知池化层的$\delta^l$，推导出上一隐藏层的$\delta^{l-1}$。</p>
+<p>在前向传播算法时，池化层一般我们会用 MAX 或者 Average 对输入进行池化，池化的区域大小已知。现在我们反过来，要从缩小后的误差 $\delta^l$ ，还原前一次较大区域对应的误差。</p>
+<p>在反向传播时，我们首先会把 $\delta^l$ 的所有子矩阵矩阵大小还原成池化之前的大小，然后如果是 MAX，则把 $\delta^l$ 的所有子矩阵的各个池化局域的值放在之前做前向传播算法得到最大值的位置。如果是 Average，则把 $\delta^l$ 的所有子矩阵的各个池化局域的值取平均后放在还原后的子矩阵位置。这个过程一般叫做 upsample。</p>
+<p>这样我们就得到了上一层  $\frac{\partial C}{\partial a_k^{l-1}}$的值，要得到 $\delta_k^{l-1}$：</p>
+<script type="math/tex; mode=display">\delta_k^{l-1} = \frac{\partial C}{\partial a_k^{l-1}} \frac{\partial  a_k^{l-1}}{\partial z_k^{l-1}} = upsample(\delta_k^l) \odot \sigma'(z_k^{l-1})</script><p>其中，upsample函数完成了池化误差矩阵放大与误差重新分配的逻辑。</p>
+<p>我们概括下，对于张量$\delta^{l-1}$，我们有：</p>
+<script type="math/tex; mode=display">\delta^{l-1} =  upsample(\delta^l) \odot \sigma'(z^{l-1})</script><h3 id="证明-delta-l-1-delta-l-rot180-w-l-odot-sigma’-z-l-1"><a href="#证明-delta-l-1-delta-l-rot180-w-l-odot-sigma’-z-l-1" class="headerlink" title="证明 $\delta^{l-1} = \delta^{l}*rot180(w^{l}) \odot  \sigma’(z^{l-1})$"></a>证明 $\delta^{l-1} = \delta^{l}*rot180(w^{l}) \odot  \sigma’(z^{l-1})$</h3><p>对于卷积网络，前向传播公式为：</p>
+<script type="math/tex; mode=display">a^l= \sigma(z^l) = \sigma(a^{l-1}*w^l +b^l)</script><p>注意到 $ \delta^{l-1}$ 和 $\delta^l$ 的递推关系为：</p>
+<script type="math/tex; mode=display">\delta^{l} = \frac{\partial C}{\partial z^l} = \frac{\partial C}{\partial z^{l+1}}\frac{\partial z^{l+1}}{\partial z^{l}} = \delta^{l+1}\frac{\partial z^{l+1}}{\partial z^{l}}</script><p>因此要推导出 $\delta^{l-1}$ 和 $\delta^{l}$ 的递推关系，必须计算 $\frac{\partial z^{l}}{\partial z^{l-1}}$的梯度表达式。</p>
+<p>注意到 $z^{l}$和$z^{l-1}$ 的关系为：<script type="math/tex">z^l = a^{l-1}*w^l +b^l =\sigma(z^{l-1})*w^l +b^l</script></p>
+<p>因此我们有：</p>
+<script type="math/tex; mode=display">\delta^{l-1} =  \delta^{l}\frac{\partial z^{l}}{\partial z^{l-1}} = \delta^{l}*rot180(W^{l}) \odot  \sigma'(z^{l-1})</script><p>这里的式子其实和 DNN 的类似，区别在于对于含有卷积的式子求导时，卷积核被旋转了 180 度。即式子中的 $rot180()$，翻转 180 度的意思是上下翻转一次，接着左右翻转一次。在 DNN 中这里只是矩阵的转置。那么为什么呢？由于这里都是张量，直接推演参数太多了。我们以一个简单的例子说明为啥这里求导后卷积核要翻转。</p>
+<p>假设我们 $l-1$ 层的输出 $a^{l-1}$ 是一个 3x3 矩阵，第 $l$ 层的卷积核 $W^l$ 是一个2x2矩阵，采用 1 像素的步幅，则输出 $z^{l}$ 是一个 2x2 的矩阵。我们简化 $b^l$ 都是 $0$,则有</p>
+<script type="math/tex; mode=display">a^{l-1} * w^l = z^{l}</script><p>我们列出 $a,W,z$ 的矩阵表达式如下：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} a_{11}&a_{12}&a_{13} \\ a_{21}&a_{22}&a_{23}\\ a_{31}&a_{32}&a_{33} \end{array} \right)    *  \left( \begin{array}{ccc} w_{11}&w_{12}\\ w_{21}&w_{22} \end{array} \right) = \left( \begin{array}{ccc} z_{11}&z_{12}\\ z_{21}&z_{22} \end{array} \right)</script><p>利用卷积的定义，很容易得出：</p>
+<ul>
+<li>$z_{11} = a_{11}w_{11} + a_{12}w_{12} + a_{21}w_{21} +   a_{22}w_{22}$</li>
+<li>$z_{12} = a_{12}w_{11} + a_{13}w_{12} + a_{22}w_{21} +   a_{23}w_{22}$</li>
+<li>$z_{21} = a_{21}w_{11} + a_{22}w_{12} + a_{31}w_{21} +   a_{32}w_{22}$</li>
+<li>$z_{22} = a_{22}w_{11} + a_{23}w_{12} + a_{32}w_{21} +   a_{33}w_{22}$</li>
+</ul>
+<p>接着我们模拟反向求导：</p>
+<script type="math/tex; mode=display">
+\nabla a^{l-1} = \frac{\partial C}{\partial a^{l-1}} = \frac{\partial C}{\partial z^{l}} \frac{\partial z^{l}}{\partial a^{l-1}} = \delta^{l} \frac{\partial z^{l}}{\partial a^{l-1}}</script><p>从上式可以看出，对于 $a^{l-1}$ 的梯度误差 $\nabla a^{l-1}$，等于第 $l$ 层的梯度误差乘以 $\frac{\partial z^{l}}{\partial a^{l-1}}$，而 $\frac{\partial z^{l}}{\partial a^{l-1}}$ 对应上面的例子中相关联的 $w$ 的值。假设我们的 $z$ 矩阵对应的反向传播误差是 $\delta_{11}, \delta_{12}, \delta_{21}, \delta_{22}$ 组成的 2x2 矩阵，则利用上面梯度的式子和 4 个等式，我们可以分别写出 $\nabla a^{l-1}$ 的 9 个标量的梯度。</p>
+<p>比如对于 $a_{11}$ 的梯度，由于在 4 个等式中 $a_{11}$ 只和 $z_{11}$ 有乘积关系，从而我们有：</p>
+<script type="math/tex; mode=display">\nabla a_{11} = \delta_{11}w_{11}</script><p>对于 $a_{12}$ 的梯度，由于在 4 个等式中 $a_{12}$ 和 $z_{12}, z_{11}$ 有乘积关系，从而我们有：</p>
+<script type="math/tex; mode=display">\nabla a_{12} = \delta_{11}w_{12} + \delta_{12}w_{11}</script><p>同样的道理我们得到：</p>
+<ul>
+<li><p>$ \nabla a_{13} = \delta_{12}w_{12} $</p>
+</li>
+<li><p>$\nabla a_{21} = \delta_{11}w_{21} + \delta_{21}w_{11}$</p>
+</li>
+<li><p>$\nabla a_{22} = \delta_{11}w_{22} + \delta_{12}w_{21} + \delta_{21}w_{12} + \delta_{22}w_{11}$</p>
+</li>
+<li><p>$\nabla a_{23} = \delta_{12}w_{22} + \delta_{22}w_{12}$</p>
+</li>
+<li><p>$\nabla a_{31} = \delta_{21}w_{21}$</p>
+</li>
+<li><p>$\nabla a_{32} = \delta_{21}w_{22} + \delta_{22}w_{21}$</p>
+</li>
+<li><p>$\nabla a_{33} = \delta_{22}w_{22}$</p>
+</li>
+</ul>
+<p>这上面9个式子其实可以用一个矩阵卷积的形式表示，即：</p>
+<script type="math/tex; mode=display">
+\left( \begin{array}{ccc} 0&0&0&0 \\ 0&\delta_{11}& \delta_{12}&0 \\ 0&\delta_{21}&\delta_{22}&0 \\ 0&0&0&0 \end{array} \right) * \left( \begin{array}{ccc} w_{22}&w_{21}\\ w_{12}&w_{11} \end{array} \right)  = \left( \begin{array}{ccc} \nabla a_{11}&\nabla a_{12}&\nabla a_{13} \\ \nabla a_{21}&\nabla a_{22}&\nabla a_{23}\\ \nabla a_{31}&\nabla a_{32}&\nabla a_{33} \end{array} \right)</script><p>为了符合梯度计算，我们在误差矩阵周围填充了一圈0，此时我们将卷积核翻转后和反向传播的梯度误差进行卷积，就得到了前一次的梯度误差。这个例子直观的介绍了为什么对含有卷积的式子求导时，卷积核要翻转180度的原因。</p>
+<p>以上就是卷积层的误差反向传播过程。</p>
+<h3 id="证明-frac-partial-C-partial-w-l-rot180-delta-l-a-l-1-和-frac-partial-C-partial-b-l-sum-limits-u-v-delta-l-u-v"><a href="#证明-frac-partial-C-partial-w-l-rot180-delta-l-a-l-1-和-frac-partial-C-partial-b-l-sum-limits-u-v-delta-l-u-v" class="headerlink" title="证明 $\frac{\partial C}{\partial w^{l}} = rot180(\delta^l*a^{l-1})$ 和 $\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}$"></a>证明 $\frac{\partial C}{\partial w^{l}} = rot180(\delta^l*a^{l-1})$ 和 $\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}$</h3><p>我们现在已经可以递推出每一层的梯度误差 $\delta^l$ 了，对于全连接层，可以按 DNN 的反向传播算法求该层 $W,b$ 的梯度，而池化层并没有 $W,b$,也不用求 $W,b$ 的梯度。只有卷积层的 $W,b$ 需要求出。</p>
+<p>对于卷积网络，前向传播公式为：</p>
+<script type="math/tex; mode=display">a^l= \sigma(z^l) = \sigma(a^{l-1}*w^l +b^l)</script><p>又因为</p>
+<script type="math/tex; mode=display">\delta^l \equiv \frac{\partial C}{\partial z^l}.</script><script type="math/tex; mode=display">z^l = a^{l-1}*w^l +b^l</script><p>那么</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^l} = \frac{\partial C}{\partial z^l}\frac{\partial z^l}{\partial w^l}=\delta^l \frac{\partial z^l}{\partial w^l}= \delta^l * rot180(a^{l-1})</script><p>即</p>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial w^{l}} = \delta^l*rot180(a^{l-1})</script><p>而对于b,则稍微有些特殊，因为 $\delta^l$ 是张量，而 $b$ 只是一个向量，不能像 DNN 那样直接和 $\delta^l$ 相等。通常的做法是将 $\delta^l$ 的各个子矩阵的项分别求和，得到一个误差向量，即为 $b$ 的梯度：</p>
+<script type="math/tex; mode=display">\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}</script><hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] 月见樽. CNN的反向传播[DB/OL]. <a href="https://qiankun214.github.io/2018/02/21/CNN的反向传播/" target="_blank" rel="noopener">https://qiankun214.github.io/2018/02/21/CNN的反向传播/</a>, 2018-06-26.</p>
+<p>[2] oio328Loio. 神经网络学习（三）反向（BP）传播算法（1）[DB/OL]. <a href="https://blog.csdn.net/hoho1151191150/article/details/79537246" target="_blank" rel="noopener">https://blog.csdn.net/hoho1151191150/article/details/79537246</a>, 2018-06-26.</p>
+<p>[3] oio328Loio. 神经网络学习（十二）卷积神经网络与BP算法[DB/OL]. <a href="https://blog.csdn.net/hoho1151191150/article/details/79705332" target="_blank" rel="noopener">https://blog.csdn.net/hoho1151191150/article/details/79705332</a>, 2018-06-26.</p>
+<p>[4] 刘建平Pinard. 卷积神经网络(CNN)反向传播算法[DB/OL]. <a href="http://www.cnblogs.com/pinard/p/6494810.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6494810.html</a>, 2018-06-26.</p>
+<p>[5] 刘建平Pinard. 卷积神经网络(CNN)前向传播算法[DB/OL]. <a href="http://www.cnblogs.com/pinard/p/6489633.html" target="_blank" rel="noopener">http://www.cnblogs.com/pinard/p/6489633.html</a>, 2018-06-26.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/卷积神经网络/" rel="tag"># 卷积神经网络</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/前向传播算法/" rel="tag"># 前向传播算法</a>
+          
+            <a href="/tags/反向传播算法/" rel="tag"># 反向传播算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/24/改进神经网络的学习方法——弃权/" rel="next" title="改进神经网络的学习方法——弃权">
+                <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——弃权
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/27/改进神经网络的学习方法——代码实现/" rel="prev" title="改进神经网络的学习方法——代码实现">
+                改进神经网络的学习方法——代码实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络：前向传播算法"><span class="nav-number">1.</span> <span class="nav-text">卷积神经网络：前向传播算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN输入层前向传播到卷积层"><span class="nav-number">1.1.</span> <span class="nav-text">CNN输入层前向传播到卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层前向传播到卷积层"><span class="nav-number">1.2.</span> <span class="nav-text">隐藏层前向传播到卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层前向传播到池化层"><span class="nav-number">1.3.</span> <span class="nav-text">隐藏层前向传播到池化层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层前向传播到全连接层"><span class="nav-number">1.4.</span> <span class="nav-text">隐藏层前向传播到全连接层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN前向传播算法小结"><span class="nav-number">1.5.</span> <span class="nav-text">CNN前向传播算法小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络：反向传播算法计算"><span class="nav-number">2.</span> <span class="nav-text">卷积神经网络：反向传播算法计算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层的误差-delta-l"><span class="nav-number">2.1.</span> <span class="nav-text">池化层的误差 $\delta^l$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层的误差-delta-l"><span class="nav-number">2.2.</span> <span class="nav-text">卷积层的误差 $\delta^l$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层的权重梯度-partial-C-partial-w"><span class="nav-number">2.3.</span> <span class="nav-text">卷积层的权重梯度 $\partial C / \partial w$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层的权重梯度-partial-C-partial-b"><span class="nav-number">2.4.</span> <span class="nav-text">卷积层的权重梯度 $\partial C / \partial b$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络：反向传播算法思想"><span class="nav-number">3.</span> <span class="nav-text">卷积神经网络：反向传播算法思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络：反向传播计算公式的证明"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络：反向传播计算公式的证明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-delta-l-upsample-left-delta-l-1-right-odot-sigma-‘-left-z-l-right"><span class="nav-number">4.1.</span> <span class="nav-text">证明 ${\delta ^l} = {upsample}\left( \delta ^{l + 1} \right) \odot \sigma ‘ \left( {z^l} \right)$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-delta-l-1-delta-l-rot180-w-l-odot-sigma’-z-l-1"><span class="nav-number">4.2.</span> <span class="nav-text">证明 $\delta^{l-1} = \delta^{l}*rot180(w^{l}) \odot  \sigma’(z^{l-1})$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明-frac-partial-C-partial-w-l-rot180-delta-l-a-l-1-和-frac-partial-C-partial-b-l-sum-limits-u-v-delta-l-u-v"><span class="nav-number">4.3.</span> <span class="nav-text">证明 $\frac{\partial C}{\partial w^{l}} = rot180(\delta^l*a^{l-1})$ 和 $\frac{\partial C}{\partial b^{l}} = \sum\limits_{u,v}(\delta^l)_{u,v}$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="深度学习,手写数字识别,代码实现," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="部分代码解读在之前描述 MNIST 数据时，我说它分成了 60,000 个训练图像和 10,000 个测试图像。这是官方的 MNIST 的描述。实际上，我们将用稍微不同的方法对数据进行划分。我们将测试集保持原样，但是将 60,000 个图像的 MNIST 训练集分成两个部分：一部分 50,000 个图像，我们将用来训练我们的神经网络，和一个单独的 10,000 个图像的验证集。在本章中我们不使用验">
+<meta name="keywords" content="深度学习,手写数字识别,代码实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用神经网络识别手写数字——代码实现">
+<meta property="og:url" content="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="部分代码解读在之前描述 MNIST 数据时，我说它分成了 60,000 个训练图像和 10,000 个测试图像。这是官方的 MNIST 的描述。实际上，我们将用稍微不同的方法对数据进行划分。我们将测试集保持原样，但是将 60,000 个图像的 MNIST 训练集分成两个部分：一部分 50,000 个图像，我们将用来训练我们的神经网络，和一个单独的 10,000 个图像的验证集。在本章中我们不使用验">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/3.png">
+<meta property="og:updated_time" content="2019-08-04T07:56:57.619Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用神经网络识别手写数字——代码实现">
+<meta name="twitter:description" content="部分代码解读在之前描述 MNIST 数据时，我说它分成了 60,000 个训练图像和 10,000 个测试图像。这是官方的 MNIST 的描述。实际上，我们将用稍微不同的方法对数据进行划分。我们将测试集保持原样，但是将 60,000 个图像的 MNIST 训练集分成两个部分：一部分 50,000 个图像，我们将用来训练我们的神经网络，和一个单独的 10,000 个图像的验证集。在本章中我们不使用验">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/"/>
+
+
+
+
+
+  <title>使用神经网络识别手写数字——代码实现 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/19/使用神经网络识别手写数字——代码实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用神经网络识别手写数字——代码实现</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-19T20:22:42+08:00">
+                2018-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
+                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/19/使用神经网络识别手写数字——代码实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/19/使用神经网络识别手写数字——代码实现/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="部分代码解读"><a href="#部分代码解读" class="headerlink" title="部分代码解读"></a>部分代码解读</h2><p>在之前描述 MNIST 数据时，我说它分成了 60,000 个训练图像和 10,000 个测试图像。这是官方的 MNIST 的描述。实际上，我们将用稍微不同的方法对数据进行划分。我们将测试集保持原样，但是将 60,000 个图像的 MNIST 训练集分成两个部分：一部分 50,000 个图像，我们将用来训练我们的神经网络，和一个单独的 10,000 个图像的验证集。在本章中我们不使用验证数据，但是在本书的后面我们将会发现它对于解决如何去设置某些神经网络中的超参数是很有用的，例如学习率等，这些参数不被我们的学习算法直接选择。尽管验证数据不是原始 MNIST 规范的一部分，然而许多人以这种方式使用 MNIST，并且在神经网络中使用验证数据是很普遍的。从现在起当我提到“MNIST 训练数据”时，我指的是我们的 50,000 个图像数据集，而不是原始的 60,000图像数据集</p>
+<p>除了 MNIST 数据，我们还需要一个叫做 Numpy 的 Python 库，用来做快速线性代数。如果你没有安装过 Numpy。在列出一个完整的代码清单之前，让我解释一下神经网络代码的核心特性。核心片段是一个 Network 类，我们用来表示一个神经网络。这是我们用来初始化一个 Network 对象的代码：</p>
+<h3 id="神经网络架构"><a href="#神经网络架构" class="headerlink" title="神经网络架构"></a>神经网络架构</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Network</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, sizes)</span>:</span></span><br><span class="line">		self.num_layers = len(sizes)</span><br><span class="line">		self.sizes = sizes</span><br><span class="line">		self.biases = [np.random.randn(y, <span class="number">1</span>) <span class="keyword">for</span> y <span class="keyword">in</span> sizes[<span class="number">1</span>:]]</span><br><span class="line">		self.weights = [np.random.randn(y, x)</span><br><span class="line">						<span class="keyword">for</span> x, y <span class="keyword">in</span> zip(sizes[:<span class="number">-1</span>], sizes[<span class="number">1</span>:])]</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，列表 sizes 包含各层神经元的数量。例如，如果我们想创建一个在第一层有 2 个神经元，第二层有 3 个神经元，最后层有 1 个神经元的 Network 对象，我们应这样写代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net = Network([<span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+<p>Network 对象中的权重和偏置都是被随机初始化的，使用 Numpy 的 np.random.randn! 函数来生成均值为 0，标准差为 1 的高斯分布。这样的随机初始化给了我们的随机梯度下降算法一个起点。</p>
+<h3 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h3><p>我们从定义 S型函数开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1.0</span>+np.exp(-z))</span><br></pre></td></tr></table></figure>
+<h3 id="前馈神经网络"><a href="#前馈神经网络" class="headerlink" title="前馈神经网络"></a>前馈神经网络</h3><p>然后对 Network 类添加一个 feedforward 方法，对于网络<br>给定一个输入 $a$，返回对应的输出,这个方法所做的是对每一层应用方程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">feedforward</span><span class="params">(self, a)</span>:</span></span><br><span class="line">    <span class="string">"""Return the output of the network if "a" is input."""</span></span><br><span class="line">    <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">        a = sigmoid(np.dot(w, a)+b)</span><br><span class="line">    <span class="keyword">return</span> a</span><br></pre></td></tr></table></figure>
+<h3 id="随机梯度下降算法"><a href="#随机梯度下降算法" class="headerlink" title="随机梯度下降算法"></a>随机梯度下降算法</h3><p>当然，我们想要 Network 对象做的主要事情是学习。为此我们给它们一个实现随机梯度下降算法的 SGD 方法。代码如下。其中一些地方看似有一点神秘，我会在代码后面逐个分析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SGD</span><span class="params">(self, training_data, epochs, mini_batch_size, eta,</span></span></span><br><span class="line"><span class="function"><span class="params">        test_data=None)</span>:</span></span><br><span class="line">    <span class="string">"""Train the neural network using mini-batch stochastic</span></span><br><span class="line"><span class="string">    gradient descent.  The "training_data" is a list of tuples</span></span><br><span class="line"><span class="string">    "(x, y)" representing the training inputs and the desired</span></span><br><span class="line"><span class="string">    outputs.  The other non-optional parameters are</span></span><br><span class="line"><span class="string">       self-explanatory.  If "test_data" is provided then the</span></span><br><span class="line"><span class="string">       network will be evaluated against the test data after each</span></span><br><span class="line"><span class="string">       epoch, and partial progress printed out.  This is useful for</span></span><br><span class="line"><span class="string">       tracking progress, but slows things down substantially."""</span></span><br><span class="line">       <span class="keyword">if</span> test_data: n_test = len(test_data)</span><br><span class="line">       n = len(training_data)</span><br><span class="line">       <span class="keyword">for</span> j <span class="keyword">in</span> xrange(epochs):</span><br><span class="line">           random.shuffle(training_data)</span><br><span class="line">           mini_batches = [</span><br><span class="line">               training_data[k:k+mini_batch_size]</span><br><span class="line">               <span class="keyword">for</span> k <span class="keyword">in</span> xrange(<span class="number">0</span>, n, mini_batch_size)]</span><br><span class="line">           <span class="keyword">for</span> mini_batch <span class="keyword">in</span> mini_batches:</span><br><span class="line">               self.update_mini_batch(mini_batch, eta)</span><br><span class="line">           <span class="keyword">if</span> test_data:</span><br><span class="line">               <span class="keyword">print</span> <span class="string">"Epoch &#123;0&#125;: &#123;1&#125; / &#123;2&#125;"</span>.format(</span><br><span class="line">                   j, self.evaluate(test_data), n_test)</span><br><span class="line">           <span class="keyword">else</span>:</span><br><span class="line">               <span class="keyword">print</span> <span class="string">"Epoch &#123;0&#125; complete"</span>.format(j)</span><br></pre></td></tr></table></figure>
+<p>training_data 是一个 (x, y) 元组的列表，表示训练输入和其对应的期望输出。变量 epochs 和 mini_batch_size 正如你预料的迭代期数量，和采样时的小批量数据的大小。eta 是学习率，$\eta$。如果给出了可选参数 test_data，那么程序会在每个训练器后评估网络，并打印出部分进展。这对于追踪进度很有用，但相当拖慢执行速度。</p>
+<p>代码如下工作。在每个周期，它首先随机地将训练数据打乱，然后将它分成多个适当大小的小批量数据。这是一个简单的从训练数据的随机采样方法。然后对于每一个小批量数据我们应用一次梯度下降。这是通过代码 self.update_mini_batch(mini_batch, eta) 完成的，它仅仅使用 mini_batch 中的训练数据，根据单次梯度下降的迭代更新网络的权重和偏置。这是 update_mini_batch 方法的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_mini_batch</span><span class="params">(self, mini_batch, eta)</span>:</span></span><br><span class="line">   <span class="string">"""Update the network's weights and biases by applying</span></span><br><span class="line"><span class="string">   gradient descent using backpropagation to a single mini batch.</span></span><br><span class="line"><span class="string">   The "mini_batch" is a list of tuples "(x, y)", and "eta"</span></span><br><span class="line"><span class="string">     is the learning rate."""</span></span><br><span class="line">   nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">   nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">   <span class="keyword">for</span> x, y <span class="keyword">in</span> mini_batch:</span><br><span class="line">       delta_nabla_b, delta_nabla_w = self.backprop(x, y)</span><br><span class="line">       nabla_b = [nb+dnb <span class="keyword">for</span> nb, dnb <span class="keyword">in</span> zip(nabla_b, delta_nabla_b)]</span><br><span class="line">       nabla_w = [nw+dnw <span class="keyword">for</span> nw, dnw <span class="keyword">in</span> zip(nabla_w, delta_nabla_w)]</span><br><span class="line">   self.weights = [w-(eta/len(mini_batch))*nw</span><br><span class="line">                   <span class="keyword">for</span> w, nw <span class="keyword">in</span> zip(self.weights, nabla_w)]</span><br><span class="line">   self.biases = [b-(eta/len(mini_batch))*nb</span><br><span class="line">                   <span class="keyword">for</span> b, nb <span class="keyword">in</span> zip(self.biases, nabla_b)]</span><br></pre></td></tr></table></figure>
+<p>大部分工作由这行代码完成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delta_nabla_b, delta_nabla_w = self.backprop(x, y)</span><br></pre></td></tr></table></figure>
+<p>这行调用了一个称为反向传播的算法，一种快速计算代价函数的梯度的方法。因此 update_mini_batch 的工作仅仅是对 mini_batch 中的每一个训练样本计算梯度，然后适当地更新 self.weights 和 self.biases。</p>
+<p>我现在不会列出 self.backprop 的代码。我们将在下章中学习反向传播是怎样工作的，包括 self.backprop 的代码。现在，就假设它按照我们要求的工作，返回与训练样本 $x$ 相关代价的适当梯度。</p>
+<h2 id="Network-py-完整代码"><a href="#Network-py-完整代码" class="headerlink" title="Network.py 完整代码"></a>Network.py 完整代码</h2><p>让我们看一下完整的程序，包括我之前忽略的文档注释。除了 self.backprop，程序已经有了足够的文档注释，所有的繁重工作由 self.SGD 和 self.update_mini_batch 完成，对此我们已经有讨论过。self.backprop 方法利用一些额外的函数来帮助计算梯度，即 sigmoid_prime，它计算 $\sigma$ 函数的导数，以及 self.cost_derivative，这里我不会对它过多描述。你能够通过查看代码或文档注释来获得这些的要点（或者细节）。我们将在下章详细地看它们。注意，虽然程序显得很长，但是很多代码是用来使代码更容易理解的文档注释。实际上，程序只包含 74 行非空、非注释的代码。所有的代码可以在 <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network.py" target="_blank" rel="noopener">GitHub</a> 上找到。</p>
+<p>注意作者的代码是 Python2 版本的，下面替换成 <a href="https://github.com/skylook/neural-networks-and-deep-learning/blob/master/src/network.py" target="_blank" rel="noopener">Python3</a> 版本的（仅仅针对不同 Python 版本语法进行了代码修改，原理没有任何修改）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">network.py</span></span><br><span class="line"><span class="string">~~~~~~~~~~</span></span><br><span class="line"><span class="string">A module to implement the stochastic gradient descent learning</span></span><br><span class="line"><span class="string">algorithm for a feedforward neural network.  Gradients are calculated</span></span><br><span class="line"><span class="string">using backpropagation.  Note that I have focused on making the code</span></span><br><span class="line"><span class="string">simple, easily readable, and easily modifiable.  It is not optimized,</span></span><br><span class="line"><span class="string">and omits many desirable features.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Libraries</span></span><br><span class="line"><span class="comment"># Standard library</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># Third-party libraries</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Network</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, sizes)</span>:</span></span><br><span class="line">        <span class="string">"""The list ``sizes`` contains the number of neurons in the</span></span><br><span class="line"><span class="string">        respective layers of the network.  For example, if the list</span></span><br><span class="line"><span class="string">        was [2, 3, 1] then it would be a three-layer network, with the</span></span><br><span class="line"><span class="string">        first layer containing 2 neurons, the second layer 3 neurons,</span></span><br><span class="line"><span class="string">        and the third layer 1 neuron.  The biases and weights for the</span></span><br><span class="line"><span class="string">        network are initialized randomly, using a Gaussian</span></span><br><span class="line"><span class="string">        distribution with mean 0, and variance 1.  Note that the first</span></span><br><span class="line"><span class="string">        layer is assumed to be an input layer, and by convention we</span></span><br><span class="line"><span class="string">        won't set any biases for those neurons, since biases are only</span></span><br><span class="line"><span class="string">        ever used in computing the outputs from later layers."""</span></span><br><span class="line">        self.num_layers = len(sizes)</span><br><span class="line">        self.sizes = sizes</span><br><span class="line">        self.biases = [np.random.randn(y, <span class="number">1</span>) <span class="keyword">for</span> y <span class="keyword">in</span> sizes[<span class="number">1</span>:]]</span><br><span class="line">        self.weights = [np.random.randn(y, x)</span><br><span class="line">                        <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(sizes[:<span class="number">-1</span>], sizes[<span class="number">1</span>:])]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">feedforward</span><span class="params">(self, a)</span>:</span></span><br><span class="line">        <span class="string">"""Return the output of the network if ``a`` is input."""</span></span><br><span class="line">        <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">            a = sigmoid(np.dot(w, a)+b)</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SGD</span><span class="params">(self, training_data, epochs, mini_batch_size, eta,</span></span></span><br><span class="line"><span class="function"><span class="params">            test_data=None)</span>:</span></span><br><span class="line">        <span class="string">"""Train the neural network using mini-batch stochastic</span></span><br><span class="line"><span class="string">        gradient descent.  The ``training_data`` is a list of tuples</span></span><br><span class="line"><span class="string">        ``(x, y)`` representing the training inputs and the desired</span></span><br><span class="line"><span class="string">        outputs.  The other non-optional parameters are</span></span><br><span class="line"><span class="string">        self-explanatory.  If ``test_data`` is provided then the</span></span><br><span class="line"><span class="string">        network will be evaluated against the test data after each</span></span><br><span class="line"><span class="string">        epoch, and partial progress printed out.  This is useful for</span></span><br><span class="line"><span class="string">        tracking progress, but slows things down substantially."""</span></span><br><span class="line">        test_data = list(test_data)</span><br><span class="line">        training_data = list(training_data)</span><br><span class="line">        <span class="keyword">if</span> test_data: n_test = len(test_data)</span><br><span class="line">        n = len(training_data)</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(epochs):</span><br><span class="line">            random.shuffle(training_data)</span><br><span class="line">            mini_batches = [</span><br><span class="line">                training_data[k:k+mini_batch_size]</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">0</span>, n, mini_batch_size)]</span><br><span class="line">            <span class="keyword">for</span> mini_batch <span class="keyword">in</span> mini_batches:</span><br><span class="line">                self.update_mini_batch(mini_batch, eta)</span><br><span class="line">            <span class="keyword">if</span> test_data:</span><br><span class="line">                print(<span class="string">"Epoch &#123;0&#125;: &#123;1&#125; / &#123;2&#125;"</span>.format(</span><br><span class="line">                    j, self.evaluate(test_data), n_test))</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                print(<span class="string">"Epoch &#123;0&#125; complete"</span>.format(j))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_mini_batch</span><span class="params">(self, mini_batch, eta)</span>:</span></span><br><span class="line">        <span class="string">"""Update the network's weights and biases by applying</span></span><br><span class="line"><span class="string">        gradient descent using backpropagation to a single mini batch.</span></span><br><span class="line"><span class="string">        The ``mini_batch`` is a list of tuples ``(x, y)``, and ``eta``</span></span><br><span class="line"><span class="string">        is the learning rate."""</span></span><br><span class="line">        nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">        nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> mini_batch:</span><br><span class="line">            delta_nabla_b, delta_nabla_w = self.backprop(x, y)</span><br><span class="line">            nabla_b = [nb+dnb <span class="keyword">for</span> nb, dnb <span class="keyword">in</span> zip(nabla_b, delta_nabla_b)]</span><br><span class="line">            nabla_w = [nw+dnw <span class="keyword">for</span> nw, dnw <span class="keyword">in</span> zip(nabla_w, delta_nabla_w)]</span><br><span class="line">        self.weights = [w-(eta/len(mini_batch))*nw</span><br><span class="line">                        <span class="keyword">for</span> w, nw <span class="keyword">in</span> zip(self.weights, nabla_w)]</span><br><span class="line">        self.biases = [b-(eta/len(mini_batch))*nb</span><br><span class="line">                       <span class="keyword">for</span> b, nb <span class="keyword">in</span> zip(self.biases, nabla_b)]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return a tuple ``(nabla_b, nabla_w)`` representing the</span></span><br><span class="line"><span class="string">        gradient for the cost function C_x.  ``nabla_b`` and</span></span><br><span class="line"><span class="string">        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar</span></span><br><span class="line"><span class="string">        to ``self.biases`` and ``self.weights``."""</span></span><br><span class="line">        nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">        nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">        <span class="comment"># feedforwar</span></span><br><span class="line">        activation = x</span><br><span class="line">        activations = [x] <span class="comment"># list to store all the activations, layer by layer</span></span><br><span class="line">        zs = [] <span class="comment"># list to store all the z vectors, layer by layer</span></span><br><span class="line">        <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">            z = np.dot(w, activation)+b</span><br><span class="line">            zs.append(z)</span><br><span class="line">            activation = sigmoid(z)</span><br><span class="line">            activations.append(activation)</span><br><span class="line">        <span class="comment"># backward pass</span></span><br><span class="line">        delta = self.cost_derivative(activations[<span class="number">-1</span>], y) * \</span><br><span class="line">            sigmoid_prime(zs[<span class="number">-1</span>])</span><br><span class="line">        nabla_b[<span class="number">-1</span>] = delta</span><br><span class="line">        nabla_w[<span class="number">-1</span>] = np.dot(delta, activations[<span class="number">-2</span>].transpose())</span><br><span class="line">        <span class="comment"># Note that the variable l in the loop below is used a little</span></span><br><span class="line">        <span class="comment"># differently to the notation in Chapter 2 of the book.  Here,</span></span><br><span class="line">        <span class="comment"># l = 1 means the last layer of neurons, l = 2 is the</span></span><br><span class="line">        <span class="comment"># second-last layer, and so on.  It's a renumbering of the</span></span><br><span class="line">        <span class="comment"># scheme in the book, used here to take advantage of the fact</span></span><br><span class="line">        <span class="comment"># that Python can use negative indices in lists.</span></span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> range(<span class="number">2</span>, self.num_layers):</span><br><span class="line">            z = zs[-l]</span><br><span class="line">            sp = sigmoid_prime(z)</span><br><span class="line">            delta = np.dot(self.weights[-l+<span class="number">1</span>].transpose(), delta) * sp</span><br><span class="line">            nabla_b[-l] = delta</span><br><span class="line">            nabla_w[-l] = np.dot(delta, activations[-l<span class="number">-1</span>].transpose())</span><br><span class="line">        <span class="keyword">return</span> (nabla_b, nabla_w)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">evaluate</span><span class="params">(self, test_data)</span>:</span></span><br><span class="line">        <span class="string">"""Return the number of test inputs for which the neural</span></span><br><span class="line"><span class="string">        network outputs the correct result. Note that the neural</span></span><br><span class="line"><span class="string">        network's output is assumed to be the index of whichever</span></span><br><span class="line"><span class="string">        neuron in the final layer has the highest activation."""</span></span><br><span class="line">        test_results = [(np.argmax(self.feedforward(x)), y)</span><br><span class="line">                        <span class="keyword">for</span> (x, y) <span class="keyword">in</span> test_data]</span><br><span class="line">        <span class="keyword">return</span> sum(int(x == y) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> test_results)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">cost_derivative</span><span class="params">(self, output_activations, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the vector of partial derivatives \partial C_x /</span></span><br><span class="line"><span class="string">        \partial a for the output activations."""</span></span><br><span class="line">        <span class="keyword">return</span> (output_activations-y)</span><br><span class="line"></span><br><span class="line"><span class="comment">#### Miscellaneous functions</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""The sigmoid function."""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1.0</span>+np.exp(-z))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid_prime</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""Derivative of the sigmoid function."""</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(z)*(<span class="number">1</span>-sigmoid(z))</span><br></pre></td></tr></table></figure>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><p>这个程序对识别手写数字效果如何？好吧，让我们先加载 MNIST 数据。我将用下面所描述的一小段辅助程序 mnist_loader.py 来完成。我们在一个 Python shell 中执行下面的命令，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> mnist_loader</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>training_data, validation_data, test_data = \</span><br><span class="line"><span class="meta">... </span>mnist_loader.load_data_wrapper()</span><br></pre></td></tr></table></figure>
+<p>在加载完 MNIST 数据之后，我们将设置一个有 30 个隐藏层神经元的 Network。我们在导入如上所列的名为 network 的 Python 程序后做，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> network</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network.Network([<span class="number">784</span>, <span class="number">30</span>, <span class="number">10</span>])</span><br></pre></td></tr></table></figure>
+<p>最后，我们将使用随机梯度下降来从 MNIST training_data 学习超过 30 次 epoch，mini-batch 大小为 10，学习率 $\eta = 3.0$，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">3.0</span>, test_data=test_data)</span><br></pre></td></tr></table></figure>
+<p>打印内容显示了在每轮训练期后神经网络能正确识别测试图像的数量。正如你所见到，在仅仅一次 epoch后，达到了 10,000 中选中的 9,129 个。而且数目还在持续增长，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Epoch <span class="number">0</span>: <span class="number">9129</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">1</span>: <span class="number">9295</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">2</span>: <span class="number">9348</span> / <span class="number">10000</span></span><br><span class="line">...</span><br><span class="line">Epoch <span class="number">27</span>: <span class="number">9528</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">28</span>: <span class="number">9542</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">29</span>: <span class="number">9534</span> / <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+<p>更确切地说，经过训练的网络给出的识别率约为 95% 在峰值时为 95.42%（“Epoch 28”）作为第一次尝试，这是非常令人鼓舞的。然而我应该提醒你，如果你运行代码然后得到的结果和我的不完全一样，那是因为我们使用了（不同的）随机权重和偏置来初始化我们的网络。</p>
+<p>让我们重新运行上面的实验，将隐藏神经元数量改到 100。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>net = network.Network([<span class="number">784</span>, <span class="number">100</span>, <span class="number">10</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>net.SGD(training_data, <span class="number">30</span>, <span class="number">10</span>, <span class="number">3.0</span>, test_data=test_data)</span><br></pre></td></tr></table></figure>
+<p>果然，它将结果提升至 96.59%。至少在这种情况下，使用更多的隐藏神经元帮助我们得到了更好的结果。（注意，有的反馈表明本实验在结果上有相当多的变化，而且一些训练运行给出的结果相当糟糕。使用第三章所介绍的技术将大大减少我们网络上这些不同训练运行性能的差别。）</p>
+<p>当然，为了获得这些准确性，我不得不对训练的迭代期数量，mini-batch 大小和学习率 $\eta$ 做特别的选择。正如我上面所提到的，这些在我们的神经网络中被称为超参数，以区别于通过我们的学习算法所学到的参数权重和偏置。如果我们选择了糟糕的超参数，我们会得到较差的结果。假如我们定 学习率 为 $\eta = 0.001$,</p>
+<p>结果则不太令人鼓舞了，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Epoch <span class="number">0</span>: <span class="number">1139</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">1</span>: <span class="number">1136</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">2</span>: <span class="number">1135</span> / <span class="number">10000</span></span><br><span class="line">...</span><br><span class="line">Epoch <span class="number">27</span>: <span class="number">2101</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">28</span>: <span class="number">2123</span> / <span class="number">10000</span></span><br><span class="line">Epoch <span class="number">29</span>: <span class="number">2142</span> / <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+<p>然而，你可以看到网络的性能随着时间的推移慢慢地变好了。这表明应该增大 学习率，例如 $\eta = 0.01$。如果我们那样做了，我们会得到更好的结果，这表明我们应该再次增加学习率。（如果改变能够改善一些事情，试着做更多！）如果我们这样做几次，我们最终会得到一个像 $\eta = 1.0$ 的 学习率（或者调整到$3.0$），这跟我们之前的实验很接近。因此即使我们最初选择了糟糕的超参数，我们至少获得了足够的信息来帮助我们改善对于超参数的选择。通常，调试一个神经网络是具有挑战性的。</p>
+<p>从这得到的教训是调试一个神经网络不是琐碎的，就像常规编程那样，它是一门艺术。你需要学习调试的艺术来获得神经网络更好的结果。更普通的是，我们需要启发式方法来选择好的超参数和好的结构。我们将在整本书中讨论这些，包括上面我是怎么样选择超参数的。</p>
+<h2 id="补充：加载训练数据的代码"><a href="#补充：加载训练数据的代码" class="headerlink" title="补充：加载训练数据的代码"></a>补充：加载训练数据的代码</h2><p>前文中，我跳过了如何加载 MNIST 数据的细节。这很简单。这里列出了完整的代码。用于存储 MNIST 数据的数据结构在文档注释中有详细描述，都是简单的类型，元组和 Numpy ndarry 对象的列表（如果你不熟悉 ndarray，那就把它们看成向量）：</p>
+<p>原来的 <a href="https://github.com/skylook/neural-networks-and-deep-learning/blob/master/src/mnist_loader.py" target="_blank" rel="noopener">mnist_loader 代码</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">mnist_loader</span></span><br><span class="line"><span class="string">~~~~~~~~~~~~</span></span><br><span class="line"><span class="string">A library to load the MNIST image data.  For details of the data</span></span><br><span class="line"><span class="string">structures that are returned, see the doc strings for ``load_data``</span></span><br><span class="line"><span class="string">and ``load_data_wrapper``.  In practice, ``load_data_wrapper`` is the</span></span><br><span class="line"><span class="string">function usually called by our neural network code.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Libraries</span></span><br><span class="line"><span class="comment"># Standard library</span></span><br><span class="line"><span class="keyword">import</span> pickle</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"></span><br><span class="line"><span class="comment"># Third-party libraries</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Return the MNIST data as a tuple containing the training data,</span></span><br><span class="line"><span class="string">    the validation data, and the test data.</span></span><br><span class="line"><span class="string">    The ``training_data`` is returned as a tuple with two entries.</span></span><br><span class="line"><span class="string">    The first entry contains the actual training images.  This is a</span></span><br><span class="line"><span class="string">    numpy ndarray with 50,000 entries.  Each entry is, in turn, a</span></span><br><span class="line"><span class="string">    numpy ndarray with 784 values, representing the 28 * 28 = 784</span></span><br><span class="line"><span class="string">    pixels in a single MNIST image.</span></span><br><span class="line"><span class="string">    The second entry in the ``training_data`` tuple is a numpy ndarray</span></span><br><span class="line"><span class="string">    containing 50,000 entries.  Those entries are just the digit</span></span><br><span class="line"><span class="string">    values (0...9) for the corresponding images contained in the first</span></span><br><span class="line"><span class="string">    entry of the tuple.</span></span><br><span class="line"><span class="string">    The ``validation_data`` and ``test_data`` are similar, except</span></span><br><span class="line"><span class="string">    each contains only 10,000 images.</span></span><br><span class="line"><span class="string">    This is a nice data format, but for use in neural networks it's</span></span><br><span class="line"><span class="string">    helpful to modify the format of the ``training_data`` a little.</span></span><br><span class="line"><span class="string">    That's done in the wrapper function ``load_data_wrapper()``, see</span></span><br><span class="line"><span class="string">    below.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    f = gzip.open(<span class="string">'../data/mnist.pkl.gz'</span>, <span class="string">'rb'</span>)</span><br><span class="line">    training_data, validation_data, test_data = pickle.load(f, encoding=<span class="string">'bytes'</span>)</span><br><span class="line">    f.close()</span><br><span class="line">    <span class="keyword">return</span> (training_data, validation_data, test_data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load_data_wrapper</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"""Return a tuple containing ``(training_data, validation_data,</span></span><br><span class="line"><span class="string">    test_data)``. Based on ``load_data``, but the format is more</span></span><br><span class="line"><span class="string">    convenient for use in our implementation of neural networks.</span></span><br><span class="line"><span class="string">    In particular, ``training_data`` is a list containing 50,000</span></span><br><span class="line"><span class="string">    2-tuples ``(x, y)``.  ``x`` is a 784-dimensional numpy.ndarray</span></span><br><span class="line"><span class="string">    containing the input image.  ``y`` is a 10-dimensional</span></span><br><span class="line"><span class="string">    numpy.ndarray representing the unit vector corresponding to the</span></span><br><span class="line"><span class="string">    correct digit for ``x``.</span></span><br><span class="line"><span class="string">    ``validation_data`` and ``test_data`` are lists containing 10,000</span></span><br><span class="line"><span class="string">    2-tuples ``(x, y)``.  In each case, ``x`` is a 784-dimensional</span></span><br><span class="line"><span class="string">    numpy.ndarry containing the input image, and ``y`` is the</span></span><br><span class="line"><span class="string">    corresponding classification, i.e., the digit values (integers)</span></span><br><span class="line"><span class="string">    corresponding to ``x``.</span></span><br><span class="line"><span class="string">    Obviously, this means we're using slightly different formats for</span></span><br><span class="line"><span class="string">    the training data and the validation / test data.  These formats</span></span><br><span class="line"><span class="string">    turn out to be the most convenient for use in our neural network</span></span><br><span class="line"><span class="string">    code."""</span></span><br><span class="line">    tr_d, va_d, te_d = load_data()</span><br><span class="line">    training_inputs = [np.reshape(x, (<span class="number">784</span>, <span class="number">1</span>)) <span class="keyword">for</span> x <span class="keyword">in</span> tr_d[<span class="number">0</span>]]</span><br><span class="line">    training_results = [vectorized_result(y) <span class="keyword">for</span> y <span class="keyword">in</span> tr_d[<span class="number">1</span>]]</span><br><span class="line">    training_data = list(zip(training_inputs, training_results))</span><br><span class="line">    validation_inputs = [np.reshape(x, (<span class="number">784</span>, <span class="number">1</span>)) <span class="keyword">for</span> x <span class="keyword">in</span> va_d[<span class="number">0</span>]]</span><br><span class="line">    validation_data = list(zip(validation_inputs, va_d[<span class="number">1</span>]))</span><br><span class="line">    test_inputs = [np.reshape(x, (<span class="number">784</span>, <span class="number">1</span>)) <span class="keyword">for</span> x <span class="keyword">in</span> te_d[<span class="number">0</span>]]</span><br><span class="line">    test_data = list(zip(test_inputs, te_d[<span class="number">1</span>]))</span><br><span class="line">    <span class="keyword">return</span> (training_data, validation_data, test_data)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vectorized_result</span><span class="params">(j)</span>:</span></span><br><span class="line">    <span class="string">"""Return a 10-dimensional unit vector with a 1.0 in the jth</span></span><br><span class="line"><span class="string">    position and zeroes elsewhere.  This is used to convert a digit</span></span><br><span class="line"><span class="string">    (0...9) into a corresponding desired output from the neural</span></span><br><span class="line"><span class="string">    network."""</span></span><br><span class="line">    e = np.zeros((<span class="number">10</span>, <span class="number">1</span>))</span><br><span class="line">    e[j] = <span class="number">1.0</span></span><br><span class="line">    <span class="keyword">return</span> e</span><br></pre></td></tr></table></figure>
+<h2 id="怎么做到识别手写数字的？-迈向深度学习"><a href="#怎么做到识别手写数字的？-迈向深度学习" class="headerlink" title="怎么做到识别手写数字的？ 迈向深度学习"></a>怎么做到识别手写数字的？ 迈向深度学习</h2><p>虽然我们的神经网络给出了令人印象深刻的表现，但这样的表现带有几分神秘。网络中的权重和偏置是被自动发现的。这意味着我们不能立即解释网络怎么做的、做了什么。我们能否找到一些方法来理解我们的网络通过什么原理分类手写数字？并且，在知道了这些原理后，我们能做得更好吗？</p>
+<p>为了让这些问题更具体，我们假设数十年后神经网络引发了人工智能（AI）。到那个时候，我们能明白这种智能网络的工作机制吗？或许，因为有着自动学习得到的权重和偏置，这些是我们无法理解的，这样的神经网络对我们来说是不透明的。在人工智能的早期研究阶段，人们希望在构建人工智能的努力过程中，也同时能够帮助我们理解智能背后的机制，以及人类大脑的运转方式。但结果可能是我们既不能够理解大脑的机制，也不能够理解人工智能的机制。</p>
+<p>为解决这些问题，让我们重新思考一下我在本章开始时所给的人工神经元的解释，作为一种衡量证据的方法。假设我们要确定一幅图像是否显示有人脸：</p>
+<p><img src="/2018/06/19/使用神经网络识别手写数字——代码实现/1.png" alt=""></p>
+<p>我们可以用解决手写识别问题的相同方式来攻克这个问题。网络的输入是图像中的像素，网络的输出是一个单个的神经元用于表明“是的，这是一张脸”或“不，这不是一张脸”。</p>
+<p>假设我们就采取了这个方法，但接下来我们先不去使用一个学习算法。而是去尝试亲手设计一个网络，并为它选择合适的权重和偏置。我们要怎样做呢？暂时先忘掉神经网络，我们受到启发的一个想法是将这个问题分解成子问题：图像的左上角有一个眼睛吗？右上角有一个眼睛吗？中间有一个鼻子吗？下面中央有一个嘴吗？上面有头发吗？诸如此类。</p>
+<p>如果一些问题的回答是“是”，或者甚至仅仅是“可能是”，那么我们可以作出结论这个图像可能是一张脸。相反地，如果大多数这些问题的答案是“不是”，那么这张图像可能不是一张脸。</p>
+<p>当然，这仅仅是一个粗略的想法，而且它存在许多缺陷。也许有个人是秃头，没有头发。也许我们仅仅能看到脸的部分，或者这张脸是有角度的，因此一些面部特征是模糊的。不过这个想法表明了如果我们能够使用神经网络来解决这些子问题，那么我们也许可以通过将这些解决子问题的网络结合起来，构成一个人脸检测的神经网络。下图是一个可能的结构，其中的方框表示子网络。注意，这不是一个人脸检测问题的现实的解决方法，而是为了帮助我们构建起网络如何运转的直观感受。下图是这个网络的结构：</p>
+<p><img src="/2018/06/19/使用神经网络识别手写数字——代码实现/2.png" alt=""></p>
+<p>子网络也可以被继续分解，这看上去很合理。假设我们考虑这个问题：“左上角有一个眼睛吗？”。 这个问题可以被分解成这些子问题：“有一个眉毛吗？”，“有睫毛吗？”，“有虹膜吗？”，等等。当然这些问题也应该包含关于位置的信息，诸如“在左上角有眉毛，上面有虹膜吗？”，但是让我们先保持简单。回答问题“左上角有一个眼睛吗？”的网络能够被分解成：</p>
+<p><img src="/2018/06/19/使用神经网络识别手写数字——代码实现/3.png" alt=""></p>
+<p>这些子问题也同样可以继续被分解，并通过多个网络层传递得越来越远。最终，我们的子网络可以回答那些只包含若干个像素点的简单问题。举例来说，这些简单的问题可能是询问图像中的几个像素是否构成非常简单的形状。这些问题就可以被那些与图像中原始像素点相连的单个神经元所回答。</p>
+<p><strong>最终的结果是，我们设计出了一个网络，它将一个非常复杂的问题，这张图像是否有一张人脸，分解成在单像素层面上就可回答的非常简单的问题。它通过一系列多层结构来完成，在前面的网络层，它回答关于输入图像非常简单明确的问题，在后面的网络层，它建立了一个更加复杂和抽象的层级结构。包含这种多层结构，两层或更多隐藏层的网络被称为深度神经网络。</strong></p>
+<p>当然，我没有提到如何去递归地分解成子网络。手工设计网络中的权重和偏置无疑是不切实际的。取而代之的是，我们希望使用学习算法来让网络能够自动从训练数据中学习权重和偏置。这样，形成一个概念的层次结构。80年代和 90年代的研究人员尝试了使用随机梯度下降和反向传播来训练深度网络。不幸的是，除了一些特殊的结构，他们并没有取得很好的效果。虽然网络能够学习，但是学习速度非常缓慢，不适合在实际中使用。</p>
+<p>自 2006 年以来，人们已经开发了一系列技术使深度神经网络能够学习。这些深度学习技术基于随机梯度下降和反向传播，并引进了新的想法。这些技术已经使更深（更大）的网络能够被训练~——~现在训练一个有 5 到 10 层隐藏层的网络都是很常见的。而且事实证明，在许多问题上，它们比那些浅层神经网络，例如仅有一个隐藏层的网络，表现的更加出色。当然，原因是深度网络能够构建起一个复杂的概念的层次结构。这有点像传统编程语言使用模块化的设计和抽象的思想来创建复杂的计算机程序。将深度网络与浅层网络进行对比，有点像将一个能够进行函数调用的程序语言与一个不能进行函数调用的精简语言进行对比。抽象在神经网络中的形式和传统的编程方式相比不同，但它同样重要。</p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Michael Nielsen. CHAPTER 1 Using neural nets to recognize handwritten digits[DB/OL]. <a href="http://neuralnetworksanddeeplearning.com/chap1.html" target="_blank" rel="noopener">http://neuralnetworksanddeeplearning.com/chap1.html</a>, 2018-06-19.</p>
+<p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL]. <a href="https://github.com/zhanggyb/nndl/blob/master/chap1.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap1.tex</a>, 2018-06-19.</p>
+<p>[3] skylook. neural-networks-and-deep-learning, mnist_loader.py[DB/OL]. <a href="https://github.com/skylook/neural-networks-and-deep-learning/blob/master/src/mnist_loader.py" target="_blank" rel="noopener">https://github.com/skylook/neural-networks-and-deep-learning/blob/master/src/mnist_loader.py</a>, 2018-06-19.</p>
+<p>[4] skylook. neural-networks-and-deep-learning, network.py[DB/OL]. <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network.py" target="_blank" rel="noopener">https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network.py</a>, 2018-06-19.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/手写数字识别/" rel="tag"># 手写数字识别</a>
+          
+            <a href="/tags/代码实现/" rel="tag"># 代码实现</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/18/使用神经网络识别手写数字——梯度下降算法/" rel="next" title="使用神经网络识别手写数字——梯度下降算法">
+                <i class="fa fa-chevron-left"></i> 使用神经网络识别手写数字——梯度下降算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/20/贝叶斯估计、最大似然估计、最大后验估计三者的区别/" rel="prev" title="贝叶斯估计、最大似然估计、最大后验估计三者的区别">
+                贝叶斯估计、最大似然估计、最大后验估计三者的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分代码解读"><span class="nav-number">1.</span> <span class="nav-text">部分代码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络架构"><span class="nav-number">1.1.</span> <span class="nav-text">神经网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激活函数"><span class="nav-number">1.2.</span> <span class="nav-text">激活函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前馈神经网络"><span class="nav-number">1.3.</span> <span class="nav-text">前馈神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#随机梯度下降算法"><span class="nav-number">1.4.</span> <span class="nav-text">随机梯度下降算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-py-完整代码"><span class="nav-number">2.</span> <span class="nav-text">Network.py 完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行结果"><span class="nav-number">3.</span> <span class="nav-text">运行结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充：加载训练数据的代码"><span class="nav-number">4.</span> <span class="nav-text">补充：加载训练数据的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么做到识别手写数字的？-迈向深度学习"><span class="nav-number">5.</span> <span class="nav-text">怎么做到识别手写数字的？ 迈向深度学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

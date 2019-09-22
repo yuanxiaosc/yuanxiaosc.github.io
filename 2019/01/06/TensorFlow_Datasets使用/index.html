@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="TensorFlow,TensorFlow Function Usage," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="按顺序必读官方指引 TensorFlow Datasets and Estimators    标题 说明 时间     Introduction to TensorFlow Datasets and Estimators Google Develops Blog Part 1 2017-09-12   Introducing TensorFlow Feature Columns Google D">
+<meta name="keywords" content="TensorFlow,TensorFlow Function Usage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow_Datasets基本使用">
+<meta property="og:url" content="http://yoursite.com/2019/01/06/TensorFlow_Datasets使用/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="按顺序必读官方指引 TensorFlow Datasets and Estimators    标题 说明 时间     Introduction to TensorFlow Datasets and Estimators Google Develops Blog Part 1 2017-09-12   Introducing TensorFlow Feature Columns Google D">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-06T13:11:56.055Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow_Datasets基本使用">
+<meta name="twitter:description" content="按顺序必读官方指引 TensorFlow Datasets and Estimators    标题 说明 时间     Introduction to TensorFlow Datasets and Estimators Google Develops Blog Part 1 2017-09-12   Introducing TensorFlow Feature Columns Google D">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/06/TensorFlow_Datasets使用/"/>
+
+
+
+
+
+  <title>TensorFlow_Datasets基本使用 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/06/TensorFlow_Datasets使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TensorFlow_Datasets基本使用</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-06T09:32:00+08:00">
+                2019-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TF/" itemprop="url" rel="index">
+                    <span itemprop="name">TF</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/01/06/TensorFlow_Datasets使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/06/TensorFlow_Datasets使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="按顺序必读官方指引-TensorFlow-Datasets-and-Estimators"><a href="#按顺序必读官方指引-TensorFlow-Datasets-and-Estimators" class="headerlink" title="按顺序必读官方指引 TensorFlow Datasets and Estimators"></a>按顺序必读官方指引 TensorFlow Datasets and Estimators</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://developers.googleblog.com/2017/09/introducing-tensorflow-datasets.html" target="_blank" rel="noopener">Introduction to TensorFlow Datasets and Estimators</a></td>
+<td>Google Develops Blog Part 1</td>
+<td>2017-09-12</td>
+</tr>
+<tr>
+<td><a href="https://developers.googleblog.com/2017/11/introducing-tensorflow-feature-columns.html" target="_blank" rel="noopener">Introducing TensorFlow Feature Columns</a></td>
+<td>Google Develops Blog Part 2</td>
+<td>2017-11-20</td>
+</tr>
+<tr>
+<td><a href="https://developers.googleblog.com/2017/12/creating-custom-estimators-in-tensorflow.html" target="_blank" rel="noopener">Creating Custom Estimators in TensorFlow</a></td>
+<td>Google Develops Blog Part 3</td>
+<td>2017-12-19</td>
+</tr>
+<tr>
+<td><a href="https://medium.com/tensorflow/classifying-text-with-tensorflow-estimators-a99603033fbe" target="_blank" rel="noopener">Classifying text with TensorFlow Estimators</a></td>
+<td>Part 4</td>
+<td>2018-03-07</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="tfrecord-详解"><a href="#tfrecord-详解" class="headerlink" title="tfrecord 详解"></a>tfrecord 详解</h2><h3 id="示例代码-GenerateSimpleTFRecord-py"><a href="#示例代码-GenerateSimpleTFRecord-py" class="headerlink" title="示例代码 GenerateSimpleTFRecord.py"></a>示例代码 <a href="https://github.com/yuanxiaosc/TensorFlow_iris_estimator/blob/master/tfrecord_basic_operation/GenerateSimpleTFRecord.py" target="_blank" rel="noopener">GenerateSimpleTFRecord.py</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Demonstration of creating TFRecord file with simple data types like int, float, string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">data_arr = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'int_data'</span>: <span class="number">108</span>,</span><br><span class="line">        <span class="string">'float_data'</span>: <span class="number">2.45</span>,</span><br><span class="line">        <span class="string">'str_data'</span>: <span class="string">'String 100'</span>,</span><br><span class="line">        <span class="string">'float_list_data'</span>: [<span class="number">256.78</span>, <span class="number">13.9</span>],</span><br><span class="line">        <span class="string">'image_data'</span>: np.random.uniform(<span class="number">0</span>, <span class="number">255</span>, size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>))</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">'int_data'</span>: <span class="number">37</span>,</span><br><span class="line">        <span class="string">'float_data'</span>: <span class="number">84.3</span>,</span><br><span class="line">        <span class="string">'str_data'</span>: <span class="string">'String 200'</span>,</span><br><span class="line">        <span class="string">'float_list_data'</span>: [<span class="number">1.34</span>, <span class="number">843.9</span>, <span class="number">65.22</span>],</span><br><span class="line">        <span class="string">'image_data'</span>: np.random.uniform(<span class="number">0</span>, <span class="number">255</span>, size=(<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>))</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">tf.reset_default_graph()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_example_object</span><span class="params">(data_record)</span>:</span></span><br><span class="line">    <span class="comment"># Convert individual data into a list of int64 or float or bytes</span></span><br><span class="line">    int_list1 = tf.train.Int64List(value=[data_record[<span class="string">'int_data'</span>]])</span><br><span class="line">    float_list1 = tf.train.FloatList(value=[data_record[<span class="string">'float_data'</span>]])</span><br><span class="line">    <span class="comment"># Convert string data into list of bytes</span></span><br><span class="line">    str_list1 = tf.train.BytesList(value=[data_record[<span class="string">'str_data'</span>].encode(<span class="string">'utf-8'</span>)])</span><br><span class="line">    float_list2 = tf.train.FloatList(value=data_record[<span class="string">'float_list_data'</span>])</span><br><span class="line">    image_list = tf.train.BytesList(value=[data_record[<span class="string">'image_data'</span>].tostring()])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create a dictionary with above lists individually wrapped in Feature</span></span><br><span class="line">    feature_key_value_pair = &#123;</span><br><span class="line">        <span class="string">'int_list1'</span>: tf.train.Feature(int64_list=int_list1),</span><br><span class="line">        <span class="string">'float_list1'</span>: tf.train.Feature(float_list=float_list1),</span><br><span class="line">        <span class="string">'str_list1'</span>: tf.train.Feature(bytes_list=str_list1),</span><br><span class="line">        <span class="string">'float_list2'</span>: tf.train.Feature(float_list=float_list2),</span><br><span class="line">        <span class="string">'image_list'</span>: tf.train.Feature(bytes_list=image_list)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create Features object with above feature dictionary</span></span><br><span class="line">    features = tf.train.Features(feature=feature_key_value_pair)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create Example object with features</span></span><br><span class="line">    example = tf.train.Example(features=features)</span><br><span class="line">    <span class="keyword">return</span> example</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.python_io.TFRecordWriter(<span class="string">'example.tfrecord'</span>) <span class="keyword">as</span> tfwriter:</span><br><span class="line">    <span class="comment"># Iterate through all records</span></span><br><span class="line">    <span class="keyword">for</span> data_record <span class="keyword">in</span> data_arr:</span><br><span class="line">        example = get_example_object(data_record)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Append each example into tfrecord</span></span><br><span class="line">        tfwriter.write(example.SerializeToString())</span><br></pre></td></tr></table></figure>
+<h3 id="示例代码-ExtractSimpleTFRecord-py"><a href="#示例代码-ExtractSimpleTFRecord-py" class="headerlink" title="示例代码 ExtractSimpleTFRecord.py"></a>示例代码 <a href="https://github.com/yuanxiaosc/TensorFlow_iris_estimator/blob/master/tfrecord_basic_operation/ExtractSimpleTFRecord.py" target="_blank" rel="noopener">ExtractSimpleTFRecord.py</a></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Demonstration of extracting TFRecord file with simple data types like int, float, string</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">tf.reset_default_graph()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">extract_fn</span><span class="params">(data_record)</span>:</span></span><br><span class="line">    features = &#123;</span><br><span class="line">        <span class="comment"># Extract features using the keys set during creation</span></span><br><span class="line">        <span class="string">'int_list1'</span>: tf.FixedLenFeature([], tf.int64),</span><br><span class="line">        <span class="string">'float_list1'</span>: tf.FixedLenFeature([], tf.float32),</span><br><span class="line">        <span class="string">'str_list1'</span>: tf.FixedLenFeature([], tf.string),</span><br><span class="line">        <span class="comment"># If size is different of different records, use VarLenFeature</span></span><br><span class="line">        <span class="string">'float_list2'</span>: tf.VarLenFeature(tf.float32),</span><br><span class="line">        <span class="string">'image_list'</span>: tf.FixedLenFeature([], tf.string)</span><br><span class="line">    &#125;</span><br><span class="line">    sample = tf.parse_single_example(data_record, features)</span><br><span class="line">    sample[<span class="string">'float_list2'</span>] = tf.sparse.to_dense(sample[<span class="string">'float_list2'</span>])</span><br><span class="line">    sample[<span class="string">'image_list'</span>] = tf.decode_raw(sample[<span class="string">'image_list'</span>], tf.float64)</span><br><span class="line">    sample[<span class="string">'image_list'</span>] = tf.reshape(sample[<span class="string">'image_list'</span>], (<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">return</span> sample</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize all tfrecord paths</span></span><br><span class="line">dataset = tf.data.TFRecordDataset([<span class="string">'example.tfrecord'</span>])</span><br><span class="line">dataset = dataset.map(extract_fn)</span><br><span class="line">iterator = dataset.make_one_shot_iterator()</span><br><span class="line">next_element = iterator.get_next()</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            data_record = sess.run(next_element)</span><br><span class="line">            print(data_record)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h2 id="tfrecord-basic-explanation-方法总结"><a href="#tfrecord-basic-explanation-方法总结" class="headerlink" title="tfrecord basic explanation 方法总结"></a>tfrecord basic explanation 方法总结</h2><blockquote>
+<p>For example, see the <a href="https://github.com/yuanxiaosc/TensorFlow_iris_estimator" target="_blank" rel="noopener">code</a></p>
+<h3 id="Producte-tfrecord-files"><a href="#Producte-tfrecord-files" class="headerlink" title="Producte tfrecord files"></a>Producte tfrecord files</h3><h4 id="1-Open-TFRecordWriter"><a href="#1-Open-TFRecordWriter" class="headerlink" title="1. Open TFRecordWriter"></a>1. Open TFRecordWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer = tf.python_io.TFRecordWriter(tfrecord_store_path)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="2-prepater-to-feature-dict"><a href="#2-prepater-to-feature-dict" class="headerlink" title="2. prepater to feature_dict"></a>2. prepater to feature_dict</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">for index, row in pandas_datafram_data.iterrows():</span><br><span class="line">    dict_row = dict(row)</span><br><span class="line">    feature_dict = &#123;&#125;</span><br><span class="line">    # prepater to feature_dict</span><br><span class="line">    for k,v in dict_row.items():</span><br><span class="line">        if k in [&apos;feature1&apos;, &apos;feature2&apos;,...,&apos;featureN&apos;]:</span><br><span class="line">            feature_dict[k] = tf.train.Feature(float_list=tf.train.FloatList(value=[v]))</span><br><span class="line">        elif k in [&apos;feature1&apos;, &apos;feature2&apos;,...,&apos;featureN&apos;]:</span><br><span class="line">            feature_dict[k] = tf.train.Feature(int64_list=tf.train.Int64List(value=[v])</span><br><span class="line">        else:</span><br><span class="line">            feature_dict[k] = tf.train.Feature(int64_list=tf.train.BytesList(value=[v)])</span><br></pre></td></tr></table></figure>
+<h4 id="3-producte-data-example"><a href="#3-producte-data-example" class="headerlink" title="3. producte data example"></a>3. producte data example</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example = tf.train.Example(features=tf.train.Features(feature=feature_dict))</span><br></pre></td></tr></table></figure>
+<h4 id="4-serialize-to-string"><a href="#4-serialize-to-string" class="headerlink" title="4. serialize to string"></a>4. serialize to string</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serialized = example.SerializeToString()</span><br></pre></td></tr></table></figure>
+<h4 id="5-write-a-example-to-tfrecord-file"><a href="#5-write-a-example-to-tfrecord-file" class="headerlink" title="5. write a example to tfrecord file"></a>5. write a example to tfrecord file</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.write(serialized)</span><br></pre></td></tr></table></figure>
+<h4 id="6-Close-TFRecordWriter"><a href="#6-Close-TFRecordWriter" class="headerlink" title="6. Close TFRecordWriter"></a>6. Close TFRecordWriter</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">writer.close()</span><br></pre></td></tr></table></figure>
+<h3 id="Using-tfrecord-files"><a href="#Using-tfrecord-files" class="headerlink" title="Using tfrecord files"></a>Using tfrecord files</h3><h4 id="1-Open-TFRecordDataset"><a href="#1-Open-TFRecordDataset" class="headerlink" title="1. Open TFRecordDataset"></a>1. Open TFRecordDataset</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">filenames = [&apos;tfrecord_file_name1&apos;,&apos;tfrecord_file_name2&apos;]</span><br><span class="line">tf_dataset = tf.data.TFRecordDataset(filenames)</span><br></pre></td></tr></table></figure>
+<h4 id="2-Parse-dataset"><a href="#2-Parse-dataset" class="headerlink" title="2. Parse dataset"></a>2. Parse dataset</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def _parse_function(record):</span><br><span class="line">    features = &#123;&quot;feature1&quot;: tf.FixedLenFeature((), tf.float32, default_value=0.0),</span><br><span class="line">                &quot;feature2&quot;: tf.FixedLenFeature((), tf.int64, default_value=0)&#125;</span><br><span class="line">    parsed_features = tf.parse_single_example(record, features)</span><br><span class="line">    return &#123;&quot;feature1&quot;: parsed_features[&quot;feature1&quot;]&#125;, parsed_features[&quot;Species&quot;]</span><br><span class="line">dataset = tf_dataset.map(_parse_function)</span><br></pre></td></tr></table></figure>
+<h4 id="3-Shuffle-repeat-and-batch-the-examples"><a href="#3-Shuffle-repeat-and-batch-the-examples" class="headerlink" title="3. Shuffle, repeat, and batch the examples"></a>3. Shuffle, repeat, and batch the examples</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf_dataset = dataset.shuffle(1000).repeat().batch(batch_size)</span><br></pre></td></tr></table></figure>
+<h4 id="4-Iterate-dataset"><a href="#4-Iterate-dataset" class="headerlink" title="4. Iterate dataset"></a>4. Iterate dataset</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tf_iterator = tf_dataset.make_one_shot_iterator()</span><br><span class="line">next_element = tf_iterator.get_next()</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    for i in range(show_numbers):</span><br><span class="line">        a_data = sess.run(next_element)</span><br><span class="line">        print(a_data)</span><br></pre></td></tr></table></figure>
+<h2 id="TFRecord-相关博客"><a href="#TFRecord-相关博客" class="headerlink" title="TFRecord 相关博客"></a>TFRecord 相关博客</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/how_tos/reading_data/convert_to_records.py" target="_blank" rel="noopener">convert_to_records.py</a></td>
+<td>tensorflow/tensorflow/examples/how_tos/reading_data/convert_to_records.py</td>
+<td>20171201</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/examples/how_tos/reading_data/fully_connected_reader.py#L54" target="_blank" rel="noopener">fully_connected_reader.py</a></td>
+<td>tensorflow/tensorflow/examples/how_tos/reading_data/fully_connected_reader.py</td>
+<td>20181203</td>
+</tr>
+<tr>
+<td><a href="https://www.tensorflow.org/guide/datasets" target="_blank" rel="noopener">导入数据</a></td>
+<td>TensorFlow Guide</td>
+<td>持续更新</td>
+</tr>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/33223782" target="_blank" rel="noopener">TensorFlow中层API：Datasets+TFRecord的数据导入</a></td>
+<td>对应代码<a href="https://github.com/YJango/TFRecord-Dataset-Estimator-API/blob/master/TensorFlow%20Dataset%20%2B%20TFRecords.ipynb" target="_blank" rel="noopener">TensorFlow Dataset + TFRecords.ipynb</a></td>
+<td>20180126</td>
+</tr>
+<tr>
+<td><a href="https://lanhongvp.github.io/2018/11/03/Tensorflow-tf-estimator/" target="_blank" rel="noopener">Tensorflow-tf-estimator</a></td>
+<td>lanhong</td>
+<td>20181103</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Prasad9/TFRecord_Images" target="_blank" rel="noopener">TFRecord_Images</a></td>
+<td>Illustration of how to create TFRecord with images and pipelined into Datasets and Iterators</td>
+<td>20180723</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/TensorFlow/" rel="tag"># TensorFlow</a>
+          
+            <a href="/tags/TensorFlow-Function-Usage/" rel="tag"># TensorFlow Function Usage</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/03/Tensorflow_Seq2Seq使用/" rel="next" title="Tensorflow_Seq2Seq使用">
+                <i class="fa fa-chevron-left"></i> Tensorflow_Seq2Seq使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/06/TensorFlow_estimator使用/" rel="prev" title="TensorFlow Estimator使用">
+                TensorFlow Estimator使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#按顺序必读官方指引-TensorFlow-Datasets-and-Estimators"><span class="nav-number">1.</span> <span class="nav-text">按顺序必读官方指引 TensorFlow Datasets and Estimators</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tfrecord-详解"><span class="nav-number">2.</span> <span class="nav-text">tfrecord 详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#示例代码-GenerateSimpleTFRecord-py"><span class="nav-number">2.1.</span> <span class="nav-text">示例代码 GenerateSimpleTFRecord.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例代码-ExtractSimpleTFRecord-py"><span class="nav-number">2.2.</span> <span class="nav-text">示例代码 ExtractSimpleTFRecord.py</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tfrecord-basic-explanation-方法总结"><span class="nav-number">3.</span> <span class="nav-text">tfrecord basic explanation 方法总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Producte-tfrecord-files"><span class="nav-number">3.1.</span> <span class="nav-text">Producte tfrecord files</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Open-TFRecordWriter"><span class="nav-number">3.1.1.</span> <span class="nav-text">1. Open TFRecordWriter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-prepater-to-feature-dict"><span class="nav-number">3.1.2.</span> <span class="nav-text">2. prepater to feature_dict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-producte-data-example"><span class="nav-number">3.1.3.</span> <span class="nav-text">3. producte data example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-serialize-to-string"><span class="nav-number">3.1.4.</span> <span class="nav-text">4. serialize to string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-write-a-example-to-tfrecord-file"><span class="nav-number">3.1.5.</span> <span class="nav-text">5. write a example to tfrecord file</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Close-TFRecordWriter"><span class="nav-number">3.1.6.</span> <span class="nav-text">6. Close TFRecordWriter</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-tfrecord-files"><span class="nav-number">3.2.</span> <span class="nav-text">Using tfrecord files</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Open-TFRecordDataset"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. Open TFRecordDataset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Parse-dataset"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. Parse dataset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Shuffle-repeat-and-batch-the-examples"><span class="nav-number">3.2.3.</span> <span class="nav-text">3. Shuffle, repeat, and batch the examples</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Iterate-dataset"><span class="nav-number">3.2.4.</span> <span class="nav-text">4. Iterate dataset</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TFRecord-相关博客"><span class="nav-number">4.</span> <span class="nav-text">TFRecord 相关博客</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

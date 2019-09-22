@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="项目," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。  百度理解与交互技术平台(UNIT) 【提升篇】酒店语音助手实例教程1 UNIT2.0基本概念https://ai.baidu.com/docs#/UNIT-v2-intro/top 2 训练智能对话技能的总体流程      总共分为3个阶段，需求分析并做好前期准备工作→通过UNIT创建最小可用技能模型→持续优化技能模型，具">
+<meta name="keywords" content="项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自然语言理解与交互技术平台">
+<meta property="og:url" content="http://yoursite.com/2018/11/12/自然语言理解与交互技术平台/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。  百度理解与交互技术平台(UNIT) 【提升篇】酒店语音助手实例教程1 UNIT2.0基本概念https://ai.baidu.com/docs#/UNIT-v2-intro/top 2 训练智能对话技能的总体流程      总共分为3个阶段，需求分析并做好前期准备工作→通过UNIT创建最小可用技能模型→持续优化技能模型，具">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ai.bdstatic.com/file/2DCEF8C4D2174B61BFE909F3728FB15C">
+<meta property="og:image" content="https://ai.bdstatic.com/file/23A80EF1A0B042CF9150E5F916D28D3C">
+<meta property="og:image" content="https://ai.bdstatic.com/file/BA2B5521A9CA4E36808C2D13677C438A">
+<meta property="og:image" content="https://ai.bdstatic.com/file/419F03217D9E4271B106253E5E573156">
+<meta property="og:image" content="https://ai.bdstatic.com/file/E1AF6678351D4209AB00F99ECFE4BFED">
+<meta property="og:image" content="https://ai.bdstatic.com/file/62A9F290E08143EF86BE2CCBAA826E5E">
+<meta property="og:image" content="https://ai.bdstatic.com/file/10588CA8B1CB48169A5340A79E02F104">
+<meta property="og:image" content="https://ai.bdstatic.com/file/199F329F4B4144328F378B09937336CA">
+<meta property="og:image" content="https://ai.bdstatic.com/file/4449E80A8B4440FEB2FBA727F68F66D6">
+<meta property="og:image" content="https://ai.bdstatic.com/file/2D74F43A241440BF8D6BDAE8221044EF">
+<meta property="og:image" content="https://ai.bdstatic.com/file/14D1412FFA2E40A687C94A02DE13DC2F">
+<meta property="og:image" content="https://ai.bdstatic.com/file/24768C9B09EF4E57A3B73DE2E21CBFBA">
+<meta property="og:image" content="https://ai.bdstatic.com/file/B111588AFE45457286D23E04B6ED3AEB">
+<meta property="og:image" content="https://ai.bdstatic.com/file/75B51EFBAA744D2EA4D72800D7CF1AA1">
+<meta property="og:image" content="https://ai.bdstatic.com/file/24F000E90FF1421A87E215F31A0CF824">
+<meta property="og:image" content="https://ai.bdstatic.com/file/C05D14DD26174F4D9D09AF2DD0B5309E">
+<meta property="og:image" content="https://ai.bdstatic.com/file/00C3F22E7C9F48E39D9B11E1DB2A9A72">
+<meta property="og:image" content="https://ai.bdstatic.com/file/1D3CEE2F16744A2B81F405D9CF1CD4A8">
+<meta property="og:image" content="https://ai.bdstatic.com/file/13D39832BA5D407B964353ACC5C3144C">
+<meta property="og:image" content="https://ai.bdstatic.com/file/59F28D8E4C5D4303A5BFF4E587FB1384">
+<meta property="og:image" content="https://ai.bdstatic.com/file/76BB3E9746524A519D14AFA29CC44EA3">
+<meta property="og:image" content="https://ai.bdstatic.com/file/7215E26CE8494747A07EBF26945D1ED3">
+<meta property="og:image" content="https://ai.bdstatic.com/file/EFC481F9CEC349A79C8EDAD2F79DC5F9">
+<meta property="og:image" content="https://ai.bdstatic.com/file/D6DE24992181481B8191F9D751C17EF9">
+<meta property="og:image" content="https://ai.bdstatic.com/file/4F48F390AA264AA5AE2FC88961FEE05A">
+<meta property="og:image" content="https://ai.bdstatic.com/file/CD933D229CAA4B2B89044FCBF652425A">
+<meta property="og:image" content="https://ai.bdstatic.com/file/5C4D0DC7C72745288C8F3A8E50AEFDC0">
+<meta property="og:image" content="https://ai.bdstatic.com/file/318C4EAD08894C9690302278661DD87C">
+<meta property="og:updated_time" content="2018-11-12T01:35:30.404Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自然语言理解与交互技术平台">
+<meta name="twitter:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。  百度理解与交互技术平台(UNIT) 【提升篇】酒店语音助手实例教程1 UNIT2.0基本概念https://ai.baidu.com/docs#/UNIT-v2-intro/top 2 训练智能对话技能的总体流程      总共分为3个阶段，需求分析并做好前期准备工作→通过UNIT创建最小可用技能模型→持续优化技能模型，具">
+<meta name="twitter:image" content="https://ai.bdstatic.com/file/2DCEF8C4D2174B61BFE909F3728FB15C">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/12/自然语言理解与交互技术平台/"/>
+
+
+
+
+
+  <title>自然语言理解与交互技术平台 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/12/自然语言理解与交互技术平台/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">自然语言理解与交互技术平台</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-12T09:53:50+08:00">
+                2018-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/" itemprop="url" rel="index">
+                    <span itemprop="name">项目</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/项目/智能家居/" itemprop="url" rel="index">
+                    <span itemprop="name">智能家居</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/12/自然语言理解与交互技术平台/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/12/自然语言理解与交互技术平台/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。</p>
+</blockquote>
+<p><a href="https://ai.baidu.com/unit/home" target="_blank" rel="noopener">百度理解与交互技术平台(UNIT)</a></p>
+<h1 id="【提升篇】酒店语音助手实例教程"><a href="#【提升篇】酒店语音助手实例教程" class="headerlink" title="【提升篇】酒店语音助手实例教程"></a><a href="http://ai.baidu.com/forum/topic/show/892294" target="_blank" rel="noopener">【提升篇】酒店语音助手实例教程</a></h1><p><strong>1 UNIT2.0基本概念</strong><br><a href="https://ai.baidu.com/docs#/UNIT-v2-intro/top" target="_blank" rel="noopener">https://ai.baidu.com/docs#/UNIT-v2-intro/top</a></p>
+<p><strong>2 训练智能对话技能的总体流程</strong></p>
+<p><img src="https://ai.bdstatic.com/file/2DCEF8C4D2174B61BFE909F3728FB15C" alt=""></p>
+<pre><code>    总共分为3个阶段，需求分析并做好前期准备工作→通过UNIT创建最小可用技能模型→持续优化技能模型，具体如下：
+
+    （1）第1阶段：需求分析。当前阶段需要有熟悉业务的人员参加，例如：产品经理、业务负责人等。先分析业务，明确业务中哪里需要通过和用户的对话来完成；再确认相关对话逻辑。最后基于之前的分析，从之前沉淀的数据中提取有价值信息，用于后续技能创建与训练；如果是新业务或之前没有准备，也先不用着急，我们可以先完成其他部分，但综合来看，业务中的真实数据是训练技能时最理想的“知识”。
+
+    （2）第2阶段，创建&amp;训练技能。当前阶段就是要赋予技能模型对话能力了。赋予技能模型对话能力和教小朋友说话一样，要先确认教他的知识点，而这些知识点就是技能的意图。基本定义灌输完成后，就需要通过大量的练习题来帮助技能模型理解、巩固与记忆。最后，可以通过考试，来检测技能模型的学习成果。当考试合格后，就可以用于实战了，即接入咱们的业务中（API、SDK等）。
+
+    （3）第3阶段，持续优化。因着业务程度复杂、用户画像变化等因素，技能之前掌握的只是知识可能不足以应对新市场，这时我们需要通过更多的“练习”与“考试”来帮助技能提高能力。目前技能还无法完全自主学习并提高自己，还需要训练人员辅助。
+
+本文将基于酒店服务这一场景，通过搭建酒店智能语音助手技能（下简称酒店助手技能）来讲解整个流程。
+</code></pre><p><strong>3 需求分析</strong></p>
+<pre><code>需求分析是训练智能对话技能举足轻重的一步，需要基于自身业务场景进行深入透彻的思考，从而明确整个对话技能的架构，后续的技能创建与训练工作全部在此架构的基础上展开。这一步在训练智能对话技能时很容易被忽视，但草率分析需求即着手训练的技能往往后续需要投入更多的时间和精力进行调整，甚至需要推翻重来；
+</code></pre><p><strong>3.1   业务场景分析：确定边界，明确目标</strong></p>
+<p><strong>3.1.1 挖掘需求，确定边界</strong></p>
+<pre><code>首先是对业务场景进行分析，在酒店服务这一场景下存在很多酒店助手“可以做”的业务，我们应当从用户需求和用户体验入手，思考在该场景下用户的刚需，以及如何通过引入对话交互来大幅提升用户体验，从而在大范围的“可以做”的业务中找到其中“必须做”和“应该做”的业务。
+</code></pre><p><img src="https://ai.bdstatic.com/file/23A80EF1A0B042CF9150E5F916D28D3C" alt=""></p>
+<pre><code>在酒店服务这一场景下，用户主要的活动空间是在酒店房间内，因此酒店助手的首要目标为尽可能优化用户在酒店房间内的体验，像联系前台、呼叫客房服务这些都是需要优先满足的需求；而设置日程提醒、控制房间内的家电，这些功能通过语音交互来实现可以使用户进一步感受到智能化酒店的舒适和创新；意见反馈有助于收集用户的反馈以不断优化酒店的服务，通过酒店助手的对话来完成可以获得比纸质调查表更高的反馈率。
+
+而关于酒店的常见问题的咨询，也是酒店助手应当实现的功能之一：一方面这些问题对于新入住的顾客而言是切实需要获得解答的，另一方面直接通过对话方式获得问题的解答比传统的从宣传单中查找或是致电询问前台都更加简单便捷。
+
+对于一些超出酒店基本服务以外的拓展服务，如新闻播报、城市导览等功能，可以对用户体验起到一定的提升，但并非强需求，同时需要对接大量的资源库；而我们的目标是首先搭建最小可用技能，因此这部分功能可以先不去开发或低优先级开发。
+</code></pre><p><strong>3.1.2 明确目标，确定任务类型</strong></p>
+<pre><code>在确定了业务场景的边界之后，我们就需要明确这些功能的目标，从而确定任务的类型，不同的任务类型对应着不同的配置方式；首先我们来了解一下任务类型的分类：
+</code></pre><p><img src="https://ai.bdstatic.com/file/BA2B5521A9CA4E36808C2D13677C438A" alt=""></p>
+<pre><code>可以看出，任务类型区分的关键在于任务目标的有无以及是否需要把请求参数化；了解了这一点后，我们不难将之前梳理的功能进行分类：
+</code></pre><p><img src="https://ai.bdstatic.com/file/419F03217D9E4271B106253E5E573156" alt=""></p>
+<p><strong>3.2 功能定义：确定优先级及关键信息要素</strong></p>
+<pre><code>在确定边界和目标后，我们就可以动手对功能进行定义了，在这一阶段，我们需要确定各功能的优先级，并确定每个功能的实体要素。
+</code></pre><p><strong>3.2.1 优先级的确定</strong></p>
+<pre><code>首先是优先级的确定，其实在确定边界的过程中，我们已经对功能的重要程度和实现难度进行了分析，在此基础上不难确定出功能的优先级：
+</code></pre><p><img src="https://ai.bdstatic.com/file/E1AF6678351D4209AB00F99ECFE4BFED" alt=""></p>
+<p><strong>3.2.2 关键信息要素的分析</strong></p>
+<pre><code>任务型的对话需要将请求参数化，相应的我们就需要分析要完成每个对话都需要将哪些实体要素参数化，而这些实体要素所对应的正是技能的对话意图及其词槽。我们以酒店房间内场景下P0优先级的功能为例进行分析，可以梳理出如下的关键信息要素：
+</code></pre><p><img src="https://ai.bdstatic.com/file/62A9F290E08143EF86BE2CCBAA826E5E" alt=""></p>
+<pre><code>可以发现标红部分因为其关键信息要素的重合而产生了意图的合并，具体如何处理相似功能间意图的拆解与合并，我们在下节对话逻辑梳理中展开讲解。
+</code></pre><p><strong>3.3 对话逻辑梳理：任务型对话的常规与异常情况、问答型的知识分类</strong></p>
+<p><strong>3.3.1 任务型对话的意图梳理</strong></p>
+<pre><code>任务型对话因具有将请求参数化的这一特点，在配置到对话意图时需整体考虑该场景下的相似任务和相关任务，在这一阶段将对话任务与意图间的映射关系梳理清晰，可以在后续的配置中达到事半功倍的效果。
+
+以上节中进行了关键信息要素分析的功能为例，在物品需求类型的功能间和智能家电的开关控制中出现了功能的关键信息要素重合的情况，下面我们分别针对这两类功能进行分析：
+
+1.  物品需求类型功能
+
+在实际的酒店场景中顾客可能产生远比本文列出的示例更多的物品需求，在物品需求与意图之间建立一一映射关系不仅会浪费大量的人力，而且存在拓展性差、不同意图间的query相似性强相互干扰影响效果的缺点。因此我们采取合并意图、通过词槽来区分具体物品的方式，这种方式前期工作量小，后期拓展性强（只需调整词槽词典即可增删物品）。但也不可不管三七二十一将所有物品需求合并为同一意图，需要从实际场景出发进行合理的意图合并与区分。
+</code></pre><p><img src="https://ai.bdstatic.com/file/10588CA8B1CB48169A5340A79E02F104" alt=""></p>
+<pre><code>2.  家电控制类型功能
+
+家电控制类型的功能在意图的梳理上与物品需求类型的功能基本相同，在上节的梳理中考虑方便未来的拓展，把只有开关指令的设备汇总到一个意图中。
+
+注意：本例中假设灯具只有开关两种指令，若存在更复杂的指令如（柔和模式、工作模式……），则需单独设立意图不可合并。
+</code></pre><p><strong>3.3.2 问答型对话的意图梳理</strong></p>
+<pre><code>问答型对话没有需要参数化的内容，往往具有固定的标准答案；这类型的对话逻辑梳理其实就是要对问题进行分类，或者叫知识分类。比如酒店的问题咨询可以如下分类：
+</code></pre><p><img src="https://ai.bdstatic.com/file/199F329F4B4144328F378B09937336CA" alt=""></p>
+<p><strong>3.4   场景数据收集：在真实场景下用户会怎么问？</strong></p>
+<pre><code>人工智能实现语义理解的过程，和教牙牙学语的小朋友讲话的过程是相似的：最初他只能懂你教他的一模一样的内容（训练数据量少时泛化能力差），等到教的内容多了之后就可以理解这个意思的不同表达方式（基于大量的训练数据产生泛化能力）。
+
+因此我们在收集场景数据时，需要尽可能贴近真实场景下用户的表达方式，最好是从实际业务场景中沉淀下来的真实数据，全面覆盖用户在该场景下可能出现的表达方式。关于这些数据收集的技巧在《UNIT 使用技巧与持续优化 https://pan.baidu.com/s/1gyQXvExLka5yjdZr3tUziA 》中有详细的介绍，可参考该教程进行数据的收集。
+</code></pre><p><strong>4 搭建技能模型</strong></p>
+<p>-———可拷贝或选择下面红色的文字 在UNIT里一步一步配置出酒店助手技能———-<br>注册百度账号，打开<a href="http://unit.baidu.com" target="_blank" rel="noopener">http://unit.baidu.com</a> ，进入UNIT：</p>
+<p><img src="https://ai.bdstatic.com/file/4449E80A8B4440FEB2FBA727F68F66D6" alt=""></p>
+<p><strong>4.1  新建技能</strong></p>
+<pre><code>在UNIT平台搭建对话机器人的第一步是先创建一个技能，只需要输入一个技能名称，非常简单。
+
+技能名称：酒店助手
+</code></pre><p><img src="https://ai.bdstatic.com/file/2D74F43A241440BF8D6BDAE8221044EF" alt=""></p>
+<p><strong>4.2  自定义技能：新建对话/问答意图</strong></p>
+<pre><code>创建完后就进入技能定义的阶段，技能又分自定义技能和预置技能，每个技能都是由多个相关的意图组成，这个阶段的新建意图就对应我们需求分析阶段的功能定义。以需确认数量物品这一功能为例，可以如下转化为意图：
+</code></pre><p><img src="https://ai.bdstatic.com/file/14D1412FFA2E40A687C94A02DE13DC2F" alt=""></p>
+<pre><code>下面展开讲解具体操作步骤：
+</code></pre><p><strong>4.2.1  新建对话意图</strong></p>
+<pre><code>点击【酒店助手】技能，进入技能模块，在自定义技能中【新建对话意图】：
+</code></pre><p><img src="https://ai.bdstatic.com/file/24768C9B09EF4E57A3B73DE2E21CBFBA" alt=""></p>
+<pre><code>意图名称：ITEM\_NUM\_NEEDED
+
+意图别名：需确认数量物品
+</code></pre><p><strong>4.2.2  添加词槽</strong></p>
+<pre><code>添加两个词槽：
+
+1、词槽名：user\_item\_numneeded，别名：需确认数量物品类型，词典：自定义词典——上传自定义词典文件，必填
+
+第一步是选择【添加方式】，选 「新建自定义词槽」，并设置词槽名（user\_item\_numneeded）和词槽别名(需确认数量物品类型)，
+</code></pre><p><img src="https://ai.bdstatic.com/file/B111588AFE45457286D23E04B6ED3AEB" alt=""></p>
+<pre><code>第二步【上传自定义词典】
+</code></pre><ul>
+<li>UNIT平台中词槽的识别依赖词槽对应的词典。支持自定义词典，也可以选择系统预置词典，我们建议在能选择系统词典的情况下尽量选择使用系统词典(详见：<a href="http://ai.baidu.com/forum/topic/show/869949" target="_blank" rel="noopener">http://ai.baidu.com/forum/topic/show/869949</a> )，当系统词典里没有你需要的类型时可以添加自定义词典。</li>
+<li>本例中我们希望通过这一词槽来匹配酒店中顾客需要确认数量的物品需求，需要根据自身需求来添加自定义词典，词典文件格式参考demo下载，这里不做展开介绍。</li>
+</ul>
+<p>词典值：</p>
+<p>毛巾</p>
+<p>牙刷</p>
+<p>水</p>
+<h1 id="矿泉水"><a href="#矿泉水" class="headerlink" title="矿泉水"></a>矿泉水</h1><h1 id="纯净水"><a href="#纯净水" class="headerlink" title="纯净水"></a>纯净水</h1><p>浴巾</p>
+<p>香皂</p>
+<p><img src="https://ai.bdstatic.com/file/75B51EFBAA744D2EA4D72800D7CF1AA1" alt=""></p>
+<p><img src="https://ai.bdstatic.com/file/24F000E90FF1421A87E215F31A0CF824" alt=""></p>
+<pre><code>第三步设置词槽与意图关联属性，在该意图中的物品类型是必须的关键信息，所以我们选择必填。澄清话术就是当用户表达订票需求的语句里缺少出发时间时技能主动让用户澄清的话术。还可以设置让用户澄清多少轮后放弃要求澄清，默认是3次。
+</code></pre><p><img src="https://ai.bdstatic.com/file/C05D14DD26174F4D9D09AF2DD0B5309E" alt=""></p>
+<pre><code>2、配置物品数量词槽的流程与上面的步骤基本相同，在选择词典时需打开【系统词槽词典】的开关，然后选择系统词典sys\_generic\_unit (更丰富的数字+单位，如：一块两毛、三桶、两摞、3千克/立方米)
+
+词槽名：user\_item\_num，别名：物品数量，词典：系统词典——sys\_generic\_unit (更丰富的数字+单位，如：一块两毛、三桶、两摞、3千克/立方米)，必填
+
+添加完所有词槽后如下图：
+</code></pre><p><img src="https://ai.bdstatic.com/file/00C3F22E7C9F48E39D9B11E1DB2A9A72" alt=""></p>
+<pre><code>在词槽列表中可以调整词槽澄清的顺序。
+</code></pre><p><strong>4.2.3  设置对话回应</strong></p>
+<p><img src="https://ai.bdstatic.com/file/1D3CEE2F16744A2B81F405D9CF1CD4A8" alt=""></p>
+<pre><code>对话回应就是当对话识别出用户的意图和所有必填词槽值 时给用户的反馈。
+
+有三种回应方式：【答复】、【引导至对话意图】、【引导至问答意图】
+
+这里我们以【答复】为例，设置答复文本内容为：&quot;好的，马上为您送到&quot; 
+
+设置完成后最终保存意图
+
+注意点：实际落地的时候这里其实需要你在自己的业务代码里判断当前技能解析的用户意图为需确认数量物品，且用户提供了物品重量、物品数量，这时将这两个词槽值传递到自己的业务管理系统通知到相应服务人员。  
+引导至对话意图：是当前对话满足一定条件时把当前意图到另一个对话意图，让用户进入另一个意图的对话中。  
+引导至问答意图：是当前对话满足一定条件时把当前意图到另一个问答意图，让用户直接在目标问答意图下提问并获取答案。  
+</code></pre><p><strong>4.2.4  新建问答意图</strong></p>
+<p><img src="https://ai.bdstatic.com/file/13D39832BA5D407B964353ACC5C3144C" alt=""></p>
+<pre><code>针对前期分析问答型对话的退票问题 定义一个问答意图 FAQ\_PARK，意图别名：停车场相关问题
+</code></pre><p><strong>4.3   添加训练数据</strong></p>
+<pre><code>完成技能的意图定义后，我们进入创建和训练技能的最重要的第二个环节，给技能添加训练数据，这个阶段用到的正是我们之前收集的真实场景下的数据，在其基础上进行总结和分类，给技能提供1到3种学习数据，让其学习我们定义的技能。
+
+在训练数据的选择上，我们应当根据自身场景中的对话类型和数据收集情况来进行选择：
+</code></pre><ul>
+<li>假如你的场景是任务型的又缺少对话样本，这时你就可以先去配置对话模板，快速达到一定效果后再从日志中筛选更多的对话样本；</li>
+<li>假如你一开始就有对话样本，这时你可以对话模板、对话样本一起上，这样可以快速达到一个更好的效果；</li>
+<li>而如果你还有问答行的对话时，只要添加问答对就可以了，简单易上手。</li>
+</ul>
+<p><strong>4.3.1  配置对话模板</strong></p>
+<pre><code>对话模板是基于用户的表达方式归纳出的匹配规则，归纳得当的对话模板配置起来简单快速，可以识别多种表达方式，适合短时间内使技能达到可用的对话效果。同时对话模板的优先级高于对话样本，可用于对对话样本训练结果的优化。
+
+在开始配置对话模板之前，我们来明确几个概念：
+</code></pre><ul>
+<li>特征词：特征词通常是具有一类特征的词，可用于在对话模板中匹配这一类词。举例：对于“缝补衣服”意图，用户可能会说“我想缝衣服”、“我想补衣服”、“找谁缝补衣服”，那么对应的模板中，可以设置表示缝补的特征词：缝衣服、补衣服、缝补衣服……这些词不需要作为词槽被提取出来提供给业务，仅用于约束模板的匹配，因此使用特征词而非词槽。</li>
+<li>口语化词：口语化词将在语义解析时会被自动忽略掉，以此来提高解析的精准率。比如通用场景下：嗯我看一下明天的天气吧 —&gt; 明天天气，这里把”嗯、我、看一下、的、吧”等口语化词都去掉了。又比如特定场景里：预定如家酒店 —&gt; 预订如家，在定酒店的场景里省略了 “酒店”， 可以将“酒店”配置为口语化的词。</li>
+<li>模板片段：UNIT2.0的对话模板提供了一种非常强大的用法——模板片段。多个模板片段组成一个对话模板，每个模板片段都可以由词槽、特征词、特定文本单独或组合而成，而且多个模板片段可以是无序的，也可以是有序的。顺序设为0就表示这个模板片段可以出现在用户query中的任意位置。而非0的，必须按照数字顺序在query中出现。此外还可以设置一个模板片段是否必须在用户query中出现。</li>
+<li><p>阈值：它是说当前模板配置的词槽、特征词占用户query的长度比例，当只有这个比例达到这个阈值的时候，我们才会判定用户的query就是这个模板所表示的意图。</p>
+<p>理解了这些概念后，我们就可以从真实场景的数据中提炼相应的对话模板了。以需确认数量物品这一意图为例：</p>
+</li>
+</ul>
+<p><img src="https://ai.bdstatic.com/file/59F28D8E4C5D4303A5BFF4E587FB1384" alt=""></p>
+<pre><code>我们首先来定义代表对物品的需求的特征词：
+
+在页面较下方找到特征词列表，点击新建特征词，填写下列内容，点击确定保存该特征词：
+</code></pre><p>kw_item_want，描述：物品需求</p>
+<p>词典值：</p>
+<p>我想要</p>
+<p>我要</p>
+<p>给我拿</p>
+<p>给我送一下</p>
+<p>给我</p>
+<p>送</p>
+<p>要</p>
+<p><img src="https://ai.bdstatic.com/file/76BB3E9746524A519D14AFA29CC44EA3" alt=""></p>
+<pre><code>完成新建我们所需的特征词后，点击添加对话模板来进行配置：
+</code></pre><p><img src="https://ai.bdstatic.com/file/7215E26CE8494747A07EBF26945D1ED3" alt=""></p>
+<pre><code>在选择必须匹配这一项时，因为在用户提到的物品类型为需确认数量物品类型时，我们才会定位到需确认数量物品意图，因此将user\_item\_numneeded词槽这一模板片段设置为必须匹配，而其余两个模板片段设置为非必须匹配，来保证模板的泛化能力。
+
+目前我们只配置了一条对话模板，当我们有多个对话模板时，它们之间是有优先级的，在对话模板列表的上面的优先级要高于下面的，可以选中一条对话模板，然后执行上移、下移的操作来调整优先级。
+
+关于对话模板的更多技巧说明可 下载文档进一步学习了解：https://pan.baidu.com/s/1j6cx9HPuRav1tvOToW2mEA
+</code></pre><p><strong>4.3.2  标注对话样本</strong></p>
+<pre><code>对话样本是技能通过对海量标注数据的深度学习，获得“理解”相应场景下的对话的能力。这部分我们要把需求分析最后一个阶段收集到的对话数据导入UNIT平台，然后给他们逐条标注意图、词槽。这部分数据可以用于后续的样本学习，让对话机器人获得更好的对话理解泛化能力。
+
+注意机器学习一般对训练样本有数量的要求，几条几十条数据很难训练出令人满意的泛化理解能力，在实际配置时需要海量样本的标注。标注方式参考产品手册，这里不做示例。
+</code></pre><p><strong>4.3.3  添加问答对</strong></p>
+<pre><code>在创建问答意图FAQ\_PARK时，系统已自动创建相应的问答集FAQ\_PARK，我们可在其中添加问答对。问答对有直接在页面上录入和导入问答对数据文件两种方式，本文示例在页面上录入问答对的方式：
+
+点击添加问题，录入问题文本后，再点击添加答案，录入问题的对应答案；问题与答案之间支持多对多的对应关系；
+</code></pre><p><img src="https://ai.bdstatic.com/file/EFC481F9CEC349A79C8EDAD2F79DC5F9" alt=""></p>
+<p>问题：</p>
+<p>停车场在哪</p>
+<p>车往哪停</p>
+<p>查询停车场位置</p>
+<p>哪里有停车场</p>
+<p>答案：</p>
+<p>停车场的位置在酒店地下一至三层，您可通过……进入停车场</p>
+<p><img src="https://ai.bdstatic.com/file/D6DE24992181481B8191F9D751C17EF9" alt=""></p>
+<p>点击保存，保存该问答对。</p>
+<p><strong>4.5  训练模型</strong></p>
+<p><img src="https://ai.bdstatic.com/file/4F48F390AA264AA5AE2FC88961FEE05A" alt=""></p>
+<pre><code>训练技能有两种方式，一种是只训练我们上面配置的对话模板，另外一种是 训练对话样本同时训练对话模板
+</code></pre><p><img src="https://ai.bdstatic.com/file/CD933D229CAA4B2B89044FCBF652425A" alt=""></p>
+<pre><code>系统默认必须训练对话模板，不论你有没有标注对话模板。如果这时如上图你在对话样本集里使用了默认选项『使用沙盒中的模型』，直接训练模型并生效到沙盒，会需要15~30秒的时间。（首次训练只能选择『使用沙盒中的模型』）
+
+如果如上图在对话样本集选项中选择了『重新选择样本』且选中了有标注样本的样本集，则对应后端的训练讲采用深度机器学习的策略进行样本的训练学习，同时也会把标注的模板也融合进来一起训练。这时训练的速度会与标注的对话样本量成正比。这里需要注意的是一定要选择系统自带的「闲聊负例样本」，这样可以降低技能的误召回情况，就是告诉技能哪些query是闲聊而不是我们设置的意图。
+</code></pre><p><strong>4.6  测试体验</strong></p>
+<pre><code>完成模型的训练后，就可以在测试窗口测试一下对话，看看对话效果是否符合预期了：
+</code></pre><p><img src="https://ai.bdstatic.com/file/5C4D0DC7C72745288C8F3A8E50AEFDC0" alt=""></p>
+<p><img src="https://ai.bdstatic.com/file/318C4EAD08894C9690302278661DD87C" alt=""></p>
+<p>本入门教程到此结束</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目/" rel="tag"># 项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/11/智能家居项目调研/" rel="next" title="智能家居项目调研">
+                <i class="fa fa-chevron-left"></i> 智能家居项目调研
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/12/智能家居自然语言理解平台的解决方案/" rel="prev" title="智能家居自然语言理解平台的解决方案">
+                智能家居自然语言理解平台的解决方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#【提升篇】酒店语音助手实例教程"><span class="nav-number">1.</span> <span class="nav-text">【提升篇】酒店语音助手实例教程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#矿泉水"><span class="nav-number">2.</span> <span class="nav-text">矿泉水</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#纯净水"><span class="nav-number">3.</span> <span class="nav-text">纯净水</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="图像风格迁移," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="图像风格迁移的现实应用Prisma修图APP Building the future of photo and video editing. 实验 Image-Captioning CNN-Encoder and RNN-Decoder (Bahdanau Attention) for image caption or image to text on MS-COCO dataset. Image">
+<meta name="keywords" content="图像风格迁移">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像风格迁移">
+<meta property="og:url" content="http://yoursite.com/2019/07/01/图像风格迁移/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="图像风格迁移的现实应用Prisma修图APP Building the future of photo and video editing. 实验 Image-Captioning CNN-Encoder and RNN-Decoder (Bahdanau Attention) for image caption or image to text on MS-COCO dataset. Image">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.prisma-ai.com/images/prisma-app-ios.jpeg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_13.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_9.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_20.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in39.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar39.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_39.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in57.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar57.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_57.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/0_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/0_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/0_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/1_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/1_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/1_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/2_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/2_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/2_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/3_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/3_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/3_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/4_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/4_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/4_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/5_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/5_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/5_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/6_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/6_naive.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/6_final_res2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_naive_popeye.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_result_popeye.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/8_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_naive_aircraft.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_result_aircraft.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/9_target.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/9_naive_dragon.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/9_result_dragon.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_c.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_s.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_256.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_512.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_768.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_c.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_s.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_256.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_512.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_768.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_c.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_s.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_256.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_512.jpg">
+<meta property="og:image" content="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_768.jpg">
+<meta property="og:updated_time" content="2019-07-01T00:52:52.111Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像风格迁移">
+<meta name="twitter:description" content="图像风格迁移的现实应用Prisma修图APP Building the future of photo and video editing. 实验 Image-Captioning CNN-Encoder and RNN-Decoder (Bahdanau Attention) for image caption or image to text on MS-COCO dataset. Image">
+<meta name="twitter:image" content="https://www.prisma-ai.com/images/prisma-app-ios.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/01/图像风格迁移/"/>
+
+
+
+
+
+  <title>图像风格迁移 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/01/图像风格迁移/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图像风格迁移</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-01T10:25:00+08:00">
+                2019-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/图像风格迁移/" itemprop="url" rel="index">
+                    <span itemprop="name">图像风格迁移</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/01/图像风格迁移/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/01/图像风格迁移/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="图像风格迁移的现实应用"><a href="#图像风格迁移的现实应用" class="headerlink" title="图像风格迁移的现实应用"></a>图像风格迁移的现实应用</h2><h3 id="Prisma修图APP"><a href="#Prisma修图APP" class="headerlink" title="Prisma修图APP"></a><a href="https://prisma-ai.com/" target="_blank" rel="noopener">Prisma修图APP</a></h3><p><img src="https://www.prisma-ai.com/images/prisma-app-ios.jpeg" height="460" width="230"></p>
+<p>Building the future of photo and video editing.</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><ul>
+<li><a href="https://github.com/yuanxiaosc/Image-Captioning" target="_blank" rel="noopener">Image-Captioning</a> CNN-Encoder and RNN-Decoder (Bahdanau Attention) for image caption or image to text on MS-COCO dataset.</li>
+<li><a href="https://github.com/yuanxiaosc/Image_to_Text" target="_blank" rel="noopener">Image_to_Text</a><br>Taking the image description task on the MS-COCO data set as an example, the template code of Image_to_Text is shown.</li>
+<li><a href="https://segmentfault.com/a/1190000017391689?utm_source=tag-newest" target="_blank" rel="noopener">图像风格转移</a></li>
+</ul>
+<h2 id="阅读资料"><a href="#阅读资料" class="headerlink" title="阅读资料"></a>阅读资料</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>内容</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://zhuanlan.zhihu.com/p/26746283" target="_blank" rel="noopener">图像风格迁移(Neural Style)简史</a></td>
+<td>总结1960-2015图像风格迁移历史</td>
+<td>20180104</td>
+</tr>
+<tr>
+<td><a href="https://cloud.tencent.com/developer/article/1435202" target="_blank" rel="noopener">寻找下一款Prisma APP：深度学习在图像处理中的应用探讨</a></td>
+<td>主要内容包括：传统的图像处理：如超分辨、灰度图彩色化、2D/3D转换等；图像/视频风格化；图像生成。</td>
+<td>20190526</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="图像风格迁移研究进展"><a href="#图像风格迁移研究进展" class="headerlink" title="图像风格迁移研究进展"></a>图像风格迁移研究进展</h2><blockquote>
+<p>more info see <a href="https://github.com/ycjing/Neural-Style-Transfer-Papers" target="_blank" rel="noopener">Neural-Style-Transfer-Papers</a></p>
+</blockquote>
+<h3 id="2015-Paper-A-Neural-Algorithm-of-Artistic-Style"><a href="#2015-Paper-A-Neural-Algorithm-of-Artistic-Style" class="headerlink" title="2015 Paper A Neural Algorithm of Artistic Style"></a>2015 Paper <a href="https://arxiv.org/abs/1508.06576" target="_blank" rel="noopener">A Neural Algorithm of Artistic Style</a></h3><blockquote>
+<p>In fine art, especially painting, humans have mastered the skill to create unique visual experiences through composing a complex interplay between the content and style of an image. Thus far the algorithmic basis of this process is unknown and there exists no artificial system with similar capabilities. However, in other key areas of visual perception such as object and face recognition near-human performance was recently demonstrated by a class of biologically inspired vision models called Deep Neural Networks. Here we introduce an artificial system based on a Deep Neural Network that creates artistic images of high perceptual quality. The system uses neural representations to separate and recombine content and style of arbitrary images, providing a neural algorithm for the creation of artistic images. Moreover, in light of the striking similarities between performance-optimised artificial neural networks and biological vision, our work offers a path forward to an algorithmic understanding of how humans create and perceive artistic imagery.</p>
+<p>在美术，尤其是绘画中，人类通过在图像的内容和风格之间构成复杂的相互作用，掌握了创造独特视觉体验的技能。到目前为止，该过程的算法基础是未知的，并且不存在具有类似能力的人工系统。然而，在视觉感知的其他关键领域，例如物体和人脸识别，近乎人类表现最近由一类被称为深度神经网络的生物学启发的视觉模型证明。在这里，我们介绍一个基于深度神经网络的人工系统，创建高感知质量的艺术图像。该系统使用神经表示来分离和重新组合任意图像的内容和风格，为艺术图像的创建提供神经算法。此外，鉴于性能优化的人工神经网络与生物视觉之间惊人的相似性，我们的工作为算法理解人类如何创造和感知艺术图像提供了一条前进的道路。</p>
+</blockquote>
+<h4 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.jianshu.com/p/9f03b61fdeac" target="_blank" rel="noopener">一个艺术风格化的神经网络算法</a></td>
+<td>论文中文翻译</td>
+</tr>
+<tr>
+<td><a href="https://github.com/titu1994/Neural-Style-Transfer" target="_blank" rel="noopener">Neural-Style-Transfer</a></td>
+<td>Keras Implementation of Neural Style Transfer from the paper “A Neural Algorithm of Artistic Style” (<a href="http://arxiv.org/abs/1508.06576" target="_blank" rel="noopener">http://arxiv.org/abs/1508.06576</a>) in Keras 2.0+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2017-GitHub-deep-photo-styletransfer"><a href="#2017-GitHub-deep-photo-styletransfer" class="headerlink" title="2017 GitHub deep-photo-styletransfer"></a>2017 GitHub <a href="https://github.com/luanfujun/deep-photo-styletransfer" target="_blank" rel="noopener">deep-photo-styletransfer</a></h3><p>Code and data for paper <a href="https://arxiv.org/abs/1703.07511" target="_blank" rel="noopener">Deep Photo Style Transfer</a></p>
+<blockquote>
+<p>This paper introduces a deep-learning approach to photographic style transfer that handles a large variety of image content while faithfully transferring the reference style. Our approach builds upon the recent work on painterly transfer that separates style from the content of an image by considering different layers of a neural network. However, as is, this approach is not suitable for photorealistic style transfer. Even when both the input and reference images are photographs, the output still exhibits distortions reminiscent of a painting. Our contribution is to constrain the transformation from the input to the output to be locally affine in colorspace, and to express this constraint as a custom fully differentiable energy term. We show that this approach successfully suppresses distortion and yields satisfying photorealistic style transfers in a broad variety of scenarios, including transfer of the time of day, weather, season, and artistic edits.</p>
+<p>本文介绍了一种深度学习的摄影风格转换方法，可以处理各种图像内容，同时忠实地传递参考风格。 我们的方法建立在最近的绘画转移工作的基础上，通过考虑神经网络的不同层，将风格与图像内容分开。 但是，这种方法不适合照片般逼真的风格转换。 即使输入和参考图像都是照片，输出仍然会呈现出与绘画相似的扭曲。 我们的贡献是限制从输入到输出的转换在颜色空间中局部仿射，并将该约束表达为定制的完全可微分的能量项。 我们表明，这种方法成功地抑制了失真，并在各种场景中产生令人满意的逼真风格转换，包括时间，天气，季节和艺术编辑的转移。</p>
+</blockquote>
+<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><p>Here are some results from our algorithm (from left to right are input, style and our output):</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in3.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar3.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_3.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in4.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar4.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_4.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in13.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar13.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_13.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in9.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar9.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_9.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in20.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar20.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_20.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in1.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar1.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_1.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in39.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar39.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_39.png" height="194" width="290">
+</p>
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/input/in57.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/style/tar57.png" height="194" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-photo-styletransfer/master/examples/refine_posterization/refine_57.png" height="194" width="290">
+</p>
+
+
+<h3 id="2018-GitHub-deep-painterly-harmonization"><a href="#2018-GitHub-deep-painterly-harmonization" class="headerlink" title="2018 GitHub deep-painterly-harmonization"></a>2018 GitHub <a href="https://github.com/luanfujun/deep-painterly-harmonization" target="_blank" rel="noopener">deep-painterly-harmonization</a></h3><p>Code and data for paper <a href="https://arxiv.org/abs/1804.03189" target="_blank" rel="noopener">Deep Painterly Harmonization</a></p>
+<p>Here are some results from our algorithm (from left to right are original painting, naive composite and our output):</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/0_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/0_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/0_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/1_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/1_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/1_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/2_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/2_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/2_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/3_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/3_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/3_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/4_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/4_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/4_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/5_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/5_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/5_final_res2.png" width="290">
+</p>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/6_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/6_naive.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/6_final_res2.png" width="290">
+</p>
+<!--
+<p align='center'>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/7_target.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/7_naive.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_final_res2.png' width='290'/>
+</p>
+-->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_naive_popeye.png" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/7_result_popeye.jpg" width="290">
+</p>
+
+<!--
+<p align='center'>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/8_target.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/8_naive.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_final_res.png' width='290'/>
+</p>
+<p align='center'>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/8_target.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_naive_balloon.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_result_balloon.jpg' width='290'/>
+</p>
+-->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/8_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_naive_aircraft.png" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/8_result_aircraft.png" width="290">
+</p>
+
+<!--
+<p align='center'>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/9_target.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/9_naive.jpg' width='290'/>
+  <img src='https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/9_final_res2.png' width='290'/>
+</p>
+-->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/data/9_target.jpg" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/9_naive_dragon.png" width="290">
+  <img src="https://raw.githubusercontent.com/luanfujun/deep-painterly-harmonization/master/results/9_result_dragon.jpg" width="290">
+</p>
+
+
+<h3 id="2018-GitHub-stroke-controllable-fast-style-transfer"><a href="#2018-GitHub-stroke-controllable-fast-style-transfer" class="headerlink" title="2018 GitHub stroke-controllable-fast-style-transfer"></a>2018 GitHub <a href="https://github.com/LouieYang/stroke-controllable-fast-style-transfer" target="_blank" rel="noopener">stroke-controllable-fast-style-transfer</a></h3><p>code for papaer <a href="https://arxiv.org/abs/1802.07101" target="_blank" rel="noopener">Stroke Controllable Fast Style Transfer with Adaptive Receptive Fields</a></p>
+<blockquote>
+<p>hotograph to an artistic style in real-time. This task involves controlling the stroke size in the stylized results, which remains an open challenge. In this paper, we present a stroke controllable style transfer network that can achieve continuous and spatial stroke size control. By analyzing the factors that influence the stroke size, we propose to explicitly account for the receptive field and the style image scales. We propose a StrokePyramid module to endow the network with adaptive receptive fields, and two training strategies to achieve faster convergence and augment new stroke sizes upon a trained model respectively. By combining the proposed runtime control strategies, our network can achieve continuous changes in stroke sizes and produce distinct stroke sizes in different spatial regions within the same output image.</p>
+<p>最近提出了快速风格转移方法以实时地将照片转换为艺术风格。 该任务涉及控制程式化结果中的笔划大小，这仍然是一个开放的挑战。 在本文中，我们提出了一种可以实现连续和空间行程尺寸控制的笔画可控式传送网络。 通过分析影响笔画大小的因素，我们建议明确考虑感受野和风格图像尺度。 我们提出了一个StrokePyramid模块，为网络赋予了自适应感受域，以及两种训练策略，分别在训练模型上实现更快的收敛和增加新的笔画大小。 通过组合所提出的运行时控制策略，我们的网络可以实现笔划大小的连续变化，并在同一输出图像内的不同空间区域中产生不同的笔划大小。</p>
+</blockquote>
+<h4 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h4><p>From left to right are content, style, 256-stroke-size result, 512-stroke-size result, 768-stroke-size result.</p>
+<p align="center">
+    <br>
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_c.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_s.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_256.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_512.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/1_768.jpg" width="165">
+    <br>
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_c.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_s.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_256.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_512.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/2_768.jpg" width="165">
+    <br>
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_c.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_s.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_256.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_512.jpg" width="165">
+    <img src="https://raw.githubusercontent.com/LouieYang/stroke-controllable-fast-style-transfer/master/examples/readme_examples/discrete_stroke/3_768.jpg" width="165">
+    <br>
+</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/图像风格迁移/" rel="tag"># 图像风格迁移</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/29/Transformer代码实现/" rel="next" title="Transformer 代码实现及应用">
+                <i class="fa fa-chevron-left"></i> Transformer 代码实现及应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding翻译/" rel="prev" title="XLNet Generalized Autoregressive Pretraining for Language Understanding 翻译">
+                XLNet Generalized Autoregressive Pretraining for Language Understanding 翻译 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像风格迁移的现实应用"><span class="nav-number">1.</span> <span class="nav-text">图像风格迁移的现实应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Prisma修图APP"><span class="nav-number">1.1.</span> <span class="nav-text">Prisma修图APP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">2.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读资料"><span class="nav-number">3.</span> <span class="nav-text">阅读资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像风格迁移研究进展"><span class="nav-number">4.</span> <span class="nav-text">图像风格迁移研究进展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2015-Paper-A-Neural-Algorithm-of-Artistic-Style"><span class="nav-number">4.1.</span> <span class="nav-text">2015 Paper A Neural Algorithm of Artistic Style</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#相关资源"><span class="nav-number">4.1.1.</span> <span class="nav-text">相关资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2017-GitHub-deep-photo-styletransfer"><span class="nav-number">4.2.</span> <span class="nav-text">2017 GitHub deep-photo-styletransfer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Examples"><span class="nav-number">4.2.1.</span> <span class="nav-text">Examples</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-GitHub-deep-painterly-harmonization"><span class="nav-number">4.3.</span> <span class="nav-text">2018 GitHub deep-painterly-harmonization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2018-GitHub-stroke-controllable-fast-style-transfer"><span class="nav-number">4.4.</span> <span class="nav-text">2018 GitHub stroke-controllable-fast-style-transfer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#examples"><span class="nav-number">4.4.1.</span> <span class="nav-text">examples</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

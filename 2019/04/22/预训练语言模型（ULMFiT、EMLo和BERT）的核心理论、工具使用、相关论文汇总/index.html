@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="论文,语言模型," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Significance: 预训练语言模型的意义 Instead of training the model from scratch, you can use another pre-trained model as the basis and only fine-tune it to solve the specific NLP task. Using pre-trained models a">
+<meta name="keywords" content="论文,语言模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总">
+<meta property="og:url" content="http://yoursite.com/2019/04/22/预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Significance: 预训练语言模型的意义 Instead of training the model from scratch, you can use another pre-trained model as the basis and only fine-tune it to solve the specific NLP task. Using pre-trained models a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-24T01:08:20.598Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总">
+<meta name="twitter:description" content="Significance: 预训练语言模型的意义 Instead of training the model from scratch, you can use another pre-trained model as the basis and only fine-tune it to solve the specific NLP task. Using pre-trained models a">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/22/预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总/"/>
+
+
+
+
+
+  <title>预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/22/预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-22T19:30:00+08:00">
+                2019-04-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/语言模型/" itemprop="url" rel="index">
+                    <span itemprop="name">语言模型</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/04/22/预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/04/22/预训练语言模型（ULMFiT、EMLo和BERT）的核心理论、工具使用、相关论文汇总/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Significance-预训练语言模型的意义"><a href="#Significance-预训练语言模型的意义" class="headerlink" title="Significance: 预训练语言模型的意义"></a>Significance: 预训练语言模型的意义</h2><ol>
+<li>Instead of training the model from scratch, you can use another pre-trained model as the basis and only fine-tune it to solve the specific NLP task.</li>
+<li>Using pre-trained models allows you to achieve the same or even better performance much faster and with much less labeled data.</li>
+</ol>
+<h2 id="Model-2018-年三个最主要的语言模型-ULMFiT、EMLo和BERT"><a href="#Model-2018-年三个最主要的语言模型-ULMFiT、EMLo和BERT" class="headerlink" title="Model: 2018 年三个最主要的语言模型 ULMFiT、EMLo和BERT"></a>Model: 2018 年三个最主要的语言模型 ULMFiT、EMLo和BERT</h2><ul>
+<li><a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="noopener">ULMFiT</a>, or Universal Language Model Fine-Tuning method, is likely the first effective approach to fine-tuning the language model. The authors demonstrate the importance of several novel techniques, including discriminative fine-tuning, slanted triangular learning rate, and gradual unfreezing, for retaining previous knowledge and avoiding catastrophic forgetting during fine-tuning.</li>
+<li><a href="https://arxiv.org/abs/1802.05365" target="_blank" rel="noopener">ELMo</a> word representations, or Embeddings from Language Models, are generated in a way to take the entire context into consideration. In particular, they are created as a weighted sum of the internal states of a deep bi-directional language model (biLM), pre-trained on a large text corpus. Furthermore, ELMo representations are based on characters so that the network can understand even out-of-vocabulary tokens unseen in training.</li>
+<li><a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">BERT</a>, or Bidirectional Encoder Representations from Transformers, is a new cutting-edge model that considers the context from both the left and the right sides of each word. The two key success factors are (1) masking part of input tokens to avoid cycles where words indirectly “see themselves”, and (2) pre-training a sentence relationship model. Finally, BERT is also a very big model trained on a huge word corpus.</li>
+</ul>
+<h2 id="Tool-使用三大语言模型的工具"><a href="#Tool-使用三大语言模型的工具" class="headerlink" title="Tool: 使用三大语言模型的工具"></a>Tool: 使用三大语言模型的工具</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>工具</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/1801.06146" target="_blank" rel="noopener">ULMFiT</a></td>
+<td><a href="https://github.com/fastai/fastai" target="_blank" rel="noopener">fastai</a></td>
+<td><a href="http://nlp.fast.ai/category/classification.html" target="_blank" rel="noopener">fastai NLP</a>; <a href="imdb_scripts">fastai imdb 例子</a>; <a href="https://www.analyticsvidhya.com/blog/2018/11/tutorial-text-classification-ulmfit-fastai-library/" target="_blank" rel="noopener">Tutorial on Text Classification (NLP) using ULMFiT and fastai Library in Python</a></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/1802.05365" target="_blank" rel="noopener">ELMo</a></td>
+<td><a href="https://allennlp.org/elmo" target="_blank" rel="noopener">allen-ELMo</a>;<a href="https://github.com/allenai/bilm-tf" target="_blank" rel="noopener">Google-ELMo</a></td>
+<td><a href="https://github.com/yuanxiaosc/ELMo" target="_blank" rel="noopener">ELMo-use-example</a></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">BERT</a></td>
+<td><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">Google-BERT</a></td>
+<td><a href="https://github.com/yuanxiaosc/BERT-for-Sequence-Labeling-and-Text-Classification" target="_blank" rel="noopener">BERT—use-example</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Summarie-ULMFiT、EMLo和BERT"><a href="#Summarie-ULMFiT、EMLo和BERT" class="headerlink" title="Summarie: ULMFiT、EMLo和BERT"></a>Summarie: ULMFiT、EMLo和BERT</h2><h3 id="UNIVERSAL-LANGUAGE-MODEL-FINE-TUNING-FOR-TEXT-CLASSIFICATION"><a href="#UNIVERSAL-LANGUAGE-MODEL-FINE-TUNING-FOR-TEXT-CLASSIFICATION" class="headerlink" title="UNIVERSAL LANGUAGE MODEL FINE-TUNING FOR TEXT CLASSIFICATION"></a>UNIVERSAL LANGUAGE MODEL FINE-TUNING FOR TEXT CLASSIFICATION</h3><p><strong>ORIGINAL ABSTRACT</strong><br>Inductive transfer learning has greatly impacted computer vision, but existing approaches in NLP still require task-specific modifications and training from scratch. We propose Universal Language Model Fine-tuning (ULMFiT), an effective transfer learning method that can be applied to any task in NLP, and introduce techniques that are key for fine-tuning a language model. Our method significantly outperforms the state-of-the-art on six text classification tasks, reducing the error by 18-24% on the majority of datasets. Furthermore, with only 100 labeled examples, it matches the performance of training from scratch on 100x more data. We open source our pretrained models and code.</p>
+<p><strong>OUR SUMMARY</strong><br>Howard and Ruder suggest using pre-trained models for solving a wide range of NLP problems. With this approach, you don’t need to train your model from scratch, but only fine-tune the original model. Their method, called Universal Language Model Fine-Tuning (ULMFiT) outperforms state-of-the-art results, reducing the error by 18-24%. Even more, with only 100 labeled examples, ULMFiT matches the performance of models trained from scratch on 10K labeled examples.</p>
+<p><strong>WHAT’S THE CORE IDEA OF THIS PAPER?</strong></p>
+<ol>
+<li>To address the lack of labeled data and to make NLP classification easier and less time-consuming, the researchers suggest applying transfer learning to NLP problems. Thus, instead of training the model from scratch, you can use another model that has been trained to solve a similar problem as the basis, and then fine-tune the original model to solve your specific problem.</li>
+<li>However, to be successful, this fine-tuning should take into account several important considerations:<ul>
+<li>Different layers should be fine-tuned to different extents as they capture different kinds of information.</li>
+<li>Adapting model’s parameters to task-specific features will be more efficient if the learning rate is firstly linearly increased and then linearly decayed.</li>
+<li>Fine-tuning all layers at once is likely to result in catastrophic forgetting; thus, it would be better to gradually unfreeze the model starting from the last layer.</li>
+</ul>
+</li>
+</ol>
+<p><strong>WHAT’S THE KEY ACHIEVEMENT?</strong></p>
+<ul>
+<li>Significantly outperforming state-of-the-art: reducing the error by 18-24%.<br>Much less labeled data needed: with only 100 labeled examples and 50K unlabeled, matching the performance of learning from scratch on 100x more data.</li>
+</ul>
+<h3 id="DEEP-CONTEXTUALIZED-WORD-REPRESENTATIONS"><a href="#DEEP-CONTEXTUALIZED-WORD-REPRESENTATIONS" class="headerlink" title="DEEP CONTEXTUALIZED WORD REPRESENTATIONS"></a>DEEP CONTEXTUALIZED WORD REPRESENTATIONS</h3><p><strong>ORIGINAL ABSTRACT</strong><br>We introduce a new type of deep contextualized word representation that models both (1) complex characteristics of word use (e.g., syntax and semantics), and (2) how these uses vary across linguistic contexts (i.e., to model polysemy). Our word vectors are learned functions of the internal states of a deep bidirectional language model (biLM), which is pre-trained on a large text corpus. We show that these representations can be easily added to existing models and significantly improve the state of the art across six challenging NLP problems, including question answering, textual entailment and sentiment analysis. We also present an analysis showing that exposing the deep internals of the pre-trained network is crucial, allowing downstream models to mix different types of semi-supervision signals.</p>
+<p><strong>OUR SUMMARY</strong><br>The team from the Allen Institute for Artificial Intelligence introduces a new type of deep contextualized word representation – Embeddings from Language Models (ELMo). In ELMO-enhanced models, each word is vectorized on the basis of the entire context in which it is used. Adding ELMo to the existing NLP systems results in 1) relative error reduction ranging from 6-20%, 2) a significantly lower number of epochs required to train the models and 3) a significantly reduced amount of training data needed to reach baseline performance.</p>
+<p><strong>WHAT’S THE CORE IDEA OF THIS PAPER?</strong></p>
+<ul>
+<li>To generate word embeddings as a weighted sum of the internal states of a deep bi-directional language model (biLM), pre-trained on a large text corpus.</li>
+<li>To include representations from all layers of a biLM as different layers represent different types of information.</li>
+<li>To base ELMo representations on characters so that the network can use morphological clues to “understand” out-of-vocabulary tokens unseen in training.</li>
+</ul>
+<p><strong>WHAT’S THE KEY ACHIEVEMENT?</strong></p>
+<ul>
+<li>Adding ELMo to the model leads to the new state-of-the-art results, with relative error reductions ranging from 6 – 20% across such NLP tasks as question answering, textual entailment, semantic role labeling, coreference resolution, named entity extraction, and sentiment analysis.</li>
+<li>Enhancing the model with ELMo results in a significantly lower number of updates required to reach state-of-the-art performance. Thus, the Semantic Role Labeling (SRL) model with ELMo needs only 10 epochs to exceed the baseline maximum reached after 486 epochs of training.</li>
+<li>Introducing ELMo to the model also significantly reduces the amount of training data needed to achieve the same level of performance. For example, for the SRL task, the ELMo-enhanced model needs only 1% of the training set to achieve the same performance as the baseline model with 10% of the training data.</li>
+</ul>
+<h3 id="BERT-PRE-TRAINING-OF-DEEP-BIDIRECTIONAL-TRANSFORMERS-FOR-LANGUAGE-UNDERSTANDING"><a href="#BERT-PRE-TRAINING-OF-DEEP-BIDIRECTIONAL-TRANSFORMERS-FOR-LANGUAGE-UNDERSTANDING" class="headerlink" title="BERT: PRE-TRAINING OF DEEP BIDIRECTIONAL TRANSFORMERS FOR LANGUAGE UNDERSTANDING"></a>BERT: PRE-TRAINING OF DEEP BIDIRECTIONAL TRANSFORMERS FOR LANGUAGE UNDERSTANDING</h3><p><strong>ORIGINAL ABSTRACT</strong><br>We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT representations can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications.</p>
+<p>BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE benchmark to 80.4% (7.6% absolute improvement), MultiNLI accuracy to 86.7 (5.6% absolute improvement) and the SQuAD v1.1 question answering Test F1 to 93.2 (1.5% absolute improvement), outperforming human performance by 2.0%.</p>
+<p><strong>OUR SUMMARY</strong><br>A Google AI team presents a new cutting-edge model for Natural Language Processing (NLP) – BERT, or Bidirectional Encoder Representations from Transformers. Its design allows the model to consider the context from both the left and the right sides of each word. While being conceptually simple, BERT obtains new state-of-the-art results on eleven NLP tasks, including question answering, named entity recognition and other tasks related to general language understanding.</p>
+<p><strong>WHAT’S THE CORE IDEA OF THIS PAPER?</strong></p>
+<ul>
+<li>Training a deep bidirectional model by randomly masking a percentage of input tokens – thus, avoiding cycles where words can indirectly “see themselves”.</li>
+<li>Also pre-training a sentence relationship model by building a simple binary classification task to predict whether sentence B immediately follows sentence A, thus allowing BERT to better understand relationships between sentences.</li>
+<li>Training a very big model (24 Transformer blocks, 1024-hidden, 340M parameters) with lots of data (3.3 billion word corpus).</li>
+</ul>
+<p><strong>WHAT’S THE KEY ACHIEVEMENT?</strong></p>
+<ol>
+<li>Advancing the state-of-the-art for 11 NLP tasks, including:<ul>
+<li>getting a GLUE score of 80.4%, which is 7.6% of absolute improvement from the previous best result;</li>
+<li>achieving 93.2% accuracy on SQuAD 1.1 and outperforming human performance by 2%.</li>
+</ul>
+</li>
+<li>Suggesting a pre-trained model, which doesn’t require any substantial architecture modifications to be applied to specific NLP tasks.</li>
+</ol>
+<h2 id="Paper-相关论文汇总"><a href="#Paper-相关论文汇总" class="headerlink" title="Paper: 相关论文汇总"></a>Paper: 相关论文汇总</h2><h3 id="ULMFiT-work-was-further-extended-and-applied-in-the-following-papers"><a href="#ULMFiT-work-was-further-extended-and-applied-in-the-following-papers" class="headerlink" title="ULMFiT work was further extended and applied in the following papers"></a>ULMFiT work was further extended and applied in the following papers</h3><h4 id="Improving-Language-Understanding-by-Generative-Pre-Training"><a href="#Improving-Language-Understanding-by-Generative-Pre-Training" class="headerlink" title="Improving Language Understanding by Generative Pre-Training"></a><a href="https://openai.com/blog/language-unsupervised/" target="_blank" rel="noopener">Improving Language Understanding by Generative Pre-Training</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task. In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9% on commonsense reasoning (Stories Cloze Test), 5.7% on question answering (RACE), and 1.5% on textual entailment (MultiNLI).</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>自然语言理解包括各种各样的任务，如文本蕴涵，问答，语义相似性评估和文档分类。虽然大量未标记的文本语料库很丰富，但用于学习这些特定任务的标记数据很少，这使得经过充分理解的模式训练模型具有挑战性。我们证明，通过对多种未标记文本语料库中的语言模型进行生成预训练，然后对每个特定任务进行辨别性调整，可以实现这些任务的巨大收益。与以前的方法相比，我们在微调期间利用任务感知输入转换来实现有效传输，同时对模型架构进行最少的更改。我们证明了我们的方法在广泛的自然语言理解基准上的有效性。我们的一般任务不可知模型优于使用针对每项任务专门设计的架构的经过训练的训练模型，在所研究的12项任务中的9项中显着改进了现有技术水平。例如，我们在常识推理（Stories Cloze Test）上获得8.9％的绝对改善，在问答（RACE）上达到5.7％，在文本蕴涵（MultiNLI）上达到1.5％。</p>
+</blockquote>
+<h4 id="Universal-Language-Model-Fine-Tuning-with-Subword-Tokenization-for-Polish"><a href="#Universal-Language-Model-Fine-Tuning-with-Subword-Tokenization-for-Polish" class="headerlink" title="Universal Language Model Fine-Tuning with Subword Tokenization for Polish"></a><a href="https://arxiv.org/abs/1810.10222" target="_blank" rel="noopener">Universal Language Model Fine-Tuning with Subword Tokenization for Polish</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Universal Language Model for Fine-tuning [arXiv:1801.06146] (ULMFiT) is one of the first NLP methods for efficient inductive transfer learning. Unsupervised pretraining results in improvements on many NLP tasks for English. In this paper, we describe a new method that uses subword tokenization to adapt ULMFiT to languages with high inflection. Our approach results in a new state-of-the-art for the Polish language, taking first place in Task 3 of PolEval’18. After further training, our final model outperformed the second best model by 35%. We have open-sourced our pretrained models and code.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>用于微调的通用语言模型[arXiv：1801.06146]（ULMFiT）是有效的归纳转移学习的第一种NLP方法之一。 无人监督的预训练可以改善英语的许多NLP任务。 在本文中，我们描述了一种新方法，该方法使用子词标记化来使ULMFiT适应具有高度变形的语言。 我们的方法为波兰语创造了一种新的先进技术，在PolEval’18的任务3中占据首位。 经过进一步培训，我们的最终模型比第二好的模型高出35％。 我们开源了我们的预训练模型和代码。</p>
+</blockquote>
+<h4 id="Universal-Language-Model-Fine-tuning-for-Patent-Classification"><a href="#Universal-Language-Model-Fine-tuning-for-Patent-Classification" class="headerlink" title="Universal Language Model Fine-tuning for Patent Classification"></a><a href="https://www.aclweb.org/anthology/papers/U/U18/U18-1013/" target="_blank" rel="noopener">Universal Language Model Fine-tuning for Patent Classification</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>This paper describes the methods used for the 2018 ALTA Shared Task. The task this year was to automatically classify Australian patents into their main International Patent Classiﬁcation section. Our ﬁnal submission used a Support Vector Machine (SVM) and Universal Language Model with Fine-tuning (ULMFiT). Our system achieved the best results in the student category.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>本文介绍了2018年ALTA共享任务使用的方法。 今年的任务是自动将澳大利亚专利分类为其主要的国际专利分类部分。 我们的最终提交使用支持向量机（SVM）和具有微调的通用语言模型（ULMFiT）。 我们的系统在学生类别中取得了最佳成绩。</p>
+</blockquote>
+<h3 id="ELMo-embeddings-have-been-already-used-in-a-number-of-important-research-papers-including"><a href="#ELMo-embeddings-have-been-already-used-in-a-number-of-important-research-papers-including" class="headerlink" title="ELMo embeddings have been already used in a number of important research papers including"></a>ELMo embeddings have been already used in a number of important research papers including</h3><h4 id="Linguistically-Informed-Self-Attention-for-Semantic-Role-Labeling"><a href="#Linguistically-Informed-Self-Attention-for-Semantic-Role-Labeling" class="headerlink" title="Linguistically-Informed Self-Attention for Semantic Role Labeling"></a><a href="https://arxiv.org/abs/1804.08199" target="_blank" rel="noopener">Linguistically-Informed Self-Attention for Semantic Role Labeling</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Current state-of-the-art semantic role labeling (SRL) uses a deep neural network with no explicit linguistic features. However, prior work has shown that gold syntax trees can dramatically improve SRL decoding, suggesting the possibility of increased accuracy from explicit modeling of syntax. In this work, we present linguistically-informed self-attention (LISA): a neural network model that combines multi-head self-attention with multi-task learning across dependency parsing, part-of-speech tagging, predicate detection and SRL. Unlike previous models which require significant pre-processing to prepare linguistic features, LISA can incorporate syntax using merely raw tokens as input, encoding the sequence only once to simultaneously perform parsing, predicate detection and role labeling for all predicates. Syntax is incorporated by training one attention head to attend to syntactic parents for each token. Moreover, if a high-quality syntactic parse is already available, it can be beneficially injected at test time without re-training our SRL model. In experiments on CoNLL-2005 SRL, LISA achieves new state-of-the-art performance for a model using predicted predicates and standard word embeddings, attaining 2.5 F1 absolute higher than the previous state-of-the-art on newswire and more than 3.5 F1 on out-of-domain data, nearly 10% reduction in error. On ConLL-2012 English SRL we also show an improvement of more than 2.5 F1. LISA also out-performs the state-of-the-art with contextually-encoded (ELMo) word representations, by nearly 1.0 F1 on news and more than 2.0 F1 on out-of-domain text.</p>
+</blockquote>
+<p><strong>摘要</strong><br>当前最先进的语义角色标记（SRL）使用深度神经网络，没有明确的语言特征。但是，之前的工作表明，黄金语法树可以显着改善SRL解码，这表明通过显式语法建模可以提高准确性。在这项工作中，我们提出了语言知情的自我关注（LISA）：一种神经网络模型，它将多头自我关注与多任务学习相结合，包括依赖解析，词性标注，谓词检测和SRL。与先前需要大量预处理来准备语言特征的模型不同，LISA可以仅使用原始令牌作为输入来合并语法，仅对序列编码一次以同时对所有谓词执行解析，谓词检测和角色标记。语法通过训练一个注意力头来参与每个令牌的句法父母。此外，如果已经有高质量的语法分析，则可以在测试时进行有益的注入，而无需重新训练我们的SRL模型。在CoNLL-2005 SRL的实验中，LISA使用预测谓词和标准字嵌入为模型实现了最新的最先进性能，比新闻专线上的先前技术水平高出2.5 F1绝对值3.5关于域外数据的F1，误差减少近10％。在ConLL-2012英语SRL上，我们也表现出超过2.5 F1的改进。 LISA还通过上下文编码（ELMo）单词表示超出了最新技术水平，在新闻上接近1.0 F1，在域外文本上超过2.0 F1。</p>
+<h4 id="Language-Model-Pre-training-for-Hierarchical-Document-Representations"><a href="#Language-Model-Pre-training-for-Hierarchical-Document-Representations" class="headerlink" title="Language Model Pre-training for Hierarchical Document Representations"></a><a href="https://arxiv.org/abs/1901.09128" target="_blank" rel="noopener">Language Model Pre-training for Hierarchical Document Representations</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Hierarchical neural architectures are often used to capture long-distance dependencies and have been applied to many document-level tasks such as summarization, document segmentation, and sentiment analysis. However, effective usage of such a large context can be difficult to learn, especially in the case where there is limited labeled data available. Building on the recent success of language model pretraining methods for learning flat representations of text, we propose algorithms for pre-training hierarchical document representations from unlabeled data. Unlike prior work, which has focused on pre-training contextual token representations or context-independent {sentence/paragraph} representations, our hierarchical document representations include fixed-length sentence/paragraph representations which integrate contextual information from the entire documents. Experiments on document segmentation, document-level question answering, and extractive document summarization demonstrate the effectiveness of the proposed pre-training algorithms.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>分层神经架构通常用于捕获长距离依赖关系，并已应用于许多文档级任务，如摘要，文档分段和情感分析。然而，这种大的上下文的有效使用可能难以学习，尤其是在可用的标记数据有限的情况下。在最近成功学习用于学习文本平面表示的语言模型预训练方法的基础上，我们提出了用于从未标记数据预训练分层文档表示的算法。与先前的工作不同，后者专注于预训练上下文令牌表示或与上下文无关的{句子/段落}表示，我们的分层文档表示包括固定长度的句子/段落表示，其整合来自整个文档的上下文信息。文档分割，文档级问答和提取文档摘要的实验证明了所提出的预训练算法的有效性。</p>
+</blockquote>
+<h4 id="Deep-Enhanced-Representation-for-Implicit-Discourse-Relation-Recognition"><a href="#Deep-Enhanced-Representation-for-Implicit-Discourse-Relation-Recognition" class="headerlink" title="Deep Enhanced Representation for Implicit Discourse Relation Recognition"></a><a href="https://arxiv.org/abs/1807.05154" target="_blank" rel="noopener">Deep Enhanced Representation for Implicit Discourse Relation Recognition</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Implicit discourse relation recognition is a challenging task as the relation prediction without explicit connectives in discourse parsing needs understanding of text spans and cannot be easily derived from surface features from the input sentence pairs. Thus, properly representing the text is very crucial to this task. In this paper, we propose a model augmented with different grained text representations, including character, subword, word, sentence, and sentence pair levels. The proposed deeper model is evaluated on the benchmark treebank and achieves state-of-the-art accuracy with greater than 48% in 11-way and F1 score greater than 50% in 4-way classifications for the first time according to our best knowledge.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>隐含话语关系识别是一项具有挑战性的任务，因为在话语分析中没有明确连接词的关系预测需要理解文本跨度，并且不能容易地从输入句子对的表面特征中导出。 因此，正确表示文本对于这项任务至关重要。 在本文中，我们提出了一个增加了不同粒度文本表示的模型，包括字符，子字，单词，句子和句子对等级。 根据我们的最佳知识，所提出的更深层次模型在基准树库上进行评估并达到最先进的准确度，11路方式超过48％，4路分类中F1分数首次超过50％。</p>
+</blockquote>
+<h3 id="BERT-was-introduced-only-in-late-2018-but-has-been-already-a-basis-for-some-further-research-advancements"><a href="#BERT-was-introduced-only-in-late-2018-but-has-been-already-a-basis-for-some-further-research-advancements" class="headerlink" title="BERT was introduced only in late 2018 but has been already a basis for some further research advancements"></a>BERT was introduced only in late 2018 but has been already a basis for some further research advancements</h3><h4 id="A-BERT-Baseline-for-the-Natural-Questions"><a href="#A-BERT-Baseline-for-the-Natural-Questions" class="headerlink" title="A BERT Baseline for the Natural Questions"></a><a href="https://arxiv.org/abs/1901.08634" target="_blank" rel="noopener">A BERT Baseline for the Natural Questions</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>This technical note describes a new baseline for the Natural Questions. Our model is based on BERT and reduces the gap between the model F1 scores reported in the original dataset paper and the human upper bound by 30% and 50% relative for the long and short answer tasks respectively. This baseline has been submitted to the official NQ leaderboard at this http URL. Code, preprocessed data and pretrained model are available at this https <a href="https://github.com/google-research/language/tree/master/language/question_answering/bert_joint" target="_blank" rel="noopener">URL</a>.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>本技术说明描述了自然问题的新基线。 我们的模型基于BERT，并且将原始数据集论文中报告的模型F1分数与人类上限之间的差距分别缩小了30％和50％相对于长期和短期答案任务。 此基线已通过此http URL提交给官方NQ排行榜。 此https URL提供代码，预处理数据和预训练模型。</p>
+</blockquote>
+<h4 id="SDNet-Contextualized-Attention-based-Deep-Network-for-Conversational-Question-Answering"><a href="#SDNet-Contextualized-Attention-based-Deep-Network-for-Conversational-Question-Answering" class="headerlink" title="SDNet: Contextualized Attention-based Deep Network for Conversational Question Answering"></a><a href="https://arxiv.org/abs/1812.03593" target="_blank" rel="noopener">SDNet: Contextualized Attention-based Deep Network for Conversational Question Answering</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Conversational question answering (CQA) is a novel QA task that requires understanding of dialogue context. Different from traditional single-turn machine reading comprehension (MRC) tasks, CQA includes passage comprehension, coreference resolution, and contextual understanding. In this paper, we propose an innovated contextualized attention-based deep neural network, SDNet, to fuse context into traditional MRC models. Our model leverages both inter-attention and self-attention to comprehend conversation context and extract relevant information from passage. Furthermore, we demonstrated a novel method to integrate the latest BERT contextual model. Empirical results show the effectiveness of our model, which sets the new state of the art result in CoQA leaderboard, outperforming the previous best model by 1.6% F1. Our ensemble model further improves the result by 2.7% F1.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>会话问答（CQA）是一项新颖的QA任务，需要了解对话背景。 与传统的单圈机器阅读理解（MRC）任务不同，CQA包括段落理解，共指解析和情境理解。 在本文中，我们提出了一种创新的基于情境的注重深度神经网络SDNet，将背景融合到传统的MRC模型中。 我们的模型利用相互关注和自我关注来理解对话背景并从段落中提取相关信息。 此外，我们演示了一种集成最新BERT上下文模型的新方法。 实证结果显示我们的模型的有效性，它在CoQA排行榜中设定了新的最新状态，比之前的最佳模型优于1.6％的F1。 我们的整体模型进一步提高了2.7％的F1结果。</p>
+</blockquote>
+<h4 id="Extracting-Multiple-Relations-in-One-Pass-with-Pre-Trained-Transformers"><a href="#Extracting-Multiple-Relations-in-One-Pass-with-Pre-Trained-Transformers" class="headerlink" title="Extracting Multiple-Relations in One-Pass with Pre-Trained Transformers"></a><a href="https://arxiv.org/abs/1902.01030" target="_blank" rel="noopener">Extracting Multiple-Relations in One-Pass with Pre-Trained Transformers</a></h4><p><strong>Abstract</strong></p>
+<blockquote>
+<p>Most approaches to extraction multiple relations from a paragraph require multiple passes over the paragraph. In practice, multiple passes are computationally expensive and this makes difficult to scale to longer paragraphs and larger text corpora. In this work, we focus on the task of multiple relation extraction by encoding the paragraph only once (one-pass). We build our solution on the pre-trained self-attentive (Transformer) models, where we first add a structured prediction layer to handle extraction between multiple entity pairs, then enhance the paragraph embedding to capture multiple relational information associated with each entity with an entity-aware attention technique. We show that our approach is not only scalable but can also perform state-of-the-art on the standard benchmark ACE 2005.</p>
+</blockquote>
+<p><strong>摘要</strong></p>
+<blockquote>
+<p>从段落中提取多个关系的大多数方法都要求在段落上多次传递。 在实践中，多次通过在计算上是昂贵的，并且这使得难以扩展到更长的段落和更大的文本语料库。 在这项工作中，我们通过仅对段落进行一次编码（一次通过）来专注于多关系提取的任务。 我们在预训练的自我关注（Transformer）模型上构建我们的解决方案，我们首先添加结构化预测层来处理多个实体对之间的提取，然后增强段落嵌入以捕获与每个实体关联的多个关系信息与实体  - 注意技术。 我们表明，我们的方法不仅可扩展，而且还可以在标准基准ACE 2005上执行最先进的技术。</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.topbots.com/ai-nlp-research-pretrained-language-models/" target="_blank" rel="noopener">WHAT EVERY NLP ENGINEER NEEDS TO KNOW ABOUT PRE-TRAINED LANGUAGE MODELS</a></td>
+<td>本文主要内容基于该文</td>
+<td>Feb 19, 2019</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/论文/" rel="tag"># 论文</a>
+          
+            <a href="/tags/语言模型/" rel="tag"># 语言模型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/22/Robust Chinese Word Segmentation with Contextualized Word Representations/" rel="next" title="Robust Chinese Word Segmentation with Contextualized Word Representations">
+                <i class="fa fa-chevron-left"></i> Robust Chinese Word Segmentation with Contextualized Word Representations
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/25/学习资源归类/" rel="prev" title="学习资源归类">
+                学习资源归类 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Significance-预训练语言模型的意义"><span class="nav-number">1.</span> <span class="nav-text">Significance: 预训练语言模型的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-2018-年三个最主要的语言模型-ULMFiT、EMLo和BERT"><span class="nav-number">2.</span> <span class="nav-text">Model: 2018 年三个最主要的语言模型 ULMFiT、EMLo和BERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tool-使用三大语言模型的工具"><span class="nav-number">3.</span> <span class="nav-text">Tool: 使用三大语言模型的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Summarie-ULMFiT、EMLo和BERT"><span class="nav-number">4.</span> <span class="nav-text">Summarie: ULMFiT、EMLo和BERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIVERSAL-LANGUAGE-MODEL-FINE-TUNING-FOR-TEXT-CLASSIFICATION"><span class="nav-number">4.1.</span> <span class="nav-text">UNIVERSAL LANGUAGE MODEL FINE-TUNING FOR TEXT CLASSIFICATION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DEEP-CONTEXTUALIZED-WORD-REPRESENTATIONS"><span class="nav-number">4.2.</span> <span class="nav-text">DEEP CONTEXTUALIZED WORD REPRESENTATIONS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT-PRE-TRAINING-OF-DEEP-BIDIRECTIONAL-TRANSFORMERS-FOR-LANGUAGE-UNDERSTANDING"><span class="nav-number">4.3.</span> <span class="nav-text">BERT: PRE-TRAINING OF DEEP BIDIRECTIONAL TRANSFORMERS FOR LANGUAGE UNDERSTANDING</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paper-相关论文汇总"><span class="nav-number">5.</span> <span class="nav-text">Paper: 相关论文汇总</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ULMFiT-work-was-further-extended-and-applied-in-the-following-papers"><span class="nav-number">5.1.</span> <span class="nav-text">ULMFiT work was further extended and applied in the following papers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Improving-Language-Understanding-by-Generative-Pre-Training"><span class="nav-number">5.1.1.</span> <span class="nav-text">Improving Language Understanding by Generative Pre-Training</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Universal-Language-Model-Fine-Tuning-with-Subword-Tokenization-for-Polish"><span class="nav-number">5.1.2.</span> <span class="nav-text">Universal Language Model Fine-Tuning with Subword Tokenization for Polish</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Universal-Language-Model-Fine-tuning-for-Patent-Classification"><span class="nav-number">5.1.3.</span> <span class="nav-text">Universal Language Model Fine-tuning for Patent Classification</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ELMo-embeddings-have-been-already-used-in-a-number-of-important-research-papers-including"><span class="nav-number">5.2.</span> <span class="nav-text">ELMo embeddings have been already used in a number of important research papers including</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linguistically-Informed-Self-Attention-for-Semantic-Role-Labeling"><span class="nav-number">5.2.1.</span> <span class="nav-text">Linguistically-Informed Self-Attention for Semantic Role Labeling</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Language-Model-Pre-training-for-Hierarchical-Document-Representations"><span class="nav-number">5.2.2.</span> <span class="nav-text">Language Model Pre-training for Hierarchical Document Representations</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Deep-Enhanced-Representation-for-Implicit-Discourse-Relation-Recognition"><span class="nav-number">5.2.3.</span> <span class="nav-text">Deep Enhanced Representation for Implicit Discourse Relation Recognition</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BERT-was-introduced-only-in-late-2018-but-has-been-already-a-basis-for-some-further-research-advancements"><span class="nav-number">5.3.</span> <span class="nav-text">BERT was introduced only in late 2018 but has been already a basis for some further research advancements</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#A-BERT-Baseline-for-the-Natural-Questions"><span class="nav-number">5.3.1.</span> <span class="nav-text">A BERT Baseline for the Natural Questions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SDNet-Contextualized-Attention-based-Deep-Network-for-Conversational-Question-Answering"><span class="nav-number">5.3.2.</span> <span class="nav-text">SDNet: Contextualized Attention-based Deep Network for Conversational Question Answering</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Extracting-Multiple-Relations-in-One-Pass-with-Pre-Trained-Transformers"><span class="nav-number">5.3.3.</span> <span class="nav-text">Extracting Multiple-Relations in One-Pass with Pre-Trained Transformers</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Attention,Transformer,Sequence-to-Sequence," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Attention is All You Need 是谷歌发表的文章，针对nlp里的机器翻译问题，提出了一种被称为”Transformer”的网络结构，基于注意力机制。文章提出，以往nlp里大量使用RNN结构和encoder-decoder结构，RNN及其衍生网络的缺点就是慢，问题在于前后隐藏状态的依赖性，无法实现并行，而文章提出的”Transformer”完全摒弃了递归结构，依赖注意力机制，挖掘">
+<meta name="keywords" content="Attention,Transformer,Sequence-to-Sequence">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention is All You Need">
+<meta property="og:url" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="Attention is All You Need 是谷歌发表的文章，针对nlp里的机器翻译问题，提出了一种被称为”Transformer”的网络结构，基于注意力机制。文章提出，以往nlp里大量使用RNN结构和encoder-decoder结构，RNN及其衍生网络的缺点就是慢，问题在于前后隐藏状态的依赖性，无法实现并行，而文章提出的”Transformer”完全摒弃了递归结构，依赖注意力机制，挖掘">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/self-attention-matrix-calculation.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/self-attention-matrix-calculation-2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/attention_example.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_qkv.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_weight_matrix_o.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_z.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/transformer_multi-headed_self-attention-recap.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/p1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/p2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/p3.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/p4.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/y1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/y2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/k1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/k2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u3.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u4.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u5.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u6.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u7.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u8.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u9.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/u10.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/seq2seq_example.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/attention_nmt_model.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/transformer_nmt_model.png">
+<meta property="og:updated_time" content="2019-09-20T02:53:59.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Attention is All You Need">
+<meta name="twitter:description" content="Attention is All You Need 是谷歌发表的文章，针对nlp里的机器翻译问题，提出了一种被称为”Transformer”的网络结构，基于注意力机制。文章提出，以往nlp里大量使用RNN结构和encoder-decoder结构，RNN及其衍生网络的缺点就是慢，问题在于前后隐藏状态的依赖性，无法实现并行，而文章提出的”Transformer”完全摒弃了递归结构，依赖注意力机制，挖掘">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/self-attention-matrix-calculation.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/"/>
+
+
+
+
+
+  <title>Attention is All You Need | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/06/Attention_is_All_You_Need/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Attention is All You Need</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-06T11:30:50+08:00">
+                2018-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/" itemprop="url" rel="index">
+                    <span itemprop="name">论文</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/论文/神经机器翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">神经机器翻译</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/06/Attention_is_All_You_Need/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/06/Attention_is_All_You_Need/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention is All You Need</a> 是谷歌发表的文章，针对nlp里的机器翻译问题，提出了一种被称为”Transformer”的网络结构，基于注意力机制。文章提出，以往nlp里大量使用RNN结构和encoder-decoder结构，RNN及其衍生网络的缺点就是慢，问题在于前后隐藏状态的依赖性，无法实现并行，而文章提出的”Transformer”完全摒弃了递归结构，依赖注意力机制，挖掘输入和输出之间的关系，这样做最大的好处是能够并行计算了。</p>
+<blockquote>
+<p>Transformer完整实现：<a href="https://github.com/yuanxiaosc/Transformer_implementation_and_application" target="_blank" rel="noopener">https://github.com/yuanxiaosc/Transformer_implementation_and_application</a></p>
+</blockquote>
+<h2 id="论文精要"><a href="#论文精要" class="headerlink" title="论文精要"></a><a href="https://arxiv.org/pdf/1706.03762v5.pdf" target="_blank" rel="noopener">论文精要</a></h2><h3 id="自注意力机制机制"><a href="#自注意力机制机制" class="headerlink" title="自注意力机制机制"></a>自注意力机制机制</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/self-attention-matrix-calculation.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/self-attention-matrix-calculation-2.png" alt=""><br>$Attention(Q, K, V)=softmax(\dfrac{QK^T}{\sqrt{d_k}})V$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Q: [batch_size, num_heads, Q_sequence_length, Q_depth]</span><br><span class="line">K: [batch_size, num_heads, K_sequence_length, K_depth]</span><br><span class="line">V: [batch_size, num_heads, V_sequence_length, V_depth]</span><br></pre></td></tr></table></figure>
+<p>需要满足两点：</p>
+<ol>
+<li>Q_depth = K_depth;</li>
+<li>K_sequence_length = V_sequence_length</li>
+</ol>
+<p>第一点保证可以通过$QK^T$计算当前查询Q对应的K键，第二点保证K和V一一对应（选择一个K那么就能找到k对应的v）。</p>
+<p>$MultiHead(Q, K, V)=Concat(head_1,…,head_h)W^o $<br>$where head_i=Attention(QW^Q_i, KW^K_i, VW^V_i)$</p>
+<p>The attention function used by the transformer takes three inputs: Q (query), K (key), V (value). The equation used to calculate the attention weights is:</p>
+<script type="math/tex; mode=display">\Large{Attention(Q, K, V) = softmax_k(\frac{QK^T}{\sqrt{d_k}}) V}</script><p>The dot-product attention is scaled by a factor of square root of the depth. This is done because for large values of depth, the dot product grows large in magnitude pushing the softmax function where it has small gradients resulting in a very hard softmax.</p>
+<p>For example, consider that <code>Q</code> and <code>K</code> have a mean of 0 and variance of 1. Their matrix multiplication will have a mean of 0 and variance of <code>dk</code>. Hence, <em>square root of <code>dk</code></em> is used for scaling (and not any other number) because the matmul of <code>Q</code> and <code>K</code> should have a mean of 0 and variance of 1, so that we get a gentler softmax.</p>
+<p>The mask is multiplied with <em>-1e9 (close to negative infinity).</em> This is done because the mask is summed with the scaled matrix multiplication of Q and K and is applied immediately before a softmax. The goal is to zero out these cells, and large negative inputs to softmax are near zero in the output.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">def scaled_dot_product_attention(q, k, v, mask):</span><br><span class="line">  &quot;&quot;&quot;Calculate the attention weights.</span><br><span class="line">  q, k, v must have matching leading dimensions.</span><br><span class="line">  k, v must have matching penultimate dimension, i.e.: seq_len_k = seq_len_v.</span><br><span class="line">  The mask has different shapes depending on its type(padding or look ahead)</span><br><span class="line">  but it must be broadcastable for addition.</span><br><span class="line"></span><br><span class="line">  Args:</span><br><span class="line">    q: query shape == (..., seq_len_q, depth)</span><br><span class="line">    k: key shape == (..., seq_len_k, depth)</span><br><span class="line">    v: value shape == (..., seq_len_v, depth_v)</span><br><span class="line">    mask: Float tensor with shape broadcastable</span><br><span class="line">          to (..., seq_len_q, seq_len_k). Defaults to None.</span><br><span class="line"></span><br><span class="line">  Returns:</span><br><span class="line">    output, attention_weights</span><br><span class="line">  &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">  matmul_qk = tf.matmul(q, k, transpose_b=True)  # (..., seq_len_q, seq_len_k)</span><br><span class="line"></span><br><span class="line">  # scale matmul_qk</span><br><span class="line">  dk = tf.cast(tf.shape(k)[-1], tf.float32)</span><br><span class="line">  scaled_attention_logits = matmul_qk / tf.math.sqrt(dk)</span><br><span class="line"></span><br><span class="line">  # add the mask to the scaled tensor.</span><br><span class="line">  if mask is not None:</span><br><span class="line">    scaled_attention_logits += (mask * -1e9)</span><br><span class="line"></span><br><span class="line">  # softmax is normalized on the last axis (seq_len_k) so that the scores</span><br><span class="line">  # add up to 1.</span><br><span class="line">  attention_weights = tf.nn.softmax(scaled_attention_logits, axis=-1)  # (..., seq_len_q, seq_len_k)</span><br><span class="line"></span><br><span class="line">  output = tf.matmul(attention_weights, v)  # (..., seq_len_v, depth_v)</span><br><span class="line"></span><br><span class="line">  return output, attention_weights</span><br></pre></td></tr></table></figure>
+<p>As the softmax normalization is done on K, its values decide the amount of importance given to Q.</p>
+<p>The output represents the multiplication of the attention weights and the V (value) vector. This ensures that the words we want to focus on are kept as is and the irrelevant words are flushed out.</p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/attention_example.png" alt=""></p>
+<h3 id="多头自注意力机制"><a href="#多头自注意力机制" class="headerlink" title="多头自注意力机制"></a>多头自注意力机制</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_qkv.png" alt=""></p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_weight_matrix_o.png" alt=""></p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/transformer_attention_heads_z.png" alt=""></p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/transformer_multi-headed_self-attention-recap.png" alt=""></p>
+<h2 id="深入解析-Attention-is-All-You-Need-中自注意力机制"><a href="#深入解析-Attention-is-All-You-Need-中自注意力机制" class="headerlink" title="深入解析 Attention is All You Need 中自注意力机制"></a>深入解析 Attention is All You Need 中自注意力机制</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://jalammar.github.io/illustrated-transformer/" target="_blank" rel="noopener">The Illustrated Transformer</a></td>
+<td>对论文解析的最好的一篇博文，制作精美</td>
+<td>20190228</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/1706.03762v5" target="_blank" rel="noopener">Attention Is All You Need</a></td>
+<td>原始论文</td>
+<td>20170612</td>
+</tr>
+<tr>
+<td><a href="http://nlp.seas.harvard.edu/2018/04/03/attention.html" target="_blank" rel="noopener">The Annotated Transformer</a></td>
+<td>harvard NLP 解读原文</td>
+<td>20180403</td>
+</tr>
+<tr>
+<td><a href="https://github.com/tensorflow/models/tree/master/official/transformer" target="_blank" rel="noopener">Transformer Translation Model</a></td>
+<td>TensorFlow 官方模型复现</td>
+<td>长期更新</td>
+</tr>
+<tr>
+<td><a href="https://nvidia.github.io/OpenSeq2Seq/html/machine-translation.html" target="_blank" rel="noopener">Transformer Translation Model</a></td>
+<td>TensorFlow NVIDIA模型复现</td>
+<td>长期更新</td>
+</tr>
+<tr>
+<td><a href="https://github.com/Lsdefine/attention-is-all-you-need-keras" target="_blank" rel="noopener">attention-is-all-you-need-keras</a></td>
+<td>Keras 论文复现</td>
+<td>201807</td>
+</tr>
+<tr>
+<td>Attention Is All You Need code we used to train and evaluate our models is available at <a href="https://github.com/tensorflow/tensor2tensor" target="_blank" rel="noopener">https://github.com/tensorflow/tensor2tensor</a></td>
+<td>原始论文模型评估</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/Synced-github-implement-project-machine-translation-by-transformer?from=synced&amp;keyword=Transformer" target="_blank" rel="noopener">基于注意力机制，机器之心带你理解与训练神经机器翻译系统</a></td>
+<td>复现论文+ 解析</td>
+<td>20180512</td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-06-06-7" target="_blank" rel="noopener">大规模集成Transformer模型，阿里达摩院如何打造WMT 2018机器翻译获胜系统</a></td>
+<td>论文实际应用</td>
+<td>201806</td>
+</tr>
+<tr>
+<td><a href="https://github.com/bojone/attention/blob/master/attention_keras.py" target="_blank" rel="noopener">attention_keras.py</a></td>
+<td>论文注意力机制（部分）复现</td>
+<td>20180528</td>
+</tr>
+<tr>
+<td><a href="https://cloud.tencent.com/developer/article/1153079" target="_blank" rel="noopener">“变形金刚”为何强大：从模型到代码全面解析Google Tensor2Tensor系统</a></td>
+<td>Google Tensor2Tensor系统是一套十分强大的深度学习系统，在多个任务上的表现非常抢眼。尤其在机器翻译问题上，单模型的表现就可以超过之前方法的集成模型。这一套系统的模型结构、训练和优化技巧等，可以被利用到公司的产品线上，直接转化成生产力。本文对Tensor2Tensor系统从模型到代码进行了全面的解析，期望能够给大家提供有用的信息。</td>
+<td>20181106</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="序列到序列任务与Transformer模型"><a href="#序列到序列任务与Transformer模型" class="headerlink" title="序列到序列任务与Transformer模型"></a><a href="https://cloud.tencent.com/developer/article/1153079" target="_blank" rel="noopener">序列到序列任务与Transformer模型</a></h2><h3 id="序列到序列任务与Encoder-Decoder框架"><a href="#序列到序列任务与Encoder-Decoder框架" class="headerlink" title="序列到序列任务与Encoder-Decoder框架"></a>序列到序列任务与Encoder-Decoder框架</h3><p>序列到序列（Sequence-to-Sequence）是自然语言处理中的一个常见任务，主要用来做泛文本生成的任务，像机器翻译、文本摘要、歌词/故事生成、对话机器人等。最具有代表性的一个任务就是机器翻译（Machine Translation），将一种语言的序列映射到另一个语言的序列。例如，在汉-英机器翻译任务中，模型要将一个汉语句子（词序列）转化成一个英语句子（词序列）。</p>
+<p>目前Encoder-Decoder框架是解决序列到序列问题的一个主流模型。模型使用Encoder对source sequence进行压缩表示，使用Decoder基于源端的压缩表示生成target sequence。该结构的好处是可以实现两个sequence之间end-to-end方式的建模，模型中所有的参数变量统一到一个目标函数下进行训练，模型表现较好。图1展示了Encoder-Decoder模型的结构，从底向上是一个机器翻译的过程。<br><img src="/2018/11/06/Attention_is_All_You_Need/p1.png" alt=""><br>Encoder和Decoder可以选用不同结构的Neural Network，比如RNN、CNN。RNN的工作方式是对序列根据时间步，依次进行压缩表示。使用RNN的时候，一般会使用双向的RNN结构。具体方式是使用一个RNN对序列中的元素进行从左往右的压缩表示，另一个RNN对序列进行从右向左的压缩表示。两种表示被联合起来使用，作为最终序列的分布式表示。使用CNN结构的时候，一般使用多层的结构，来实现序列局部表示到全局表示的过程。使用RNN建模句子可以看做是一种时间序列的观点，使用CNN建模句子可以看做一种结构化的观点。使用RNN结构的序列到序列模型主要包括RNNSearch、GNMT等，使用CNN结构的序列到序列模型主要有ConvS2S等。</p>
+<h3 id="神经网络模型与语言距离依赖现象"><a href="#神经网络模型与语言距离依赖现象" class="headerlink" title="神经网络模型与语言距离依赖现象"></a>神经网络模型与语言距离依赖现象</h3><p>Transformer是一种建模序列的新方法，序列到序列的模型依然是沿用了上述经典的Encoder-Decoder结构，不同的是不再使用RNN或是CNN作为序列建模机制了，而是使用了self-attention机制。这种机制理论上的优势就是更容易捕获“长距离依赖信息（long distance dependency）”。所谓的“长距离依赖信息”可以这么来理解：1）一个词其实是一个可以表达多样性语义信息的符号（歧义问题）。2）一个词的语义确定，要依赖其所在的上下文环境。（根据上下文消岐）3）有的词可能需要一个范围较小的上下文环境就能确定其语义（短距离依赖现象），有的词可能需要一个范围较大的上下文环境才能确定其语义（长距离依赖现象）。</p>
+<p>举个例子，看下面两句话：“山上有很多杜鹃，春天到了的时候，会漫山遍野的开放，非常美丽。” “山上有很多杜鹃，春天到了的时候，会漫山遍野的啼鸣，非常婉转。”在这两句话中，“杜鹃”分别指花（azalea）和鸟（cuckoo）。在机器翻译问题中，如果不看距其比较远的距离的词，很难将“杜鹃”这个词翻译正确。该例子是比较明显的一个例子，可以明显的看到词之间的远距离依赖关系。当然，绝大多数的词义在一个较小范围的上下文语义环境中就可以确定，像上述的例子在语言中占的比例会相对较小。我们期望的是模型既能够很好的学习到短距离的依赖知识，也能够学习到长距离依赖的知识。</p>
+<p>那么，为什么Transformer中的self-attention理论上能够更好的捕获这种长短距离的依赖知识呢？我们直观的来看一下，基于RNN、CNN、self-attention的三种序列建模方法，任意两个词之间的交互距离上的区别。图2是一个使用双向RNN来对序列进行建模的方法。由于是对序列中的元素按顺序处理的，两个词之间的交互距离可以认为是他们之间的相对距离。W1和Wn之间的交互距离是n-1。带有门控（Gate）机制的RNN模型理论上可以对历史信息进行有选择的存储和遗忘，具有比纯RNN结构更好的表现，但是门控参数量一定的情况下，这种能力是一定的。随着句子的增长，相对距离的增大，存在明显的理论上限。<br><img src="/2018/11/06/Attention_is_All_You_Need/p2.png" alt=""><br>图3展示了使用多层CNN对序列进行建模的方法。第一层的CNN单元覆盖的语义环境范围较小，第二层覆盖的语义环境范围会变大，依次类推，越深层的CNN单元，覆盖的语义环境会越大。一个词首先会在底层CNN单元上与其近距离的词产生交互，然后在稍高层次的CNN单元上与其更远一些词产生交互。所以，多层的CNN结构体现的是一种从局部到全局的特征抽取过程。词之间的交互距离，与他们的相对距离成正比。距离较远的词只能在较高的CNN节点上相遇，才产生交互。这个过程可能会存在较多的信息丢失。<br><img src="/2018/11/06/Attention_is_All_You_Need/p3.png" alt=""><br>图4展示的是基于self-attention机制的序列建模方法。注意，为了使图展示的更清晰，少画了一些连接线，图中“sentence”层中的每个词和第一层self-attention layer中的节点都是全连接的关系，第一层self-attention layer和第二层self-attention layer之间的节点也都是全连接的关系。我们可以看到在这种建模方法中，任意两个词之间的交互距离都是1，与词之间的相对距离不存在关系。这种方式下，每个词的语义的确定，都考虑了与整个句子中所有的词的关系。多层的self-attention机制，使得这种全局交互变的更加复杂，能够捕获到更多的信息。<br><img src="/2018/11/06/Attention_is_All_You_Need/p4.png" alt=""><br>综上，self-attention机制在建模序列问题时，能够捕获长距离依赖知识，具有更好的理论基础。</p>
+<h2 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a><a href="https://arxiv.org/abs/1706.03762v5" target="_blank" rel="noopener">Attention Is All You Need</a></h2><p>Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin<br>(Submitted on 12 Jun 2017 (v1), last revised 6 Dec 2017 (this version, v5))</p>
+<blockquote>
+<p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.</p>
+</blockquote>
+<p>Comments:    15 pages, 5 figures<br>Subjects:    Computation and Language (cs.CL); Machine Learning (cs.LG)<br>Cite as:    arXiv:1706.03762 [cs.CL]<br>     (or arXiv:1706.03762v5 [cs.CL] for this version)</p>
+<h3 id="论文模型图片"><a href="#论文模型图片" class="headerlink" title="论文模型图片"></a>论文模型图片</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/y1.png" alt=""></p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/y2.png" alt=""></p>
+<h3 id="论文结果可视化"><a href="#论文结果可视化" class="headerlink" title="论文结果可视化"></a>论文结果可视化</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/k1.png" alt=""></p>
+<p><img src="/2018/11/06/Attention_is_All_You_Need/k2.png" alt=""></p>
+<h3 id="论文原文"><a href="#论文原文" class="headerlink" title="论文原文"></a>论文原文</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/u1.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u2.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u3.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u4.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u5.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u6.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u7.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u8.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u9.png" alt=""><br><img src="/2018/11/06/Attention_is_All_You_Need/u10.png" alt=""></p>
+<h2 id="seq2seq-example"><a href="#seq2seq-example" class="headerlink" title="seq2seq_example"></a><a href="https://github.com/farizrahman4u/seq2seq" target="_blank" rel="noopener">seq2seq_example</a></h2><p><img src="/2018/11/06/Attention_is_All_You_Need/seq2seq_example.png" alt=""><br>编码器 - 解码器架构 - ：编码器将源句子转换为“含义”向量，该向量通过解码器以产生翻译。</p>
+<h2 id="NMT-Keras"><a href="#NMT-Keras" class="headerlink" title="NMT-Keras"></a><a href="https://github.com/lvapeab/nmt-keras" target="_blank" rel="noopener">NMT-Keras</a></h2><h3 id="Attentional-recurrent-neural-network-NMT-model"><a href="#Attentional-recurrent-neural-network-NMT-model" class="headerlink" title="Attentional recurrent neural network NMT model"></a>Attentional recurrent neural network NMT model</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/attention_nmt_model.png" alt=""></p>
+<h3 id="Transformer-NMT-model"><a href="#Transformer-NMT-model" class="headerlink" title="Transformer NMT model"></a>Transformer NMT model</h3><p><img src="/2018/11/06/Attention_is_All_You_Need/transformer_nmt_model.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Attention/" rel="tag"># Attention</a>
+          
+            <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+          
+            <a href="/tags/Sequence-to-Sequence/" rel="tag"># Sequence-to-Sequence</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/30/Semi_Supervised_sequence_tagging_with_bidirectional_language_models/" rel="next" title="Semi-supervised sequence tagging with bidirectional language models">
+                <i class="fa fa-chevron-left"></i> Semi-supervised sequence tagging with bidirectional language models
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/06/LearningRate模型的学习率/" rel="prev" title="LearningRate模型的学习率">
+                LearningRate模型的学习率 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#论文精要"><span class="nav-number">1.</span> <span class="nav-text">论文精要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自注意力机制机制"><span class="nav-number">1.1.</span> <span class="nav-text">自注意力机制机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多头自注意力机制"><span class="nav-number">1.2.</span> <span class="nav-text">多头自注意力机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深入解析-Attention-is-All-You-Need-中自注意力机制"><span class="nav-number">2.</span> <span class="nav-text">深入解析 Attention is All You Need 中自注意力机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列到序列任务与Transformer模型"><span class="nav-number">3.</span> <span class="nav-text">序列到序列任务与Transformer模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#序列到序列任务与Encoder-Decoder框架"><span class="nav-number">3.1.</span> <span class="nav-text">序列到序列任务与Encoder-Decoder框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型与语言距离依赖现象"><span class="nav-number">3.2.</span> <span class="nav-text">神经网络模型与语言距离依赖现象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention-Is-All-You-Need"><span class="nav-number">4.</span> <span class="nav-text">Attention Is All You Need</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#论文模型图片"><span class="nav-number">4.1.</span> <span class="nav-text">论文模型图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#论文结果可视化"><span class="nav-number">4.2.</span> <span class="nav-text">论文结果可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#论文原文"><span class="nav-number">4.3.</span> <span class="nav-text">论文原文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#seq2seq-example"><span class="nav-number">5.</span> <span class="nav-text">seq2seq_example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NMT-Keras"><span class="nav-number">6.</span> <span class="nav-text">NMT-Keras</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Attentional-recurrent-neural-network-NMT-model"><span class="nav-number">6.1.</span> <span class="nav-text">Attentional recurrent neural network NMT model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transformer-NMT-model"><span class="nav-number">6.2.</span> <span class="nav-text">Transformer NMT model</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

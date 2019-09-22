@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="经典支持向量机 Support Vector Machines在机器学习中，支持向量机是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后">
+<meta name="keywords" content="深度学习;机器学习;人工智能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机">
+<meta property="og:url" content="http://yoursite.com/2018/11/22/支持向量机/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="经典支持向量机 Support Vector Machines在机器学习中，支持向量机是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/点到直线距离公式.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/01_introduction.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_23_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_23_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_23_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_19_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_19_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/04_nonlinear_data_linear_kernel.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/支持向量机//04_linear_svm_gaussian.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_24_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_24_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_24_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/05_non_linear_svms.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_20_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_20_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_20_2.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/06_multiclass_svm.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_25_0.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_25_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/11/22/支持向量机/output_25_2.png">
+<meta property="og:updated_time" content="2019-08-20T14:08:09.680Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="支持向量机">
+<meta name="twitter:description" content="经典支持向量机 Support Vector Machines在机器学习中，支持向量机是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后">
+<meta name="twitter:image" content="http://yoursite.com/2018/11/22/支持向量机/点到直线距离公式.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/22/支持向量机/"/>
+
+
+
+
+
+  <title>支持向量机 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/22/支持向量机/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">支持向量机</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-22T08:30:15+08:00">
+                2018-11-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/支持向量机/" itemprop="url" rel="index">
+                    <span itemprop="name">支持向量机</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/22/支持向量机/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/22/支持向量机/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="经典支持向量机-Support-Vector-Machines"><a href="#经典支持向量机-Support-Vector-Machines" class="headerlink" title="经典支持向量机 Support Vector Machines"></a><a href="https://en.wikipedia.org/wiki/Support_vector_machine" target="_blank" rel="noopener">经典支持向量机 Support Vector Machines</a></h1><p>在机器学习中，支持向量机是在分类与回归分析中分析数据的监督式学习模型与相关的学习算法。给定一组训练实例，每个训练实例被标记为属于两个类别中的一个或另一个，SVM训练算法创建一个将新的实例分配给两个类别之一的模型，使其成为非概率二元线性分类器。SVM模型是将实例表示为空间中的点，这样映射就使得单独类别的实例被尽可能宽的明显的间隔分开。然后，将新的实例映射到同一空间，并基于它们落在间隔的哪一侧来预测所属类别。</p>
+<p>个人建议学习支持向量机的方法：</p>
+<ol>
+<li>熟读理论 <a href="支持向量机/理解SVM的三层境界.pdf">支持向量机通俗导论（理解SVM的三层境界）LaTeX最新版_2015.1.9 PDF</a></li>
+<li>应用支持向量机解决实际问题</li>
+</ol>
+<h1 id="支持向量机资源"><a href="#支持向量机资源" class="headerlink" title="支持向量机资源"></a>支持向量机资源</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="http://www.cnblogs.com/v-July-v/archive/2012/06/01/2539022.html" target="_blank" rel="noopener">支持向量机通俗导论（理解SVM的三层境界）</a></td>
+<td><a href="支持向量机/理解SVM的三层境界.pdf">支持向量机通俗导论（理解SVM的三层境界）LaTeX最新版_2015.1.9 PDF</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.zhihu.com/question/21094489" target="_blank" rel="noopener">支持向量机(SVM)是什么意思？</a></td>
+<td>知乎</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://www.jiqizhixin.com/articles/2018-10-17-20?from=synced&amp;keyword=%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA" target="_blank" rel="noopener">学习SVM，这篇文章就够了！（附详细代码）</a></td>
+<td><a href="https://www.jiqizhixin.com/users/20d5e621-141a-4560-87f6-636271e1df5e" target="_blank" rel="noopener">贪心科技</a></td>
+<td>20181017</td>
+</tr>
+<tr>
+<td><a href="https://github.com/nfmcclure/tensorflow_cookbook" target="_blank" rel="noopener">TensorFlow Machine Learning Cookbook</a></td>
+<td><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines" target="_blank" rel="noopener">04_Support_Vector_Machines</a></td>
+<td>201702</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">Hands-on Machine Learning with Scikit-Learn and TensorFlow </a></td>
+<td><a href="http://nbviewer.jupyter.org/github/ageron/handson-ml/blob/master/05_support_vector_machines.ipynb" target="_blank" rel="noopener"> 05_support_vector_machines.ipynb</a></td>
+<td>201705</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">Hands-on Machine Learning with Scikit-Learn and TensorFlow 中文版</a></td>
+<td><a href="https://wizardforcel.gitbooks.io/hands-on-ml-with-sklearn-and-tf/content/docs/5.%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA.html" target="_blank" rel="noopener">五、支持向量机</a></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://zhiyuanliplus.github.io/SVM-SMO" target="_blank" rel="noopener">支持向量机的序列最小最优化算法SMO实现</a></td>
+<td></td>
+<td>20170409</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>点到直线距离公式<br><img src="/2018/11/22/支持向量机/点到直线距离公式.jpg" alt=""></p>
+<h1 id="Support-Vector-Machines"><a href="#Support-Vector-Machines" class="headerlink" title="Support Vector Machines"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines" target="_blank" rel="noopener">Support Vector Machines</a></h1><p>This chapter shows how to implement various SVM methods with TensorFlow.  We first create a linear SVM and also show how it can be used for regression.  We then introduce kernels (RBF Gaussian kernel) and show how to use it to split up non-linear data. We finish with a multi-dimensional implementation of non-linear SVMs to work with multiple classes.</p>
+<h2 id="1-Linear-Support-Vector-Machine-Soft-Margin"><a href="#1-Linear-Support-Vector-Machine-Soft-Margin" class="headerlink" title="1. Linear Support Vector Machine: Soft Margin"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines/02_Working_with_Linear_SVMs" target="_blank" rel="noopener">1. Linear Support Vector Machine: Soft Margin</a></h2><p><strong>Model</strong><br>We will aim to maximize the margin width, 2/||A||, or minimize ||A||.  We allow for a soft margin by having an error term in the loss function which is the max(0, 1-pred*actual).</p>
+<p><img src="/2018/11/22/支持向量机/01_introduction.png" alt="Linear Separator" title="Linear Separator"></p>
+<p>This function shows how to use TensorFlow to create a soft margin SVM<br>We will use the iris data, specifically:</p>
+<p>$x_1 =$ Sepal Length</p>
+<p>$x_2 =$ Petal Width</p>
+<p>Class 1 : <code>I. setosa</code></p>
+<p>Class -1: <code>not I. setosa</code></p>
+<p>We know here that x and y are linearly seperable for I. setosa classification.</p>
+<blockquote>
+<p>Note that we implement the soft margin with an allowable margin of error for points.  The margin of error term is given by ‘alpha’ below.  To behave like a hard margin SVM, set alpha = 0. (in notebook code block #7)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Set a random seed and start a computational graph.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">41</span>)</span><br><span class="line">tf.set_random_seed(<span class="number">41</span>)</span><br><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Load the data</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([[x[<span class="number">0</span>], x[<span class="number">3</span>]] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([<span class="number">1</span> <span class="keyword">if</span> y == <span class="number">0</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> iris.target])</span><br></pre></td></tr></table></figure>
+<p>Split data into train/test sets</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<p>Set model parameters, placeholders, and coefficients.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">110</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for SVM</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">2</span>, <span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>, <span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<p>Declare our model and L2 Norm</p>
+<p>SVM linear model is given by the equation:</p>
+<script type="math/tex; mode=display">\left[ \frac{1}{n} \sum_{i=1}^{n} \max(0, 1 - y_i(A \cdot x - b)) \right] + \alpha \cdot ||A||^{2}</script><p>Our loss function will be the above quantity and we will tell TensorFlow to minimize it. Note that $n$ is the number of points (in a batch), $A$ is the hyperplane-normal vector (to solve for), $b$ is the hyperplane-offset (to solve for), and $\alpha$ is the soft-margin parameter.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.subtract(tf.matmul(x_data, A), b)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare vector L2 'norm' function squared</span></span><br><span class="line">l2_norm = tf.reduce_sum(tf.square(A))</span><br></pre></td></tr></table></figure>
+<p>Here we make our special loss function based on the classification of the points (which side of the line they fall on).</p>
+<p>Also, note that <code>alpha</code> is the soft-margin term and an be increased to allow for more erroroneous classification points.  For hard-margin behaviour, set <code>alpha = 0</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare loss function</span></span><br><span class="line"><span class="comment"># Loss = max(0, 1-pred*actual) + alpha * L2_norm(A)^2</span></span><br><span class="line"><span class="comment"># L2 regularization parameter, alpha</span></span><br><span class="line"></span><br><span class="line">alpha = tf.constant([<span class="number">0.01</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Margin term in loss</span></span><br><span class="line">classification_term = tf.reduce_mean(tf.maximum(<span class="number">0.</span>, tf.subtract(<span class="number">1.</span>, tf.multiply(model_output, y_target))))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Put terms together</span></span><br><span class="line">loss = tf.add(classification_term, tf.multiply(alpha, l2_norm))</span><br></pre></td></tr></table></figure>
+<p>Creat the prediction function, optimization algorithm, and initialize the variables.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare prediction function</span></span><br><span class="line">prediction = tf.sign(model_output)</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, y_target), tf.float32))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.AdamOptimizer(<span class="number">0.005</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Now we can start the training loop.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">train_accuracy = []</span><br><span class="line">test_accuracy = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1500</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = x_vals_train[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    train_acc_temp = sess.run(accuracy, feed_dict=&#123;</span><br><span class="line">        x_data: x_vals_train,</span><br><span class="line">        y_target: np.transpose([y_vals_train])&#125;)</span><br><span class="line">    train_accuracy.append(train_acc_temp)</span><br><span class="line"></span><br><span class="line">    test_acc_temp = sess.run(accuracy, feed_dict=&#123;</span><br><span class="line">        x_data: x_vals_test,</span><br><span class="line">        y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_accuracy.append(test_acc_temp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i + <span class="number">1</span>) % <span class="number">75</span> == <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #&#123;&#125; A = &#123;&#125;, b = &#123;&#125;'</span>.format(</span><br><span class="line">            str(i+<span class="number">1</span>),</span><br><span class="line">            str(sess.run(A)),</span><br><span class="line">            str(sess.run(b))</span><br><span class="line">        ))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #75 A = [[0.65587175]
+ [0.73911524]], b = [[0.8189382]]
+Loss = [3.477592]
+Step #150 A = [[0.30820864]
+ [0.37043768]], b = [[1.1588708]]
+Loss = [1.8782018]
+Step #225 A = [[0.05466489]
+ [0.01620324]], b = [[1.3756151]]
+Loss = [0.61904156]
+Step #300 A = [[ 0.0723089 ]
+ [-0.10384972]], b = [[1.2969997]]
+Loss = [0.50430346]
+Step #375 A = [[ 0.08872697]
+ [-0.21590038]], b = [[1.214785]]
+Loss = [0.5581]
+Step #450 A = [[ 0.10302152]
+ [-0.33577552]], b = [[1.1402861]]
+Loss = [0.60070616]
+Step #525 A = [[ 0.12028296]
+ [-0.46366042]], b = [[1.0620526]]
+Loss = [0.47809908]
+Step #600 A = [[ 0.145114 ]
+ [-0.5994784]], b = [[0.97037107]]
+Loss = [0.56837624]
+Step #675 A = [[ 0.16354088]
+ [-0.7458743 ]], b = [[0.8814289]]
+Loss = [0.5452542]
+Step #750 A = [[ 0.17879468]
+ [-0.90772235]], b = [[0.7907687]]
+Loss = [0.47175956]
+Step #825 A = [[ 0.20936723]
+ [-1.0691159 ]], b = [[0.68023866]]
+Loss = [0.41458404]
+Step #900 A = [[ 0.236106 ]
+ [-1.2391785]], b = [[0.5687398]]
+Loss = [0.29367676]
+Step #975 A = [[ 0.25400215]
+ [-1.4175524 ]], b = [[0.46441486]]
+Loss = [0.27020118]
+Step #1050 A = [[ 0.28435734]
+ [-1.5984066 ]], b = [[0.34036276]]
+Loss = [0.19518965]
+Step #1125 A = [[ 0.28947413]
+ [-1.780023  ]], b = [[0.24134117]]
+Loss = [0.17559259]
+Step #1200 A = [[ 0.2927576]
+ [-1.930816 ]], b = [[0.15315719]]
+Loss = [0.13242653]
+Step #1275 A = [[ 0.3031533]
+ [-2.0399208]], b = [[0.06639722]]
+Loss = [0.14762701]
+Step #1350 A = [[ 0.29892927]
+ [-2.1220415 ]], b = [[0.00746888]]
+Loss = [0.1029826]
+Step #1425 A = [[ 0.29492435]
+ [-2.1905353 ]], b = [[-0.04703728]]
+Loss = [0.11851373]
+Step #1500 A = [[ 0.29012206]
+ [-2.2488031 ]], b = [[-0.09580647]]
+Loss = [0.1065909]
+</code></pre><p>Now we extract the linear coefficients and get the SVM boundary line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extract coefficients</span></span><br><span class="line">[[a1], [a2]] = sess.run(A)</span><br><span class="line">[[b]] = sess.run(b)</span><br><span class="line">slope = -a2/a1</span><br><span class="line">y_intercept = b/a1</span><br><span class="line"></span><br><span class="line"><span class="comment"># Extract x1 and x2 vals</span></span><br><span class="line">x1_vals = [d[<span class="number">1</span>] <span class="keyword">for</span> d <span class="keyword">in</span> x_vals]</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x1_vals:</span><br><span class="line">    best_fit.append(slope*i+y_intercept)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Separate I. setosa</span></span><br><span class="line">setosa_x = [d[<span class="number">1</span>] <span class="keyword">for</span> i, d <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i] == <span class="number">1</span>]</span><br><span class="line">setosa_y = [d[<span class="number">0</span>] <span class="keyword">for</span> i, d <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i] == <span class="number">1</span>]</span><br><span class="line">not_setosa_x = [d[<span class="number">1</span>] <span class="keyword">for</span> i, d <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i] == <span class="number">-1</span>]</span><br><span class="line">not_setosa_y = [d[<span class="number">0</span>] <span class="keyword">for</span> i, d <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i] == <span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<p>Matplotlib code for plotting</p>
+<p>$a_1<em>x_1 + a_2</em>x_2 - b = 0$</p>
+<script type="math/tex; mode=display">x_1 = -\frac{a_2}{a_1}x_2 + \frac{b}{a_1}</script><p>$x_1 =$ Sepal Length</p>
+<p>$x_2 =$ Petal Width</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot data and line</span></span><br><span class="line">plt.plot(setosa_x, setosa_y, <span class="string">'o'</span>, label=<span class="string">'I. setosa'</span>)</span><br><span class="line">plt.plot(not_setosa_x, not_setosa_y, <span class="string">'x'</span>, label=<span class="string">'Non-setosa'</span>)</span><br><span class="line">plt.plot(x1_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'Linear Separator'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">10</span>])</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.title(<span class="string">'Sepal Length vs Petal Width'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Width'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Length'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot train/test accuracies</span></span><br><span class="line">plt.plot(train_accuracy, <span class="string">'k-'</span>, label=<span class="string">'Training Accuracy'</span>)</span><br><span class="line">plt.plot(test_accuracy, <span class="string">'r--'</span>, label=<span class="string">'Test Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Train and Test Set Accuracies'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/22/支持向量机/output_23_0.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_23_1.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_23_2.png" alt="png"></p>
+<hr>
+<h2 id="2-SVM-Regression"><a href="#2-SVM-Regression" class="headerlink" title="2. SVM Regression"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines/03_Reduction_to_Linear_Regression" target="_blank" rel="noopener">2. SVM Regression</a></h2><p>This function shows how to use TensorFlow to solve support vector regression. We are going<br>to find the line that has the maximum margin which INCLUDES as many points as possible.</p>
+<p>We will use the iris data, specifically:</p>
+<p>$y =$ Sepal Length</p>
+<p>$x =$ Pedal Width</p>
+<p>To start, load the necessary libraries:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Create a TF Graph Session:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Load the iris data, use the Sepal Length and Petal width for SVM regression.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load the data</span></span><br><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([x[<span class="number">3</span>] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([y[<span class="number">0</span>] <span class="keyword">for</span> y <span class="keyword">in</span> iris.data])</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data into train/test sets</span></span><br><span class="line">train_indices = np.random.choice(len(x_vals), round(len(x_vals)*<span class="number">0.8</span>), replace=<span class="keyword">False</span>)</span><br><span class="line">test_indices = np.array(list(set(range(len(x_vals))) - set(train_indices)))</span><br><span class="line">x_vals_train = x_vals[train_indices]</span><br><span class="line">x_vals_test = x_vals[test_indices]</span><br><span class="line">y_vals_train = y_vals[train_indices]</span><br><span class="line">y_vals_test = y_vals[test_indices]</span><br></pre></td></tr></table></figure>
+<p>Declare the batch size, initialize placeholders, and create linear regression variables</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">50</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for linear regression</span></span><br><span class="line">A = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<p>Create the model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare model operations</span></span><br><span class="line">model_output = tf.add(tf.matmul(x_data, A), b)</span><br></pre></td></tr></table></figure>
+<p>Our loss function, which maximizes the amount of points near the line.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare loss function</span></span><br><span class="line"><span class="comment"># = max(0, abs(target - predicted) + epsilon)</span></span><br><span class="line"><span class="comment"># 1/2 margin width parameter = epsilon</span></span><br><span class="line">epsilon = tf.constant([<span class="number">0.5</span>])</span><br><span class="line"><span class="comment"># Margin term in loss</span></span><br><span class="line">loss = tf.reduce_mean(tf.maximum(<span class="number">0.</span>, tf.subtract(tf.abs(tf.subtract(model_output, y_target)), epsilon)))</span><br></pre></td></tr></table></figure>
+<p> Create the optimization function and initialize all the model variables</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.075</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>Train!  Loop through batches of data and optimize.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">train_loss = []</span><br><span class="line">test_loss = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">200</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals_train), size=batch_size)</span><br><span class="line">    rand_x = np.transpose([x_vals_train[rand_index]])</span><br><span class="line">    rand_y = np.transpose([y_vals_train[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_train_loss = sess.run(loss, feed_dict=&#123;x_data: np.transpose([x_vals_train]), y_target: np.transpose([y_vals_train])&#125;)</span><br><span class="line">    train_loss.append(temp_train_loss)</span><br><span class="line"></span><br><span class="line">    temp_test_loss = sess.run(loss, feed_dict=&#123;x_data: np.transpose([x_vals_test]), y_target: np.transpose([y_vals_test])&#125;)</span><br><span class="line">    test_loss.append(temp_test_loss)</span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">50</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'-----------'</span>)</span><br><span class="line">        print(<span class="string">'Generation: '</span> + str(i+<span class="number">1</span>))</span><br><span class="line">        print(<span class="string">'A = '</span> + str(sess.run(A)) + <span class="string">' b = '</span> + str(sess.run(b)))</span><br><span class="line">        print(<span class="string">'Train Loss = '</span> + str(temp_train_loss))</span><br><span class="line">        print(<span class="string">'Test Loss = '</span> + str(temp_test_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>-----------
+Generation: 50
+A = [[2.4289258]] b = [[2.271079]]
+Train Loss = 0.7553672
+Test Loss = 0.65542704
+-----------
+Generation: 100
+A = [[1.9204257]] b = [[3.4155781]]
+Train Loss = 0.3573223
+Test Loss = 0.39466858
+-----------
+Generation: 150
+A = [[1.3823755]] b = [[4.095077]]
+Train Loss = 0.14115657
+Test Loss = 0.14801341
+-----------
+Generation: 200
+A = [[1.204475]] b = [[4.462577]]
+Train Loss = 0.09575871
+Test Loss = 0.11255897
+</code></pre><p>For plotting, we need to extract the coefficients and get the best fit line. (Also the upper and lower margins.)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extract Coefficients</span></span><br><span class="line">[[slope]] = sess.run(A)</span><br><span class="line">[[y_intercept]] = sess.run(b)</span><br><span class="line">[width] = sess.run(epsilon)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Get best fit line</span></span><br><span class="line">best_fit = []</span><br><span class="line">best_fit_upper = []</span><br><span class="line">best_fit_lower = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> x_vals:</span><br><span class="line">  best_fit.append(slope*i+y_intercept)</span><br><span class="line">  best_fit_upper.append(slope*i+y_intercept+width)</span><br><span class="line">  best_fit_lower.append(slope*i+y_intercept-width)</span><br></pre></td></tr></table></figure>
+<p>Matplotlib code to plot the fit and loss.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot fit with data</span></span><br><span class="line">plt.plot(x_vals, y_vals, <span class="string">'o'</span>, label=<span class="string">'Data Points'</span>)</span><br><span class="line">plt.plot(x_vals, best_fit, <span class="string">'r-'</span>, label=<span class="string">'SVM Regression Line'</span>, linewidth=<span class="number">3</span>)</span><br><span class="line">plt.plot(x_vals, best_fit_upper, <span class="string">'r--'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.plot(x_vals, best_fit_lower, <span class="string">'r--'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">plt.ylim([<span class="number">0</span>, <span class="number">10</span>])</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.title(<span class="string">'Sepal Length vs Petal Width'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Width'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Length'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(train_loss, <span class="string">'k-'</span>, label=<span class="string">'Train Set Loss'</span>)</span><br><span class="line">plt.plot(test_loss, <span class="string">'r--'</span>, label=<span class="string">'Test Set Loss'</span>)</span><br><span class="line">plt.title(<span class="string">'L2 Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'L2 Loss'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'upper right'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/22/支持向量机/output_19_0.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_19_1.png" alt="png"></p>
+<hr>
+<h2 id="3-Illustration-of-Various-Kernels"><a href="#3-Illustration-of-Various-Kernels" class="headerlink" title="3. Illustration of Various Kernels"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines/04_Working_with_Kernels" target="_blank" rel="noopener">3. Illustration of Various Kernels</a></h2><p><strong>Working with Kernels</strong></p>
+<p>Linear SVMs are very powerful.  But sometimes the data are not very linear.  To this end, we can use the ‘kernel trick’ to map our data into a higher dimensional space, where it may be linearly separable.  Doing this allows us to separate out non-linear classes.  See the below example.</p>
+<p>If we attempt to separate the below circular-ring shaped classes with a standard linear SVM, we fail.</p>
+<p><img src="/2018/11/22/支持向量机/04_nonlinear_data_linear_kernel.png" alt="Linear SVM Nonlinear Data" title="Linear SVM Fit"></p>
+<p>But if we separate it with a Gaussian-RBF kernel, we can find a linear separator in a higher dimension that works a lot better.</p>
+<p><img src="支持向量机//04_linear_svm_gaussian.png" alt="Gaussian Kernel Nonlinear Data" title="Gaussian Kernel"></p>
+<p>This function wll illustrate how to implement various kernels in TensorFlow.</p>
+<p>Linear Kernel:</p>
+<script type="math/tex; mode=display">K(x_1, x_2) = x_1^{T} \cdot x_2</script><p>Gaussian Kernel (RBF):</p>
+<script type="math/tex; mode=display">K(x_1, x_2) = e^{(-\gamma |x_1 - x_2|^2)}</script><p>We start by loading the necessary libraries</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Start a computational graph session:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>For this example, we will generate fake non-linear data.  The data we will generate is concentric ring data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate non-lnear data</span></span><br><span class="line">(x_vals, y_vals) = datasets.make_circles(n_samples=<span class="number">350</span>, factor=<span class="number">.5</span>, noise=<span class="number">.1</span>)</span><br><span class="line">y_vals = np.array([<span class="number">1</span> <span class="keyword">if</span> y==<span class="number">1</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> y_vals])</span><br><span class="line">class1_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">1</span>]</span><br><span class="line">class1_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">1</span>]</span><br><span class="line">class2_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">-1</span>]</span><br><span class="line">class2_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<p>We declare the batch size (large for SVMs), create the placeholders, and declare the $b$ variable for the SVM model.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">350</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">prediction_grid = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for svm</span></span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,batch_size]))</span><br></pre></td></tr></table></figure>
+<p>Here we will apply the kernel.  Note that the <code>Linear Kernel</code> is commented out.  If you choose to use the linear kernel, then uncomment the linear <code>my_kernel</code> variable, and comment out the five RBF kernel lines.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Apply kernel</span></span><br><span class="line"><span class="comment"># Linear Kernel</span></span><br><span class="line"><span class="comment"># my_kernel = tf.matmul(x_data, tf.transpose(x_data))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gaussian (RBF) kernel</span></span><br><span class="line">gamma = tf.constant(<span class="number">-50.0</span>)</span><br><span class="line">dist = tf.reduce_sum(tf.square(x_data), <span class="number">1</span>)</span><br><span class="line">dist = tf.reshape(dist, [<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">sq_dists = tf.add(tf.subtract(dist, tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(x_data)))), tf.transpose(dist))</span><br><span class="line">my_kernel = tf.exp(tf.multiply(gamma, tf.abs(sq_dists)))</span><br></pre></td></tr></table></figure>
+<p>Next we compute the SVM model and create a loss function.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Compute SVM Model</span></span><br><span class="line">first_term = tf.reduce_sum(b)</span><br><span class="line">b_vec_cross = tf.matmul(tf.transpose(b), b)</span><br><span class="line">y_target_cross = tf.matmul(y_target, tf.transpose(y_target))</span><br><span class="line">second_term = tf.reduce_sum(tf.multiply(my_kernel, tf.multiply(b_vec_cross, y_target_cross)))</span><br><span class="line">loss = tf.negative(tf.subtract(first_term, second_term))</span><br></pre></td></tr></table></figure>
+<p>Just like we created the kernel for the training points, we need to create the kernel for the test/prediction points.</p>
+<p>Again, comment/uncomment the appropriate lines for using the linear or RBF kernel.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create Prediction Kernel</span></span><br><span class="line"><span class="comment"># Linear prediction kernel</span></span><br><span class="line"><span class="comment"># my_kernel = tf.matmul(x_data, tf.transpose(prediction_grid))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Gaussian (RBF) prediction kernel</span></span><br><span class="line">rA = tf.reshape(tf.reduce_sum(tf.square(x_data), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">rB = tf.reshape(tf.reduce_sum(tf.square(prediction_grid), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">pred_sq_dist = tf.add(tf.subtract(rA, tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(prediction_grid)))), tf.transpose(rB))</span><br><span class="line">pred_kernel = tf.exp(tf.multiply(gamma, tf.abs(pred_sq_dist)))</span><br></pre></td></tr></table></figure>
+<p>In order to use the kernel to classify points, we create a prediction operation.  This prediction operation will be the sign ( positive or negative ) of the model outputs.  The accuracy can then be computed if we know the actual target labels.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">prediction_output = tf.matmul(tf.multiply(tf.transpose(y_target),b), pred_kernel)</span><br><span class="line">prediction = tf.sign(prediction_output-tf.reduce_mean(prediction_output))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.squeeze(prediction), tf.squeeze(y_target)), tf.float32))</span><br></pre></td></tr></table></figure>
+<p>We now declare the optimizer and variable initialization operations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.002</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>We start the training loop for the SVM.  We will randomly choose a batch of points and run the train step.  Then we calculate the loss and accuracy.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">batch_accuracy = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = x_vals[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    acc_temp = sess.run(accuracy, feed_dict=&#123;x_data: rand_x,</span><br><span class="line">                                             y_target: rand_y,</span><br><span class="line">                                             prediction_grid:rand_x&#125;)</span><br><span class="line">    batch_accuracy.append(acc_temp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">250</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #250
+Loss = 46.040836
+Step #500
+Loss = -5.635271
+Step #750
+Loss = -11.075392
+Step #1000
+Loss = -11.158321
+</code></pre><p>To plot a pretty picture of the regions we fit, we create a fine mesh to run through our model and get the predictions.  (This is very similar to the SVM plotting code from sci-kit learn).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a mesh to plot points in</span></span><br><span class="line">x_min, x_max = x_vals[:, <span class="number">0</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">y_min, y_max = x_vals[:, <span class="number">1</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, <span class="number">0.02</span>),</span><br><span class="line">                     np.arange(y_min, y_max, <span class="number">0.02</span>))</span><br><span class="line">grid_points = np.c_[xx.ravel(), yy.ravel()]</span><br><span class="line">[grid_predictions] = sess.run(prediction, feed_dict=&#123;x_data: x_vals,</span><br><span class="line">                                                   y_target: np.transpose([y_vals]),</span><br><span class="line">                                                   prediction_grid: grid_points&#125;)</span><br><span class="line">grid_predictions = grid_predictions.reshape(xx.shape)</span><br></pre></td></tr></table></figure>
+<p>Plot the results</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot points and grid</span></span><br><span class="line">plt.contourf(xx, yy, grid_predictions, cmap=plt.cm.Paired, alpha=<span class="number">0.8</span>)</span><br><span class="line">plt.plot(class1_x, class1_y, <span class="string">'ro'</span>, label=<span class="string">'Class 1'</span>)</span><br><span class="line">plt.plot(class2_x, class2_y, <span class="string">'kx'</span>, label=<span class="string">'Class -1'</span>)</span><br><span class="line">plt.title(<span class="string">'Gaussian SVM Results'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'x'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'y'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.ylim([<span class="number">-1.5</span>, <span class="number">1.5</span>])</span><br><span class="line">plt.xlim([<span class="number">-1.5</span>, <span class="number">1.5</span>])</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot batch accuracy</span></span><br><span class="line">plt.plot(batch_accuracy, <span class="string">'k-'</span>, label=<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Batch Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/22/支持向量机/output_24_0.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_24_1.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_24_2.png" alt="png"></p>
+<p><strong>Prediction/Evaluation</strong></p>
+<p>Here is code on how to predict the class on new or unseen data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># New data points:</span></span><br><span class="line">new_points = np.array([(<span class="number">-0.75</span>, <span class="number">-0.75</span>),</span><br><span class="line">                       (<span class="number">-0.5</span>, <span class="number">-0.5</span>),</span><br><span class="line">                       (<span class="number">-0.25</span>, <span class="number">-0.25</span>),</span><br><span class="line">                       (<span class="number">0.25</span>, <span class="number">0.25</span>),</span><br><span class="line">                       (<span class="number">0.5</span>, <span class="number">0.5</span>),</span><br><span class="line">                       (<span class="number">0.75</span>, <span class="number">0.75</span>)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[evaluations] = sess.run(prediction, feed_dict=&#123;x_data: x_vals,</span><br><span class="line">                                                y_target: np.transpose([y_vals]),</span><br><span class="line">                                                prediction_grid: new_points&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ix, p <span class="keyword">in</span> enumerate(new_points):</span><br><span class="line">    print(<span class="string">'&#123;&#125; : class=&#123;&#125;'</span>.format(p, evaluations[ix]))</span><br></pre></td></tr></table></figure>
+<pre><code>[-0.75 -0.75] : class=-1.0
+[-0.5 -0.5] : class=1.0
+[-0.25 -0.25] : class=1.0
+[0.25 0.25] : class=1.0
+[0.5 0.5] : class=-1.0
+[0.75 0.75] : class=-1.0
+</code></pre><hr>
+<h2 id="4-Implementing-NonLinear-SVMs"><a href="#4-Implementing-NonLinear-SVMs" class="headerlink" title="4. Implementing NonLinear SVMs"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines/05_Implementing_Nonlinear_SVMs" target="_blank" rel="noopener">4. Implementing NonLinear SVMs</a></h2><p>Here we show how to use the prior Gaussian RBF kernel to predict I.setosa from the Iris dataset.</p>
+<p><img src="/2018/11/22/支持向量机/05_non_linear_svms.png" alt="Nonlinear SVM" title="Nonlinear SVM"></p>
+<p>This function wll illustrate how to implement the gaussian kernel on the iris dataset.</p>
+<p>Gaussian Kernel:</p>
+<script type="math/tex; mode=display">K(x_{1}, x_{2}) = e^{\left(-\gamma \cdot (x_{1} - x_{2})^{2}\right)}</script><p>We start by loading the necessary libraries and resetting the computational graph.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Create a graph session</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p><strong>Load the Iris Data</strong></p>
+<p>Our x values will be $(x_1, x_2)$ where,</p>
+<p>$x_1 =$ ‘Sepal Length’</p>
+<p>$x_2 =$ ‘Petal Width’</p>
+<p>The Target values will be wether or not the flower species is Iris Setosa.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load the data</span></span><br><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([[x[<span class="number">0</span>], x[<span class="number">3</span>]] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals = np.array([<span class="number">1</span> <span class="keyword">if</span> y==<span class="number">0</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> iris.target])</span><br><span class="line">class1_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">1</span>]</span><br><span class="line">class1_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">1</span>]</span><br><span class="line">class2_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">-1</span>]</span><br><span class="line">class2_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> y_vals[i]==<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+<p><strong>Model Parameters</strong></p>
+<p>We now declare our batch size, placeholders, and the fitted b-value for the SVM kernel.  Note that we will create a separate placeholder to feed in the prediction grid for plotting.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare batch size</span></span><br><span class="line">batch_size = <span class="number">150</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">1</span>], dtype=tf.float32)</span><br><span class="line">prediction_grid = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for svm</span></span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">1</span>,batch_size]))</span><br></pre></td></tr></table></figure>
+<p><strong>Gaussian (RBF) Kernel</strong></p>
+<p>We create the gaussian kernel that is used to transform the data points into a higher dimensional space.</p>
+<p>The Kernel of two points, $x$ and $x’$ is given as</p>
+<script type="math/tex; mode=display">K(x, x')=exp\left(-\gamma|| x-x' ||^{2}\right)</script><p>For $\gamma$ very small, the kernel is very wide, and vice-versa for large $\gamma$ values.  This means that large $\gamma$ leads to high bias and low variance models.</p>
+<p>If we have a vector of points, $x$ of size (batch_size, 2), then our kernel calculation becomes</p>
+<script type="math/tex; mode=display">K(\textbf{x})=exp\left( -\gamma \textbf{x} \cdot \textbf{x}^{T} \right)</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gaussian (RBF) kernel</span></span><br><span class="line">gamma = tf.constant(<span class="number">-50.0</span>)</span><br><span class="line">sq_vec = tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(x_data)))</span><br><span class="line">my_kernel = tf.exp(tf.multiply(gamma, tf.abs(sq_vec)))</span><br></pre></td></tr></table></figure>
+<p><strong>Compute SVM Model</strong></p>
+<p>Here, the SVM loss is given by two terms, The first term is the sum of the $b$ matrix, and the second term is</p>
+<script type="math/tex; mode=display">\sum\left(K\cdot||\textbf{b}||^{2}||\textbf{y}||^{2}\right)</script><p>We finally tell TensorFlow to maximize the loss by minimizing the negative:  (The following is a horribly abbreviated version of the dual problem)</p>
+<script type="math/tex; mode=display">-\left(\sum\textbf{b} - \sum\left(K\cdot||\textbf{b}||^{2}||\textbf{y}||^{2}\right)\right)</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Compute SVM Model</span></span><br><span class="line">first_term = tf.reduce_sum(b)</span><br><span class="line">b_vec_cross = tf.matmul(tf.transpose(b), b)</span><br><span class="line">y_target_cross = tf.matmul(y_target, tf.transpose(y_target))</span><br><span class="line">second_term = tf.reduce_sum(tf.multiply(my_kernel, tf.multiply(b_vec_cross, y_target_cross)))</span><br><span class="line">loss = tf.negative(tf.subtract(first_term, second_term))</span><br></pre></td></tr></table></figure>
+<p><strong>Define the Prediction Kernel</strong></p>
+<p>Now we do the exact same thing as above for the prediction points.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gaussian (RBF) prediction kernel</span></span><br><span class="line">rA = tf.reshape(tf.reduce_sum(tf.square(x_data), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">rB = tf.reshape(tf.reduce_sum(tf.square(prediction_grid), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">pred_sq_dist = tf.add(tf.subtract(rA, tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(prediction_grid)))), tf.transpose(rB))</span><br><span class="line">pred_kernel = tf.exp(tf.multiply(gamma, tf.abs(pred_sq_dist)))</span><br><span class="line"></span><br><span class="line">prediction_output = tf.matmul(tf.multiply(tf.transpose(y_target),b), pred_kernel)</span><br><span class="line">prediction = tf.sign(prediction_output-tf.reduce_mean(prediction_output))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.squeeze(prediction), tf.squeeze(y_target)), tf.float32))</span><br></pre></td></tr></table></figure>
+<p><strong>Optimizing Method</strong></p>
+<p>We declare our gradient descent optimizer and intialize our model variables (<code>b</code>)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p><strong>Run the Classification!</strong></p>
+<p>We iterate through the training for 300 iterations. We will output the loss every 75 iterations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">batch_accuracy = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">300</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = x_vals[rand_index]</span><br><span class="line">    rand_y = np.transpose([y_vals[rand_index]])</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    acc_temp = sess.run(accuracy, feed_dict=&#123;x_data: rand_x,</span><br><span class="line">                                             y_target: rand_y,</span><br><span class="line">                                             prediction_grid:rand_x&#125;)</span><br><span class="line">    batch_accuracy.append(acc_temp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">75</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #75
+Loss = -135.62637
+Step #150
+Loss = -248.12627
+Step #225
+Loss = -360.6262
+Step #300
+Loss = -473.12637
+</code></pre><p><strong>Plotting Results</strong></p>
+<p>We now create a fine mesh for plotting the SVM class lines</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a mesh to plot points in</span></span><br><span class="line">x_min, x_max = x_vals[:, <span class="number">0</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">y_min, y_max = x_vals[:, <span class="number">1</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, <span class="number">0.02</span>),</span><br><span class="line">                     np.arange(y_min, y_max, <span class="number">0.02</span>))</span><br><span class="line">grid_points = np.c_[xx.ravel(), yy.ravel()]</span><br><span class="line">[grid_predictions] = sess.run(prediction, feed_dict=&#123;x_data: x_vals,</span><br><span class="line">                                                   y_target: np.transpose([y_vals]),</span><br><span class="line">                                                   prediction_grid: grid_points&#125;)</span><br><span class="line">grid_predictions = grid_predictions.reshape(xx.shape)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="comment"># Plot points and grid</span></span><br><span class="line">plt.contourf(xx, yy, grid_predictions, cmap=plt.cm.Paired, alpha=<span class="number">0.8</span>)</span><br><span class="line">plt.plot(class1_x, class1_y, <span class="string">'ro'</span>, label=<span class="string">'I. setosa'</span>)</span><br><span class="line">plt.plot(class2_x, class2_y, <span class="string">'kx'</span>, label=<span class="string">'Non setosa'</span>)</span><br><span class="line">plt.title(<span class="string">'Gaussian SVM Results on Iris Data'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Length'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Width'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.ylim([<span class="number">-0.5</span>, <span class="number">3.0</span>])</span><br><span class="line">plt.xlim([<span class="number">3.5</span>, <span class="number">8.5</span>])</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot batch accuracy</span></span><br><span class="line">plt.plot(batch_accuracy, <span class="string">'k-'</span>, label=<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Batch Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/22/支持向量机/output_20_0.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_20_1.png" alt="png"><br><img src="/2018/11/22/支持向量机/output_20_2.png" alt="png"></p>
+<p><strong>Evaluate Test Points</strong></p>
+<p>We create a set of test points, and evaluate the class predictions</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">x_test_seq = np.array([<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>, <span class="number">7.</span>])</span><br><span class="line">y_test_seq = np.array([<span class="number">0.</span>, <span class="number">1.</span>, <span class="number">2.</span>])</span><br><span class="line"></span><br><span class="line">x_test, y_test = np.meshgrid(x_test_seq,y_test_seq)</span><br><span class="line">test_points = np.c_[x_test.ravel(), y_test.ravel()]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_points</span><br></pre></td></tr></table></figure>
+<pre><code>array([[4., 0.],
+       [5., 0.],
+       [6., 0.],
+       [7., 0.],
+       [4., 1.],
+       [5., 1.],
+       [6., 1.],
+       [7., 1.],
+       [4., 2.],
+       [5., 2.],
+       [6., 2.],
+       [7., 2.]])
+</code></pre><p>Now we can evaluate the predictions on our test points:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_points</span><br></pre></td></tr></table></figure>
+<pre><code>array([[4., 0.],
+       [5., 0.],
+       [6., 0.],
+       [7., 0.],
+       [4., 1.],
+       [5., 1.],
+       [6., 1.],
+       [7., 1.],
+       [4., 2.],
+       [5., 2.],
+       [6., 2.],
+       [7., 2.]])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[test_predictions] = sess.run(prediction, feed_dict=&#123;x_data: x_vals,</span><br><span class="line">                                                     y_target: np.transpose([y_vals]),</span><br><span class="line">                                                     prediction_grid: test_points&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_predictions.ravel()</span><br></pre></td></tr></table></figure>
+<pre><code>array([ 1.,  1.,  1.,  1.,  1., -1., -1.,  1.,  1.,  1., -1., -1.],
+      dtype=float32)
+</code></pre><p>Format the test points together with the predictions:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ix, point <span class="keyword">in</span> enumerate(test_points):</span><br><span class="line">    point_pred = test_predictions.ravel()[ix]</span><br><span class="line">    print(<span class="string">'Point &#123;&#125; is predicted to be in class &#123;&#125;'</span>.format(point, point_pred))</span><br></pre></td></tr></table></figure>
+<pre><code>Point [4. 0.] is predicted to be in class 1.0
+Point [5. 0.] is predicted to be in class 1.0
+Point [6. 0.] is predicted to be in class 1.0
+Point [7. 0.] is predicted to be in class 1.0
+Point [4. 1.] is predicted to be in class 1.0
+Point [5. 1.] is predicted to be in class -1.0
+Point [6. 1.] is predicted to be in class -1.0
+Point [7. 1.] is predicted to be in class 1.0
+Point [4. 2.] is predicted to be in class 1.0
+Point [5. 2.] is predicted to be in class 1.0
+Point [6. 2.] is predicted to be in class -1.0
+Point [7. 2.] is predicted to be in class -1.0
+</code></pre><hr>
+<h2 id="5-Multi-class-Nonlinear-SVM-Example"><a href="#5-Multi-class-Nonlinear-SVM-Example" class="headerlink" title="5. Multi-class (Nonlinear) SVM Example"></a><a href="https://github.com/nfmcclure/tensorflow_cookbook/tree/master/04_Support_Vector_Machines/06_Implementing_Multiclass_SVMs" target="_blank" rel="noopener">5. Multi-class (Nonlinear) SVM Example</a></h2><p>Here, we implement a 1-vs-all voting method for a multiclass SVM.  We attempt to separate the three Iris flower classes with TensorFlow.</p>
+<p><img src="/2018/11/22/支持向量机/06_multiclass_svm.png" alt="Multiclass SVM" title="Multiclass SVM"></p>
+<p>This function wll illustrate how to implement the gaussian kernel with multiple classes on the iris dataset.</p>
+<p>Gaussian Kernel:</p>
+<script type="math/tex; mode=display">K(x_1, x_2) = e^{-\gamma \cdot (x_1 - x_2)^2}</script><p>X : (Sepal Length, Petal Width)</p>
+<p>Y: (I. setosa, I. virginica, I. versicolor) (3 classes)</p>
+<p>Basic idea: introduce an extra dimension to do one vs all classification.</p>
+<p>The prediction of a point will be the category with the largest margin or distance to boundary.</p>
+<p>We start by loading the necessary libraries.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> datasets</span><br><span class="line"><span class="keyword">from</span> tensorflow.python.framework <span class="keyword">import</span> ops</span><br><span class="line">ops.reset_default_graph()</span><br></pre></td></tr></table></figure>
+<p>Start a computational graph session.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sess = tf.Session()</span><br></pre></td></tr></table></figure>
+<p>Now we load the iris data.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Load the data</span></span><br><span class="line"><span class="comment"># iris.data = [(Sepal Length, Sepal Width, Petal Length, Petal Width)]</span></span><br><span class="line">iris = datasets.load_iris()</span><br><span class="line">x_vals = np.array([[x[<span class="number">0</span>], x[<span class="number">3</span>]] <span class="keyword">for</span> x <span class="keyword">in</span> iris.data])</span><br><span class="line">y_vals1 = np.array([<span class="number">1</span> <span class="keyword">if</span> y==<span class="number">0</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> iris.target])</span><br><span class="line">y_vals2 = np.array([<span class="number">1</span> <span class="keyword">if</span> y==<span class="number">1</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> iris.target])</span><br><span class="line">y_vals3 = np.array([<span class="number">1</span> <span class="keyword">if</span> y==<span class="number">2</span> <span class="keyword">else</span> <span class="number">-1</span> <span class="keyword">for</span> y <span class="keyword">in</span> iris.target])</span><br><span class="line">y_vals = np.array([y_vals1, y_vals2, y_vals3])</span><br><span class="line">class1_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">0</span>]</span><br><span class="line">class1_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">0</span>]</span><br><span class="line">class2_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">1</span>]</span><br><span class="line">class2_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">1</span>]</span><br><span class="line">class3_x = [x[<span class="number">0</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">2</span>]</span><br><span class="line">class3_y = [x[<span class="number">1</span>] <span class="keyword">for</span> i,x <span class="keyword">in</span> enumerate(x_vals) <span class="keyword">if</span> iris.target[i]==<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<p>Declare the batch size</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">batch_size = <span class="number">50</span></span><br></pre></td></tr></table></figure>
+<p>Initialize placeholders and create the variables for multiclass SVM</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Initialize placeholders</span></span><br><span class="line">x_data = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line">y_target = tf.placeholder(shape=[<span class="number">3</span>, <span class="keyword">None</span>], dtype=tf.float32)</span><br><span class="line">prediction_grid = tf.placeholder(shape=[<span class="keyword">None</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create variables for svm</span></span><br><span class="line">b = tf.Variable(tf.random_normal(shape=[<span class="number">3</span>,batch_size]))</span><br></pre></td></tr></table></figure>
+<p>Create the Gaussian Kernel</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gaussian (RBF) kernel</span></span><br><span class="line">gamma = tf.constant(<span class="number">-10.0</span>)</span><br><span class="line">dist = tf.reduce_sum(tf.square(x_data), <span class="number">1</span>)</span><br><span class="line">dist = tf.reshape(dist, [<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">sq_dists = tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(x_data)))</span><br><span class="line">my_kernel = tf.exp(tf.multiply(gamma, tf.abs(sq_dists)))</span><br></pre></td></tr></table></figure>
+<p>Declare a function that will do reshaping and batch matrix multiplication</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare function to do reshape/batch multiplication</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reshape_matmul</span><span class="params">(mat, _size)</span>:</span></span><br><span class="line">    v1 = tf.expand_dims(mat, <span class="number">1</span>)</span><br><span class="line">    v2 = tf.reshape(v1, [<span class="number">3</span>, _size, <span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span>(tf.matmul(v2, v1))</span><br></pre></td></tr></table></figure>
+<p>Now we can compute the SVM model</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Compute SVM Model</span></span><br><span class="line">first_term = tf.reduce_sum(b)</span><br><span class="line">b_vec_cross = tf.matmul(tf.transpose(b), b)</span><br><span class="line">y_target_cross = reshape_matmul(y_target, batch_size)</span><br><span class="line"></span><br><span class="line">second_term = tf.reduce_sum(tf.multiply(my_kernel, tf.multiply(b_vec_cross, y_target_cross)),[<span class="number">1</span>,<span class="number">2</span>])</span><br><span class="line">loss = tf.reduce_sum(tf.negative(tf.subtract(first_term, second_term)))</span><br></pre></td></tr></table></figure>
+<p>Create the same RBF kernel for a set of prediction points (used on a grid of points at the end).</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Gaussian (RBF) prediction kernel</span></span><br><span class="line">rA = tf.reshape(tf.reduce_sum(tf.square(x_data), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">rB = tf.reshape(tf.reduce_sum(tf.square(prediction_grid), <span class="number">1</span>),[<span class="number">-1</span>,<span class="number">1</span>])</span><br><span class="line">pred_sq_dist = tf.add(tf.subtract(rA, tf.multiply(<span class="number">2.</span>, tf.matmul(x_data, tf.transpose(prediction_grid)))), tf.transpose(rB))</span><br><span class="line">pred_kernel = tf.exp(tf.multiply(gamma, tf.abs(pred_sq_dist)))</span><br><span class="line"></span><br><span class="line">prediction_output = tf.matmul(tf.multiply(y_target,b), pred_kernel)</span><br><span class="line">prediction = tf.argmax(prediction_output-tf.expand_dims(tf.reduce_mean(prediction_output,<span class="number">1</span>), <span class="number">1</span>), <span class="number">0</span>)</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(tf.equal(prediction, tf.argmax(y_target,<span class="number">0</span>)), tf.float32))</span><br></pre></td></tr></table></figure>
+<p>Create the optimization and variable initializer operations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Declare optimizer</span></span><br><span class="line">my_opt = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</span><br><span class="line">train_step = my_opt.minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Initialize variables</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess.run(init)</span><br></pre></td></tr></table></figure>
+<p>We now start the training loop for the multiclass SVM</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training loop</span></span><br><span class="line">loss_vec = []</span><br><span class="line">batch_accuracy = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    rand_index = np.random.choice(len(x_vals), size=batch_size)</span><br><span class="line">    rand_x = x_vals[rand_index]</span><br><span class="line">    rand_y = y_vals[:,rand_index]</span><br><span class="line">    sess.run(train_step, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line"></span><br><span class="line">    temp_loss = sess.run(loss, feed_dict=&#123;x_data: rand_x, y_target: rand_y&#125;)</span><br><span class="line">    loss_vec.append(temp_loss)</span><br><span class="line"></span><br><span class="line">    acc_temp = sess.run(accuracy, feed_dict=&#123;x_data: rand_x,</span><br><span class="line">                                             y_target: rand_y,</span><br><span class="line">                                             prediction_grid:rand_x&#125;)</span><br><span class="line">    batch_accuracy.append(acc_temp)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>)%<span class="number">25</span>==<span class="number">0</span>:</span><br><span class="line">        print(<span class="string">'Step #'</span> + str(i+<span class="number">1</span>))</span><br><span class="line">        print(<span class="string">'Loss = '</span> + str(temp_loss))</span><br></pre></td></tr></table></figure>
+<pre><code>Step #25
+Loss = -295.13718
+Step #50
+Loss = -632.6369
+Step #75
+Loss = -970.1367
+Step #100
+Loss = -1307.6366
+</code></pre><p>For a pretty picture, to see the results, we create a fine grid of points to label/color for each class.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a mesh to plot points in</span></span><br><span class="line">x_min, x_max = x_vals[:, <span class="number">0</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">0</span>].max() + <span class="number">1</span></span><br><span class="line">y_min, y_max = x_vals[:, <span class="number">1</span>].min() - <span class="number">1</span>, x_vals[:, <span class="number">1</span>].max() + <span class="number">1</span></span><br><span class="line">xx, yy = np.meshgrid(np.arange(x_min, x_max, <span class="number">0.02</span>),</span><br><span class="line">                     np.arange(y_min, y_max, <span class="number">0.02</span>))</span><br><span class="line">grid_points = np.c_[xx.ravel(), yy.ravel()]</span><br><span class="line">grid_predictions = sess.run(prediction, feed_dict=&#123;x_data: rand_x,</span><br><span class="line">                                                   y_target: rand_y,</span><br><span class="line">                                                   prediction_grid: grid_points&#125;)</span><br><span class="line">grid_predictions = grid_predictions.reshape(xx.shape)</span><br></pre></td></tr></table></figure>
+<p>Plot the results</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Plot points and grid</span></span><br><span class="line">plt.contourf(xx, yy, grid_predictions, cmap=plt.cm.Paired, alpha=<span class="number">0.8</span>)</span><br><span class="line">plt.plot(class1_x, class1_y, <span class="string">'ro'</span>, label=<span class="string">'I. setosa'</span>)</span><br><span class="line">plt.plot(class2_x, class2_y, <span class="string">'kx'</span>, label=<span class="string">'I. versicolor'</span>)</span><br><span class="line">plt.plot(class3_x, class3_y, <span class="string">'gv'</span>, label=<span class="string">'I. virginica'</span>)</span><br><span class="line">plt.title(<span class="string">'Gaussian SVM Results on Iris Data'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Petal Length'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Sepal Width'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.ylim([<span class="number">-0.5</span>, <span class="number">3.0</span>])</span><br><span class="line">plt.xlim([<span class="number">3.5</span>, <span class="number">8.5</span>])</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot batch accuracy</span></span><br><span class="line">plt.plot(batch_accuracy, <span class="string">'k-'</span>, label=<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Batch Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend(loc=<span class="string">'lower right'</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Plot loss over time</span></span><br><span class="line">plt.plot(loss_vec, <span class="string">'k-'</span>)</span><br><span class="line">plt.title(<span class="string">'Loss per Generation'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Generation'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2018/11/22/支持向量机/output_25_0.png" alt="png"></p>
+<p><img src="/2018/11/22/支持向量机/output_25_1.png" alt="png"></p>
+<p><img src="/2018/11/22/支持向量机/output_25_2.png" alt="png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/20/Transfer_learning_for_time_series_classification/" rel="next" title="Transfer learning for time series classification">
+                <i class="fa fa-chevron-left"></i> Transfer learning for time series classification
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/23/最近邻算法/" rel="prev" title="最近邻方法 Nearest Neighbor Methords">
+                最近邻方法 Nearest Neighbor Methords <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#经典支持向量机-Support-Vector-Machines"><span class="nav-number">1.</span> <span class="nav-text">经典支持向量机 Support Vector Machines</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机资源"><span class="nav-number">2.</span> <span class="nav-text">支持向量机资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Support-Vector-Machines"><span class="nav-number">3.</span> <span class="nav-text">Support Vector Machines</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Linear-Support-Vector-Machine-Soft-Margin"><span class="nav-number">3.1.</span> <span class="nav-text">1. Linear Support Vector Machine: Soft Margin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-SVM-Regression"><span class="nav-number">3.2.</span> <span class="nav-text">2. SVM Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Illustration-of-Various-Kernels"><span class="nav-number">3.3.</span> <span class="nav-text">3. Illustration of Various Kernels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Implementing-NonLinear-SVMs"><span class="nav-number">3.4.</span> <span class="nav-text">4. Implementing NonLinear SVMs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Multi-class-Nonlinear-SVM-Example"><span class="nav-number">3.5.</span> <span class="nav-text">5. Multi-class (Nonlinear) SVM Example</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="二分类,多分类,多标签," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文分为理论和实验两部分：  理论部分先讲解二分类、多分类与多标签分类问题的基本概念，然后分析它们为什么使用不同的激活函数和损失函数，结论见文末总结。  实验部分重点讲解了多标签和多输出问题。   二分类、多分类、多标签和多输出问题的基本概念二分类：表示分类任务中有两个类别，比如我们想识别一幅图片是不是猫。也就是说，训练一个分类器，输入一幅图片，用特征向量x表示，输出是不是猫，用y=0或1表示。二">
+<meta name="keywords" content="二分类,多分类,多标签">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分类、多分类、多标签和多输出问题解析">
+<meta property="og:url" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="本文分为理论和实验两部分：  理论部分先讲解二分类、多分类与多标签分类问题的基本概念，然后分析它们为什么使用不同的激活函数和损失函数，结论见文末总结。  实验部分重点讲解了多标签和多输出问题。   二分类、多分类、多标签和多输出问题的基本概念二分类：表示分类任务中有两个类别，比如我们想识别一幅图片是不是猫。也就是说，训练一个分类器，输入一幅图片，用特征向量x表示，输出是不是猫，用y=0或1表示。二">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/5.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/6.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c2.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c3.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c4.png">
+<meta property="og:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c5.png">
+<meta property="og:updated_time" content="2018-08-18T12:34:06.318Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二分类、多分类、多标签和多输出问题解析">
+<meta name="twitter:description" content="本文分为理论和实验两部分：  理论部分先讲解二分类、多分类与多标签分类问题的基本概念，然后分析它们为什么使用不同的激活函数和损失函数，结论见文末总结。  实验部分重点讲解了多标签和多输出问题。   二分类、多分类、多标签和多输出问题的基本概念二分类：表示分类任务中有两个类别，比如我们想识别一幅图片是不是猫。也就是说，训练一个分类器，输入一幅图片，用特征向量x表示，输出是不是猫，用y=0或1表示。二">
+<meta name="twitter:image" content="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/"/>
+
+
+
+
+
+  <title>二分类、多分类、多标签和多输出问题解析 | 望江人工智库</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="望江车神">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二分类、多分类、多标签和多输出问题解析</h1>
+        
+
+        <div class="post-meta">
+		  
+
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T08:22:42+08:00">
+                2018-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实验/" itemprop="url" rel="index">
+                    <span itemprop="name">实验</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文分为理论和实验两部分：</p>
+<ul>
+<li><p>理论部分先讲解二分类、多分类与多标签分类问题的基本概念，然后分析它们为什么使用不同的激活函数和损失函数，结论见文末总结。</p>
+</li>
+<li><p>实验部分重点讲解了多标签和多输出问题。</p>
+</li>
+</ul>
+<h2 id="二分类、多分类、多标签和多输出问题的基本概念"><a href="#二分类、多分类、多标签和多输出问题的基本概念" class="headerlink" title="二分类、多分类、多标签和多输出问题的基本概念"></a>二分类、多分类、多标签和多输出问题的基本概念</h2><p>二分类：表示分类任务中有两个类别，比如我们想识别一幅图片是不是猫。也就是说，训练一个分类器，输入一幅图片，用特征向量x表示，输出是不是猫，用y=0或1表示。二类分类是假设每个样本都被设置了一个且仅有一个标签 0 或者 1。</p>
+<p>多类分类(Multiclass classification): 表示分类任务中有多个类别, 比如对一堆水果图片分类, 它们可能是橘子、苹果、梨等. 多类分类是假设每个样本都被设置了一个且仅有一个标签: 一个水果可以是苹果或者梨, 但是同时不可能是两者。</p>
+<p>多标签分类(Multilabel classification): 给每个样本一系列的目标标签. 可以想象成一个数据点的各属性不是相互排斥的(一个水果既是苹果又是梨就是相互排斥的), 比如一个文档相关的话题. 一个文本可能被同时认为是宗教、政治、金融或者教育相关话题。</p>
+<p>多输出分类：多个多分类或多标签分类组合输出的分类。网络至少会分支两次（有时候会更多），从而在网络末端创建出多组全连接头——然后你的网络的每个头都会预测一组类别标签，使其有可能学习到不相交的标签组合。比如一个网络同时预测服饰的款式类型和颜色类型。</p>
+<h2 id="多分类问题与二分类问题关系"><a href="#多分类问题与二分类问题关系" class="headerlink" title="多分类问题与二分类问题关系"></a>多分类问题与二分类问题关系</h2><p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/1.png" alt=""></p>
+<p>首先，两类问题是分类问题中最简单的一种。其次，很多多类问题可以被分解为多个两类问题进行求解（请看下文分解）。所以，历史上有很多算法都是针对两类问题提出的。下面我们来分析如何处理多分类问题：</p>
+<h3 id="直接分成多类"><a href="#直接分成多类" class="headerlink" title="直接分成多类"></a>直接分成多类</h3><p>比如使用 Softmax 回归。</p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/2.png" alt=""></p>
+<h3 id="一对一的策略"><a href="#一对一的策略" class="headerlink" title="一对一的策略"></a>一对一的策略</h3><p>给定数据集D这里有N个类别，这种情况下就是将这些类别两两配对，从而产生N(N−1)2个二分类任务，在测试的时候把样本交给这些分类器，然后进行投票。</p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/3.png" alt=""></p>
+<h3 id="一对其余策略"><a href="#一对其余策略" class="headerlink" title="一对其余策略"></a>一对其余策略</h3><p>将每一次的一个类作为正例，其余作为反例，总共训练N个分类器。测试的时候若仅有一个分类器预测为正的类别则对应的类别标记作为最终分类结果，若有多个分类器预测为正类，则选择置信度最大的类别作为最终分类结果。</p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/4.png" alt=""></p>
+<h2 id="多标签问题与二分类问题关系"><a href="#多标签问题与二分类问题关系" class="headerlink" title="多标签问题与二分类问题关系"></a>多标签问题与二分类问题关系</h2><p><strong>面临的问题：</strong><br>图片的标签数目不是固定的，有的有一个标签，有的有两个标签，但标签的种类总数是固定的，比如为5类。</p>
+<p><strong>解决该问题：</strong><br>采用了标签补齐的方法，即缺失的标签全部使用0标记，这意味着，不再使用one-hot编码。例如：标签为：-1,1,1,-1,1 ;-1表示该类标签没有，1表示该类标签存在，则这张图片的标签编码为：</p>
+<p>0 0 0 0 0<br>0 1 0 0 0<br>0 0 1 0 0<br>0 0 0 0 0<br>0 0 0 0 1</p>
+<p>2.如何衡量损失？</p>
+<p>计算出一张图片各个标签的损失，然后取平均值。</p>
+<p>3.如何计算精度</p>
+<p>计算出一张图片各个标签的精度，然后取平均值。</p>
+<p><strong>该处理方法的本质：把一个多标签问题，转化为了在每个标签上的二分类问题。</strong></p>
+<h2 id="损失函数的选择问题"><a href="#损失函数的选择问题" class="headerlink" title="损失函数的选择问题"></a>损失函数的选择问题</h2><h3 id="基于逻辑回归的二分类问题"><a href="#基于逻辑回归的二分类问题" class="headerlink" title="基于逻辑回归的二分类问题"></a>基于逻辑回归的二分类问题</h3><p>对于logistic回归，有：</p>
+<script type="math/tex; mode=display">h_{\theta}(x) = g(\theta^{T}x) = \frac{1}{1+e^{-\theta^{T}x}}</script><p>逻辑回归有以下优点：</p>
+<ol>
+<li>它的输入范围是 $-\infty \to+\infty$，而之于刚好为（0，1），正好满足概率分布为（0，1）的要求。我们用概率去描述分类器，自然比单纯的某个阈值要方便很多；</li>
+<li>它是一个单调上升的函数，具有良好的连续性，不存在不连续点。</li>
+</ol>
+<p>对数损失函数（logarithmic loss function) 或对数似然损失函数(log-likehood loss function) 。</p>
+<script type="math/tex; mode=display">L(Y,P(Y|X)) = -logP(Y|X)</script><p>逻辑回归中，采用的则是对数损失函数。根据上面的内容，我们可以得到逻辑回归的对数似然损失函数cost function：</p>
+<script type="math/tex; mode=display">cost(h_{\theta}(x),y) = \begin{cases}  -log(h_{\theta}(x))  & \text {if y=1} \\ -log(1-h_{\theta}(x))  & \text{if y=0} \end{cases}</script><p>将以上两个表达式合并为一个，则单个样本的损失函数可以描述为：</p>
+<script type="math/tex; mode=display">cost(h_{\theta}(x),y) = -y_ilog(h_{\theta}(x)) - (1-y_i)log(1-h_{\theta}(x))</script><p>这就是逻辑回归最终的损失函数表达式。</p>
+<h3 id="基于-Softmax-的多分类问题"><a href="#基于-Softmax-的多分类问题" class="headerlink" title="基于 Softmax 的多分类问题"></a>基于 Softmax 的多分类问题</h3><p>softmax层中的softmax 函数是logistic函数在多分类问题上的推广，它将一个N维的实数向量压缩成一个满足特定条件的N维实数向。压缩后的向量满足两个条件：</p>
+<ol>
+<li>向量中的每个元素的大小都在[0,1]</li>
+<li>向量所有元素的和为 1</li>
+</ol>
+<p>因此，softmax适用于多分类问题中对每一个类别的概率判断，softmax的函数公式如下：</p>
+<script type="math/tex; mode=display">a^L_j = \frac {e^{z^L_j}}{\sum_k e^{z^L_k}}</script><p>基于 Softmax 的多分类问题采用的是 log似然代价函数（log-likelihood cost function）来解决。</p>
+<p>单个样本的 log似然代价函数的公式为：</p>
+<script type="math/tex; mode=display">
+C = - \sum_i y_i log a_i</script><p>其中， $y_i$ 表示标签向量的第 $i$ 个分量。因为往往只有一个分量为 1 其余的分量都为 0，所以可以去掉损失函数中的求和符号，化简为，</p>
+<script type="math/tex; mode=display">
+  C \equiv -\ln a_j</script><p>其中， $a_j$ 是向量 $y$ 中取值为 1 对应的第 $j$ 个分量的值。</p>
+<h3 id="交叉熵损失函数与-log-似然代价函数关系-本质一样"><a href="#交叉熵损失函数与-log-似然代价函数关系-本质一样" class="headerlink" title="交叉熵损失函数与 log 似然代价函数关系 本质一样"></a>交叉熵损失函数与 log 似然代价函数关系 本质一样</h3><p>有的文献中也称 log 似然代价函数为交叉熵损失函数，这两个都是交叉熵损失函数，但是看起来长的却有天壤之别。为什么同是交叉熵损失函数，长的却不一样呢？</p>
+<script type="math/tex; mode=display">cost(h_{\theta}(x),y) = -y_ilog(h_{\theta}(x)) - (1-y_i)log(1-h_{\theta}(x))</script><script type="math/tex; mode=display">C = - \sum_i y_i log a_i</script><p>因为这两个交叉熵损失函数对应不同的最后一层的输出。第一个对应的最后一层是 sigmoid，用于二分类问题，第二个对应的最后一层是 softmax，用于多分类问题。但是它们的本质是一样的，请看下面的分析。</p>
+<p>首先来看信息论中交叉熵的定义：</p>
+<script type="math/tex; mode=display">-\int p(x)\text{log}g(x)dx</script><p>交叉熵是用来描述两个分布的距离的，神经网络训练的目的就是使 g(x) 逼近 p(x)。</p>
+<h3 id="sigmoid-对数损失函数"><a href="#sigmoid-对数损失函数" class="headerlink" title="sigmoid + 对数损失函数"></a>sigmoid + 对数损失函数</h3><p>先看看 sigmoid 作为神经网络最后一层的情况。sigmoid 作为最后一层输出的话，那就不能吧最后一层的输出看作成一个分布了，因为加起来不为 1。现在应该将最后一层的每个神经元看作一个分布，对应的 target 属于二项分布(target的值代表是这个类的概率)，那么第 i 个神经元交叉熵为</p>
+<script type="math/tex; mode=display">y_i\text{log}(h_{\theta})+(1-y_i)\text{log}(1-h_{\theta})</script><p>其实这个式子可以用求和符号改写，</p>
+<script type="math/tex; mode=display">C = - \sum_i  log a_i</script><p>其中，</p>
+<script type="math/tex; mode=display">cost(h_{\theta}(x),y) = \begin{cases}  -log(a_i) & a_i=h_{\theta}  & \text {if }  y_i=1 \\ -log(a_i) & a_i=1-h_{\theta}  & \text{if } y_i=0 \end{cases}</script><h3 id="Softmax-交叉熵"><a href="#Softmax-交叉熵" class="headerlink" title="Softmax + 交叉熵"></a>Softmax + 交叉熵</h3><p>现在来看 softmax 作为神经网络最后一层的情况。g(x)是什么呢？就是最后一层的输出 y 。p(x)是什么呢？就是我们的one-hot标签。我们带入交叉熵的定义中算一下，就会得到：</p>
+<script type="math/tex; mode=display">C = - \sum_i y_i log a_i</script><h3 id="交叉熵损失函数与-log-似然损失函数的总结"><a href="#交叉熵损失函数与-log-似然损失函数的总结" class="headerlink" title="交叉熵损失函数与 log 似然损失函数的总结"></a>交叉熵损失函数与 log 似然损失函数的总结</h3><p>注意到不管是交叉熵损失函数与 log 似然损失函数，交叉熵损失函数用于二分类问题， log 似然损失函数用于多分类，但是对于某一个样本只属于一个类别，只有一个标签。如果用 one-hot 编码样本的标签那么，对于标签向量只有一个分量的值为 1 其余的值都为 0。</p>
+<p>所以不管是交叉熵损失函数与 log 似然损失函数，都可以化简为，</p>
+<script type="math/tex; mode=display">
+  C \equiv -\ln a_j</script><p>其中， $a_j$ 是向量 $y$ 中取值为 1 对应的第 $j$ 个分量的值。这两个长的不一样的损失函数实际上是对应的不同的输出层。本质上是一样的。</p>
+<p>我的建议是，采用 <a href="https://keras.io/" target="_blank" rel="noopener">Kears</a> 中的命名方法，对于二分类的交叉熵损失函数称之为 <strong>“二分类交叉熵损失函数（binary_crossentropy）”</strong> ，对于多分类的交叉熵损失函数称之为 <strong>“多类别交叉熵损失函数（categorical_crossentropy）”</strong>。</p>
+<p>在 Kears 中也有提示（注意: 当使用categorical_crossentropy损失时，你的目标值应该是分类格式 (即，如果你有10个类，每个样本的目标值应该是一个10维的向量，这个向量除了表示类别的那个索引为1，其他均为0)。 为了将 整数目标值 转换为 分类目标值，你可以使用Keras实用函数to_categorical：）</p>
+<hr>
+<p>一种更直接的证明方法，数学公式，</p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/5.png" alt=""></p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/6.png" alt=""></p>
+<p>内容来源于 <a href="https://www.safaribooksonline.com/library/view/hands-on-machine-learning/9781491962282/#toc-start" target="_blank" rel="noopener"> Hands-on Machine Learning with Scikit-Learn and TensorFlow</a> 141 页。</p>
+<h3 id="多标签分类-二分类交叉熵损失函数"><a href="#多标签分类-二分类交叉熵损失函数" class="headerlink" title="多标签分类 + 二分类交叉熵损失函数"></a>多标签分类 + 二分类交叉熵损失函数</h3><p>多标签问题与二分类问题关系在上文已经讨论过了，方法是计算一个样本各个标签的损失（输出层采用sigmoid函数），然后取平均值。把一个多标签问题，转化为了在每个标签上的二分类问题。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>分类问题名称</th>
+<th>输出层使用激活函数</th>
+<th>对应的损失函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>二分类</td>
+<td>sigmoid函数</td>
+<td>二分类交叉熵损失函数（binary_crossentropy）</td>
+</tr>
+<tr>
+<td>多分类</td>
+<td>Softmax函数</td>
+<td>多类别交叉熵损失函数（categorical_crossentropy）</td>
+</tr>
+<tr>
+<td>多标签分类</td>
+<td>sigmoid函数</td>
+<td>二分类交叉熵损失函数（binary_crossentropy）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="为什么要引入多输出分类问题"><a href="#为什么要引入多输出分类问题" class="headerlink" title="为什么要引入多输出分类问题"></a>为什么要引入多输出分类问题</h2><p>使用Keras执行多标签分类非常简单，包括两个主要步骤：</p>
+<p>使用 sigmoid 激活替换网络末端的 softmax 激活<br>换出明确的交叉熵的二进制交叉熵对你的损失函数<br>从那里你可以像往常一样训练你的网络。<br>应用上述过程的最终结果是多类分类器。<br>可以使用Keras多类分类来预测多个标签只是一个单一的向前传递。</p>
+<p>但是，您需要考虑以下问题：</p>
+<p>您需要针对要预测的每个类别组合的培训数据。</p>
+<p>就像神经网络无法预测从未接受过训练的类一样，您的神经网络无法预测从未见过的组合的多个类别标签。这种行为的原因是由于网络内神经元的激活。</p>
+<p>如果您的网络接受过（1）黑色裤子和（2）红色衬衫的示例训练，现在您想要预测“红裤子”（数据集中没有“红裤子”图像），负责检测的神经元“红色”和“裤子”会触发，但由于网络一旦到达完全连接的层之前从未见过这种数据/激活组合，您的输出预测很可能是不正确的（即，您可能会遇到“红色”或“裤子”，但两者都不太可能）。</p>
+<p>同样，您的网络无法正确预测从未接受过培训的数据（您也不应该期望它）。在培训您自己的Keras网络进行多标签分类时，请牢记这一点。</p>
+<p>使用多输出分类就可以解决此问题。通过创建两个全连接头和相关的子网络（如有必要），我们可以训练一个头分类服装种类，另一个头负责识别颜色——最终得到的网络可以分类「黑色裙子」，即使它之前从未在这样的数据上训练过！</p>
+<hr>
+<h2 id="多输出分类-针对服装类型和颜色的实验"><a href="#多输出分类-针对服装类型和颜色的实验" class="headerlink" title="多输出分类:针对服装类型和颜色的实验"></a>多输出分类:针对服装类型和颜色的实验</h2><p><a href="https://www.jiqizhixin.com/articles/2018-08-14-2" target="_blank" rel="noopener">实验详细指导</a></p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c2.png" alt=""></p>
+<p><strong>创建模型的关键代码</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FashionNet</span>:</span></span><br><span class="line"><span class="meta">	@staticmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_category_branch</span><span class="params">(inputs, numCategories,</span></span></span><br><span class="line"><span class="function"><span class="params">		finalAct=<span class="string">"softmax"</span>, chanDim=<span class="number">-1</span>)</span>:</span></span><br><span class="line">		<span class="comment"># utilize a lambda layer to convert the 3 channel input to a</span></span><br><span class="line">		<span class="comment"># grayscale representation</span></span><br><span class="line">		x = Lambda(<span class="keyword">lambda</span> c: tf.image.rgb_to_grayscale(c))(inputs)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># CONV =&gt; RELU =&gt; POOL</span></span><br><span class="line">		x = Conv2D(<span class="number">32</span>, (<span class="number">3</span>, <span class="number">3</span>), padding=<span class="string">"same"</span>)(x)</span><br><span class="line">		x = Activation(<span class="string">"relu"</span>)(x)</span><br><span class="line">		x = BatchNormalization(axis=chanDim)(x)</span><br><span class="line">		x = MaxPooling2D(pool_size=(<span class="number">3</span>, <span class="number">3</span>))(x)</span><br><span class="line">		x = Dropout(<span class="number">0.25</span>)(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Omit some similar code</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># define a branch of output layers for the number of different</span></span><br><span class="line">		<span class="comment"># clothing categories (i.e., shirts, jeans, dresses, etc.)</span></span><br><span class="line">		x = Flatten()(x)</span><br><span class="line">		x = Dense(<span class="number">256</span>)(x)</span><br><span class="line">		x = Activation(<span class="string">"relu"</span>)(x)</span><br><span class="line">		x = BatchNormalization()(x)</span><br><span class="line">		x = Dropout(<span class="number">0.5</span>)(x)</span><br><span class="line">		x = Dense(numCategories)(x)</span><br><span class="line">		x = Activation(finalAct, name=<span class="string">"category_output"</span>)(x)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># return the category prediction sub-network</span></span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="meta">	@staticmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build_color_branch</span><span class="params">(inputs, numColors, finalAct=<span class="string">"softmax"</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">		chanDim=<span class="number">-1</span>)</span>:</span></span><br><span class="line">		<span class="comment"># CONV =&gt; RELU =&gt; POOL</span></span><br><span class="line">		x = Conv2D(<span class="number">16</span>, (<span class="number">3</span>, <span class="number">3</span>), padding=<span class="string">"same"</span>)(inputs)</span><br><span class="line">		x = Activation(<span class="string">"relu"</span>)(x)</span><br><span class="line">		x = BatchNormalization(axis=chanDim)(x)</span><br><span class="line">		x = MaxPooling2D(pool_size=(<span class="number">3</span>, <span class="number">3</span>))(x)</span><br><span class="line">		x = Dropout(<span class="number">0.25</span>)(x)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Omit some similar code</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># define a branch of output layers for the number of different</span></span><br><span class="line">		<span class="comment"># colors (i.e., red, black, blue, etc.)</span></span><br><span class="line">		x = Flatten()(x)</span><br><span class="line">		x = Dense(<span class="number">128</span>)(x)</span><br><span class="line">		x = Activation(<span class="string">"relu"</span>)(x)</span><br><span class="line">		x = BatchNormalization()(x)</span><br><span class="line">		x = Dropout(<span class="number">0.5</span>)(x)</span><br><span class="line">		x = Dense(numColors)(x)</span><br><span class="line">		x = Activation(finalAct, name=<span class="string">"color_output"</span>)(x)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># return the color prediction sub-network</span></span><br><span class="line">		<span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="meta">	@staticmethod</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(width, height, numCategories, numColors,</span></span></span><br><span class="line"><span class="function"><span class="params">		finalAct=<span class="string">"softmax"</span>)</span>:</span></span><br><span class="line">		<span class="comment"># initialize the input shape and channel dimension (this code</span></span><br><span class="line">		<span class="comment"># assumes you are using TensorFlow which utilizes channels</span></span><br><span class="line">		<span class="comment"># last ordering)</span></span><br><span class="line">		inputShape = (height, width, <span class="number">3</span>)</span><br><span class="line">		chanDim = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">		<span class="comment"># construct both the "category" and "color" sub-networks</span></span><br><span class="line">		inputs = Input(shape=inputShape)</span><br><span class="line">		categoryBranch = FashionNet.build_category_branch(inputs,</span><br><span class="line">			numCategories, finalAct=finalAct, chanDim=chanDim)</span><br><span class="line">		colorBranch = FashionNet.build_color_branch(inputs,</span><br><span class="line">			numColors, finalAct=finalAct, chanDim=chanDim)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># create the model using our input (the batch of images) and</span></span><br><span class="line">		<span class="comment"># two separate outputs -- one for the clothing category</span></span><br><span class="line">		<span class="comment"># branch and another for the color branch, respectively</span></span><br><span class="line">		model = Model(</span><br><span class="line">			inputs=inputs,</span><br><span class="line">			outputs=[categoryBranch, colorBranch],</span><br><span class="line">			name=<span class="string">"fashionnet"</span>)</span><br><span class="line"></span><br><span class="line">		<span class="comment"># return the constructed network architecture</span></span><br><span class="line">		<span class="keyword">return</span> model</span><br></pre></td></tr></table></figure></p>
+<p><strong>实验输出</strong></p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c3.png" alt=""></p>
+<p><strong>模型预测效果</strong></p>
+<p><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c4.png" alt=""><br><img src="/2018/07/01/二分类、多分类与多标签问题的区别——对应损失函数的选择/c5.png" alt=""></p>
+<hr>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] François Chollet‏. Keras Document[DB/OL]. <a href="https://keras.io/" target="_blank" rel="noopener">https://keras.io/</a>, 2018-07-01.</p>
+<p>[2] 目力过人. 多标签分类（multilabel classification ）[DB/OL]. <a href="https://blog.csdn.net/bemachine/article/details/10471383" target="_blank" rel="noopener">https://blog.csdn.net/bemachine/article/details/10471383</a>, 2018-07-01.</p>
+<p>[3] Inside_Zhang.【联系】二项分布的对数似然函数与交叉熵（cross entropy）损失函数[DB/OL]. <a href="https://blog.csdn.net/lanchunhui/article/details/75433608" target="_blank" rel="noopener">https://blog.csdn.net/lanchunhui/article/details/75433608</a>, 2018-07-01.</p>
+<p>[4] ke1th. 两种交叉熵损失函数的异同[DB/OL]. <a href="https://blog.csdn.net/u012436149/article/details/69660214" target="_blank" rel="noopener">https://blog.csdn.net/u012436149/article/details/69660214</a>, 2018-07-01.</p>
+<p>[5] bitcarmanlee. logistic回归详解一：为什么要使用logistic函数[DB/OL]. <a href="https://blog.csdn.net/bitcarmanlee/article/details/51154481" target="_blank" rel="noopener">https://blog.csdn.net/bitcarmanlee/article/details/51154481</a>, 2018-07-01.</p>
+<p>[6] Aurélien Géron. Hands-On Machine Learning with Scikit-Learn and TensorFlow[M]. America: O’Reilly Media, 2017-03-10, 140-141.</p>
+<p>[7] Adrian Rosebrock. 使用Keras实现多输出分类：用单个模型同时执行两个独立分类任务[DB/OL]. <a href="https://www.jiqizhixin.com/articles/2018-08-14-2" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2018-08-14-2</a>, 2018-08-18.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>感谢金主！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="望江车神 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="望江车神 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/二分类/" rel="tag"># 二分类</a>
+          
+            <a href="/tags/多分类/" rel="tag"># 多分类</a>
+          
+            <a href="/tags/多标签/" rel="tag"># 多标签</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/29/神经网络可以计算任何函数的可视化证明/" rel="next" title="神经网络可以计算任何函数的可视化证明">
+                <i class="fa fa-chevron-left"></i> 神经网络可以计算任何函数的可视化证明
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/09/四川大学研究生软件项目管理期末考试分析/" rel="prev" title="四川大学研究生软件项目管理期末考试分析">
+                四川大学研究生软件项目管理期末考试分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+                alt="望江车神" />
+            
+              <p class="site-author-name" itemprop="name">望江车神</p>
+              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分类、多分类、多标签和多输出问题的基本概念"><span class="nav-number">1.</span> <span class="nav-text">二分类、多分类、多标签和多输出问题的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多分类问题与二分类问题关系"><span class="nav-number">2.</span> <span class="nav-text">多分类问题与二分类问题关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接分成多类"><span class="nav-number">2.1.</span> <span class="nav-text">直接分成多类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对一的策略"><span class="nav-number">2.2.</span> <span class="nav-text">一对一的策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对其余策略"><span class="nav-number">2.3.</span> <span class="nav-text">一对其余策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多标签问题与二分类问题关系"><span class="nav-number">3.</span> <span class="nav-text">多标签问题与二分类问题关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数的选择问题"><span class="nav-number">4.</span> <span class="nav-text">损失函数的选择问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于逻辑回归的二分类问题"><span class="nav-number">4.1.</span> <span class="nav-text">基于逻辑回归的二分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-Softmax-的多分类问题"><span class="nav-number">4.2.</span> <span class="nav-text">基于 Softmax 的多分类问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵损失函数与-log-似然代价函数关系-本质一样"><span class="nav-number">4.3.</span> <span class="nav-text">交叉熵损失函数与 log 似然代价函数关系 本质一样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sigmoid-对数损失函数"><span class="nav-number">4.4.</span> <span class="nav-text">sigmoid + 对数损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Softmax-交叉熵"><span class="nav-number">4.5.</span> <span class="nav-text">Softmax + 交叉熵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵损失函数与-log-似然损失函数的总结"><span class="nav-number">4.6.</span> <span class="nav-text">交叉熵损失函数与 log 似然损失函数的总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多标签分类-二分类交叉熵损失函数"><span class="nav-number">4.7.</span> <span class="nav-text">多标签分类 + 二分类交叉熵损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.8.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要引入多输出分类问题"><span class="nav-number">5.</span> <span class="nav-text">为什么要引入多输出分类问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多输出分类-针对服装类型和颜色的实验"><span class="nav-number">6.</span> <span class="nav-text">多输出分类:针对服装类型和颜色的实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">望江车神</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+        placeholder: '欢迎交流',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
