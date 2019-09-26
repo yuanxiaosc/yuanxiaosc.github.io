@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://static001.infoq.cn/resource/image/4f/e1/4f37f8350b34355266e5cce64ad281e1.png">
 <meta property="og:image" content="https://static001.infoq.cn/resource/image/84/f5/84e0b1b26f52480479044c4417a99ff5.png">
-<meta property="og:updated_time" content="2019-09-23T08:54:06.203Z">
+<meta property="og:updated_time" content="2019-09-25T01:59:54.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习算法的商业应用案例">
 <meta name="twitter:description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和应用能力。编者：袁宵 知乎 推荐算法知乎CTO李大海：知识内容平台 AI 技术应用思考 | 李大海 | 20190430  这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息过载问">
@@ -413,8 +413,16 @@
 </blockquote>
 <p>该文主要内容：</p>
 <p>一、内容市场背景介绍：<br>1、信息过载<br>2、用户内容需求升级<br>3、知乎的使命</p>
-<p>二、知乎如何连接「人与内容」：<br>1、首页个性化推荐技术的架构与应用<br>2、知乎搜索技术的架构与应用<br>3、问题路由技术的架构与应用<br>4、算法机器人「瓦力」的应用<br>5、视频理解技术的应用</p>
-<p>三、知乎如何连接「人与人」：<br>1、基于用户行为的 Embeeding 表示模型<br>2、基于用户社交关系的 Embeeding 表示模型</p>
+<p>二、知乎如何连接「人与内容」：</p>
+<blockquote>
+<p>2013 <a href="https://blog.csdn.net/qq_25439417/article/details/86135896" target="_blank" rel="noopener">Edge Rank</a> -&gt; 2016 GBDT 算法 -&gt; 2017 word2vec 和 ANN 算法（Approximate Nearest Neighbor）-&gt; 多目标学习 和 seq2seq</p>
+</blockquote>
+<p>1、首页个性化推荐技术的架构与应用<br>2、知乎搜索技术的架构与应用<br>3、问题路由技术的架构与应用<br>4、算法机器人「瓦力」的应用<br>5、视频理解技术的应用</p>
+<p>三、知乎如何连接「人与人」：</p>
+<blockquote>
+<p>Graph Embedding 模型</p>
+</blockquote>
+<p>1、基于用户行为的 Embeeding 表示模型（主要使用用户搜索内容、关注、收藏、点赞、阅读的回答、文章等对应的话题，作为用户的特征，整理成 0-1 的向量。使用变分自编码器（Variational Auto-Encoder，VAE），使样本对应到正态分布，计算此正态分布和标准正态分布的 KL 散度距离作为额外的 loss，最终为得到用户的 Embedding 表示。）<br>2、基于用户社交关系的 Embeeding 表示模型（主要使用 skip-gram 模型，得到用户的特征表示，从用户关注优秀回答者的关注关系网络中抽取数据集，采用 Randomwalk 方法抽样有序的节点，从而将社交网络转化为有序节点进行学习。）</p>
 <p>四、知乎如何连接「内容与内容」：<br>1、知识图谱<br>2、其他</p>
 <p>五、后续计划：构建 AI 驱动的「智能社区」</p>
 <h2 id="NAVER-商品分类算法"><a href="#NAVER-商品分类算法" class="headerlink" title="NAVER 商品分类算法"></a><a href="https://www.naver.com/" target="_blank" rel="noopener">NAVER</a> 商品分类算法</h2><p><a href="https://yuanxiaosc.github.io/2019/07/13/%E4%BD%BF%E7%94%A8TensorFlow%E8%87%AA%E5%8A%A8%E5%88%86%E7%B1%BBNAVER%E8%B4%AD%E7%89%A9%E4%BA%A7%E5%93%81%E7%B1%BB%E5%88%AB/" target="_blank" rel="noopener">使用TensorFlow自动分类NAVER购物产品类别</a> | TensorFlow | 20190521</p>
