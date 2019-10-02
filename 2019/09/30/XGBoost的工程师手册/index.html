@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/30/XGBoost的工程师手册/XGBoost_paper_fig_3.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/30/XGBoost的工程师手册/稀疏感知算法.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/30/XGBoost的工程师手册/XGBoost_paper_fig_6.png">
-<meta property="og:updated_time" content="2019-09-29T09:29:39.726Z">
+<meta property="og:updated_time" content="2019-10-02T13:29:11.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XGBoost的工程师手册">
 <meta name="twitter:description" content="XGBoost的工程师手册 = XGBoost论文理论解析 + XGBoost实战 + XGBoost面试题 编者：袁宵 XGBoost: A Scalable Tree Boosting System树提升（Tree boosting）算法是一种非常有效且被广泛使用的机器学习方法。 在本文中，我们描述了一个名为 XGBoost （Extreme Gradient Boosting 极限提升树）的">
@@ -571,8 +571,30 @@
 <p>在计算过程中，使用独立的线程将Block预提取到主内存缓冲区，这样子数据计算和磁盘读取可以同步进行，但由于IO非常耗时，所以还有2种技术来改善这种核外计算：</p>
 <p>Block Compression： 块压缩，并当加载到主内存时由独立线程动态解压缩；<br>Block Sharding： 块分片，即将数据分片到多个磁盘，为每个磁盘分配一个线程，将数据提取到内存缓冲区，然后每次训练线程的时候交替地从每个缓冲区读取数据，有助于在多个磁盘可用时，增加读取的吞吐量。</p>
 <h2 id="XGBoost相关证明"><a href="#XGBoost相关证明" class="headerlink" title="XGBoost相关证明"></a>XGBoost相关证明</h2><p>TODO：完善内容</p>
-<h2 id="XGBoost应用"><a href="#XGBoost应用" class="headerlink" title="XGBoost应用"></a>XGBoost应用</h2><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><h3 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h3><p><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/" target="_blank" rel="noopener">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a> | <a href="与论文结合详解XGBoost参数">与论文结合详解XGBoost参数</a></p>
-<h2 id="XGBoost面试题"><a href="#XGBoost面试题" class="headerlink" title="XGBoost面试题"></a>XGBoost面试题</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<h2 id="XGBoost应用"><a href="#XGBoost应用" class="headerlink" title="XGBoost应用"></a>XGBoost应用</h2><h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>TODO：完善内容</p>
+<h3 id="调参"><a href="#调参" class="headerlink" title="调参"></a>调参</h3><p><a href="https://www.analyticsvidhya.com/blog/2016/03/complete-guide-parameter-tuning-xgboost-with-codes-python/" target="_blank" rel="noopener">Complete Guide to Parameter Tuning in XGBoost with codes in Python</a></p>
+<p><a href="https://blog.csdn.net/u010665216/article/details/78532619" target="_blank" rel="noopener">Xgboost参数调优的完整指南及实战</a></p>
+<h2 id="XGBoost面试题"><a href="#XGBoost面试题" class="headerlink" title="XGBoost面试题"></a>XGBoost面试题</h2><ol>
+<li>简单介绍一下XGB</li>
+<li>XGBoost为什么使用泰勒二阶展开？为什么用二阶信息不用一阶？</li>
+<li>XGBoost在什么地方做的剪枝，怎么做的？</li>
+<li>XGBoost如何分布式？特征分布式和数据分布式？ 各有什么存在的问题？</li>
+<li>XGBoost里处理缺失值的方法？</li>
+<li>XGBoost有那些优化？</li>
+<li>XGBoost如何寻找最优特征？是又放回还是无放回的呢？</li>
+<li>GBDT和XGBoost的区别是什么？</li>
+<li>lightgbm和xgboost有什么区别？他们的loss一样么？ 算法层面有什么区别？</li>
+<li>比较一下LR和GBDT？GBDT在什么情况下比逻辑回归算法要差？</li>
+<li>RF和GBDT的区别；RF怎么解决的过拟合问题；</li>
+<li>怎么理解决策树、xgboost能处理缺失值？而有的模型(svm)对缺失值比较敏感？</li>
+<li>随机森林是怎样避免ID3算法信息增益的缺点的？</li>
+<li>gbdt对标量特征要不要onehot编码？</li>
+<li>CART为什么选择基尼系数作为特征选择标准 ？</li>
+<li>如何解决类别不平衡问题？</li>
+<li>GBDT 如何用于分类 ？</li>
+</ol>
+<p><a href="https://blog.csdn.net/jamexfx/article/details/93780308" target="_blank" rel="noopener">参考答案</a></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
 <li>理解XGBoost原理，查看陈天齐的PPT <a href="https://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="noopener">Introduction to Boosted Trees</a> 和论文 <a href="https://arxiv.org/abs/1603.02754" target="_blank" rel="noopener">XGBoost: A Scalable Tree Boosting System</a>。</li>
 <li>使用XGBoost，查看GitHub 可扩展，可移植和分布式梯度提升（GBDT，GBRT或GBM）库  <a href="https://github.com/dmlc/xgboost" target="_blank" rel="noopener">xgboost</a>。</li>
 <li>阅读：XGBoost超详细推导，终于有人讲明白了！ / 珍藏版 | 20道XGBoost面试题，你会几个？(上篇) / 珍藏版 | 20道XGBoost面试题，你会几个？(下篇)</li>
@@ -640,6 +662,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/02/正则表达式/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
