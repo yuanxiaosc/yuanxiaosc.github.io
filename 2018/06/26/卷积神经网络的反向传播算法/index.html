@@ -22,6 +22,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
 
 
 <script id="hexo-configurations">
@@ -59,7 +61,7 @@
 </script>
 
   <meta name="description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本">
-<meta name="keywords" content="卷积神经网络,深度学习,反向传播算法,前向传播算法">
+<meta name="keywords" content="卷积神经网络,深度学习,前向传播算法,反向传播算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卷积神经网络的反向传播算法">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2018/06/26/卷积神经网络的反向传播算法/index.html">
@@ -560,9 +562,9 @@
             
               <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
             
-              <a href="/tags/反向传播算法/" rel="tag"># 反向传播算法</a>
-            
               <a href="/tags/前向传播算法/" rel="tag"># 前向传播算法</a>
+            
+              <a href="/tags/反向传播算法/" rel="tag"># 反向传播算法</a>
             
           </div>
         
@@ -572,8 +574,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/06/24/改进神经网络的学习方法——弃权/" rel="next" title="改进神经网络的学习方法——弃权">
-                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——弃权
+                <a href="/2018/06/24/改进神经网络的学习方法——正则化/" rel="next" title="改进神经网络的学习方法——正则化">
+                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——正则化
                 </a>
               
             </div>
@@ -740,6 +742,11 @@
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
   </div>
 
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 374.5k 字</span>
+</div>
+
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -782,7 +789,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>

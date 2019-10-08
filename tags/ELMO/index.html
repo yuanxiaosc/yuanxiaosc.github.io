@@ -22,6 +22,8 @@
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
 
 
 <script id="hexo-configurations">
@@ -62,14 +64,14 @@
 <meta name="keywords" content="自然语言处理,深度学习,机器学习,人工智能,论文">
 <meta property="og:type" content="website">
 <meta property="og:title" content="望江人工智库">
-<meta property="og:url" content="https://yuanxiaosc.github.io/tags/ELMO/index.html">
+<meta property="og:url" content="https://yuanxiaosc.github.io/tags/ELMo/index.html">
 <meta property="og:site_name" content="望江人工智库">
 <meta property="og:description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="望江人工智库">
 <meta name="twitter:description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-  <link rel="canonical" href="https://yuanxiaosc.github.io/tags/ELMO/">
+  <link rel="canonical" href="https://yuanxiaosc.github.io/tags/ELMo/">
 
 
 <script id="page-configurations">
@@ -83,7 +85,7 @@
   };
 </script>
 
-  <title>标签: ELMO | 望江人工智库</title>
+  <title>标签: ELMo | 望江人工智库</title>
   
 
 
@@ -264,7 +266,7 @@
   <div class="post-block">
     <div class="posts-collapse">
       <div class="collection-title">
-        <h2 class="collection-header">ELMO<small>标签</small>
+        <h2 class="collection-header">ELMo<small>标签</small>
         </h2>
       </div>
 
@@ -276,7 +278,7 @@
   
     
     <div class="collection-year">
-      <h2 class="collection-header">2018</h2>
+      <h2 class="collection-header">2019</h2>
     </div>
   
 
@@ -285,45 +287,16 @@
 
       <div class="post-meta">
         <time itemprop="dateCreated"
-              datetime="2018-10-29T09:55:50+08:00"
-              content="2018-10-29">
-          10-29
+              datetime="2019-04-22T10:30:00+08:00"
+              content="2019-04-22">
+          04-22
         </time>
       </div>
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/2018/10/29/ELMo_Deep_contextualized_word_representations/" itemprop="url">
-            <span itemprop="name">ELMo Deep contextualized word representations</span>
-          </a>
-        
-      </h3>
-
-    </header>
-  </article>
-
-
-
-  
-  
-
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2018-10-29T09:55:50+08:00"
-              content="2018-10-29">
-          10-29
-        </time>
-      </div>
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/2018/10/29/ELMo_Deep_contextualized_word_representations翻译/" itemprop="url">
-            <span itemprop="name">ELMo Deep contextualized word representations翻译</span>
+          <a class="post-title-link" href="/2019/04/22/Robust Chinese Word Segmentation with Contextualized Word Representations/" itemprop="url">
+            <span itemprop="name">Robust Chinese Word Segmentation with Contextualized Word Representations</span>
           </a>
         
       </h3>
@@ -474,6 +447,11 @@
     <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
   </div>
 
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 374.5k 字</span>
+</div>
+
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
@@ -516,7 +494,7 @@
   </div>
 
   
-  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
   <script src="/lib/anime.min.js?v=3.1.0"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
@@ -573,6 +551,32 @@
 <script>
 NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+    appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+    placeholder: '写下你到想法',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
+
+</body>
+</html>
+ = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {
     return GUEST.includes(item);
