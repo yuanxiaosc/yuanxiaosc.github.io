@@ -2,129 +2,87 @@
 
 
 
-  
 
 
-<html class="theme-next gemini use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="eYmWT0dEmt">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="深度学习,手写数字识别,代码实现," />
-
-
-
-
-
-
-
-
-
-
-<meta name="description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74">
-<meta name="keywords" content="深度学习,手写数字识别,代码实现">
-<meta property="og:type" content="article">
-<meta property="og:title" content="改进神经网络的学习方法——代码实现">
-<meta property="og:url" content="http://yoursite.com/2018/06/27/改进神经网络的学习方法——代码实现/index.html">
-<meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-24T07:32:36.618Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="改进神经网络的学习方法——代码实现">
-<meta name="twitter:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn  再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
   };
 </script>
 
+  <meta name="description" content="原文链接：CHAPTER 3 Improving the way neural networks learn 再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74$">
+<meta name="keywords" content="深度学习,手写数字识别,代码实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改进神经网络的学习方法——代码实现">
+<meta property="og:url" content="https://yuanxiaosc.github.io/2018/06/27/改进神经网络的学习方法——代码实现/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn 再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74$">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-24T07:32:36.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改进神经网络的学习方法——代码实现">
+<meta name="twitter:description" content="原文链接：CHAPTER 3 Improving the way neural networks learn 再看手写识别问题：代码让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 network.py 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74$">
+  <link rel="canonical" href="https://yuanxiaosc.github.io/2018/06/27/改进神经网络的学习方法——代码实现/">
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/27/改进神经网络的学习方法——代码实现/"/>
-
-
-
-
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
 
   <title>改进神经网络的学习方法——代码实现 | 望江人工智库</title>
   
@@ -136,226 +94,221 @@
 
 
 
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
-	<a href="https://github.com/yuanxiaosc" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
 
-    <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">望江人工智库</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
   <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
+
 
 <nav class="site-nav">
   
-
-  
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+      
       
         
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+      
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            标签
-          </a>
-        </li>
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+      
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            关于
-          </a>
-        </li>
       
+    
 
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
-      
-    </ul>
-  
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
-  
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>搜索</a>
+      </li>
+    
+  </ul>
 
-
-
-    </div>
-  
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
 
+</div>
+<div class="search-pop-overlay"></div>
 
-
- </div>
+  </div>
+</div>
     </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/yuanxiaosc" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+            
+
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  
-
+  <div class="posts-expand">
+      
   
   
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/27/改进神经网络的学习方法——代码实现/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/27/改进神经网络的学习方法——代码实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
       <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="望江人工智库">
     </span>
-
-    
       <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">改进神经网络的学习方法——代码实现
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">改进神经网络的学习方法——代码实现</h1>
-        
+          
+        </h2>
 
         <div class="post-meta">
-		  
-
-          <span class="post-time">
-            
+		  	  
+			  
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
               
-                <span class="post-meta-item-text">发表于</span>
+                
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-27T19:31:15+08:00">
-                2018-06-27
-              </time>
-            
 
-            
-
-            
-          </span>
-
+              <time title="创建时间：2018-06-27 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-27T19:31:15+08:00">2018-06-27</time>
+            </span>
           
-            <span class="post-category" >
             
-              <span class="post-meta-divider">|</span>
+
             
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-11-24 15:32:36" itemprop="dateModified" datetime="2018-11-24T15:32:36+08:00">2018-11-24</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
               
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
 
                 
                 
-                  ， 
+                  ，
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index">
-                    <span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span>
-                  </a>
-                </span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
 
                 
                 
@@ -364,31 +317,23 @@
           
 
           
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/06/27/改进神经网络的学习方法——代码实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/27/改进神经网络的学习方法——代码实现/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/06/27/改进神经网络的学习方法——代码实现/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/06/27/改进神经网络的学习方法——代码实现/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
-    
 
     
     
@@ -396,13 +341,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
         <blockquote>
 <p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
-</blockquote>
-<h2 id="再看手写识别问题：代码"><a href="#再看手写识别问题：代码" class="headerlink" title="再看手写识别问题：代码"></a>再看手写识别问题：代码</h2><p>让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network.py" target="_blank" rel="noopener">network.py</a> 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74$ 行代码，也很易懂。对 network.py 的详细讲解见第一章的 <a href="https://yuanxiaosc.github.io/2018/06/19/使用神经网络识别手写数字——代码实现/" target="_blank" rel="noopener">使用神经网络识别手写数字——代码实现</a></p>
+</blockquote><h2 id="再看手写识别问题：代码"><a href="#再看手写识别问题：代码" class="headerlink" title="再看手写识别问题：代码"></a>再看手写识别问题：代码</h2><p>让我们实现本章讨论过的这些想法（交叉熵、正则化、初始化权重等等）。我们将写出一个新的程序，network2.py，这是一个对中开发的 <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network.py" target="_blank" rel="noopener">network.py</a> 的改进版本。如果你没有仔细看过 network.py，那你可能会需要重读前面关于这段代码的讨论。仅仅 $74$ 行代码，也很易懂。对 network.py 的详细讲解见第一章的 <a href="https://yuanxiaosc.github.io/2018/06/19/使用神经网络识别手写数字——代码实现/">使用神经网络识别手写数字——代码实现</a></p><a id="more"></a>
+
 <p>和 network.py 一样，主要部分就是 Network 类了，我们用这个来表示神经网络。使用一个 sizes 的列表来对每个对应层进行初始化，默认使用交叉熵作为代价 cost 参数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Network</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, sizes, cost=CrossEntropyCost)</span>:</span></span><br><span class="line">        self.num_layers = len(sizes)</span><br><span class="line">        self.sizes = sizes</span><br><span class="line">        self.default_weight_initializer()</span><br><span class="line">        self.cost=cost</span><br></pre></td></tr></table></figure>
 <p>最开始几行里的 <figure class="highlight plain"><figcaption><span>方法的和 network.py 中一样，可以轻易弄懂。但是下面两行是新的，我们需要知道他们到底做了什么。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 权重初始化</span><br><span class="line"></span><br><span class="line">我们先看看 default_weight_initializer 方法，使用了我们新式改进后的初始权重方法。如我们已经看到的，使用了均值为 $0$ 而标准差为 $1/\sqrt&#123;n&#125;$，$n$ 为对应的输入连接个数。我们使用均值为 $0$ 而标准差为 $1$ 的高斯分布来初始化偏置。下面是代码：</span><br><span class="line"></span><br><span class="line">```Python</span><br><span class="line">def default_weight_initializer(self):</span><br><span class="line">        self.biases = [np.random.randn(y, 1) for y in self.sizes[1:]]</span><br><span class="line">        self.weights = [np.random.randn(y, x)/np.sqrt(x)</span><br><span class="line">                        for x, y in zip(self.sizes[:-1], self.sizes[1:])]</span><br></pre></td></tr></table></figure></p>
@@ -411,8 +353,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">large_weight_initializer</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.biases = [np.random.randn(y, <span class="number">1</span>) <span class="keyword">for</span> y <span class="keyword">in</span> self.sizes[<span class="number">1</span>:]]</span><br><span class="line">        self.weights = [np.random.randn(y, x)</span><br><span class="line">                        <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(self.sizes[:<span class="number">-1</span>], self.sizes[<span class="number">1</span>:])]</span><br></pre></td></tr></table></figure>
 <p>我将 larger_weight_initializer 方法包含进来的原因也就是使得跟第一章的结果更容易比较。我并没有考虑太多的推荐使用这个方法的实际情景。</p>
 <h3 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h3><p>初始化方法 <figure class="highlight plain"><figcaption><span>``` 中的第二个新的东西就是我们初始化了 cost 属性。为了理解这个工作的原理，让我们看一下用来表示交叉熵代价的类</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">```Python</span><br><span class="line">class CrossEntropyCost(object):</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def fn(a, y):</span><br><span class="line">        return np.sum(np.nan_to_num(-y*np.log(a)-(1-y)*np.log(1-a)))</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def delta(z, a, y):</span><br><span class="line">        return (a-y)</span><br></pre></td></tr></table></figure></p>
-<p>让我们分解一下。第一个看到的是：即使使用的是交叉熵，数学上看，就是一个函数，这里我们用 Python 的类而不是 Python 函数实现了它。为什么这样做呢？答案就是代价函数在我们的网络中扮演了两种不同的角色。明显的角色就是代价是输出激活值 $a$ 和目标输出 $y$ 差距优劣的度量。这个角色通过 CrossEntropyCost.fn 方法来扮演。（注意，np.nan_to_num 调用确保了 Numpy 正确处理接近 $0$ 的对数值）但是代价函数其实还有另一个角色。回想<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法/" target="_blank" rel="noopener">第二章</a>中运行反向传播算法时，我们需要计算网络输出误差，$\delta^L$。这种形式的输出误差依赖于 代价函数的选择：不同的代价函数，输出误差的形式就不同。对于交叉熵函数，输出误差就如公式所示：</p>
-<script type="math/tex; mode=display">\delta^L = a^L-y</script><p>类似地，network2.py 还包含了一个表示二次代价函数的类。这个是用来和<a href="https://yuanxiaosc.github.io/2018/06/19/使用神经网络识别手写数字——代码实现/" target="_blank" rel="noopener">第一章</a>的结果进行对比的，因为后面我们几乎都在使用交叉函数。代码如下。QuadraticCost.fn 方法是关于网络输出 $a$ 和目标输出 $y$ 的二次代价函数的直接计算结果。由 QuadraticCost.delta! 返回的值基于二次代价函数的误差表达式，我们在第二章中得到它。</p>
+<p>让我们分解一下。第一个看到的是：即使使用的是交叉熵，数学上看，就是一个函数，这里我们用 Python 的类而不是 Python 函数实现了它。为什么这样做呢？答案就是代价函数在我们的网络中扮演了两种不同的角色。明显的角色就是代价是输出激活值 $a$ 和目标输出 $y$ 差距优劣的度量。这个角色通过 CrossEntropyCost.fn 方法来扮演。（注意，np.nan_to_num 调用确保了 Numpy 正确处理接近 $0$ 的对数值）但是代价函数其实还有另一个角色。回想<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法/">第二章</a>中运行反向传播算法时，我们需要计算网络输出误差，$\delta^L$。这种形式的输出误差依赖于 代价函数的选择：不同的代价函数，输出误差的形式就不同。对于交叉熵函数，输出误差就如公式所示：</p>
+<script type="math/tex; mode=display">\delta^L = a^L-y</script><p>类似地，network2.py 还包含了一个表示二次代价函数的类。这个是用来和<a href="https://yuanxiaosc.github.io/2018/06/19/使用神经网络识别手写数字——代码实现/">第一章</a>的结果进行对比的，因为后面我们几乎都在使用交叉函数。代码如下。QuadraticCost.fn 方法是关于网络输出 $a$ 和目标输出 $y$ 的二次代价函数的直接计算结果。由 QuadraticCost.delta! 返回的值基于二次代价函数的误差表达式，我们在第二章中得到它。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuadraticCost</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(a, y)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.5</span>*np.linalg.norm(a-y)**<span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delta</span><span class="params">(z, a, y)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> (a-y) * sigmoid_prime(z)</span><br></pre></td></tr></table></figure>
 <h2 id="Network2-py-完整代码"><a href="#Network2-py-完整代码" class="headerlink" title="Network2.py 完整代码"></a>Network2.py 完整代码</h2><p>现在，我们理解了 network2.py 和 network.py 两个实现之间的主要差别。都是很简单的东西。还有一些更小的变动，下面我们会进行介绍，包含 L2 正则化的实现。在讲述正则化之前，我们看看 network2.py 完整的实现代码。你不需要太仔细地读遍这些代码，但是对整个结构尤其是文档中的内容的理解是非常重要的，这样，你就可以理解每段程序所做的工作。当然，你也可以随自己意愿去深入研究！如果你迷失了理解，那么请读读下面的讲解，然后再回到代码中。不多说了，给代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""network2.py</span></span><br><span class="line"><span class="string">~~~~~~~~~~~~~~</span></span><br><span class="line"><span class="string">An improved version of network.py, implementing the stochastic</span></span><br><span class="line"><span class="string">gradient descent learning algorithm for a feedforward neural network.</span></span><br><span class="line"><span class="string">Improvements include the addition of the cross-entropy cost function,</span></span><br><span class="line"><span class="string">regularization, and better initialization of network weights.  Note</span></span><br><span class="line"><span class="string">that I have focused on making the code simple, easily readable, and</span></span><br><span class="line"><span class="string">easily modifiable.  It is not optimized, and omits many desirable</span></span><br><span class="line"><span class="string">features.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Libraries</span></span><br><span class="line"><span class="comment"># Standard library</span></span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Third-party libraries</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Define the quadratic and cross-entropy cost functions</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuadraticCost</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(a, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the cost associated with an output ``a`` and desired output</span></span><br><span class="line"><span class="string">        ``y``.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.5</span>*np.linalg.norm(a-y)**<span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delta</span><span class="params">(z, a, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the error delta from the output layer."""</span></span><br><span class="line">        <span class="keyword">return</span> (a-y) * sigmoid_prime(z)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrossEntropyCost</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fn</span><span class="params">(a, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the cost associated with an output ``a`` and desired output</span></span><br><span class="line"><span class="string">        ``y``.  Note that np.nan_to_num is used to ensure numerical</span></span><br><span class="line"><span class="string">        stability.  In particular, if both ``a`` and ``y`` have a 1.0</span></span><br><span class="line"><span class="string">        in the same slot, then the expression (1-y)*np.log(1-a)</span></span><br><span class="line"><span class="string">        returns nan.  The np.nan_to_num ensures that that is converted</span></span><br><span class="line"><span class="string">        to the correct value (0.0).</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> np.sum(np.nan_to_num(-y*np.log(a)-(<span class="number">1</span>-y)*np.log(<span class="number">1</span>-a)))</span><br><span class="line"></span><br><span class="line"><span class="meta">    @staticmethod</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delta</span><span class="params">(z, a, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return the error delta from the output layer.  Note that the</span></span><br><span class="line"><span class="string">        parameter ``z`` is not used by the method.  It is included in</span></span><br><span class="line"><span class="string">        the method's parameters in order to make the interface</span></span><br><span class="line"><span class="string">        consistent with the delta method for other cost classes.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> (a-y)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#### Main Network class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Network</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, sizes, cost=CrossEntropyCost)</span>:</span></span><br><span class="line">        <span class="string">"""The list ``sizes`` contains the number of neurons in the respective</span></span><br><span class="line"><span class="string">        layers of the network.  For example, if the list was [2, 3, 1]</span></span><br><span class="line"><span class="string">        then it would be a three-layer network, with the first layer</span></span><br><span class="line"><span class="string">        containing 2 neurons, the second layer 3 neurons, and the</span></span><br><span class="line"><span class="string">        third layer 1 neuron.  The biases and weights for the network</span></span><br><span class="line"><span class="string">        are initialized randomly, using</span></span><br><span class="line"><span class="string">        ``self.default_weight_initializer`` (see docstring for that</span></span><br><span class="line"><span class="string">        method).</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.num_layers = len(sizes)</span><br><span class="line">        self.sizes = sizes</span><br><span class="line">        self.default_weight_initializer()</span><br><span class="line">        self.cost=cost</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">default_weight_initializer</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Initialize each weight using a Gaussian distribution with mean 0</span></span><br><span class="line"><span class="string">        and standard deviation 1 over the square root of the number of</span></span><br><span class="line"><span class="string">        weights connecting to the same neuron.  Initialize the biases</span></span><br><span class="line"><span class="string">        using a Gaussian distribution with mean 0 and standard</span></span><br><span class="line"><span class="string">        deviation 1.</span></span><br><span class="line"><span class="string">        Note that the first layer is assumed to be an input layer, and</span></span><br><span class="line"><span class="string">        by convention we won't set any biases for those neurons, since</span></span><br><span class="line"><span class="string">        biases are only ever used in computing the outputs from later</span></span><br><span class="line"><span class="string">        layers.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.biases = [np.random.randn(y, <span class="number">1</span>) <span class="keyword">for</span> y <span class="keyword">in</span> self.sizes[<span class="number">1</span>:]]</span><br><span class="line">        self.weights = [np.random.randn(y, x)/np.sqrt(x)</span><br><span class="line">                        <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(self.sizes[:<span class="number">-1</span>], self.sizes[<span class="number">1</span>:])]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">large_weight_initializer</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Initialize the weights using a Gaussian distribution with mean 0</span></span><br><span class="line"><span class="string">        and standard deviation 1.  Initialize the biases using a</span></span><br><span class="line"><span class="string">        Gaussian distribution with mean 0 and standard deviation 1.</span></span><br><span class="line"><span class="string">        Note that the first layer is assumed to be an input layer, and</span></span><br><span class="line"><span class="string">        by convention we won't set any biases for those neurons, since</span></span><br><span class="line"><span class="string">        biases are only ever used in computing the outputs from later</span></span><br><span class="line"><span class="string">        layers.</span></span><br><span class="line"><span class="string">        This weight and bias initializer uses the same approach as in</span></span><br><span class="line"><span class="string">        Chapter 1, and is included for purposes of comparison.  It</span></span><br><span class="line"><span class="string">        will usually be better to use the default weight initializer</span></span><br><span class="line"><span class="string">        instead.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.biases = [np.random.randn(y, <span class="number">1</span>) <span class="keyword">for</span> y <span class="keyword">in</span> self.sizes[<span class="number">1</span>:]]</span><br><span class="line">        self.weights = [np.random.randn(y, x)</span><br><span class="line">                        <span class="keyword">for</span> x, y <span class="keyword">in</span> zip(self.sizes[:<span class="number">-1</span>], self.sizes[<span class="number">1</span>:])]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">feedforward</span><span class="params">(self, a)</span>:</span></span><br><span class="line">        <span class="string">"""Return the output of the network if ``a`` is input."""</span></span><br><span class="line">        <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">            a = sigmoid(np.dot(w, a)+b)</span><br><span class="line">        <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">SGD</span><span class="params">(self, training_data, epochs, mini_batch_size, eta,</span></span></span><br><span class="line"><span class="function"><span class="params">            lmbda = <span class="number">0.0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">            evaluation_data=None,</span></span></span><br><span class="line"><span class="function"><span class="params">            monitor_evaluation_cost=False,</span></span></span><br><span class="line"><span class="function"><span class="params">            monitor_evaluation_accuracy=False,</span></span></span><br><span class="line"><span class="function"><span class="params">            monitor_training_cost=False,</span></span></span><br><span class="line"><span class="function"><span class="params">            monitor_training_accuracy=False)</span>:</span></span><br><span class="line">        <span class="string">"""Train the neural network using mini-batch stochastic gradient</span></span><br><span class="line"><span class="string">        descent.  The ``training_data`` is a list of tuples ``(x, y)``</span></span><br><span class="line"><span class="string">        representing the training inputs and the desired outputs.  The</span></span><br><span class="line"><span class="string">        other non-optional parameters are self-explanatory, as is the</span></span><br><span class="line"><span class="string">        regularization parameter ``lmbda``.  The method also accepts</span></span><br><span class="line"><span class="string">        ``evaluation_data``, usually either the validation or test</span></span><br><span class="line"><span class="string">        data.  We can monitor the cost and accuracy on either the</span></span><br><span class="line"><span class="string">        evaluation data or the training data, by setting the</span></span><br><span class="line"><span class="string">        appropriate flags.  The method returns a tuple containing four</span></span><br><span class="line"><span class="string">        lists: the (per-epoch) costs on the evaluation data, the</span></span><br><span class="line"><span class="string">        accuracies on the evaluation data, the costs on the training</span></span><br><span class="line"><span class="string">        data, and the accuracies on the training data.  All values are</span></span><br><span class="line"><span class="string">        evaluated at the end of each training epoch.  So, for example,</span></span><br><span class="line"><span class="string">        if we train for 30 epochs, then the first element of the tuple</span></span><br><span class="line"><span class="string">        will be a 30-element list containing the cost on the</span></span><br><span class="line"><span class="string">        evaluation data at the end of each epoch. Note that the lists</span></span><br><span class="line"><span class="string">        are empty if the corresponding flag is not set.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> evaluation_data: n_data = len(evaluation_data)</span><br><span class="line">        n = len(training_data)</span><br><span class="line">        evaluation_cost, evaluation_accuracy = [], []</span><br><span class="line">        training_cost, training_accuracy = [], []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> xrange(epochs):</span><br><span class="line">            random.shuffle(training_data)</span><br><span class="line">            mini_batches = [</span><br><span class="line">                training_data[k:k+mini_batch_size]</span><br><span class="line">                <span class="keyword">for</span> k <span class="keyword">in</span> xrange(<span class="number">0</span>, n, mini_batch_size)]</span><br><span class="line">            <span class="keyword">for</span> mini_batch <span class="keyword">in</span> mini_batches:</span><br><span class="line">                self.update_mini_batch(</span><br><span class="line">                    mini_batch, eta, lmbda, len(training_data))</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"Epoch %s training complete"</span> % j</span><br><span class="line">            <span class="keyword">if</span> monitor_training_cost:</span><br><span class="line">                cost = self.total_cost(training_data, lmbda)</span><br><span class="line">                training_cost.append(cost)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Cost on training data: &#123;&#125;"</span>.format(cost)</span><br><span class="line">            <span class="keyword">if</span> monitor_training_accuracy:</span><br><span class="line">                accuracy = self.accuracy(training_data, convert=<span class="keyword">True</span>)</span><br><span class="line">                training_accuracy.append(accuracy)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Accuracy on training data: &#123;&#125; / &#123;&#125;"</span>.format(</span><br><span class="line">                    accuracy, n)</span><br><span class="line">            <span class="keyword">if</span> monitor_evaluation_cost:</span><br><span class="line">                cost = self.total_cost(evaluation_data, lmbda, convert=<span class="keyword">True</span>)</span><br><span class="line">                evaluation_cost.append(cost)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Cost on evaluation data: &#123;&#125;"</span>.format(cost)</span><br><span class="line">            <span class="keyword">if</span> monitor_evaluation_accuracy:</span><br><span class="line">                accuracy = self.accuracy(evaluation_data)</span><br><span class="line">                evaluation_accuracy.append(accuracy)</span><br><span class="line">                <span class="keyword">print</span> <span class="string">"Accuracy on evaluation data: &#123;&#125; / &#123;&#125;"</span>.format(</span><br><span class="line">                    self.accuracy(evaluation_data), n_data)</span><br><span class="line">            <span class="keyword">print</span></span><br><span class="line">        <span class="keyword">return</span> evaluation_cost, evaluation_accuracy, \</span><br><span class="line">            training_cost, training_accuracy</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_mini_batch</span><span class="params">(self, mini_batch, eta, lmbda, n)</span>:</span></span><br><span class="line">        <span class="string">"""Update the network's weights and biases by applying gradient</span></span><br><span class="line"><span class="string">        descent using backpropagation to a single mini batch.  The</span></span><br><span class="line"><span class="string">        ``mini_batch`` is a list of tuples ``(x, y)``, ``eta`` is the</span></span><br><span class="line"><span class="string">        learning rate, ``lmbda`` is the regularization parameter, and</span></span><br><span class="line"><span class="string">        ``n`` is the total size of the training data set.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">        nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> mini_batch:</span><br><span class="line">            delta_nabla_b, delta_nabla_w = self.backprop(x, y)</span><br><span class="line">            nabla_b = [nb+dnb <span class="keyword">for</span> nb, dnb <span class="keyword">in</span> zip(nabla_b, delta_nabla_b)]</span><br><span class="line">            nabla_w = [nw+dnw <span class="keyword">for</span> nw, dnw <span class="keyword">in</span> zip(nabla_w, delta_nabla_w)]</span><br><span class="line">        self.weights = [(<span class="number">1</span>-eta*(lmbda/n))*w-(eta/len(mini_batch))*nw</span><br><span class="line">                        <span class="keyword">for</span> w, nw <span class="keyword">in</span> zip(self.weights, nabla_w)]</span><br><span class="line">        self.biases = [b-(eta/len(mini_batch))*nb</span><br><span class="line">                       <span class="keyword">for</span> b, nb <span class="keyword">in</span> zip(self.biases, nabla_b)]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        <span class="string">"""Return a tuple ``(nabla_b, nabla_w)`` representing the</span></span><br><span class="line"><span class="string">        gradient for the cost function C_x.  ``nabla_b`` and</span></span><br><span class="line"><span class="string">        ``nabla_w`` are layer-by-layer lists of numpy arrays, similar</span></span><br><span class="line"><span class="string">        to ``self.biases`` and ``self.weights``."""</span></span><br><span class="line">        nabla_b = [np.zeros(b.shape) <span class="keyword">for</span> b <span class="keyword">in</span> self.biases]</span><br><span class="line">        nabla_w = [np.zeros(w.shape) <span class="keyword">for</span> w <span class="keyword">in</span> self.weights]</span><br><span class="line">        <span class="comment"># feedforward</span></span><br><span class="line">        activation = x</span><br><span class="line">        activations = [x] <span class="comment"># list to store all the activations, layer by layer</span></span><br><span class="line">        zs = [] <span class="comment"># list to store all the z vectors, layer by layer</span></span><br><span class="line">        <span class="keyword">for</span> b, w <span class="keyword">in</span> zip(self.biases, self.weights):</span><br><span class="line">            z = np.dot(w, activation)+b</span><br><span class="line">            zs.append(z)</span><br><span class="line">            activation = sigmoid(z)</span><br><span class="line">            activations.append(activation)</span><br><span class="line">        <span class="comment"># backward pass</span></span><br><span class="line">        delta = (self.cost).delta(zs[<span class="number">-1</span>], activations[<span class="number">-1</span>], y)</span><br><span class="line">        nabla_b[<span class="number">-1</span>] = delta</span><br><span class="line">        nabla_w[<span class="number">-1</span>] = np.dot(delta, activations[<span class="number">-2</span>].transpose())</span><br><span class="line">        <span class="comment"># Note that the variable l in the loop below is used a little</span></span><br><span class="line">        <span class="comment"># differently to the notation in Chapter 2 of the book.  Here,</span></span><br><span class="line">        <span class="comment"># l = 1 means the last layer of neurons, l = 2 is the</span></span><br><span class="line">        <span class="comment"># second-last layer, and so on.  It's a renumbering of the</span></span><br><span class="line">        <span class="comment"># scheme in the book, used here to take advantage of the fact</span></span><br><span class="line">        <span class="comment"># that Python can use negative indices in lists.</span></span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> xrange(<span class="number">2</span>, self.num_layers):</span><br><span class="line">            z = zs[-l]</span><br><span class="line">            sp = sigmoid_prime(z)</span><br><span class="line">            delta = np.dot(self.weights[-l+<span class="number">1</span>].transpose(), delta) * sp</span><br><span class="line">            nabla_b[-l] = delta</span><br><span class="line">            nabla_w[-l] = np.dot(delta, activations[-l<span class="number">-1</span>].transpose())</span><br><span class="line">        <span class="keyword">return</span> (nabla_b, nabla_w)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">accuracy</span><span class="params">(self, data, convert=False)</span>:</span></span><br><span class="line">        <span class="string">"""Return the number of inputs in ``data`` for which the neural</span></span><br><span class="line"><span class="string">        network outputs the correct result. The neural network's</span></span><br><span class="line"><span class="string">        output is assumed to be the index of whichever neuron in the</span></span><br><span class="line"><span class="string">        final layer has the highest activation.</span></span><br><span class="line"><span class="string">        The flag ``convert`` should be set to False if the data set is</span></span><br><span class="line"><span class="string">        validation or test data (the usual case), and to True if the</span></span><br><span class="line"><span class="string">        data set is the training data. The need for this flag arises</span></span><br><span class="line"><span class="string">        due to differences in the way the results ``y`` are</span></span><br><span class="line"><span class="string">        represented in the different data sets.  In particular, it</span></span><br><span class="line"><span class="string">        flags whether we need to convert between the different</span></span><br><span class="line"><span class="string">        representations.  It may seem strange to use different</span></span><br><span class="line"><span class="string">        representations for the different data sets.  Why not use the</span></span><br><span class="line"><span class="string">        same representation for all three data sets?  It's done for</span></span><br><span class="line"><span class="string">        efficiency reasons -- the program usually evaluates the cost</span></span><br><span class="line"><span class="string">        on the training data and the accuracy on other data sets.</span></span><br><span class="line"><span class="string">        These are different types of computations, and using different</span></span><br><span class="line"><span class="string">        representations speeds things up.  More details on the</span></span><br><span class="line"><span class="string">        representations can be found in</span></span><br><span class="line"><span class="string">        mnist_loader.load_data_wrapper.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> convert:</span><br><span class="line">            results = [(np.argmax(self.feedforward(x)), np.argmax(y))</span><br><span class="line">                       <span class="keyword">for</span> (x, y) <span class="keyword">in</span> data]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            results = [(np.argmax(self.feedforward(x)), y)</span><br><span class="line">                        <span class="keyword">for</span> (x, y) <span class="keyword">in</span> data]</span><br><span class="line">        <span class="keyword">return</span> sum(int(x == y) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> results)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">total_cost</span><span class="params">(self, data, lmbda, convert=False)</span>:</span></span><br><span class="line">        <span class="string">"""Return the total cost for the data set ``data``.  The flag</span></span><br><span class="line"><span class="string">        ``convert`` should be set to False if the data set is the</span></span><br><span class="line"><span class="string">        training data (the usual case), and to True if the data set is</span></span><br><span class="line"><span class="string">        the validation or test data.  See comments on the similar (but</span></span><br><span class="line"><span class="string">        reversed) convention for the ``accuracy`` method, above.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        cost = <span class="number">0.0</span></span><br><span class="line">        <span class="keyword">for</span> x, y <span class="keyword">in</span> data:</span><br><span class="line">            a = self.feedforward(x)</span><br><span class="line">            <span class="keyword">if</span> convert: y = vectorized_result(y)</span><br><span class="line">            cost += self.cost.fn(a, y)/len(data)</span><br><span class="line">        cost += <span class="number">0.5</span>*(lmbda/len(data))*sum(</span><br><span class="line">            np.linalg.norm(w)**<span class="number">2</span> <span class="keyword">for</span> w <span class="keyword">in</span> self.weights)</span><br><span class="line">        <span class="keyword">return</span> cost</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self, filename)</span>:</span></span><br><span class="line">        <span class="string">"""Save the neural network to the file ``filename``."""</span></span><br><span class="line">        data = &#123;<span class="string">"sizes"</span>: self.sizes,</span><br><span class="line">                <span class="string">"weights"</span>: [w.tolist() <span class="keyword">for</span> w <span class="keyword">in</span> self.weights],</span><br><span class="line">                <span class="string">"biases"</span>: [b.tolist() <span class="keyword">for</span> b <span class="keyword">in</span> self.biases],</span><br><span class="line">                <span class="string">"cost"</span>: str(self.cost.__name__)&#125;</span><br><span class="line">        f = open(filename, <span class="string">"w"</span>)</span><br><span class="line">        json.dump(data, f)</span><br><span class="line">        f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment">#### Loading a Network</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(filename)</span>:</span></span><br><span class="line">    <span class="string">"""Load a neural network from the file ``filename``.  Returns an</span></span><br><span class="line"><span class="string">    instance of Network.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    f = open(filename, <span class="string">"r"</span>)</span><br><span class="line">    data = json.load(f)</span><br><span class="line">    f.close()</span><br><span class="line">    cost = getattr(sys.modules[__name__], data[<span class="string">"cost"</span>])</span><br><span class="line">    net = Network(data[<span class="string">"sizes"</span>], cost=cost)</span><br><span class="line">    net.weights = [np.array(w) <span class="keyword">for</span> w <span class="keyword">in</span> data[<span class="string">"weights"</span>]]</span><br><span class="line">    net.biases = [np.array(b) <span class="keyword">for</span> b <span class="keyword">in</span> data[<span class="string">"biases"</span>]]</span><br><span class="line">    <span class="keyword">return</span> net</span><br><span class="line"></span><br><span class="line"><span class="comment">#### Miscellaneous functions</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vectorized_result</span><span class="params">(j)</span>:</span></span><br><span class="line">    <span class="string">"""Return a 10-dimensional unit vector with a 1.0 in the j'th position</span></span><br><span class="line"><span class="string">    and zeroes elsewhere.  This is used to convert a digit (0...9)</span></span><br><span class="line"><span class="string">    into a corresponding desired output from the neural network.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    e = np.zeros((<span class="number">10</span>, <span class="number">1</span>))</span><br><span class="line">    e[j] = <span class="number">1.0</span></span><br><span class="line">    <span class="keyword">return</span> e</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""The sigmoid function."""</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1.0</span>+np.exp(-z))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid_prime</span><span class="params">(z)</span>:</span></span><br><span class="line">    <span class="string">"""Derivative of the sigmoid function."""</span></span><br><span class="line">    <span class="keyword">return</span> sigmoid(z)*(<span class="number">1</span>-sigmoid(z))</span><br></pre></td></tr></table></figure>
@@ -435,279 +377,270 @@ w =w-\frac{\eta \lambda}{n} sgn(w) - \eta \frac{\partial C_0}{\partial w}</scrip
 <p>[2] Zhu Xiaohu. Zhang Freeman.Another Chinese Translation of Neural Networks and Deep Learning[DB/OL].<a href="https://github.com/zhanggyb/nndl/blob/master/chap3.tex" target="_blank" rel="noopener">https://github.com/zhanggyb/nndl/blob/master/chap3.tex</a>, 2018-06-27.</p>
 <p>[4] skylook. neural-networks-and-deep-learning, network2.py[DB/OL]. <a href="https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network2.py" target="_blank" rel="noopener">https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src/network2.py</a>, 2018-06-27.</p>
 
-      
     </div>
-    
-    
-    
 
     
-
     
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div>感谢金主！</div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    
+        
+      
+        <div id="reward-container">
+  <div>本站所有文章和源码均免费开放，如您喜欢，可以请我喝杯咖啡</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
   </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="袁宵 微信支付"/>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="袁宵 微信支付">
         <p>微信支付</p>
       </div>
-    
-
-    
-      <div id="alipay" style="display: inline-block">
-        <img id="alipay_qr" src="/images/alipay.jpg" alt="袁宵 支付宝"/>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="袁宵 支付宝">
         <p>支付宝</p>
       </div>
-    
-
-    
 
   </div>
 </div>
 
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>袁宵</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanxiaosc.github.io/2018/06/27/改进神经网络的学习方法——代码实现/" title="改进神经网络的学习方法——代码实现">https://yuanxiaosc.github.io/2018/06/27/改进神经网络的学习方法——代码实现/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+            
+              <a href="/tags/手写数字识别/" rel="tag"># 手写数字识别</a>
+            
+              <a href="/tags/代码实现/" rel="tag"># 代码实现</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2018/06/26/卷积神经网络的反向传播算法/" rel="next" title="卷积神经网络的反向传播算法">
+                  <i class="fa fa-chevron-left"></i> 卷积神经网络的反向传播算法
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/" rel="prev" title="改进神经网络的学习方法——如何选择神经网络的超参数">
+                  改进神经网络的学习方法——如何选择神经网络的超参数 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="comments"></div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#再看手写识别问题：代码"><span class="nav-number">1.</span> <span class="nav-text">再看手写识别问题：代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵"><span class="nav-number">1.1.</span> <span class="nav-text">交叉熵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network2-py-完整代码"><span class="nav-number">2.</span> <span class="nav-text">Network2.py 完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-、L2-正则化"><span class="nav-number">3.</span> <span class="nav-text">L1 、L2 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network2-py-构建神经网络的其它注意事项"><span class="nav-number">4.</span> <span class="nav-text">Network2.py 构建神经网络的其它注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      alt="袁宵">
+  <p class="site-author-name" itemprop="name">袁宵</p>
+  <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
       </div>
     
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
-          
-            <a href="/tags/手写数字识别/" rel="tag"># 手写数字识别</a>
-          
-            <a href="/tags/代码实现/" rel="tag"># 代码实现</a>
-          
-        </div>
-      
-
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/06/26/卷积神经网络的反向传播算法/" rel="next" title="卷积神经网络的反向传播算法">
-                <i class="fa fa-chevron-left"></i> 卷积神经网络的反向传播算法
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/06/28/改进神经网络的学习方法——如何选择神经网络的超参数/" rel="prev" title="改进神经网络的学习方法——如何选择神经网络的超参数">
-                改进神经网络的学习方法——如何选择神经网络的超参数 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-    </div>
-  
-
-
-
-        </div>
+      <div class="site-state-item site-state-categories">
         
           
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yuanxiaoSC" title="GitHub &rarr; https://github.com/yuanxiaoSC" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wangzichaochaochao@gmail.com" title="E-Mail &rarr; mailto:wangzichaochaochao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
 
-      
 
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
-                alt="袁宵" />
-            
-              <p class="site-author-name" itemprop="name">袁宵</p>
-              <p class="site-description motion-element" itemprop="description">深度学习你~~~</p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives">
-              
-                  <span class="site-state-item-count">141</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">56</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">126</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-
-          
-            <div class="links-of-author motion-element">
-                
-                  <span class="links-of-author-item">
-                    <a href="https://github.com/yuanxiaoSC" target="_blank" title="GitHub">
-                      
-                        <i class="fa fa-fw fa-github"></i>GitHub</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="mailto:wangzichaochaochao@gmail.com" target="_blank" title="E-Mail">
-                      
-                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-            </div>
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#再看手写识别问题：代码"><span class="nav-number">1.</span> <span class="nav-text">再看手写识别问题：代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#交叉熵"><span class="nav-number">1.1.</span> <span class="nav-text">交叉熵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network2-py-完整代码"><span class="nav-number">2.</span> <span class="nav-text">Network2.py 完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L1-、L2-正则化"><span class="nav-number">3.</span> <span class="nav-text">L1 、L2 正则化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network2-py-构建神经网络的其它注意事项"><span class="nav-number">4.</span> <span class="nav-text">Network2.py 构建神经网络的其它注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
+      </div>
+	  
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">袁宵</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
+  </div>
 
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
   
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
 
 
 
@@ -718,531 +651,138 @@ w =w-\frac{\eta \lambda}{n} sgn(w) - \eta \frac{\partial C_0}{\partial w}</scrip
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
   </div>
 
   
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
 
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
+<script src="/js/next-boot.js?v=7.4.1"></script>
 
 
 
   
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
-  <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item=>{
-      return GUEST.indexOf(item)>-1;
-    });
-    new Valine({
-        el: '#comments' ,
-        verify: false,
-        notify: false,
-        appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
-        appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-        placeholder: '欢迎交流',
-        avatar:'mm',
-        guest_info:guest,
-        pageSize:'10' || 10,
-    });
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
   </script>
 
 
 
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+  <script src="//code.tidio.co/ohblyq9gicnjwqem8o1hfoymk3calgui.js"></script>
+
+
+
+
+
+
+
+
+
   
 
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
     }
-    var path = "/" + search_path;
-    // monitor main search box;
+  });
 
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
         }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
       }
     });
-  </script>
+  });
 
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
 
-
-
-
+    
   
 
   
 
   
 
-  
-  
 
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-
-  
-
-  
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.includes(item);
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
+    appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
+    placeholder: '写下你到想法',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname,
+    recordIP: false,
+    serverURLs: ''
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>
