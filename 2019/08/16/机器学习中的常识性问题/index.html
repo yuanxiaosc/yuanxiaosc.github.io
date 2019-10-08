@@ -131,6 +131,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/08/16/机器学习中的常识性问题/神经语言模型和统计语言模型有啥异同点3.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/16/机器学习中的常识性问题/困惑度.png">
 <meta property="og:image" content="http://yoursite.com/2019/08/16/机器学习中的常识性问题/神经网络全连接与局部连接对比图.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/08/16/机器学习中的常识性问题/神经网络局部连接和特征图.jpg">
 <meta property="og:image" content="https://img-blog.csdn.net/20171022172015402?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGluZ3p1aHVpdG91/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://yoursite.com/2019/08/16/机器学习中的常识性问题/机器学习深度学习强化学习之间的关系.png">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-a2e753542fc6384ee351cabdbe6dd523_hd.jpg">
@@ -156,7 +157,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/graykode/nlp-roadmap/master/img/ml.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/graykode/nlp-roadmap/master/img/textmining.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/graykode/nlp-roadmap/master/img/nlp.png">
-<meta property="og:updated_time" content="2019-10-08T01:02:22.418Z">
+<meta property="og:updated_time" content="2019-10-08T01:07:57.767Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习中的常识性问题">
 <meta name="twitter:description" content="机器学习中的常识性问题定义：作为一名合格的机器学习从业人员必须理解和熟练掌握的机器学习领域的问题。  最新网页版：https://yuanxiaosc.github.io/categories/机器学习中的常识性问题/ GitHub下载版: https://github.com/yuanxiaosc/Google-Machine-learning-crash-course 编者：袁宵 最近更新时间">
@@ -739,6 +740,11 @@
 </ol>
 <hr>
 <h2 id="卷积"><a href="#卷积" class="headerlink" title="卷积"></a>卷积</h2><h3 id="CNN中的局部连接-Sparse-Connectivity-和权值共享"><a href="#CNN中的局部连接-Sparse-Connectivity-和权值共享" class="headerlink" title="CNN中的局部连接(Sparse Connectivity)和权值共享"></a>CNN中的局部连接(Sparse Connectivity)和权值共享</h3><p><img src="/2019/08/16/机器学习中的常识性问题/神经网络全连接与局部连接对比图.jpg" alt=""></p>
+<p>左边是全连接，右边是局部连接。对于一个1000 × 1000的输入图像而言，如果下一个隐藏层的神经元数目为10^6个，采用全连接则有1000 × 1000 × 10^6 = 10^12个权值参数，如此数目巨大的参数几乎难以训练；而采用局部连接，隐藏层的每个神经元仅与图像中10 × 10的局部图像相连接，那么此时的权值参数数量为10 × 10 × 10^6 = 10^8，将直接减少4个数量级。</p>
+<p>尽管减少了几个数量级，但参数数量依然较多。能不能再进一步减少呢？能！方法就是权值共享。具体做法是，在局部连接中隐藏层的每一个神经元连接的是一个10 × 10的局部图像，因此有10 × 10个权值参数，将这10 × 10个权值参数共享给剩下的神经元，也就是说隐藏层中10^6个神经元的权值参数相同，那么此时不管隐藏层神经元的数目是多少，需要训练的参数就是这 10 × 10个权值参数（也就是卷积核(也称滤波器)的大小），如下图。</p>
+<p><img src="/2019/08/16/机器学习中的常识性问题/神经网络局部连接和特征图.jpg" alt=""></p>
+<p>但是，这样仅提取了图像的一种特征，如果要多提取出一些特征，可以增加多个卷积核，不同的卷积核能够得到图像的不同映射下的特征，称之为Feature Map。如果有100个卷积核，最终的权值参数也仅为100 × 100 = 10^4个而已。另外，偏置参数也是共享的，同一种滤波器共享一个。</p>
+<p>卷积神经网络的核心思想是：局部感受野(local field)，权值共享以及时间或空间亚采样这三种思想结合起来，获得了某种程度的位移、尺度、形变不变性</p>
 <h3 id="使用更小卷积核的作用"><a href="#使用更小卷积核的作用" class="headerlink" title="使用更小卷积核的作用"></a>使用更小卷积核的作用</h3><p>在VGG16中，使用了3个3x3卷积核来代替7x7卷积核，使用了2个3x3卷积核来代替5x5卷积核，这样做的主要目的是在保证具有相同感知野的条件下，提升了网络的深度，在一定程度上提升了神经网络的效果。</p>
 <p>以下简单地说明一下小卷积(3*3)对于5×5网络感知野相同的替代性。</p>
 <p><img src="https://img-blog.csdn.net/20171022172015402?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGluZ3p1aHVpdG91/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
