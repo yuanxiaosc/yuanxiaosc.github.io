@@ -60,20 +60,20 @@
   };
 </script>
 
-  <meta name="description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5 弃权是一种相当激进的技术。和规范化不同，弃权技术并不依赖于代价函数的修改。而是，在弃权中，我们改变了网络本身。在介绍它为什么能工作，以及所得到的结果前，让我描述一下弃权（Drop">
+  <meta name="description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5">
 <meta name="keywords" content="深度学习,弃权（Dropout）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="改进神经网络的学习方法——弃权">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5 弃权是一种相当激进的技术。和规范化不同，弃权技术并不依赖于代价函数的修改。而是，在弃权中，我们改变了网络本身。在介绍它为什么能工作，以及所得到的结果前，让我描述一下弃权（Drop">
+<meta property="og:description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/1.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/2.png">
 <meta property="og:updated_time" content="2019-08-04T14:17:22.321Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改进神经网络的学习方法——弃权">
-<meta name="twitter:description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5 弃权是一种相当激进的技术。和规范化不同，弃权技术并不依赖于代价函数的修改。而是，在弃权中，我们改变了网络本身。在介绍它为什么能工作，以及所得到的结果前，让我描述一下弃权（Drop">
+<meta name="twitter:description" content="原文链接：CHAPTER 2 Improving the way neural networks learn 弃权（Dropout）的过程 Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5">
 <meta name="twitter:image" content="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/1.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/">
 
@@ -259,7 +259,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
       <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -350,9 +350,9 @@
 <p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 2 Improving the way neural networks learn</a></p>
 </blockquote><h2 id="弃权（Dropout）的过程"><a href="#弃权（Dropout）的过程" class="headerlink" title="弃权（Dropout）的过程"></a>弃权（Dropout）的过程</h2><blockquote>
 <p>Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5</p>
-</blockquote><p>弃权是一种相当激进的技术。和规范化不同，弃权技术并不依赖于代价函数的修改。而是，在弃权中，我们改变了网络本身。在介绍它为什么能工作，以及所得到的结果前，让我描述一下弃权（Dropout）基本的工作机制。</p><a id="more"></a>
+</blockquote><a id="more"></a>
 
-
+<p>弃权是一种相当激进的技术。和规范化不同，弃权技术并不依赖于代价函数的修改。而是，在弃权中，我们改变了网络本身。在介绍它为什么能工作，以及所得到的结果前，让我描述一下弃权（Dropout）基本的工作机制。</p>
 <p><img src="/2018/06/24/改进神经网络的学习方法——弃权/1.png" alt=""></p>
 <p>特别地，假设我们有一个训练数据 $x$ 和 对应的目标输出 $y$。通常我们会通过在网络中前向传播 $x$ ，然后进行反向传播来确定对梯度的贡献。使用弃权（Dropout）技术，这个过程就改了。我们会从随机（临时）地删除网络中的一半的隐藏神经元开始，同时让输入层和输出层的神经元保持不变。在此之后，我们会得到最终如下线条所示的网络。注意那些被弃权（Dropout）的神经元，即那些临时被删除的神经元，用虚圈表示在图中：</p>
 <p><img src="/2018/06/24/改进神经网络的学习方法——弃权/2.png" alt=""></p>
@@ -431,8 +431,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/06/22/改进神经网络的学习方法——Softmax/" rel="next" title="改进神经网络的学习方法——Softmax">
-                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——Softmax
+                <a href="/2018/06/24/改进神经网络的学习方法——正则化/" rel="next" title="改进神经网络的学习方法——正则化">
+                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——正则化
                 </a>
               
             </div>
@@ -441,8 +441,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2018/06/24/改进神经网络的学习方法——正则化/" rel="prev" title="改进神经网络的学习方法——正则化">
-                  改进神经网络的学习方法——正则化 <i class="fa fa-chevron-right"></i>
+                <a href="/2018/06/26/卷积神经网络的反向传播算法/" rel="prev" title="卷积神经网络的反向传播算法">
+                  卷积神经网络的反向传播算法 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -500,7 +500,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      src="/images/avatar.png"
       alt="袁宵">
   <p class="site-author-name" itemprop="name">袁宵</p>
   <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
@@ -601,7 +601,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 374.5k 字</span>
+  <span class="post-count">全站共 375k 字</span>
 </div>
 
         
@@ -763,7 +763,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     notify: false,
     appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
     appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-    placeholder: '写下你到想法',
+    placeholder: '写下你的想法',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,

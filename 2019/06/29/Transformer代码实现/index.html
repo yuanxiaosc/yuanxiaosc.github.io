@@ -60,20 +60,20 @@
   };
 </script>
 
-  <meta name="description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。Attention Is All You Need">
+  <meta name="description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。">
 <meta name="keywords" content="Attention,Transformer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Transformer 代码实现及应用">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/06/29/Transformer代码实现/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。Attention Is All You Need">
+<meta property="og:description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/Transformer代码实现/y1.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/Transformer代码实现/y2.png">
 <meta property="og:updated_time" content="2019-06-28T17:51:03.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Transformer 代码实现及应用">
-<meta name="twitter:description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。Attention Is All You Need">
+<meta name="twitter:description" content="Transformer 代码实现及应用Transformer_implementation_and_application 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。">
 <meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/06/29/Transformer代码实现/y1.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/06/29/Transformer代码实现/">
 
@@ -259,7 +259,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
       <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -338,8 +338,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Transformer-代码实现及应用"><a href="#Transformer-代码实现及应用" class="headerlink" title="Transformer 代码实现及应用"></a>Transformer 代码实现及应用</h2><p><a href="https://github.com/yuanxiaosc/Transformer_implementation_and_application" target="_blank" rel="noopener">Transformer_implementation_and_application</a> 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。</p><h2 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a><a href="https://arxiv.org/abs/1706.03762v5" target="_blank" rel="noopener">Attention Is All You Need</a></h2><a id="more"></a>
-<p>Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin<br>(Submitted on 12 Jun 2017 (v1), last revised 6 Dec 2017 (this version, v5))</p>
+        <h2 id="Transformer-代码实现及应用"><a href="#Transformer-代码实现及应用" class="headerlink" title="Transformer 代码实现及应用"></a>Transformer 代码实现及应用</h2><p><a href="https://github.com/yuanxiaosc/Transformer_implementation_and_application" target="_blank" rel="noopener">Transformer_implementation_and_application</a> 该资源仅仅用300行代码（Tensorflow 2）完整复现了Transformer模型，并且应用在神经机器翻译任务和聊天机器人上。</p><a id="more"></a>
+<h2 id="Attention-Is-All-You-Need"><a href="#Attention-Is-All-You-Need" class="headerlink" title="Attention Is All You Need"></a><a href="https://arxiv.org/abs/1706.03762v5" target="_blank" rel="noopener">Attention Is All You Need</a></h2><p>Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin<br>(Submitted on 12 Jun 2017 (v1), last revised 6 Dec 2017 (this version, v5))</p>
 <blockquote>
 <p>The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.</p>
 </blockquote>
@@ -540,7 +540,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      src="/images/avatar.png"
       alt="袁宵">
   <p class="site-author-name" itemprop="name">袁宵</p>
   <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
@@ -641,7 +641,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 374.5k 字</span>
+  <span class="post-count">全站共 375k 字</span>
 </div>
 
         
@@ -803,7 +803,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     notify: false,
     appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
     appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-    placeholder: '写下你到想法',
+    placeholder: '写下你的想法',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,

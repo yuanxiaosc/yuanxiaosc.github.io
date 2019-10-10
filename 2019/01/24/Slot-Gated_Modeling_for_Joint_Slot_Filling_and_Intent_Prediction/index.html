@@ -60,20 +60,20 @@
   };
 </script>
 
-  <meta name="description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》发表在NAACL HLT 2018，自然语言四大顶会之一。">
+  <meta name="description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》">
 <meta name="keywords" content="Dialogue">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Slot-Gated Modeling for Joint Slot Filling and Intent Prediction">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》发表在NAACL HLT 2018，自然语言四大顶会之一。">
+<meta property="og:description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/model_architecture.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/slot-gated_model.jpg">
 <meta property="og:updated_time" content="2019-07-27T02:30:41.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Slot-Gated Modeling for Joint Slot Filling and Intent Prediction">
-<meta name="twitter:description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》发表在NAACL HLT 2018，自然语言四大顶会之一。">
+<meta name="twitter:description" content="面向任务对话论文模型效果排行榜 https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》">
 <meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/model_architecture.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/">
 
@@ -259,7 +259,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
       <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -346,8 +346,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>面向任务对话论文模型效果排行榜 <a href="https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey" target="_blank" rel="noopener">https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey</a></p><h2 id="《Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction》"><a href="#《Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction》" class="headerlink" title="《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》"></a>《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》</h2><p>发表在NAACL HLT 2018，自然语言四大顶会之一。</p><a id="more"></a>
-
+        <p>面向任务对话论文模型效果排行榜 <a href="https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey" target="_blank" rel="noopener">https://github.com/AtmaHou/Task-Oriented-Dialogue-Dataset-Survey</a></p><h2 id="《Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction》"><a href="#《Slot-Gated-Modeling-for-Joint-Slot-Filling-and-Intent-Prediction》" class="headerlink" title="《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》"></a>《Slot-Gated Modeling for Joint Slot Filling and Intent Prediction》</h2><a id="more"></a>
+<p>发表在NAACL HLT 2018，自然语言四大顶会之一。</p>
 <p>Intruduction：<br>基于Attention的RNN模型在联合意图识别(ID)和槽位填充(SF)上实现最好性能（其ID和SF的attention权重独立）。然而，其通过损失函数将两者关联只是隐式地关联。由于slot filling通常高度依赖于intent，因此本工作重点介绍如何通过引入插槽选通机制来模拟slot和intent向量之间的显式关系。本文提出slot gate结构，其关注于学习intent和slot attention向量之间的关系，通过全局优化获得更好的semantic frame。通过在ATIS和Snips数据集实验，相比于attention模型semantic frame准确率相对提升了4.2%。</p>
 <p><img src="/2019/01/24/Slot-Gated_Modeling_for_Joint_Slot_Filling_and_Intent_Prediction/model_architecture.png" alt=""></p>
 <p>创新点：</p>
@@ -567,7 +567,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      src="/images/avatar.png"
       alt="袁宵">
   <p class="site-author-name" itemprop="name">袁宵</p>
   <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
@@ -668,7 +668,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 374.5k 字</span>
+  <span class="post-count">全站共 375k 字</span>
 </div>
 
         
@@ -830,7 +830,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     notify: false,
     appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
     appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-    placeholder: '写下你到想法',
+    placeholder: '写下你的想法',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,

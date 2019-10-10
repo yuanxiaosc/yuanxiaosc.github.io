@@ -60,19 +60,19 @@
   };
 </script>
 
-  <meta name="description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)    资源    标题 说明 附加     【提升篇】UNIT2.0—火车票场景实例教程 参考范例 20180708   【提升篇】酒店语音助手实例教程 参考范例 20181011   【提">
+  <meta name="description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)">
 <meta name="keywords" content="项目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="智能家居自然语言理解平台的解决方案">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2018/11/12/智能家居自然语言理解平台的解决方案/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)    资源    标题 说明 附加     【提升篇】UNIT2.0—火车票场景实例教程 参考范例 20180708   【提升篇】酒店语音助手实例教程 参考范例 20181011   【提">
+<meta property="og:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://ai.bdstatic.com/file/2DCEF8C4D2174B61BFE909F3728FB15C">
 <meta property="og:updated_time" content="2018-11-12T06:59:51.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智能家居自然语言理解平台的解决方案">
-<meta name="twitter:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)    资源    标题 说明 附加     【提升篇】UNIT2.0—火车票场景实例教程 参考范例 20180708   【提升篇】酒店语音助手实例教程 参考范例 20181011   【提">
+<meta name="twitter:description" content="参照百度大脑的项目经验训练我们自己的模型，研发我们的自然语言理解平台。 文档整理    标题 说明 附加     智能家居项目调研 智能家居项目 20181111   自然语言理解与交互技术平台(UNIT)">
 <meta name="twitter:image" content="https://ai.bdstatic.com/file/2DCEF8C4D2174B61BFE909F3728FB15C">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2018/11/12/智能家居自然语言理解平台的解决方案/">
 
@@ -258,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
       <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -359,7 +359,9 @@
 </tr>
 </tbody>
 </table>
-</div><h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h1><div class="table-container">
+</div><a id="more"></a>
+
+<h1 id="资源"><a href="#资源" class="headerlink" title="资源"></a>资源</h1><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -391,9 +393,7 @@
 </tr>
 </tbody>
 </table>
-</div><a id="more"></a>
-
-
+</div>
 <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id=""><a href="#" class="headerlink" title=""></a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">在特定场景下的对话理解与交互能力。</span><br><span class="line"></span><br><span class="line">技能主要用于解决特定场景下的对话理解与交互任务。同时UNIT平台提供了一些预置的系统技能（比如问候、电视指令等，更多系统技能会陆续开放），您可根据业务需要直接选用。</span><br><span class="line">技能中包含了一系列『对话意图』或『问答意图』用于完成特定场景下的所有对话任务(例如，智能电视技能包含了换台、调音量、找部电影等一系列『对话意图』)。 技能训练出模型并生效到沙盒环境后，您可以在『训练/体验』对话窗口中与技能对话，体验技能的对话理解能力。您也可以在自己的产品中通API直接调用它，让您的产品具有智能对话理解与交互的能力。</span><br><span class="line"></span><br><span class="line">### ```对话意图</span><br></pre></td></tr></table></figure></h3><p>【基本信息】</p>
 <p>对话意图：intent，是在一个对话任务中技能要理解的用户目的（例如用户说”换到中央台”，那对应电视控制技能下的对话意图就是”换台”）。</p>
 <p>名称：对话意图的英文定义，后续您可在程序调用中使用。</p>
@@ -498,8 +498,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/11/11/智能家居项目调研/" rel="next" title="智能家居项目调研">
-                  <i class="fa fa-chevron-left"></i> 智能家居项目调研
+                <a href="/2018/11/12/自然语言理解与交互技术平台/" rel="next" title="自然语言理解与交互技术平台">
+                  <i class="fa fa-chevron-left"></i> 自然语言理解与交互技术平台
                 </a>
               
             </div>
@@ -508,8 +508,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2018/11/12/自然语言理解与交互技术平台/" rel="prev" title="自然语言理解与交互技术平台">
-                  自然语言理解与交互技术平台 <i class="fa fa-chevron-right"></i>
+                <a href="/2018/11/12/CoLA_data_set/" rel="prev" title="CoLA The Corpus of Linguistic Acceptability">
+                  CoLA The Corpus of Linguistic Acceptability <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -567,7 +567,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      src="/images/avatar.png"
       alt="袁宵">
   <p class="site-author-name" itemprop="name">袁宵</p>
   <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
@@ -668,7 +668,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 374.5k 字</span>
+  <span class="post-count">全站共 375k 字</span>
 </div>
 
         
@@ -830,7 +830,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     notify: false,
     appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
     appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-    placeholder: '写下你到想法',
+    placeholder: '写下你的想法',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,

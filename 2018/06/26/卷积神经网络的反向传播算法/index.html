@@ -60,19 +60,19 @@
   };
 </script>
 
-  <meta name="description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本">
+  <meta name="description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。">
 <meta name="keywords" content="卷积神经网络,深度学习,前向传播算法,反向传播算法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卷积神经网络的反向传播算法">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2018/06/26/卷积神经网络的反向传播算法/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本">
+<meta property="og:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/one_2.png">
 <meta property="og:updated_time" content="2018-06-26T01:45:38.715Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积神经网络的反向传播算法">
-<meta name="twitter:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本">
+<meta name="twitter:description" content="阅读本篇前，最好先阅读多层感知机的反向传播算法。反向传播的基础知识和符号定义都在该文章中。卷积神经网络：前向传播算法CNN输入层前向传播到卷积层输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。">
 <meta name="twitter:image" content="https://yuanxiaosc.github.io/2018/06/21/%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%E7%AE%97%E6%B3%95/one_2.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2018/06/26/卷积神经网络的反向传播算法/">
 
@@ -258,7 +258,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
       <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4">
+      <meta itemprop="image" content="/images/avatar.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -330,9 +330,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>阅读本篇前，最好先阅读多层感知机的<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法">反向传播算法</a>。反向传播的基础知识和符号定义都在该文章中。</p><h2 id="卷积神经网络：前向传播算法"><a href="#卷积神经网络：前向传播算法" class="headerlink" title="卷积神经网络：前向传播算法"></a>卷积神经网络：前向传播算法</h2><h3 id="CNN输入层前向传播到卷积层"><a href="#CNN输入层前向传播到卷积层" class="headerlink" title="CNN输入层前向传播到卷积层"></a>CNN输入层前向传播到卷积层</h3><p>输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。</p><p>我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本都是有 RGB 的彩色图片，这样输入 $X$ 就是 3 个矩阵，即分别对应 R，G 和 B 的矩阵，或者说是一个张量。这时和卷积层相连的卷积核$W$就也是张量，对应的最后一维的维度为 3 .即每个卷积核都是 3 个子矩阵组成。同样的方法，对于 3D 的彩色图片之类的样本，我们的输入 $X$ 可以是 4 维，5 维的张量，那么对应的卷积核 $W$ 也是个高维的张量。</p><a id="more"></a>
+        <p>阅读本篇前，最好先阅读多层感知机的<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法">反向传播算法</a>。反向传播的基础知识和符号定义都在该文章中。</p><h2 id="卷积神经网络：前向传播算法"><a href="#卷积神经网络：前向传播算法" class="headerlink" title="卷积神经网络：前向传播算法"></a>卷积神经网络：前向传播算法</h2><h3 id="CNN输入层前向传播到卷积层"><a href="#CNN输入层前向传播到卷积层" class="headerlink" title="CNN输入层前向传播到卷积层"></a>CNN输入层前向传播到卷积层</h3><p>输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。</p><a id="more"></a>
 
-
+<p>我们这里还是以图像识别为例。先考虑最简单的，样本都是二维的黑白图片。这样输入层$X$就是一个矩阵，矩阵的值等于图片的各个像素位置的值。这时和卷积层相连的卷积核$W$就也是矩阵如果样本都是有 RGB 的彩色图片，这样输入 $X$ 就是 3 个矩阵，即分别对应 R，G 和 B 的矩阵，或者说是一个张量。这时和卷积层相连的卷积核$W$就也是张量，对应的最后一维的维度为 3 .即每个卷积核都是 3 个子矩阵组成。同样的方法，对于 3D 的彩色图片之类的样本，我们的输入 $X$ 可以是 4 维，5 维的张量，那么对应的卷积核 $W$ 也是个高维的张量。</p>
 <p>不管维度多高，对于我们的输入，前向传播的过程可以表示为：<script type="math/tex">a^2= \sigma(z^2) = \sigma(a^1*W^2 +b^2)</script></p>
 <p>其中，上标代表层数，星号代表卷积，而b代表我们的偏倚, $\sigma$为激活函数，这里一般都是ReLU。和多层感知机的前向传播比较一下，其实形式非常的像，只是我们这儿是张量的卷积，而不是矩阵的乘法。同时由于$W$是张量，那么同样的位置，$W$参数的个数就比多层感知机多很多了。</p>
 <p>为了简化我们的描述，本文后面如果没有特殊说明，我们都默认输入是3维的张量，即用RBG可以表示的彩色图片。</p>
@@ -574,8 +574,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/06/24/改进神经网络的学习方法——正则化/" rel="next" title="改进神经网络的学习方法——正则化">
-                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——正则化
+                <a href="/2018/06/24/改进神经网络的学习方法——弃权/" rel="next" title="改进神经网络的学习方法——弃权">
+                  <i class="fa fa-chevron-left"></i> 改进神经网络的学习方法——弃权
                 </a>
               
             </div>
@@ -643,7 +643,7 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="https://avatars0.githubusercontent.com/u/16183570?s=400&u=5e09ebb784cfd47de99d249f2be2413adcf4e672&v=4"
+      src="/images/avatar.png"
       alt="袁宵">
   <p class="site-author-name" itemprop="name">袁宵</p>
   <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
@@ -744,7 +744,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 374.5k 字</span>
+  <span class="post-count">全站共 375k 字</span>
 </div>
 
         
@@ -906,7 +906,7 @@ NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
     notify: false,
     appId: 'aTXvwHFSoz68yg6g3k5JzN7B-MdYXbMMI',
     appKey: 'Wkf7bKVEfcQ0sW4V1l144HLY',
-    placeholder: '写下你到想法',
+    placeholder: '写下你的想法',
     avatar: 'mm',
     meta: guest,
     pageSize: '10' || 10,
