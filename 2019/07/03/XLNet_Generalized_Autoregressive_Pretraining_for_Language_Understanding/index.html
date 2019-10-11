@@ -73,7 +73,7 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding/排列模型中的因式分解顺序例子.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding/双流自注意力例子.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding/双流自注意力模型.png">
-<meta property="og:updated_time" content="2019-08-02T07:55:05.774Z">
+<meta property="og:updated_time" content="2019-10-11T08:43:57.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XLNet Generalized Autoregressive Pretraining for Language Understanding">
 <meta name="twitter:description" content="XLNet是一种基于新型广义排列语言建模目标的新型无监督语言表示学习方法。 此外，XLNet采用Transformer-XL作为骨干模型，为涉及长时间环境的语言任务展示了出色的性能。 总体而言，XLNet在各种下游语言任务上实现了最先进的（SOTA）结果，包括问答，自然语言推理，情感分析和文档排名。">
@@ -310,7 +310,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-02 15:55:05" itemprop="dateModified" datetime="2019-08-02T15:55:05+08:00">2019-08-02</time>
+                <time title="修改时间：2019-10-11 16:43:57" itemprop="dateModified" datetime="2019-10-11T16:43:57+08:00">2019-10-11</time>
               </span>
             
           
@@ -361,6 +361,7 @@
 
       
         <p>XLNet是一种基于新型广义排列语言建模目标的新型无监督语言表示学习方法。 此外，XLNet采用Transformer-XL作为骨干模型，为涉及长时间环境的语言任务展示了出色的性能。 总体而言，XLNet在各种下游语言任务上实现了最先进的（SOTA）结果，包括问答，自然语言推理，情感分析和文档排名。</p><a id="more"></a>
+<p>推荐阅读：<a href="https://yuanxiaosc.github.io/2019/07/03/XLNet_Generalized_Autoregressive_Pretraining_for_Language_Understanding%E7%BF%BB%E8%AF%91/">XLNet论文 全文中译</a></p>
 <h2 id="2019-XLNet-Generalized-Autoregressive-Pretraining-for-Language-Understanding"><a href="#2019-XLNet-Generalized-Autoregressive-Pretraining-for-Language-Understanding" class="headerlink" title="2019 XLNet: Generalized Autoregressive Pretraining for Language Understanding"></a>2019 <a href="https://arxiv.org/abs/1906.08237" target="_blank" rel="noopener">XLNet: Generalized Autoregressive Pretraining for Language Understanding</a></h2><blockquote>
 <p>With the capability of modeling bidirectional contexts, denoising autoencoding based pretraining like BERT achieves better performance than pretraining approaches based on autoregressive language modeling. However, relying on corrupting the input with masks, BERT neglects dependency between the masked positions and suffers from a pretrain-finetune discrepancy. In light of these pros and cons, we propose XLNet, a generalized autoregressive pretraining method that (1) enables learning bidirectional contexts by maximizing the expected likelihood over all permutations of the factorization order and (2) overcomes the limitations of BERT thanks to its autoregressive formulation. Furthermore, XLNet integrates ideas from Transformer-XL, the state-of-the-art autoregressive model, into pretraining. Empirically, XLNet outperforms BERT on 20 tasks, often by a large margin, and achieves state-of-the-art results on 18 tasks including question answering, natural language inference, sentiment analysis, and document ranking.</p>
 <p>由于具有双向上下文建模的能力，像BERT这样基于自动去噪的预训练语言模型比基于自回归的预训练语言模型的性能更好。然而，依赖于使用带掩码损坏的输入，BERT忽略了掩码位置之间的依赖性，进而受到了预训练-微调不一致的影响。根据这些优点和缺点，我们提出了XLNet，一种广义自回归预训练方法，它（1）通过最大化输入序列的因式分解的所有排列的似然函数的期望来学习双向上下文，并且（2）由于其自回归方法，克服了BERT的局限性。此外，XLNet将最先进的自回归模型Transformer-XL的思想整合到预训练中。实验表明，XLNet在20个任务上常大幅度优于BERT的表现，并在18个任务中实现最先进的结果，包括问答、自然语言推理、情感分析和文档排名。</p>
@@ -662,10 +663,33 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 375k 字</span>
+  <span class="post-count">全站共 377.2k 字</span>
 </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
 
 
 

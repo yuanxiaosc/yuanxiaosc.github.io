@@ -261,125 +261,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/01/07/词嵌入Embedding和语言模型LanguageModel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/01/07/词嵌入Embedding和语言模型LanguageModel/" class="post-title-link" itemprop="url">Embedding 和语言模型 LanguageModel</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-07 09:30:15" itemprop="dateCreated datePublished" datetime="2019-01-07T09:30:15+08:00">2019-01-07</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-02 15:14:37" itemprop="dateModified" datetime="2019-09-02T15:14:37+08:00">2019-09-02</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/01/07/词嵌入Embedding和语言模型LanguageModel/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/01/07/词嵌入Embedding和语言模型LanguageModel/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="词语嵌入和语言模型基本概念"><a href="#词语嵌入和语言模型基本概念" class="headerlink" title="词语嵌入和语言模型基本概念"></a>词语嵌入和语言模型基本概念</h2><blockquote>
-<p>动手体验词嵌入 <a href="http://projector.tensorflow.org/" target="_blank" rel="noopener">http://projector.tensorflow.org/</a></p>
-</blockquote><h3 id="为什么要使用Word-Embedding"><a href="#为什么要使用Word-Embedding" class="headerlink" title="为什么要使用Word Embedding"></a>为什么要使用Word Embedding</h3><p>在信号处理领域，图像和音频信号的输入往往是表示成高维度、密集的向量形式，在图像和音频的应用系统中，如何对输入信息进行编码(Encoding)显得非常重要和关键，这将直接决定了系统的质量。然而，在自然语言处理领域中，传统的做法是将词表示成离散的符号，例如将 [cat] 表示为 [Id537]，而 [dog] 表示为 [Id143]。这样做的缺点在于，没有提供足够的信息来体现词语之间的某种关联，例如尽管cat和dog不是同一个词，但是却应该有着某种的联系（如都是属于动物种类）。由于这种一元表示法(One-hot Representation)使得词向量过于稀疏，所以往往需要大量的语料数据才能训练出一个令人满意的模型。而Word Embedding技术则可以解决上述传统方法带来的问题。</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/01/07/词嵌入Embedding和语言模型LanguageModel/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/01/06/TensorFlow_estimator使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1340,7 +1221,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-12-27 20:44:23" itemprop="dateModified" datetime="2018-12-27T20:44:23+08:00">2018-12-27</time>
+                <time title="修改时间：2019-10-11 09:36:14" itemprop="dateModified" datetime="2019-10-11T09:36:14+08:00">2019-10-11</time>
               </span>
             
           
@@ -1383,11 +1264,142 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="CoNLL-2003-data"><a href="#CoNLL-2003-data" class="headerlink" title="CoNLL 2003 data"></a>CoNLL 2003 data</h2><p><a href="https://www.clips.uantwerpen.be/conll2003/ner/" target="_blank" rel="noopener">https://www.clips.uantwerpen.be/conll2003/ner/</a></p><h2 id="CoNLL-2003-English"><a href="#CoNLL-2003-English" class="headerlink" title="CoNLL 2003 (English)"></a>CoNLL 2003 (English)</h2><p>The <a href="http://www.aclweb.org/anthology/W03-0419.pdf" target="_blank" rel="noopener">CoNLL 2003 NER task</a> consists of newswire text from the Reuters RCV1<br>corpus tagged with four different entity types (PER, LOC, ORG, MISC). Models are evaluated based on span-based F1 on the test set.</p>
+          <p>CoNLL 2003 是最经典的命名实体识别任务数据集之一，有大量的研究者在上面进行研究。如果你对该领域（自然语言处理）有兴趣，不妨以此为任务入手。</p><h2 id="我的-CoNLL-2003-解决方案"><a href="#我的-CoNLL-2003-解决方案" class="headerlink" title="我的 CoNLL 2003 解决方案"></a>我的 CoNLL 2003 解决方案</h2><blockquote>
+<p>CoNLL 2003 data 数据 + 基于BERT的代码</p>
+</blockquote>
           <!--noindex-->
           
             <div class="post-button">
               <a class="btn" href="/2018/12/26/命名实体识别CoNLL2003/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/" class="post-title-link" itemprop="url">BERT Pre-training of Deep Bidirectional Transformers for Language Understanding 翻译</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-12-25 09:30:00" itemprop="dateCreated datePublished" datetime="2018-12-25T09:30:00+08:00">2018-12-25</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-11 17:17:08" itemprop="dateModified" datetime="2019-10-11T17:17:08+08:00">2019-10-11</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/论文/" itemprop="url" rel="index"><span itemprop="name">论文</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/论文/论文写作/" itemprop="url" rel="index"><span itemprop="name">论文写作</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文是BERT论文的全文翻译，转载注明出处和译者。</p><ul>
+<li>原文 <a href="https://arxiv.org/abs/1810.04805v1" target="_blank" rel="noopener">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a>，这是BERT在2018年11月发布的版本，与2019年5月版本<a href="https://arxiv.org/abs/1810.04805v2" target="_blank" rel="noopener">v2</a>有稍许不同。</li>
+<li>PDF版翻译以及相关资源链接 GitHub <a href="https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation" target="_blank" rel="noopener">BERT_Paper_Chinese_Translation</a></li>
+<li>译者：袁宵</li>
+<li>说明：1. 对于没有标准译法的词语保留了原单词；2. 以准确翻译为第一目标，力求保持原意；3. 欢迎读者参与到翻译中来，提出修改意见。</li>
+</ul>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1674,10 +1686,33 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 375k 字</span>
+  <span class="post-count">全站共 377.2k 字</span>
 </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
 
 
 

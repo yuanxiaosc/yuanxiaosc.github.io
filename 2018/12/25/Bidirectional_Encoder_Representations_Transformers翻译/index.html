@@ -60,14 +60,15 @@
   };
 </script>
 
-  <meta name="description" content="本文是BERT原始论文BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding的全文中译，可以在 https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation 下载PDF版，转载注明出处。">
+  <meta name="description" content="本文是BERT论文的全文翻译，转载注明出处和译者。 原文 BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding，这是BERT在2018年11月发布的版本，与2019年5月版本v2有稍许不同。 PDF版翻译以及相关资源链接 GitHub BERT_Paper_Chinese_Translati">
 <meta name="keywords" content="BERT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BERT Pre-training of Deep Bidirectional Transformers for Language Understanding 翻译">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="本文是BERT原始论文BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding的全文中译，可以在 https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation 下载PDF版，转载注明出处。">
+<meta property="og:description" content="本文是BERT论文的全文翻译，转载注明出处和译者。 原文 BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding，这是BERT在2018年11月发布的版本，与2019年5月版本v2有稍许不同。 PDF版翻译以及相关资源链接 GitHub BERT_Paper_Chinese_Translati">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/BERT论文翻译扫码阅读.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/figure_1.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/figure_2.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/3_3_2_1.png">
@@ -82,11 +83,11 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/table_6.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/figure_4.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/table_7.png">
-<meta property="og:updated_time" content="2019-09-23T07:51:52.802Z">
+<meta property="og:updated_time" content="2019-10-11T09:17:08.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BERT Pre-training of Deep Bidirectional Transformers for Language Understanding 翻译">
-<meta name="twitter:description" content="本文是BERT原始论文BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding的全文中译，可以在 https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation 下载PDF版，转载注明出处。">
-<meta name="twitter:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/figure_1.png">
+<meta name="twitter:description" content="本文是BERT论文的全文翻译，转载注明出处和译者。 原文 BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding，这是BERT在2018年11月发布的版本，与2019年5月版本v2有稍许不同。 PDF版翻译以及相关资源链接 GitHub BERT_Paper_Chinese_Translati">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/BERT论文翻译扫码阅读.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/">
 
 
@@ -296,10 +297,6 @@
 
         <div class="post-meta">
 		  	  
-				<i class="fa fa-thumb-tack"></i>
-				<font color=7D26CD>置顶</font>
-				<span class="post-meta-divider">|</span>
-			  
 			  
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -323,7 +320,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-23 15:51:52" itemprop="dateModified" datetime="2019-09-23T15:51:52+08:00">2019-09-23</time>
+                <time title="修改时间：2019-10-11 17:17:08" itemprop="dateModified" datetime="2019-10-11T17:17:08+08:00">2019-10-11</time>
               </span>
             
           
@@ -373,8 +370,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文是BERT原始论文<a href="https://arxiv.org/abs/1810.04805v1" target="_blank" rel="noopener">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a>的全文中译，可以在 <a href="https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation" target="_blank" rel="noopener">https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation</a> 下载PDF版，转载注明出处。</p><a id="more"></a>
-<p>译者：袁宵</p>
+        <p>本文是BERT论文的全文翻译，转载注明出处和译者。</p><ul>
+<li>原文 <a href="https://arxiv.org/abs/1810.04805v1" target="_blank" rel="noopener">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a>，这是BERT在2018年11月发布的版本，与2019年5月版本<a href="https://arxiv.org/abs/1810.04805v2" target="_blank" rel="noopener">v2</a>有稍许不同。</li>
+<li>PDF版翻译以及相关资源链接 GitHub <a href="https://github.com/yuanxiaosc/BERT_Paper_Chinese_Translation" target="_blank" rel="noopener">BERT_Paper_Chinese_Translation</a></li>
+<li>译者：袁宵</li>
+<li>说明：1. 对于没有标准译法的词语保留了原单词；2. 以准确翻译为第一目标，力求保持原意；3. 欢迎读者参与到翻译中来，提出修改意见。</li>
+</ul><a id="more"></a>
+
+<hr>
+<p>手机扫码阅读：</p>
+<p><img src="/2018/12/25/Bidirectional_Encoder_Representations_Transformers翻译/BERT论文翻译扫码阅读.png" alt=""></p>
 <hr>
 <h1 id="BERT：预训练的深度双向-Transformer-语言模型"><a href="#BERT：预训练的深度双向-Transformer-语言模型" class="headerlink" title="BERT：预训练的深度双向 Transformer 语言模型"></a>BERT：预训练的深度双向 Transformer 语言模型</h1><p>Jacob Devlin；Ming-Wei Chang；Kenton Lee；Kristina Toutanova<br>Google AI Language<br>{jacobdevlin,mingweichang,kentonl,kristout}@google.com</p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>我们提出了一种新的称为 BERT 的语言表示模型，BERT 代表来自 Transformer 的双向编码器表示（<strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from <strong>T</strong>ransformers）。不同于最近的语言表示模型（<a href="https://arxiv.org/abs/1802.05365v2" target="_blank" rel="noopener">Peters et al., 2018</a>，<a href="https://blog.openai.com/language-unsupervised/" target="_blank" rel="noopener">Radford et al., 2018</a>）， BERT 旨在通过联合调节所有层中的左右上下文来预训练深度双向表示。因此，只需要一个额外的输出层，就可以对预训练的 BERT 表示进行微调，从而为广泛的任务（比如回答问题和语言推断任务）创建最先进的模型，而无需对特定于任务进行大量模型结构的修改。</p>
@@ -1156,10 +1161,33 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 375k 字</span>
+  <span class="post-count">全站共 377.2k 字</span>
 </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
 
 
 
