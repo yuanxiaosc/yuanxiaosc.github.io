@@ -308,7 +308,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-18 15:40:52" itemprop="dateModified" datetime="2019-10-18T15:40:52+08:00">2019-10-18</time>
+                <time title="修改时间：2019-10-19 22:15:06" itemprop="dateModified" datetime="2019-10-19T22:15:06+08:00">2019-10-19</time>
               </span>
             
           
@@ -620,6 +620,135 @@
           
             <div class="post-button">
               <a class="btn" href="/2018/06/21/反向传播算法/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/10/22/百度艾尼ERNIE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/22/百度艾尼ERNIE/" class="post-title-link" itemprop="url">百度艾尼ERNIE</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2019-10-22 08:00:00" itemprop="dateCreated datePublished" datetime="2019-10-22T08:00:00+08:00">2019-10-22</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-21 22:41:22" itemprop="dateModified" datetime="2019-10-21T22:41:22+08:00">2019-10-21</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/论文/" itemprop="url" rel="index"><span itemprop="name">论文</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/论文/语言模型/" itemprop="url" rel="index"><span itemprop="name">语言模型</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/10/22/百度艾尼ERNIE/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/10/22/百度艾尼ERNIE/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>本文计划内容：ERNIE核心资源+论文解析+实战</p><h2 id="飞桨-ERNIE-核心资源"><a href="#飞桨-ERNIE-核心资源" class="headerlink" title="飞桨-ERNIE 核心资源"></a>飞桨-ERNIE 核心资源</h2><ul>
+<li><a href="https://www.paddlepaddle.org.cn/ernie" target="_blank" rel="noopener">飞桨-ERNIE 官网</a></li>
+<li><a href="https://github.com/PaddlePaddle/ERNIE" target="_blank" rel="noopener">ERNIE GitHub</a></li>
+<li><a href="https://github.com/PaddlePaddle/ERNIE/blob/develop/README.md" target="_blank" rel="noopener">英文文档</a></li>
+<li><a href="https://github.com/PaddlePaddle/ERNIE/blob/develop/README.zh.md" target="_blank" rel="noopener">中文文档</a></li>
+</ul><h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p><a href="https://mp.weixin.qq.com/s/jNnkqdOtyfYflZM9oKqeDg" target="_blank" rel="noopener">飞桨ERNIE常用FAQ</a></p><p>五、其它问题</p><p>Q1. BERT与ERNIE谁更强？<br>从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的方法加强模型学到的语言知识。<br>ERNIE 2.0 通过增量学习的方式更新，也就是说可以通过自定义的 NLP 任务微调已训练模型，加强预训练效果。<br>ERNIE2.0 模型在英语任务上很多都优于 BERT 和XLNet，在 7 个GLUE 任务上取得了最好的结果；中文任务上，ERNIE 2.0 模型在所有9 个中文NLP 任务上全面优于 BERT。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/10/22/百度艾尼ERNIE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1314,123 +1443,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/08/04/机器学习中的微积分/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/08/04/机器学习中的微积分/" class="post-title-link" itemprop="url">机器学习中的微积分</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2019-08-04 10:20:00" itemprop="dateCreated datePublished" datetime="2019-08-04T10:20:00+08:00">2019-08-04</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-05 09:13:24" itemprop="dateModified" datetime="2019-08-05T09:13:24+08:00">2019-08-05</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数学/" itemprop="url" rel="index"><span itemprop="name">数学</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2019/08/04/机器学习中的微积分/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/08/04/机器学习中的微积分/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="极限"><a href="#极限" class="headerlink" title="极限"></a>极限</h2><p><a href="https://baike.baidu.com/item/%E6%9E%81%E9%99%90/3564509" target="_blank" rel="noopener">极限 百度百科</a></p><p>“极限”是数学中的分支——微积分的基础概念，广义的“极限”是指“无限靠近而永远不能到达”的意思。数学中的“极限”指：某一个函数中的某一个变量，此变量在变大（或者变小）的永远变化的过程中，逐渐向某一个确定的数值A不断地逼近而“永远不能够重合到A”（“永远不能够等于A，但是取等于A‘已经足够取得高精度计算结果）的过程中，此变量的变化，被人为规定为“永远靠近而不停止”、其有一个“不断地极为靠近A点的趋势”。极限是一种“变化状态”的描述。此变量永远趋近的值A叫做“极限值”（当然也可以用其他符号表示）。</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2019/08/04/机器学习中的微积分/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1483,7 +1495,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1509,7 +1521,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1573,7 +1585,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 377.8k 字</span>
+  <span class="post-count">全站共 378.3k 字</span>
 </div>
 
         

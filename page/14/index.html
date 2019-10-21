@@ -261,7 +261,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/26/卷积神经网络的反向传播算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="袁宵">
@@ -275,7 +275,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
             
-            <a href="/2018/06/24/改进神经网络的学习方法——弃权/" class="post-title-link" itemprop="url">改进神经网络的学习方法——弃权</a>
+            <a href="/2018/06/26/卷积神经网络的反向传播算法/" class="post-title-link" itemprop="url">卷积神经网络的反向传播算法</a>
           
         </h2>
 
@@ -293,19 +293,11 @@
                 
               
 
-              <time title="创建时间：2018-06-24 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-24T19:31:15+08:00">2018-06-24</time>
+              <time title="创建时间：2018-06-26 08:22:42 / 修改时间：09:45:38" itemprop="dateCreated datePublished" datetime="2018-06-26T08:22:42+08:00">2018-06-26</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-04 22:17:22" itemprop="dateModified" datetime="2019-08-04T22:17:22+08:00">2019-08-04</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -315,13 +307,6 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
 
                 
                 
@@ -340,7 +325,7 @@
       
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/2018/06/24/改进神经网络的学习方法——弃权/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/06/24/改进神经网络的学习方法——弃权/" itemprop="commentCount"></span></a>
+    <a title="valine" href="/2018/06/26/卷积神经网络的反向传播算法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/06/26/卷积神经网络的反向传播算法/" itemprop="commentCount"></span></a>
   </span>
   
   
@@ -354,15 +339,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <blockquote>
-<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 2 Improving the way neural networks learn</a></p>
-</blockquote><h2 id="弃权（Dropout）的过程"><a href="#弃权（Dropout）的过程" class="headerlink" title="弃权（Dropout）的过程"></a>弃权（Dropout）的过程</h2><blockquote>
-<p>Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5</p>
-</blockquote>
+          <p>阅读本篇前，最好先阅读多层感知机的<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法">反向传播算法</a>。反向传播的基础知识和符号定义都在该文章中。</p><h2 id="卷积神经网络：前向传播算法"><a href="#卷积神经网络：前向传播算法" class="headerlink" title="卷积神经网络：前向传播算法"></a>卷积神经网络：前向传播算法</h2><h3 id="CNN输入层前向传播到卷积层"><a href="#CNN输入层前向传播到卷积层" class="headerlink" title="CNN输入层前向传播到卷积层"></a>CNN输入层前向传播到卷积层</h3><p>输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。</p>
           <!--noindex-->
           
             <div class="post-button">
-              <a class="btn" href="/2018/06/24/改进神经网络的学习方法——弃权/#more" rel="contents">
+              <a class="btn" href="/2018/06/26/卷积神经网络的反向传播算法/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -489,6 +470,134 @@
           
             <div class="post-button">
               <a class="btn" href="/2018/06/24/改进神经网络的学习方法——正则化/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/24/改进神经网络的学习方法——弃权/" class="post-title-link" itemprop="url">改进神经网络的学习方法——弃权</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-24 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-24T19:31:15+08:00">2018-06-24</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-04 22:17:22" itemprop="dateModified" datetime="2019-08-04T22:17:22+08:00">2019-08-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/06/24/改进神经网络的学习方法——弃权/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/06/24/改进神经网络的学习方法——弃权/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 2 Improving the way neural networks learn</a></p>
+</blockquote><h2 id="弃权（Dropout）的过程"><a href="#弃权（Dropout）的过程" class="headerlink" title="弃权（Dropout）的过程"></a>弃权（Dropout）的过程</h2><blockquote>
+<p>Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/24/改进神经网络的学习方法——弃权/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1354,115 +1463,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/01/02/元学习/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/01/02/元学习/" class="post-title-link" itemprop="url">元学习</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-01-02 21:20:00" itemprop="dateCreated datePublished" datetime="2018-01-02T21:20:00+08:00">2018-01-02</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-01-02 21:42:59" itemprop="dateModified" datetime="2019-01-02T21:42:59+08:00">2019-01-02</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2018/01/02/元学习/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/01/02/元学习/" itemprop="commentCount"></span></a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.jiqizhixin.com/articles/meta-learning-intro?from=synced&amp;keyword=%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%BA%86%E8%A7%A3%E5%85%83%E5%AD%A6%E4%B9%A0" target="_blank" rel="noopener">从零开始，了解元学习</a></p>
-
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1515,7 +1515,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">142</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1541,7 +1541,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1605,7 +1605,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 377.8k 字</span>
+  <span class="post-count">全站共 378.3k 字</span>
 </div>
 
         
