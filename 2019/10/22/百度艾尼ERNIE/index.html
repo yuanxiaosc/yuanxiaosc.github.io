@@ -60,18 +60,21 @@
   };
 </script>
 
-  <meta name="description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 FAQ飞桨ERNIE常用FAQ五、其它问题Q1. BERT与ERNIE谁更强？从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的">
+  <meta name="description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 ERNIE 2.0 是基于持续学习的语义理解预训练框架，使用多任务学习增量式构建预训练任务。ERNIE 2.0 中，新构建的预训练任务类型可以无缝的加入训练框架，持续的进行语义理解学习。 通过新增的实体预测、句子因果关系判断、文章句子结构重建等语义任务，">
 <meta name="keywords" content="ERNIE">
 <meta property="og:type" content="article">
 <meta property="og:title" content="百度艾尼ERNIE">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/10/22/百度艾尼ERNIE/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 FAQ飞桨ERNIE常用FAQ五、其它问题Q1. BERT与ERNIE谁更强？从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的">
+<meta property="og:description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 ERNIE 2.0 是基于持续学习的语义理解预训练框架，使用多任务学习增量式构建预训练任务。ERNIE 2.0 中，新构建的预训练任务类型可以无缝的加入训练框架，持续的进行语义理解学习。 通过新增的实体预测、句子因果关系判断、文章句子结构重建等语义任务，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-21T14:41:22.617Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/PaddlePaddle/ERNIE/develop/.metas/ernie2.0_arch.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/PaddlePaddle/ERNIE/develop/.metas/ernie2.0_model.png">
+<meta property="og:updated_time" content="2019-10-29T08:24:20.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="百度艾尼ERNIE">
-<meta name="twitter:description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 FAQ飞桨ERNIE常用FAQ五、其它问题Q1. BERT与ERNIE谁更强？从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的">
+<meta name="twitter:description" content="本文计划内容：ERNIE核心资源+论文解析+实战飞桨-ERNIE 核心资源 飞桨-ERNIE 官网 ERNIE GitHub 英文文档 中文文档 ERNIE 2.0 是基于持续学习的语义理解预训练框架，使用多任务学习增量式构建预训练任务。ERNIE 2.0 中，新构建的预训练任务类型可以无缝的加入训练框架，持续的进行语义理解学习。 通过新增的实体预测、句子因果关系判断、文章句子结构重建等语义任务，">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/PaddlePaddle/ERNIE/develop/.metas/ernie2.0_arch.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/10/22/百度艾尼ERNIE/">
 
 
@@ -304,7 +307,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-21 22:41:22" itemprop="dateModified" datetime="2019-10-21T22:41:22+08:00">2019-10-21</time>
+                <time title="修改时间：2019-10-29 16:24:20" itemprop="dateModified" datetime="2019-10-29T16:24:20+08:00">2019-10-29</time>
               </span>
             
           
@@ -359,11 +362,16 @@
 <li><a href="https://github.com/PaddlePaddle/ERNIE" target="_blank" rel="noopener">ERNIE GitHub</a></li>
 <li><a href="https://github.com/PaddlePaddle/ERNIE/blob/develop/README.md" target="_blank" rel="noopener">英文文档</a></li>
 <li><a href="https://github.com/PaddlePaddle/ERNIE/blob/develop/README.zh.md" target="_blank" rel="noopener">中文文档</a></li>
-</ul><h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p><a href="https://mp.weixin.qq.com/s/jNnkqdOtyfYflZM9oKqeDg" target="_blank" rel="noopener">飞桨ERNIE常用FAQ</a></p><p>五、其它问题</p><p>Q1. BERT与ERNIE谁更强？<br>从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的方法加强模型学到的语言知识。<br>ERNIE 2.0 通过增量学习的方式更新，也就是说可以通过自定义的 NLP 任务微调已训练模型，加强预训练效果。<br>ERNIE2.0 模型在英语任务上很多都优于 BERT 和XLNet，在 7 个GLUE 任务上取得了最好的结果；中文任务上，ERNIE 2.0 模型在所有9 个中文NLP 任务上全面优于 BERT。</p><a id="more"></a>
+</ul><p>ERNIE 2.0 是基于持续学习的语义理解预训练框架，使用多任务学习增量式构建预训练任务。ERNIE 2.0 中，新构建的预训练任务类型可以无缝的加入训练框架，持续的进行语义理解学习。 通过新增的实体预测、句子因果关系判断、文章句子结构重建等语义任务，ERNIE 2.0 语义理解预训练模型从训练数据中获取了词法、句法、语义等多个维度的自然语言信息，极大地增强了通用语义表示能力。</p><a id="more"></a>
 
 
-
-
+<p><img src="https://raw.githubusercontent.com/PaddlePaddle/ERNIE/develop/.metas/ernie2.0_arch.png" alt=""></p>
+<p>我们对 ERNIE 2.0 模型和现有 SOTA 预训练模型在 9 个中文数据集、以及英文数据集合 GLUE 上进行效果比较。结果表明：ERNIE 2.0 模型在英语任务上几乎全面优于 BERT 和 XLNet，在 7 个 GLUE 任务上取得了最好的结果；中文任务上，ERNIE 2.0 模型在所有 9 个中文 NLP 任务上全面优于 BERT。</p>
+<p><strong>Pre-training Tasks</strong><br><img src="https://raw.githubusercontent.com/PaddlePaddle/ERNIE/develop/.metas/ernie2.0_model.png" alt=""></p>
+<h3 id="ERNIE-解读"><a href="#ERNIE-解读" class="headerlink" title="ERNIE 解读"></a>ERNIE 解读</h3><p><a href="https://www.jiqizhixin.com/articles/2019-10-29-4" target="_blank" rel="noopener">最新NLP架构的直观解释：多任务学习– ERNIE 2.0（附链接）</a></p>
+<h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p><a href="https://mp.weixin.qq.com/s/jNnkqdOtyfYflZM9oKqeDg" target="_blank" rel="noopener">飞桨ERNIE常用FAQ</a></p>
+<p>五、其它问题</p>
+<p>Q1. BERT与ERNIE谁更强？<br>从效果来看，ERNIE的效果领先于BERT。BERT、XLNet等主流方法都强调通过强力的 Transformer 直接构建语言模型，而 ERNIE 2.0 通过多任务预训练的方法加强模型学到的语言知识。<br>ERNIE 2.0 通过增量学习的方式更新，也就是说可以通过自定义的 NLP 任务微调已训练模型，加强预训练效果。<br>ERNIE2.0 模型在英语任务上很多都优于 BERT 和XLNet，在 7 个GLUE 任务上取得了最好的结果；中文任务上，ERNIE 2.0 模型在所有9 个中文NLP 任务上全面优于 BERT。</p>
 <p>Q2. ERNIE效果领先BERT是否得益于更多数据?<br>否。我们对比了不同模型公布的数据量，BERT: 3.3B (tokens), ERNIE:7.9 B (tokens),<br> XLNet: 32.8B (tokens)，目前版本的数据规模是XLNet的1/4，同时ERNIE 没有使用人工直接标注的数据，所有数据可以通过无监督或者弱监督的方式大量得到。</p>
 <p>Q3. ERNIE可以理解为是知识图谱+BERT吗？<br>不是，ERNIE没有利用图谱信息，而是直接从文本中学习知识。</p>
 <p>Q4. ERNIE的多任务持续学习是怎么实现的？<br>ERNIE2.0 的预训练任务是一个逐步增加的过程，先训练 Task1, 然后逐步增加到多个 TaskN，多个 Task 的训练是按照一定的概率分布对 Task 进行采样，比如: 第一个 batch 训练Task1, 第2个batch 训练 Task2 。训练过程中是通过多机多卡训练，有些卡去训练任务1，有些卡训练任务2。由于目前预训练代码还未开源，用户暂时无法添加新任务做预训练。</p>
@@ -488,7 +496,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#飞桨-ERNIE-核心资源"><span class="nav-number">1.</span> <span class="nav-text">飞桨-ERNIE 核心资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQ"><span class="nav-number">1.1.</span> <span class="nav-text">FAQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待实验完成后更新…"><span class="nav-number">2.</span> <span class="nav-text">待实验完成后更新…</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#飞桨-ERNIE-核心资源"><span class="nav-number">1.</span> <span class="nav-text">飞桨-ERNIE 核心资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ERNIE-解读"><span class="nav-number">1.1.</span> <span class="nav-text">ERNIE 解读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQ"><span class="nav-number">1.2.</span> <span class="nav-text">FAQ</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待实验完成后更新…"><span class="nav-number">2.</span> <span class="nav-text">待实验完成后更新…</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -597,7 +605,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 379k 字</span>
+  <span class="post-count">全站共 379.3k 字</span>
 </div>
 
         
