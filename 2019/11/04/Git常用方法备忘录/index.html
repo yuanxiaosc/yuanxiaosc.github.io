@@ -60,19 +60,19 @@
   };
 </script>
 
-  <meta name="description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 阅读更多； 第一章创建版本库初始化一个Git仓库，使用git init命令。添加文件到Git仓库，分两步：">
+  <meta name="description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
 <meta name="keywords" content="自然语言处理,深度学习,机器学习,人工智能,论文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git常用方法备忘录">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/11/04/Git常用方法备忘录/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 阅读更多； 第一章创建版本库初始化一个Git仓库，使用git init命令。添加文件到Git仓库，分两步：">
+<meta property="og:description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/04/Git常用方法备忘录/分支管理策略示意图.png">
-<meta property="og:updated_time" content="2019-11-06T01:30:12.155Z">
+<meta property="og:updated_time" content="2019-11-06T02:58:41.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git常用方法备忘录">
-<meta name="twitter:description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 阅读更多； 第一章创建版本库初始化一个Git仓库，使用git init命令。添加文件到Git仓库，分两步：">
+<meta name="twitter:description" content="Git常用方法备忘录使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
 <meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/11/04/Git常用方法备忘录/分支管理策略示意图.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/11/04/Git常用方法备忘录/">
 
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-06 09:30:12" itemprop="dateModified" datetime="2019-11-06T09:30:12+08:00">2019-11-06</time>
+                <time title="修改时间：2019-11-06 10:58:41" itemprop="dateModified" datetime="2019-11-06T10:58:41+08:00">2019-11-06</time>
               </span>
             
           
@@ -345,11 +345,11 @@
         <p>Git常用方法备忘录使用方法：</p><ol>
 <li>首先速览本文第一章和第二章内容；</li>
 <li>跟着<a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">廖雪峰 Git教程</a>操作一遍，然后再仔细阅读本文内容；</li>
-<li>阅读更多；</li>
-</ol><h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><h3 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h3><p>初始化一个Git仓库，使用git init命令。</p><p>添加文件到Git仓库，分两步：</p><a id="more"></a>
+<li>如果已经熟悉，直接看阅读更多中的内容即可。</li>
+</ol><h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><h3 id="创建版本库"><a href="#创建版本库" class="headerlink" title="创建版本库"></a>创建版本库</h3><p>初始化一个Git仓库，使用git init命令。</p><a id="more"></a>
 
 
-
+<p>添加文件到Git仓库，分两步：</p>
 <ol>
 <li>使用命令 <code>git add &lt;file&gt;</code> ，注意，可反复多次使用，添加多个文件；</li>
 <li>使用命令 <code>git commit -m &lt;message&gt;</code> ，完成。</li>
@@ -402,7 +402,16 @@
 </ul>
 <p>注释：总的来说，就是，在分支下进行的工作，如果不commit的话，回到master，就会显示出你在分支下你添加的工作。这个时候，你在master下修改完bug提交后，正在分支进行的工作也会提交了。为了避免这个情况，你就在分支下，git stash将工作隐藏，这个时候，切换到master时候，修改了bug，提交。分支的内容不会被提交上去。</p>
 <h3 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h3><p>开发一个新feature，最好新建一个分支；如果要丢弃一个没有被合并过的分支，可以通过 <code>git branch -D &lt;name&gt;</code> 强行删除。</p>
-<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><p>多人协作的工作模式通常是这样：</p>
+<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><p>当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin。<br>要查看远程库的信息，用 <code>git remote -v</code>：</p>
+<p>推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：<code>git push origin master</code> 如果要推送其他分支，比如dev，就改成：<code>git push origin dev</code></p>
+<p>但是，并不是一定要把本地分支往远程推送，那么，哪些分支需要推送，哪些不需要呢？</p>
+<ul>
+<li>master分支是主分支，因此要时刻与远程同步；</li>
+<li>dev分支是开发分支，团队所有成员都需要在上面工作，所以也需要与远程同步；</li>
+<li>bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；</li>
+<li>feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</li>
+</ul>
+<p>多人协作的工作模式通常是这样：</p>
 <ol>
 <li>首先，可以试图用 <code>git push origin &lt;branch-name&gt;</code> 推送自己的修改；</li>
 <li>如果推送失败，则因为远程分支比你的本地更新，需要先用 <code>git pull</code> 试图合并；</li>
@@ -424,6 +433,7 @@
 <li><a href="https://git-scm.com" target="_blank" rel="noopener">git-scm 官网</a></li>
 <li><a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">廖雪峰 Git教程</a></li>
 <li><a href="https://gitee.com/liaoxuefeng/learn-java/raw/master/teach/git-cheatsheet.pdf" target="_blank" rel="noopener">Git Cheat Sheet</a></li>
+<li><a href="https://github.github.com/training-kit/downloads/github-git-cheat-sheet.pdf" target="_blank" rel="noopener">GitHub Cheat Sheet</a></li>
 </ul>
 
     </div>
@@ -643,7 +653,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 381.7k 字</span>
+  <span class="post-count">全站共 382.1k 字</span>
 </div>
 
         
