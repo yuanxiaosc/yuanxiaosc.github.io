@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://image.jiqizhixin.com/uploads/editor/21e689f8-f94a-4f59-869e-d9ebf159ea0f/640.jpeg">
 <meta property="og:image" content="https://image.jiqizhixin.com/uploads/editor/b69d3462-5c03-435f-bd16-f4119b388661/640.jpeg">
 <meta property="og:image" content="https://pic3.zhimg.com/80/v2-7734b2580b943573685b9477c2a9e9be_hd.jpg">
-<meta property="og:updated_time" content="2019-11-06T08:16:36.366Z">
+<meta property="og:updated_time" content="2019-11-13T09:14:58.299Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BERT Pre-training of Deep Bidirectional Transformers for Language Understanding">
 <meta name="twitter:description" content="本文介绍了一种新的语言表征模型 BERT——来自 Transformer 的双向编码器表征。与最近的语言表征模型不同，BERT 旨在基于所有层的左、右语境来预训练深度双向表征。BERT 是首个在大批句子层面和 token 层面任务中取得当前最优性能的基于微调的表征模型，其性能超越许多使用任务特定架构的系统，刷新了 11 项 NLP 任务的当前最优性能记录。">
@@ -327,7 +327,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-06 16:16:36" itemprop="dateModified" datetime="2019-11-06T16:16:36+08:00">2019-11-06</time>
+                <time title="修改时间：2019-11-13 17:14:58" itemprop="dateModified" datetime="2019-11-13T17:14:58+08:00">2019-11-13</time>
               </span>
             
           
@@ -455,19 +455,6 @@
 <td>张俊林</td>
 <td>20181111</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h1 id="BERT-进一步研究"><a href="#BERT-进一步研究" class="headerlink" title="BERT 进一步研究"></a>BERT 进一步研究</h1><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>标题</th>
-<th>说明</th>
-<th>附加</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td><a href="https://www.jiqizhixin.com/articles/2018-11-23-15" target="_blank" rel="noopener">BERT fine-tune 实践终极教程</a></td>
 <td>BERT在中文数据集上的fine tune全攻略</td>
@@ -512,6 +499,7 @@
 <h1 id="官方复现-google-research-bert"><a href="#官方复现-google-research-bert" class="headerlink" title="官方复现 google-research bert"></a><a href="https://github.com/google-research/bert" target="_blank" rel="noopener">官方复现 google-research bert</a></h1><blockquote>
 <p>最近谷歌发布了基于双向 Transformer 的大规模预训练语言模型，该预训练模型能高效抽取文本信息并应用于各种 NLP 任务，该研究凭借预训练模型刷新了 11 项 NLP 任务的当前最优性能记录。如果这种预训练方式能经得起实践的检验，那么各种 NLP 任务只需要少量数据进行微调就能实现非常好的效果，BERT 也将成为一种名副其实的骨干网络。</p>
 </blockquote>
+<p>除了<a href="https://github.com/google-research/bert" target="_blank" rel="noopener">官方复现 google-research bert</a>，就推荐更加方便易用的<a href="https://github.com/huggingface/transformers" target="_blank" rel="noopener">huggingface/transformers</a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>BERT</strong>, or <strong>B</strong>idirectional <strong>E</strong>ncoder <strong>R</strong>epresentations from<br><strong>T</strong>ransformers, is a new method of pre-training language representations which<br>obtains state-of-the-art results on a wide array of Natural Language Processing<br>(NLP) tasks.</p>
 <p>Our academic paper which describes BERT in detail and provides full results on a<br>number of tasks can be found here:<br><a href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener">https://arxiv.org/abs/1810.04805</a>.</p>
 <p>To give a few numbers, here are the results on the<br><a href="https://rajpurkar.github.io/SQuAD-explorer/" target="_blank" rel="noopener">SQuAD v1.1</a> question answering<br>task:</p>
@@ -578,15 +566,6 @@
 <p>Plus many other tasks.</p>
 <p>Moreover, these results were all obtained with almost no task-specific neural<br>network architecture design.</p>
 <p>If you already know what BERT is and you just want to get started, you can<br><a href="#pre-trained-models">download the pre-trained models</a> and<br><a href="#fine-tuning-with-bert">run a state-of-the-art fine-tuning</a> in only a few<br>minutes.</p>
-<h1 id="复现-bert-language-understanding"><a href="#复现-bert-language-understanding" class="headerlink" title="复现 bert_language_understanding"></a><a href="https://github.com/brightmart/bert_language_understanding" target="_blank" rel="noopener">复现 bert_language_understanding</a></h1><blockquote>
-<p>Pre-training of Deep Bidirectional Transformers for Language Understanding</p>
-</blockquote>
-<h1 id="复现-BERT-keras"><a href="#复现-BERT-keras" class="headerlink" title="复现 BERT-keras"></a><a href="https://github.com/Separius/BERT-keras" target="_blank" rel="noopener">复现 BERT-keras</a></h1><blockquote>
-<p>Keras implementation of BERT(Bidirectional Encoder Representations from Transformers)</p>
-</blockquote>
-<h1 id="复现-pytorch-pretrained-BERT"><a href="#复现-pytorch-pretrained-BERT" class="headerlink" title="复现 pytorch-pretrained-BERT"></a><a href="https://github.com/huggingface/pytorch-pretrained-BERT" target="_blank" rel="noopener">复现 pytorch-pretrained-BERT</a></h1><blockquote>
-<p>PyTorch version of Google AI’s BERT model with script to load Google’s pre-trained models.</p>
-</blockquote>
 <h1 id="BERT的数据集-GLUE"><a href="#BERT的数据集-GLUE" class="headerlink" title="BERT的数据集 GLUE"></a><a href="https://arxiv.org/abs/1804.07461v2" target="_blank" rel="noopener">BERT的数据集 GLUE</a></h1><p>GLUE 来自论文 <a href="https://arxiv.org/abs/1804.07461v2" target="_blank" rel="noopener">GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding</a></p>
 <p>摘要</p>
 <blockquote>
@@ -668,6 +647,7 @@
 <p><img src="https://image.jiqizhixin.com/uploads/editor/b69d3462-5c03-435f-bd16-f4119b388661/640.jpeg" alt=""><br>每个单词都会关注该句中所有其它的单词。这可能为每个单词创建一个粗略的上下文语境。</p>
 <h2 id="后BERT时代：15个预训练模型对比分析与关键点探索"><a href="#后BERT时代：15个预训练模型对比分析与关键点探索" class="headerlink" title="后BERT时代：15个预训练模型对比分析与关键点探索"></a>后BERT时代：15个预训练模型对比分析与关键点探索</h2><p>参见 <a href="https://zhuanlan.zhihu.com/p/76912493" target="_blank" rel="noopener">nlp中的预训练语言模型总结(单向模型、BERT系列模型、XLNet)</a></p>
 <p><img src="https://pic3.zhimg.com/80/v2-7734b2580b943573685b9477c2a9e9be_hd.jpg" alt=""></p>
+<p>除了<a href="https://github.com/google-research/bert" target="_blank" rel="noopener">官方复现 google-research bert</a>，就推荐更加方便易用集成了BERT各种改进版本的<a href="https://github.com/huggingface/transformers" target="_blank" rel="noopener">huggingface/transformers</a>。</p>
 
     </div>
 
@@ -790,7 +770,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-论文内容精要"><span class="nav-number">1.</span> <span class="nav-text">BERT 论文内容精要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构"><span class="nav-number">1.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型输入"><span class="nav-number">1.2.</span> <span class="nav-text">模型输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预训练方法"><span class="nav-number">1.3.</span> <span class="nav-text">预训练方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">1.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型分析"><span class="nav-number">1.5.</span> <span class="nav-text">模型分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Pre-training-Tasks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Effect of Pre-training Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Model-Size"><span class="nav-number">1.5.2.</span> <span class="nav-text">Effect of Model Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Number-of-Training-Steps"><span class="nav-number">1.5.3.</span> <span class="nav-text">Effect of Number of Training Steps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature-based-Approach-with-BERT"><span class="nav-number">1.5.4.</span> <span class="nav-text">Feature-based Approach with BERT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">1.6.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-相关资源"><span class="nav-number">2.</span> <span class="nav-text">BERT 相关资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-进一步研究"><span class="nav-number">3.</span> <span class="nav-text">BERT 进一步研究</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-Pre-training-of-Deep-Bidirectional-Transformers-for-Language-Understanding"><span class="nav-number">4.</span> <span class="nav-text">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reddit-讨论"><span class="nav-number">5.</span> <span class="nav-text">Reddit 讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方复现-google-research-bert"><span class="nav-number">6.</span> <span class="nav-text">官方复现 google-research bert</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">6.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-bert-language-understanding"><span class="nav-number">7.</span> <span class="nav-text">复现 bert_language_understanding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-BERT-keras"><span class="nav-number">8.</span> <span class="nav-text">复现 BERT-keras</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#复现-pytorch-pretrained-BERT"><span class="nav-number">9.</span> <span class="nav-text">复现 pytorch-pretrained-BERT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT的数据集-GLUE"><span class="nav-number">10.</span> <span class="nav-text">BERT的数据集 GLUE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-在中文自然语言处理中应用"><span class="nav-number">11.</span> <span class="nav-text">BERT 在中文自然语言处理中应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析BERT中的-Transformer-的注意力机制"><span class="nav-number">12.</span> <span class="nav-text">解析BERT中的 Transformer 的注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力解释"><span class="nav-number">12.1.</span> <span class="nav-text">注意力解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1"><span class="nav-number">12.1.1.</span> <span class="nav-text">2-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-6-11"><span class="nav-number">12.1.2.</span> <span class="nav-text">3-5 6-11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5"><span class="nav-number">12.1.3.</span> <span class="nav-text">4-5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后BERT时代：15个预训练模型对比分析与关键点探索"><span class="nav-number">12.2.</span> <span class="nav-text">后BERT时代：15个预训练模型对比分析与关键点探索</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-论文内容精要"><span class="nav-number">1.</span> <span class="nav-text">BERT 论文内容精要</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构"><span class="nav-number">1.1.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型输入"><span class="nav-number">1.2.</span> <span class="nav-text">模型输入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预训练方法"><span class="nav-number">1.3.</span> <span class="nav-text">预训练方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">1.4.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型分析"><span class="nav-number">1.5.</span> <span class="nav-text">模型分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Pre-training-Tasks"><span class="nav-number">1.5.1.</span> <span class="nav-text">Effect of Pre-training Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Model-Size"><span class="nav-number">1.5.2.</span> <span class="nav-text">Effect of Model Size</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-of-Number-of-Training-Steps"><span class="nav-number">1.5.3.</span> <span class="nav-text">Effect of Number of Training Steps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature-based-Approach-with-BERT"><span class="nav-number">1.5.4.</span> <span class="nav-text">Feature-based Approach with BERT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">1.6.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-相关资源"><span class="nav-number">2.</span> <span class="nav-text">BERT 相关资源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-Pre-training-of-Deep-Bidirectional-Transformers-for-Language-Understanding"><span class="nav-number">3.</span> <span class="nav-text">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reddit-讨论"><span class="nav-number">4.</span> <span class="nav-text">Reddit 讨论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方复现-google-research-bert"><span class="nav-number">5.</span> <span class="nav-text">官方复现 google-research bert</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">5.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT的数据集-GLUE"><span class="nav-number">6.</span> <span class="nav-text">BERT的数据集 GLUE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT-在中文自然语言处理中应用"><span class="nav-number">7.</span> <span class="nav-text">BERT 在中文自然语言处理中应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解析BERT中的-Transformer-的注意力机制"><span class="nav-number">8.</span> <span class="nav-text">解析BERT中的 Transformer 的注意力机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力解释"><span class="nav-number">8.1.</span> <span class="nav-text">注意力解释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1"><span class="nav-number">8.1.1.</span> <span class="nav-text">2-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-6-11"><span class="nav-number">8.1.2.</span> <span class="nav-text">3-5 6-11</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5"><span class="nav-number">8.1.3.</span> <span class="nav-text">4-5</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后BERT时代：15个预训练模型对比分析与关键点探索"><span class="nav-number">8.2.</span> <span class="nav-text">后BERT时代：15个预训练模型对比分析与关键点探索</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -899,7 +879,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 382.9k 字</span>
+  <span class="post-count">全站共 383k 字</span>
 </div>
 
         
