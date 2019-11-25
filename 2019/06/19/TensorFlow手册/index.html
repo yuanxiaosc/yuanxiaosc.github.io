@@ -60,20 +60,20 @@
   };
 </script>
 
-  <meta name="description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作TensorFlow 语言学习    标题 说明     TensorFlow 官方教程    TensorFlow 官方指南    TensorFlow 官方API    TensorFlow-Examples TensorFlow Tutorial and Examples for Beginners   Dee">
+  <meta name="description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作 + TensorFlow Hub使用 + TensorFlow Estimator使用 + Tensorflow Seq2Seq使用">
 <meta name="keywords" content="深度学习框架">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TensorFlow手册">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/06/19/TensorFlow手册/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作TensorFlow 语言学习    标题 说明     TensorFlow 官方教程    TensorFlow 官方指南    TensorFlow 官方API    TensorFlow-Examples TensorFlow Tutorial and Examples for Beginners   Dee">
+<meta property="og:description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作 + TensorFlow Hub使用 + TensorFlow Estimator使用 + Tensorflow Seq2Seq使用">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://camo.githubusercontent.com/0905c7d634421f8aa4ab3ddf19a582572df568e1/68747470733a2f2f7777772e74656e736f72666c6f772e6f72672f696d616765732f74665f6c6f676f5f736f6369616c2e706e67">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/19/TensorFlow手册/output_196_0.png">
-<meta property="og:updated_time" content="2019-11-22T07:18:57.646Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/deep-diver/EN-FR-MLT-tensorflow/master/decoder_shift.png">
+<meta property="og:updated_time" content="2019-11-25T03:09:12.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TensorFlow手册">
-<meta name="twitter:description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作TensorFlow 语言学习    标题 说明     TensorFlow 官方教程    TensorFlow 官方指南    TensorFlow 官方API    TensorFlow-Examples TensorFlow Tutorial and Examples for Beginners   Dee">
+<meta name="twitter:description" content="TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作 + TensorFlow Hub使用 + TensorFlow Estimator使用 + Tensorflow Seq2Seq使用">
 <meta name="twitter:image" content="https://camo.githubusercontent.com/0905c7d634421f8aa4ab3ddf19a582572df568e1/68747470733a2f2f7777772e74656e736f72666c6f772e6f72672f696d616765732f74665f6c6f676f5f736f6369616c2e706e67">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/06/19/TensorFlow手册/">
 
@@ -307,7 +307,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-22 15:18:57" itemprop="dateModified" datetime="2019-11-22T15:18:57+08:00">2019-11-22</time>
+                <time title="修改时间：2019-11-25 11:09:12" itemprop="dateModified" datetime="2019-11-25T11:09:12+08:00">2019-11-25</time>
               </span>
             
           
@@ -317,7 +317,14 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TF/" itemprop="url" rel="index"><span itemprop="name">TF</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Artificial-Intelligence-Navigation/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence Navigation</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Artificial-Intelligence-Navigation/TensorFlow手册/" itemprop="url" rel="index"><span itemprop="name">TensorFlow手册</span></a></span>
 
                 
                 
@@ -336,7 +343,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://camo.githubusercontent.com/0905c7d634421f8aa4ab3ddf19a582572df568e1/68747470733a2f2f7777772e74656e736f72666c6f772e6f72672f696d616765732f74665f6c6f676f5f736f6369616c2e706e67" alt=""></p><p>TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作</p><h1 id="TensorFlow-语言学习"><a href="#TensorFlow-语言学习" class="headerlink" title="TensorFlow 语言学习"></a>TensorFlow 语言学习</h1><div class="table-container">
+        <p><img src="https://camo.githubusercontent.com/0905c7d634421f8aa4ab3ddf19a582572df568e1/68747470733a2f2f7777772e74656e736f72666c6f772e6f72672f696d616765732f74665f6c6f676f5f736f6369616c2e706e67" alt=""></p><p>TensorFlows手册 = TensorFlow 语言学习 + 张量的常用操作 + TensorFlow Hub使用 + TensorFlow Estimator使用 + Tensorflow Seq2Seq使用</p><a id="more"></a>
+
+<h2 id="TensorFlow-语言学习"><a href="#TensorFlow-语言学习" class="headerlink" title="TensorFlow 语言学习"></a>TensorFlow 语言学习</h2><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -371,741 +380,114 @@
 </tr>
 </tbody>
 </table>
-</div><a id="more"></a>
-
-
+</div>
 <hr>
-<h1 id="TensorFlow-张量的常用操作"><a href="#TensorFlow-张量的常用操作" class="headerlink" title="TensorFlow 张量的常用操作"></a>TensorFlow 张量的常用操作</h1><ul>
-<li>数据类型</li>
-<li>创建张量</li>
-<li>索引与切片</li>
-<li>维度变换</li>
-<li>数学运算</li>
-<li>合并与分割</li>
-<li>统计量</li>
-<li>张量比较</li>
-<li>填充与复制</li>
-<li>数据限幅</li>
-<li>数据收集</li>
-<li>掩码</li>
-<li>条件</li>
-<li>数据刷新</li>
-<li>采样</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy  <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
-<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><h3 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h3><ol>
-<li>标量，0维张量，主要用于模型损失和各种测量指标的表示，比如准确率、精度等；</li>
-<li>向量，1维张量，主要用于表示模型权重中的偏置b；</li>
-<li>矩阵，2维张量，主要用于表示线性模型Dense中的权重矩阵W；</li>
-<li>张量，3维张量主要用于序列数据，它的格式是 <code>[batch_size, sequence length, feature length]</code>，比如自然语言处理中句子的嵌入表示 <code>[批量大小，句子长度，词嵌入维度]</code>。4维张量主要用于图像数据，它的格式是 <code>[batch_size, length, width, channel]</code>。更高维度张量较少使用。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=float32, numpy=77.4618&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">0</span>], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(0,), dtype=float32, numpy=array([], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">1</span>], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(1,), dtype=float32, numpy=array([46.338715], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">3</span>], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([97.1354    , 38.38341   ,  0.98683834], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">2</span>, <span class="number">3</span>], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[78.945114, 73.261086, 93.4291  ],
-       [84.61572 , 86.51006 , 66.50997 ]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>], <span class="number">0</span>, <span class="number">100</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3, 2), dtype=float32, numpy=
-array([[[60.545826,  5.906999],
-        [55.62123 , 12.370276],
-        [ 7.853985, 18.358564]],
-
-       [[94.95674 , 76.40199 ],
-        [19.426023, 79.10442 ],
-        [77.84357 , 68.458496]]], dtype=float32)&gt;
-</code></pre><h3 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant(<span class="string">'Hello, Deep Learning.'</span>)</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=string, numpy=b&#39;Hello, Deep Learning.&#39;&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.numpy()</span><br></pre></td></tr></table></figure>
-<pre><code>b&#39;Hello, Deep Learning.&#39;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a.numpy().decode(<span class="string">'utf-8'</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&#39;Hello, Deep Learning.&#39;
-</code></pre><h3 id="布尔类型"><a href="#布尔类型" class="headerlink" title="布尔类型"></a>布尔类型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.constant([<span class="keyword">True</span>, <span class="keyword">False</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2,), dtype=bool, numpy=array([ True, False])&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=bool, numpy=True&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a == <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=bool, numpy=True&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.constant(<span class="keyword">True</span>) == <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=bool, numpy=True&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.Variable([<span class="number">-1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Variable &#39;Variable:0&#39; shape=(3,) dtype=int32, numpy=array([-1,  2,  3], dtype=int32)&gt;
-</code></pre><h2 id="创建张量"><a href="#创建张量" class="headerlink" title="创建张量"></a>创建张量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.convert_to_tensor(np.random.uniform(<span class="number">-3</span>, <span class="number">3</span>, size=(<span class="number">2</span>, <span class="number">3</span>)))</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float64, numpy=
-array([[ 2.76686323, -2.19883937, -1.2089297 ],
-       [-0.47934889,  1.4044582 , -2.10607684]])&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.convert_to_tensor(np.random.uniform(<span class="number">-3</span>, <span class="number">3</span>, size=(<span class="number">2</span>, <span class="number">3</span>)), dtype=tf.float32)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[-0.10371142,  1.0728451 ,  2.79291   ],
-       [ 2.5983481 ,  0.3838961 , -1.0543073 ]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.constant([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], dtype=tf.float64)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 2), dtype=float64, numpy=
-array([[1., 2.],
-       [3., 4.]])&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.zeros(shape=[<span class="number">2</span>, <span class="number">3</span>]), tf.ones(shape=[<span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[0., 0., 0.],
-        [0., 0., 0.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[1., 1., 1.],
-        [1., 1., 1.]], dtype=float32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.zeros_like(tf.constant([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], dtype=tf.float64))</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 2), dtype=float64, numpy=
-array([[0., 0.],
-       [0., 0.]])&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.fill([<span class="number">2</span>, <span class="number">3</span>], <span class="number">3.14</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[3.14, 3.14, 3.14],
-       [3.14, 3.14, 3.14]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.normal([<span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(1, 2), dtype=float32, numpy=array([[-1.3783159, -1.4801787]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.random.uniform([<span class="number">2</span>, <span class="number">3</span>], <span class="number">-5</span>, <span class="number">5</span>, tf.float16)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float16, numpy=
-array([[ 1.4375,  0.3203, -0.508 ],
-       [-1.221 , -3.691 , -0.578 ]], dtype=float16)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.range(<span class="number">1</span>, <span class="number">9</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(4,), dtype=int32, numpy=array([1, 3, 5, 7], dtype=int32)&gt;
-</code></pre><h2 id="索引与切片"><a href="#索引与切片" class="headerlink" title="索引与切片"></a>索引与切片</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = tf.reshape(tf.range(<span class="number">24</span>), shape=[<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3, 4), dtype=int32, numpy=
-array([[[ 0,  1,  2,  3],
-        [ 4,  5,  6,  7],
-        [ 8,  9, 10, 11]],
-
-       [[12, 13, 14, 15],
-        [16, 17, 18, 19],
-        [20, 21, 22, 23]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A[<span class="number">1</span>][<span class="number">2</span>][<span class="number">1</span>], A[<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(), dtype=int32, numpy=21&gt;,
- &lt;tf.Tensor: shape=(), dtype=int32, numpy=21&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A[<span class="number">1</span>][<span class="number">2</span>], A[<span class="number">1</span>, <span class="number">2</span>]</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(4,), dtype=int32, numpy=array([20, 21, 22, 23], dtype=int32)&gt;,
- &lt;tf.Tensor: shape=(4,), dtype=int32, numpy=array([20, 21, 22, 23], dtype=int32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A[ :, :, <span class="number">0</span>:<span class="number">3</span>:<span class="number">2</span>], A[..., <span class="number">0</span>:<span class="number">3</span>:<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(2, 3, 2), dtype=int32, numpy=
- array([[[ 0,  2],
-         [ 4,  6],
-         [ 8, 10]],
-
-        [[12, 14],
-         [16, 18],
-         [20, 22]]], dtype=int32)&gt;,
- &lt;tf.Tensor: shape=(2, 3, 2), dtype=int32, numpy=
- array([[[ 0,  2],
-         [ 4,  6],
-         [ 8, 10]],
-
-        [[12, 14],
-         [16, 18],
-         [20, 22]]], dtype=int32)&gt;)
-</code></pre><h2 id="维度变换"><a href="#维度变换" class="headerlink" title="维度变换"></a>维度变换</h2><h3 id="Reshape"><a href="#Reshape" class="headerlink" title="Reshape"></a>Reshape</h3><p>必须保证张量新视图的维度顺序要和张量的存储顺序一致，否则是没有意义的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.range(<span class="number">96</span>)</span><br><span class="line">x = tf.reshape(x , [<span class="number">2</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 4, 4, 3), dtype=int32, numpy=
-array([[[[ 0,  1,  2],
-         [ 3,  4,  5],
-         [ 6,  7,  8],
-         [ 9, 10, 11]],
-
-        [[12, 13, 14],
-         [15, 16, 17],
-         [18, 19, 20],
-         [21, 22, 23]],
-
-        [[24, 25, 26],
-         [27, 28, 29],
-         [30, 31, 32],
-         [33, 34, 35]],
-
-        [[36, 37, 38],
-         [39, 40, 41],
-         [42, 43, 44],
-         [45, 46, 47]]],
-
-
-       [[[48, 49, 50],
-         [51, 52, 53],
-         [54, 55, 56],
-         [57, 58, 59]],
-
-        [[60, 61, 62],
-         [63, 64, 65],
-         [66, 67, 68],
-         [69, 70, 71]],
-
-        [[72, 73, 74],
-         [75, 76, 77],
-         [78, 79, 80],
-         [81, 82, 83]],
-
-        [[84, 85, 86],
-         [87, 88, 89],
-         [90, 91, 92],
-         [93, 94, 95]]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x.ndim, x.shape</span><br></pre></td></tr></table></figure>
-<pre><code>(4, TensorShape([2, 4, 4, 3]))
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reshape(x, [<span class="number">2</span>, <span class="number">-1</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 48), dtype=int32, numpy=
-array([[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
-        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
-        32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47],
-       [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
-        64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
-        80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95]],
-      dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reshape(x, [<span class="number">2</span>, <span class="number">4</span>, <span class="number">12</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 4, 12), dtype=int32, numpy=
-array([[[ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11],
-        [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-        [24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
-        [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]],
-
-       [[48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59],
-        [60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71],
-        [72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83],
-        [84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reshape(x, [<span class="number">2</span>, <span class="number">-1</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 16, 3), dtype=int32, numpy=
-array([[[ 0,  1,  2],
-        [ 3,  4,  5],
-        [ 6,  7,  8],
-        [ 9, 10, 11],
-        [12, 13, 14],
-        [15, 16, 17],
-        [18, 19, 20],
-        [21, 22, 23],
-        [24, 25, 26],
-        [27, 28, 29],
-        [30, 31, 32],
-        [33, 34, 35],
-        [36, 37, 38],
-        [39, 40, 41],
-        [42, 43, 44],
-        [45, 46, 47]],
-
-       [[48, 49, 50],
-        [51, 52, 53],
-        [54, 55, 56],
-        [57, 58, 59],
-        [60, 61, 62],
-        [63, 64, 65],
-        [66, 67, 68],
-        [69, 70, 71],
-        [72, 73, 74],
-        [75, 76, 77],
-        [78, 79, 80],
-        [81, 82, 83],
-        [84, 85, 86],
-        [87, 88, 89],
-        [90, 91, 92],
-        [93, 94, 95]]], dtype=int32)&gt;
-</code></pre><h3 id="增删维度"><a href="#增删维度" class="headerlink" title="增删维度"></a>增删维度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random.uniform([<span class="number">3</span>, <span class="number">3</span>], minval=<span class="number">0</span>, maxval=<span class="number">255</span>, dtype=tf.int32)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 3), dtype=int32, numpy=
-array([[ 81, 137, 160],
-       [ 12, 198, 133],
-       [ 52,  81,  76]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.expand_dims(x, axis=<span class="number">2</span>)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 3, 1), dtype=int32, numpy=
-array([[[ 81],
-        [137],
-        [160]],
-
-       [[ 12],
-        [198],
-        [133]],
-
-       [[ 52],
-        [ 81],
-        [ 76]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.expand_dims(x, axis=<span class="number">0</span>)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(1, 3, 3, 1), dtype=int32, numpy=
-array([[[[ 81],
-         [137],
-         [160]],
-
-        [[ 12],
-         [198],
-         [133]],
-
-        [[ 52],
-         [ 81],
-         [ 76]]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.squeeze(x)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 3), dtype=int32, numpy=
-array([[ 81, 137, 160],
-       [ 12, 198, 133],
-       [ 52,  81,  76]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.squeeze(x, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 3, 1), dtype=int32, numpy=
-array([[[ 81],
-        [137],
-        [160]],
-
-       [[ 12],
-        [198],
-        [133]],
-
-       [[ 52],
-        [ 81],
-        [ 76]]], dtype=int32)&gt;
-</code></pre><h3 id="Transpose"><a href="#Transpose" class="headerlink" title="Transpose"></a>Transpose</h3><p>改变视图、增删维度都不会影响张量的存储。在实现算法逻辑时，在保持维度顺序不 变的条件下，仅仅改变张量的理解方式是不够的，有时需要直接调整的存储顺序，即交换 维度(Transpose)。通过交换维度，改变了张量的存储顺序，同时也改变了张量的视图。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = tf.reshape(tf.range(<span class="number">2</span>*<span class="number">4</span>*<span class="number">2</span>*<span class="number">3</span>), [<span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 4, 2, 3), dtype=int32, numpy=
-array([[[[ 0,  1,  2],
-         [ 3,  4,  5]],
-
-        [[ 6,  7,  8],
-         [ 9, 10, 11]],
-
-        [[12, 13, 14],
-         [15, 16, 17]],
-
-        [[18, 19, 20],
-         [21, 22, 23]]],
-
-
-       [[[24, 25, 26],
-         [27, 28, 29]],
-
-        [[30, 31, 32],
-         [33, 34, 35]],
-
-        [[36, 37, 38],
-         [39, 40, 41]],
-
-        [[42, 43, 44],
-         [45, 46, 47]]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">B = tf.transpose(A, perm=[<span class="number">0</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line">B</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3, 4, 2), dtype=int32, numpy=
-array([[[[ 0,  3],
-         [ 6,  9],
-         [12, 15],
-         [18, 21]],
-
-        [[ 1,  4],
-         [ 7, 10],
-         [13, 16],
-         [19, 22]],
-
-        [[ 2,  5],
-         [ 8, 11],
-         [14, 17],
-         [20, 23]]],
-
-
-       [[[24, 27],
-         [30, 33],
-         [36, 39],
-         [42, 45]],
-
-        [[25, 28],
-         [31, 34],
-         [37, 40],
-         [43, 46]],
-
-        [[26, 29],
-         [32, 35],
-         [38, 41],
-         [44, 47]]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> A[<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>] == B[<span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="数据复制"><a href="#数据复制" class="headerlink" title="数据复制"></a>数据复制</h3><h3 id="tile"><a href="#tile" class="headerlink" title="tile"></a>tile</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">X = tf.reshape(tf.range(<span class="number">8</span>, dtype=tf.float32), [<span class="number">2</span>, <span class="number">4</span>])</span><br><span class="line">W = tf.ones([<span class="number">4</span>, <span class="number">3</span>], dtype=tf.float32)</span><br><span class="line">b = tf.reshape(tf.range(<span class="number">3</span>, dtype=tf.float32), [<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X, W, b</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(2, 4), dtype=float32, numpy=
- array([[0., 1., 2., 3.],
-        [4., 5., 6., 7.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(4, 3), dtype=float32, numpy=
- array([[1., 1., 1.],
-        [1., 1., 1.],
-        [1., 1., 1.],
-        [1., 1., 1.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([0., 1., 2.], dtype=float32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Y = X@W + b</span><br><span class="line">Y</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[ 6.,  7.,  8.],
-       [22., 23., 24.]], dtype=float32)&gt;
-</code></pre><p>上述加法并没有发生逻辑错误，那么它是怎么实现的呢？这是因为它自动调用 Broadcasting 函数 tf.broadcast_to(x, new_shape)，将 2 者 shape 扩张为相同的[2,3]，即上式可以等效为：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Y1 = X@W + tf.broadcast_to(b, [<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">Y1</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[ 6.,  7.,  8.],
-       [22., 23., 24.]], dtype=float32)&gt;
-</code></pre><p>具体操作如下</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = tf.expand_dims(b, axis=<span class="number">0</span>)</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(1, 3), dtype=float32, numpy=array([[0., 1., 2.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = tf.tile(b, multiples=[<span class="number">2</span>, <span class="number">1</span>])</span><br><span class="line">b</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[0., 1., 2.],
-       [0., 1., 2.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Y2 = X@W + b</span><br><span class="line">Y2</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[ 6.,  7.,  8.],
-       [22., 23., 24.]], dtype=float32)&gt;
-</code></pre><h3 id="broadcast-to"><a href="#broadcast-to" class="headerlink" title="broadcast_to"></a>broadcast_to</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = tf.random.normal([<span class="number">3</span>, <span class="number">1</span>])</span><br><span class="line">A</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 1), dtype=float32, numpy=
-array([[ 0.9846309 ],
-       [-0.34853426],
-       [ 1.4434532 ]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.broadcast_to(A, [<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 2, 3, 2), dtype=float32, numpy=
-array([[[[ 0.9846309 ,  0.9846309 ],
-         [-0.34853426, -0.34853426],
-         [ 1.4434532 ,  1.4434532 ]],
-
-        [[ 0.9846309 ,  0.9846309 ],
-         [-0.34853426, -0.34853426],
-         [ 1.4434532 ,  1.4434532 ]]],
-
-
-       [[[ 0.9846309 ,  0.9846309 ],
-         [-0.34853426, -0.34853426],
-         [ 1.4434532 ,  1.4434532 ]],
-
-        [[ 0.9846309 ,  0.9846309 ],
-         [-0.34853426, -0.34853426],
-         [ 1.4434532 ,  1.4434532 ]]]], dtype=float32)&gt;
-</code></pre><h2 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">X = tf.ones([<span class="number">2</span>, <span class="number">3</span>], tf.float32)</span><br><span class="line">X</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[1., 1., 1.],
-       [1., 1., 1.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X + X, X - X, X * X, X / X</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[2., 2., 2.],
-        [2., 2., 2.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[0., 0., 0.],
-        [0., 0., 0.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[1., 1., 1.],
-        [1., 1., 1.]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
- array([[1., 1., 1.],
-        [1., 1., 1.]], dtype=float32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X // X</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[1., 1., 1.],
-       [1., 1., 1.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X % X</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[0., 0., 0.],
-       [0., 0., 0.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.cast(tf.range(<span class="number">1</span>, <span class="number">4</span>), tf.float32)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([1., 2., 3.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.pow(x, <span class="number">3</span>), x**<span class="number">3</span></span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([ 1.,  8., 27.], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([ 1.,  8., 27.], dtype=float32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.square(x)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([1., 4., 9.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.sqrt(x)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([1.       , 1.4142135, 1.7320508], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.math.log(x)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3,), dtype=float32, numpy=array([0.       , 0.6931472, 1.0986123], dtype=float32)&gt;
-</code></pre><h3 id="矩阵相乘"><a href="#矩阵相乘" class="headerlink" title="矩阵相乘"></a>矩阵相乘</h3><p>通过@运算符可以方便的实现矩阵相乘，还可以通过 tf.matmul(a, b)实现。需要注意的是，TensorFlow 中的矩阵相乘可以使用批量方式，也就是张量 a,b 的维度数可以大于 2。当张量 a,b 维度数大于 2 时，TensorFlow 会选择 a,b 的最后两个维度进行矩阵相乘，前面所有的维度都视作 Batch 维 度。根据矩阵相乘的定义，a 和 b 能够矩阵相乘的条件是，a 的倒数第一个维度长度(列)和 b 的倒数第二个维度长度(行)必须相等。比如张量 a shape:[4,3,28,32]可以与张量 b shape:[4,3,32,2]进行矩阵相乘：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">100</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">2</span>, <span class="number">3</span>, <span class="number">100</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = tf.matmul(a, b)</span><br><span class="line">c.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([2, 3, 3, 2])
-</code></pre><p>矩阵相乘函数支持自动Broadcasting 机制：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b2 = tf.random.normal([<span class="number">100</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c2 = a @ b2</span><br><span class="line">c2.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([2, 3, 3, 2])
-</code></pre><h2 id="合并与分割"><a href="#合并与分割" class="headerlink" title="合并与分割"></a>合并与分割</h2><p>张量的合并可以使用拼接(Concatenate)和堆叠 (Stack)操作实现，拼接并不会产生新的维度，而堆叠会创建新维度。选择使用拼接还是堆叠操作来合并张量，取决于具体的场景是否需要创建新维度。</p>
-<h3 id="合并-拼接"><a href="#合并-拼接" class="headerlink" title="合并-拼接"></a>合并-拼接</h3><p>合并是指将多个张量在某个维度上合并为一个张量。以某学校班级成绩册数据为例， 设张量 A 保存了某学校 1-4 号班级的成绩册，每个班级 35 个学生，共 8 门科目，则张量 A 的 shape 为：[4,35,8]；同样的方式，张量 B 保存了剩下的 6 个班级的成绩册，shape 为 [6,35,8]。通过合并 2 个成绩册，便可得到学校所有班级的成绩册张量 C，shape 应为 [10,35,8]。这就是张量合并的意义所在。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">4</span>, <span class="number">35</span>, <span class="number">8</span>]) <span class="comment"># 模拟成绩册 A</span></span><br><span class="line">b = tf.random.normal([<span class="number">6</span>, <span class="number">35</span>, <span class="number">8</span>]) <span class="comment"># 模拟成绩册 B</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = tf.concat([a, b], axis=<span class="number">0</span>) <span class="comment"># 合并成绩册</span></span><br><span class="line">c.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([10, 35, 8])
-</code></pre><p>除了可以在班级维度上进行合并，还可以在其他维度上合并张量。考虑张量 A 保存了 所有班级所有学生的前 4 门科目成绩，shape 为[10,35,4]，张量 B 保存了剩下的 4 门科目 成绩，shape 为[10,35,4]，则可以合并 shape 为[10,35,8]的总成绩册张量：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">10</span>, <span class="number">35</span>, <span class="number">4</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">10</span>, <span class="number">35</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = tf.concat([a, b], axis=<span class="number">2</span>) <span class="comment"># 在科目维度拼接</span></span><br><span class="line">c.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([10, 35, 8])
-</code></pre><h3 id="合并-堆叠"><a href="#合并-堆叠" class="headerlink" title="合并-堆叠"></a>合并-堆叠</h3><p>堆叠 tf.concat 直接在现有维度上面合并数据，并不会创建新的维度。如果在合并数据 时，希望创建一个新的维度，则需要使用 tf.stack 操作。考虑张量 A 保存了某个班级的成 绩册，shape 为[35,8]，张量 B 保存了另一个班级的成绩册，shape 为[35,8]。合并这 2 个班 级的数据时，需要创建一个新维度，定义为班级维度，新维度可以选择放置在任意位置， 一般根据大小维度的经验法则，将较大概念的班级维度放置在学生维度之前，则合并后的 张量的新 shape 应为[2,35,8]。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br><span class="line">b = tf.random.normal([<span class="number">35</span>, <span class="number">8</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = tf.stack([a, b], axis=<span class="number">0</span>) <span class="comment"># 堆叠合并为 2个班级</span></span><br><span class="line">c.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([2, 35, 8])
-</code></pre><p>同样可以选择在其他位置插入新维度，如在最末尾插入：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c2 = tf.stack([a, b], axis=<span class="number">2</span>) <span class="comment"># 堆叠合并为 2个班级</span></span><br><span class="line">c2.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([35, 8, 2])
-</code></pre><p>此时班级的维度在 axis=2 轴上面，理解时也需要按着最新的维度顺序去理解数据。若选择 使用 tf.concat 上述成绩单，则可以合并为：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c3 = tf.concat([a, b], axis=<span class="number">0</span>) <span class="comment"># 拼接方式合并，没有 2个班级的概念</span></span><br><span class="line">c3.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([70, 8])
-</code></pre><p>tf.concat 也可以顺利合并数据，但是在理解时，需要按着前 35 个学生来自第一个班级，后 35 个学生来自第二个班级的方式。在这里，明显通过 tf.stack 方式创建新维度的方式更合 理，得到的 shape 为[2,35,8]的张量也更容易理解。</p>
-<h3 id="分割"><a href="#分割" class="headerlink" title="分割"></a>分割</h3><p>通过 tf.split(x, axis, num_or_size_splits)可以完成张量的分割操作，其中</p>
+<h2 id="TensorFlow-张量的常用操作"><a href="#TensorFlow-张量的常用操作" class="headerlink" title="TensorFlow 张量的常用操作"></a>TensorFlow 张量的常用操作</h2><blockquote>
+<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/06/19/TensorFlow手册/TensorFlow张量的常用操作.ipynb" target="_blank" rel="noopener">TensorFlow张量的常用操作.ipynb</a>深入学习</p>
+</blockquote>
+<p>下面是该文件的主要内容。</p>
 <ul>
-<li>x：待分割张量</li>
-<li>axis：分割的维度索引号</li>
-<li>num_or_size_splits：切割方案。当 num_or_size_splits 为单个数值时，如 10，表示切割 为 10 份；当 num_or_size_splits 为 List 时，每个元素表示每份的长度，如[2,4,2,2]表示 切割为 4 份，每份的长度分别为 2,4,2,2</li>
+<li>数据类型：<code>dtype=int32, float32, string, bool</code></li>
+<li>创建张量：<code>tf.convert_to_tensor, tf.constant, tf.zeros, tf.ones, tf.zeros_like, tf.fill, tf.random.normal, tf.random.uniform, tf.range</code></li>
+<li>索引与切片：<code>A[1][2][1], A[1, 2, 1], A[ :, :, 0:3:2], A[..., 0:3:2]</code></li>
+<li>维度变换：<code>tf.reshape, tf.expand_dims, tf.squeeze, tf.transpose</code></li>
+<li>数据复制：<code>tf.tile</code></li>
+<li>数学运算：<code>+, -, *, /, //, %, **, tf.pow, tf.square, tf.sqrt, tf.math.log, tf.matmul, @</code></li>
+<li>合并与分割：<code>tf.concat, tf.stack, tf.split, tf.unstack</code></li>
+<li>统计量：<code>tf.norm, tf.reduce_max min mean sum, tf.argmax, tf.argmin</code></li>
+<li>张量比较：<code>tf.equal</code></li>
+<li>填充与复制：<code>tf.pad, tf.keras.preprocessing.sequence.pad_sequences, tf.tile</code></li>
+<li>数据限幅：<code>tf.maximum, tf.minimum, tf.clip_by_value</code></li>
+<li>数据收集：<code>tf.gather, tf.gather_nd</code></li>
+<li>掩码：<code>tf.boolean_mask</code></li>
+<li>条件：<code>tf.where</code></li>
+<li>数据刷新：<code>tf.scatter_nd</code></li>
+<li>采样：<code>tf.meshgrid</code></li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random.normal([<span class="number">10</span>,<span class="number">35</span>,<span class="number">8</span>])</span><br><span class="line"><span class="comment"># 等长切割</span></span><br><span class="line">result = tf.split(x, axis=<span class="number">0</span>, num_or_size_splits=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">len(result), type(result)</span><br></pre></td></tr></table></figure>
-<pre><code>(10, list)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result[<span class="number">0</span>].shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([1, 35, 8])
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自定义长度的切割</span></span><br><span class="line">result = tf.split(x, axis=<span class="number">0</span>, num_or_size_splits=[<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">len(result), type(result)</span><br></pre></td></tr></table></figure>
-<pre><code>(4, list)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result[<span class="number">0</span>].shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([4, 35, 8])
-</code></pre><p>特别地，如果希望在某个维度上全部按长度为  1 的方式分割，还可以直接使用 tf.unstack(x, axis)。这种方式是 tf.split 的一种特殊情况，切割长度固定为 1，只需要指定切割维度即 可。例如，将总成绩册张量在班级维度进行 unstack：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = tf.unstack(x,axis=<span class="number">0</span>) <span class="comment"># Unstack为长度为 1</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">len(result), type(result)</span><br></pre></td></tr></table></figure>
-<pre><code>(10, list)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result[<span class="number">0</span>].shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([35, 8])
-</code></pre><p>可以看到，通过 tf.unstack 切割后，shape 变为[35,8]，即班级维度消失了，这也是与 tf.split 区别之处。</p>
-<h2 id="统计量"><a href="#统计量" class="headerlink" title="统计量"></a>统计量</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = tf.reshape(tf.range(<span class="number">6</span>), [<span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">x = tf.cast(x, tf.float32)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=float32, numpy=
-array([[0., 1., 2.],
-       [3., 4., 5.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.norm(x, ord=<span class="number">1</span>) <span class="comment"># 计算 L1范数</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=float32, numpy=15.0&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.norm(x, ord=<span class="number">2</span>) <span class="comment"># 计算 L2范数</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=float32, numpy=7.4161983&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">tf.norm(x, ord=np.inf) <span class="comment"># 计算∞范数</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(), dtype=float32, numpy=5.0&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reduce_max(x, axis=<span class="number">1</span>) <span class="comment"># 统计概率维度上的最大值</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([2., 5.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reduce_min(x, axis=<span class="number">1</span>) <span class="comment"># 统计概率维度上的最小值</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([0., 3.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reduce_mean(x, axis=<span class="number">1</span>) <span class="comment"># 统计概率维度上的均值</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([1., 4.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.reduce_sum(x, axis=<span class="number">-1</span>) <span class="comment"># 求和</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([ 3., 12.], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 当不指定 axis 参数时，tf.reduce_*函数会求解出全局元素的最大、最小、均值、和：</span></span><br><span class="line">tf.reduce_max(x), tf.reduce_min(x), tf.reduce_mean(x), tf.reduce_sum(x)</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(), dtype=float32, numpy=5.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=0.0&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=2.5&gt;,
- &lt;tf.Tensor: shape=(), dtype=float32, numpy=15.0&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过 tf.argmax(x, axis)，tf.argmin(x, axis)可以求解在 axis 轴上，x 的最大值、最小值所 在的索引号：</span></span><br><span class="line">tf.argmax(x, axis=<span class="number">1</span>), tf.argmin(x, axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(2,), dtype=int64, numpy=array([2, 2])&gt;,
- &lt;tf.Tensor: shape=(2,), dtype=int64, numpy=array([0, 0])&gt;)
-</code></pre><h2 id="张量比较"><a href="#张量比较" class="headerlink" title="张量比较"></a>张量比较</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tf.equal()函数返回布尔型的张量比较结果。</span></span><br><span class="line">x = tf.reshape(tf.range(<span class="number">6</span>), [<span class="number">2</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.equal(x, x)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 3), dtype=bool, numpy=
-array([[ True,  True,  True],
-       [ True,  True,  True]])&gt;
-</code></pre><p>类似的函数还有 tf.math.greater、less、greater_wqual、less_equal、not_equal、is_nan等等</p>
-<h2 id="填充与复制"><a href="#填充与复制" class="headerlink" title="填充与复制"></a>填充与复制</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.constant([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])</span><br><span class="line">b = tf.constant([<span class="number">7</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">6</span>])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b_pad = tf.pad(b, [[<span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line">b_pad</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(6,), dtype=int32, numpy=array([0, 7, 8, 1, 6, 0], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">c = tf.stack([a, b_pad], axis=<span class="number">0</span>) <span class="comment"># 合并</span></span><br><span class="line">c</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 6), dtype=int32, numpy=
-array([[1, 2, 3, 4, 5, 6],
-       [0, 7, 8, 1, 6, 0]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.pad(c, [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>]])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(5, 9), dtype=int32, numpy=
-array([[0, 0, 0, 0, 0, 0, 0, 0, 0],
-       [0, 1, 2, 3, 4, 5, 6, 0, 0],
-       [0, 0, 7, 8, 1, 6, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0, 0, 0, 0, 0]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.pad(c, [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>]], constant_values=<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(5, 9), dtype=int32, numpy=
-array([[7, 7, 7, 7, 7, 7, 7, 7, 7],
-       [7, 1, 2, 3, 4, 5, 6, 7, 7],
-       [7, 0, 7, 8, 1, 6, 0, 7, 7],
-       [7, 7, 7, 7, 7, 7, 7, 7, 7],
-       [7, 7, 7, 7, 7, 7, 7, 7, 7]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">batch_image = tf.random.normal([<span class="number">4</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line">batch_image.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([4, 28, 28, 1])
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">batch_image_pad = tf.pad(batch_image, [[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">2</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">2</span>], [<span class="number">0</span>, <span class="number">0</span>]], constant_values=<span class="number">0</span>)</span><br><span class="line">batch_image_pad.shape</span><br></pre></td></tr></table></figure>
-<pre><code>TensorShape([4, 32, 32, 1])
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">batch_sentence_ids = [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], [<span class="number">1</span>,], [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]]</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">batch_sentence_ids_pad = tf.keras.preprocessing.sequence.pad_sequences(</span><br><span class="line">    batch_sentence_ids , dtype=<span class="string">'int32'</span>, maxlen=<span class="number">7</span>, truncating=<span class="string">'post'</span>, padding=<span class="string">'post'</span>, value=<span class="number">7</span>)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">batch_sentence_ids_pad</span><br></pre></td></tr></table></figure>
-<pre><code>array([[1, 2, 7, 7, 7, 7, 7],
-       [1, 2, 3, 4, 7, 7, 7],
-       [1, 7, 7, 7, 7, 7, 7],
-       [1, 2, 3, 4, 5, 7, 7]], dtype=int32)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.constant([[[<span class="number">0.1</span>, <span class="number">0.2</span>], [<span class="number">0.3</span>, <span class="number">0.4</span>]], [[<span class="number">0.5</span>, <span class="number">0.6</span>], [<span class="number">0.7</span>, <span class="number">0.8</span>]]])</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 2, 2), dtype=float32, numpy=
-array([[[0.1, 0.2],
-        [0.3, 0.4]],
-
-       [[0.5, 0.6],
-        [0.7, 0.8]]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.tile(x, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment"># 数据复制</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 4, 6), dtype=float32, numpy=
-array([[[0.1, 0.2, 0.1, 0.2, 0.1, 0.2],
-        [0.3, 0.4, 0.3, 0.4, 0.3, 0.4],
-        [0.1, 0.2, 0.1, 0.2, 0.1, 0.2],
-        [0.3, 0.4, 0.3, 0.4, 0.3, 0.4]],
-
-       [[0.5, 0.6, 0.5, 0.6, 0.5, 0.6],
-        [0.7, 0.8, 0.7, 0.8, 0.7, 0.8],
-        [0.5, 0.6, 0.5, 0.6, 0.5, 0.6],
-        [0.7, 0.8, 0.7, 0.8, 0.7, 0.8]]], dtype=float32)&gt;
-</code></pre><h2 id="数据限幅"><a href="#数据限幅" class="headerlink" title="数据限幅"></a>数据限幅</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.range(<span class="number">9</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(9,), dtype=int32, numpy=array([0, 1, 2, 3, 4, 5, 6, 7, 8], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.maximum(tf.range(<span class="number">9</span>), <span class="number">2</span>) <span class="comment"># 下限幅 2</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(9,), dtype=int32, numpy=array([2, 2, 2, 3, 4, 5, 6, 7, 8], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.minimum(tf.range(<span class="number">9</span>), <span class="number">5</span>) <span class="comment"># 上限幅 5</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(9,), dtype=int32, numpy=array([0, 1, 2, 3, 4, 5, 5, 5, 5], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.minimum(tf.maximum(tf.range(<span class="number">9</span>), <span class="number">2</span>), <span class="number">5</span>) <span class="comment"># 限幅为区间[2, 5]</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(9,), dtype=int32, numpy=array([2, 2, 2, 3, 4, 5, 5, 5, 5], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.clip_by_value(tf.range(<span class="number">9</span>), <span class="number">2</span>, <span class="number">5</span>) <span class="comment"># 限幅为区间[2, 5]</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(9,), dtype=int32, numpy=array([2, 2, 2, 3, 4, 5, 5, 5, 5], dtype=int32)&gt;
-</code></pre><h2 id="数据收集"><a href="#数据收集" class="headerlink" title="数据收集"></a>数据收集</h2><h3 id="tf-gather"><a href="#tf-gather" class="headerlink" title="tf.gather"></a>tf.gather</h3><p>tf.gather 可以实现根据索引号收集数据的目的，比如应用在词嵌入中。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">word_embeddings = tf.random.uniform(shape=[<span class="number">5</span>, <span class="number">2</span>], dtype=tf.float32)</span><br><span class="line">input_ids = tf.constant([[<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>]])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">word_embeddings, input_ids</span><br></pre></td></tr></table></figure>
-<pre><code>(&lt;tf.Tensor: shape=(5, 2), dtype=float32, numpy=
- array([[0.4083922 , 0.8538009 ],
-        [0.08489025, 0.9585296 ],
-        [0.35605466, 0.01085508],
-        [0.6752521 , 0.36138785],
-        [0.4922322 , 0.7534534 ]], dtype=float32)&gt;,
- &lt;tf.Tensor: shape=(2, 4), dtype=int32, numpy=
- array([[2, 3, 3, 1],
-        [3, 2, 1, 3]], dtype=int32)&gt;)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">inputs_embeds = tf.gather(word_embeddings, input_ids)</span><br><span class="line">inputs_embeds</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 4, 2), dtype=float32, numpy=
-array([[[0.35605466, 0.01085508],
-        [0.6752521 , 0.36138785],
-        [0.6752521 , 0.36138785],
-        [0.08489025, 0.9585296 ]],
-
-       [[0.6752521 , 0.36138785],
-        [0.35605466, 0.01085508],
-        [0.08489025, 0.9585296 ],
-        [0.6752521 , 0.36138785]]], dtype=float32)&gt;
-</code></pre><h3 id="tf-gather-nd"><a href="#tf-gather-nd" class="headerlink" title="tf.gather_nd"></a>tf.gather_nd</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random.uniform(shape=[<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>], minval=<span class="number">0</span>, maxval=<span class="number">100</span>, dtype=tf.int32)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 2, 5), dtype=int32, numpy=
-array([[[62, 24, 52, 40, 77],
-        [70, 90, 36, 51, 72]],
-
-       [[87, 80,  0, 68, 57],
-        [ 6,  8, 13, 98, 27]],
-
-       [[77, 30, 49, 39, 79],
-        [10, 53, 73, 77, 18]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.stack([x[<span class="number">0</span>, <span class="number">0</span>], x[<span class="number">1</span>, <span class="number">1</span>], x[<span class="number">2</span>, <span class="number">1</span>]], axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 5), dtype=int32, numpy=
-array([[62, 24, 52, 40, 77],
-       [ 6,  8, 13, 98, 27],
-       [10, 53, 73, 77, 18]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.gather_nd(x, [[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">1</span>]])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 5), dtype=int32, numpy=
-array([[62, 24, 52, 40, 77],
-       [ 6,  8, 13, 98, 27],
-       [10, 53, 73, 77, 18]], dtype=int32)&gt;
-</code></pre><h2 id="掩码"><a href="#掩码" class="headerlink" title="掩码"></a>掩码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = tf.random.uniform(shape=[<span class="number">3</span>, <span class="number">2</span>, <span class="number">5</span>], minval=<span class="number">0</span>, maxval=<span class="number">100</span>, dtype=tf.int32)</span><br><span class="line">x</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 2, 5), dtype=int32, numpy=
-array([[[48,  5, 19, 51, 68],
-        [32, 41, 90, 82, 54]],
-
-       [[18, 59, 59, 83, 24],
-        [95, 50, 92, 12, 79]],
-
-       [[83, 41, 44, 23, 26],
-        [46, 84, 52, 72, 23]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.boolean_mask(x, mask=[<span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">True</span>], axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(2, 2, 5), dtype=int32, numpy=
-array([[[48,  5, 19, 51, 68],
-        [32, 41, 90, 82, 54]],
-
-       [[83, 41, 44, 23, 26],
-        [46, 84, 52, 72, 23]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.boolean_mask(x, mask=[<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>], axis=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 2, 3), dtype=int32, numpy=
-array([[[48,  5, 19],
-        [32, 41, 90]],
-
-       [[18, 59, 59],
-        [95, 50, 92]],
-
-       [[83, 41, 44],
-        [46, 84, 52]]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.boolean_mask(x, mask=[[<span class="keyword">True</span>, <span class="keyword">True</span>], [<span class="keyword">False</span>, <span class="keyword">True</span>], [<span class="keyword">False</span>, <span class="keyword">True</span>]])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(4, 5), dtype=int32, numpy=
-array([[48,  5, 19, 51, 68],
-       [32, 41, 90, 82, 54],
-       [95, 50, 92, 12, 79],
-       [46, 84, 52, 72, 23]], dtype=int32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tf.boolean_mask(x, mask=[[[<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>], [<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>]],</span><br><span class="line">                         [[<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>], [<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>]],</span><br><span class="line">                         [[<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>], [<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>]]])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(18,), dtype=int32, numpy=
-array([48,  5, 19, 32, 41, 90, 18, 59, 59, 95, 50, 92, 83, 41, 44, 46, 84,
-       52], dtype=int32)&gt;
-</code></pre><h2 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a = tf.ones([<span class="number">3</span>, <span class="number">5</span>]) <span class="comment"># 构造 a为全 1</span></span><br><span class="line">b = tf.zeros([<span class="number">3</span>, <span class="number">5</span>]) <span class="comment"># 构造 b为全 0</span></span><br><span class="line"><span class="comment"># 构造采样条件</span></span><br><span class="line">cond = tf.constant([[<span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">True</span>], [<span class="keyword">False</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">True</span>], [<span class="keyword">True</span>, <span class="keyword">True</span>, <span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">True</span>]])</span><br><span class="line">tf.where(cond, a, b) <span class="comment"># 根据条件从 a,b中采样</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 5), dtype=float32, numpy=
-array([[1., 0., 0., 0., 1.],
-       [0., 1., 0., 0., 1.],
-       [1., 1., 0., 0., 1.]], dtype=float32)&gt;
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.where(cond) <span class="comment"># 获取 cond中为 True的元素索引</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(7, 2), dtype=int64, numpy=
-array([[0, 0],
-       [0, 4],
-       [1, 1],
-       [1, 4],
-       [2, 0],
-       [2, 1],
-       [2, 4]])&gt;
-</code></pre><h3 id="提取张量中所有正数的数据和索引"><a href="#提取张量中所有正数的数据和索引" class="headerlink" title="提取张量中所有正数的数据和索引"></a>提取张量中所有正数的数据和索引</h3><p>那么这有什么用途呢？考虑一个例子，我们需要提取张量中所有正数的数据和索引。首先 构造张量 a，并通过比较运算得到所有正数的位置掩码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a = tf.random.normal([<span class="number">3</span>, <span class="number">5</span>]) <span class="comment"># 构造 a</span></span><br><span class="line">a</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 5), dtype=float32, numpy=
-array([[ 2.362503  , -1.5162702 , -0.32195687, -1.5679237 , -1.3995572 ],
-       [ 1.6081499 ,  0.95245385, -0.2812779 ,  0.4877663 , -0.28087232],
-       [-1.1306877 ,  0.47381964, -1.8111646 , -1.503956  , -0.92814565]],
-      dtype=float32)&gt;
-</code></pre><p>通过比较运算，得到正数的掩码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mask = a &gt; <span class="number">0</span></span><br><span class="line">mask</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(3, 5), dtype=bool, numpy=
-array([[ True, False, False, False, False],
-       [ True,  True, False,  True, False],
-       [False,  True, False, False, False]])&gt;
-</code></pre><p>通过 tf.where 提取此掩码处 True 元素的索引：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">indices = tf.where(mask) <span class="comment"># 提取所有大于 0的元素索引</span></span><br><span class="line">indices</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(5, 2), dtype=int64, numpy=
-array([[0, 0],
-       [1, 0],
-       [1, 1],
-       [1, 3],
-       [2, 1]])&gt;
-</code></pre><p>拿到索引后，通过  tf.gather_nd 即可恢复出所有正数的元素：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf.gather_nd(a, indices) <span class="comment"># 提取正数的元素值</span></span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(5,), dtype=float32, numpy=
-array([2.362503  , 1.6081499 , 0.95245385, 0.4877663 , 0.47381964],
-      dtype=float32)&gt;
-</code></pre><h2 id="数据刷新"><a href="#数据刷新" class="headerlink" title="数据刷新"></a>数据刷新</h2><p>通过 tf.scatter_nd(indices, updates, shape)可以高效地刷新张量的部分数据，但是只能在 全 0 张量的白板上面刷新。白板的形状表示为 shape 参数，需要 刷新的数据索引为 indices，新数据为 updates，其中每个需要刷新的数据对应在白板中的位 置，根据 indices 给出的索引位置将 updates 中新的数据依次写入白板中，并返回更新后的 白板张量。</p>
-<h3 id="向量数据刷新"><a href="#向量数据刷新" class="headerlink" title="向量数据刷新"></a>向量数据刷新</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在长度为 8 的白板上，写入了对应位置的数据，一个 4 个新数据被刷新。</span></span><br><span class="line"><span class="comment"># 构造需要刷新数据的位置</span></span><br><span class="line">indices = tf.constant([[<span class="number">4</span>], [<span class="number">3</span>], [<span class="number">1</span>], [<span class="number">7</span>]])</span><br><span class="line"><span class="comment"># 构造需要写入的数据</span></span><br><span class="line">updates = tf.constant([<span class="number">4.4</span>, <span class="number">3.3</span>, <span class="number">1.1</span>, <span class="number">7.7</span>])</span><br><span class="line"><span class="comment"># 在长度为8的全0向量上根据 indices写入 updates</span></span><br><span class="line">tf.scatter_nd(indices, updates, [<span class="number">8</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(8,), dtype=float32, numpy=array([0. , 1.1, 0. , 3.3, 4.4, 0. , 0. , 7.7], dtype=float32)&gt;
-</code></pre><h3 id="矩阵数据刷新"><a href="#矩阵数据刷新" class="headerlink" title="矩阵数据刷新"></a>矩阵数据刷新</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构造需要刷新数据的位置</span></span><br><span class="line">indices = tf.constant([[<span class="number">1</span>], [<span class="number">3</span>]])</span><br><span class="line"><span class="comment"># 构造写入数据</span></span><br><span class="line">updates = tf.constant([[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])</span><br><span class="line"><span class="comment"># 在 shape为[5,4]白板上根据 indices写入 updates</span></span><br><span class="line">tf.scatter_nd(indices, updates, [<span class="number">5</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(5, 4), dtype=int32, numpy=
-array([[0, 0, 0, 0],
-       [3, 3, 3, 3],
-       [0, 0, 0, 0],
-       [1, 1, 1, 1],
-       [0, 0, 0, 0]], dtype=int32)&gt;
-</code></pre><h3 id="3维张量数据刷新"><a href="#3维张量数据刷新" class="headerlink" title="3维张量数据刷新"></a>3维张量数据刷新</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># 构造写入位置</span></span><br><span class="line">indices = tf.constant([[<span class="number">1</span>], [<span class="number">3</span>]])</span><br><span class="line"><span class="comment"># 构造写入数据</span></span><br><span class="line">updates = tf.constant([</span><br><span class="line">[[<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>,<span class="number">5</span>], [<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">6</span>], [<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>,<span class="number">7</span>], [<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>]],</span><br><span class="line">[[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>], [<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>], [<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">3</span>], [<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>,<span class="number">4</span>]]</span><br><span class="line">])</span><br><span class="line"><span class="comment"># 在 shape为[4,4,4]白板上根据 indices写入 updates，</span></span><br><span class="line"><span class="comment"># 可以看到，数据被刷新到第 2,4 个通道特征图上。</span></span><br><span class="line">tf.scatter_nd(indices,updates,[<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>&lt;tf.Tensor: shape=(4, 4, 4), dtype=int32, numpy=
-array([[[0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]],
-
-       [[5, 5, 5, 5],
-        [6, 6, 6, 6],
-        [7, 7, 7, 7],
-        [8, 8, 8, 8]],
-
-       [[0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]],
-
-       [[1, 1, 1, 1],
-        [2, 2, 2, 2],
-        [3, 3, 3, 3],
-        [4, 4, 4, 4]]], dtype=int32)&gt;
-</code></pre><h2 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h2><p>通过 tf.meshgrid 可以方便地生成二维网格采样点坐标，方便可视化等应用场合。考虑 2 个自变量 x,y 的 Sinc 函数表达式为：</p>
-<script type="math/tex; mode=display">z = \frac {sin(x^2 + y^2)}{x^2 + y^2}</script><p>如果需要绘制函数在𝑥 ∈ [−8,8], 𝑦 ∈ [−8,8]区间的 Sinc 函数的 3D 曲面，则 首先需要生成 x,y 的网格点坐标{(𝑥, 𝑦)}，这样才能通过 Sinc 函数的表达式计算函数在每个 (𝑥, 𝑦)位置的输出值 z。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = tf.linspace(<span class="number">-8.</span>, <span class="number">8</span>, <span class="number">50</span>) <span class="comment"># 设置 x坐标的间隔</span></span><br><span class="line">y = tf.linspace(<span class="number">-8.</span>, <span class="number">8</span>, <span class="number">100</span>) <span class="comment"># 设置 y坐标的间隔</span></span><br><span class="line">x, y = tf.meshgrid(x, y) <span class="comment"># 生成网格点，并拆分后返回</span></span><br><span class="line">x.shape, y.shape <span class="comment"># 打印拆分后的所有点的  x,y坐标张量 shape</span></span><br></pre></td></tr></table></figure>
-<pre><code>(TensorShape([100, 50]), TensorShape([100, 50]))
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">z = tf.sqrt(x**<span class="number">2</span>+y**<span class="number">2</span>)</span><br><span class="line">z = tf.sin(z)/z <span class="comment"># sinc函数实现</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> mpl_toolkits.mplot3d <span class="keyword">import</span> Axes3D</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fig = plt.figure()</span><br><span class="line">ax = Axes3D(fig)</span><br><span class="line"><span class="comment"># 根据网格点绘制 sinc函数 3D曲面</span></span><br><span class="line">ax.contour3D(x.numpy(), y.numpy(), z.numpy(), <span class="number">50</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/06/19/TensorFlow手册/output_196_0.png" alt="png"></p>
-<hr>
+<h2 id="TensorFlow-Hub使用"><a href="#TensorFlow-Hub使用" class="headerlink" title="TensorFlow Hub使用"></a>TensorFlow Hub使用</h2><p>文章 <a href="https://medium.com/tensorflow/building-a-text-classification-model-with-tensorflow-hub-and-estimators-3169e7aa568" target="_blank" rel="noopener">Building a text classification model with TensorFlow Hub and Estimators</a> | 代码 <a href="https://github.com/tensorflow/workshops/tree/master/extras/tfhub-text" target="_blank" rel="noopener">tfhub-text Code</a></p>
+<h2 id="TensorFlow-Estimator使用"><a href="#TensorFlow-Estimator使用" class="headerlink" title="TensorFlow Estimator使用"></a>TensorFlow Estimator使用</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>标题</th>
+<th>说明</th>
+<th>附加</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/GoogleCloudPlatform/tf-estimator-tutorials" target="_blank" rel="noopener">tf-estimator-tutorials</a></td>
+<td>Google Cloud Platform 官方教程</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/tensorflow/estimator" target="_blank" rel="noopener">TensorFlow Estimator</a></td>
+<td>TensorFlow Estimator 源代码</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/guillaumegenthial/tf_ner" target="_blank" rel="noopener">tf_ner</a></td>
+<td>使用tf.estimator和tf.data的简单高效的NER模型的Tensorflow实现</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://github.com/eisenjulian/nlp_estimator_tutorial" target="_blank" rel="noopener">nlp_estimator_tutorial</a></td>
+<td>关于使用TensorFlow Estimator框架进行文本分类的教育材料</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="My-Code-TensorFlow-iris-tfrecord-estimator"><a href="#My-Code-TensorFlow-iris-tfrecord-estimator" class="headerlink" title="My Code TensorFlow_iris_tfrecord_estimator"></a>My Code <a href="https://github.com/yuanxiaosc/TensorFlow_iris_estimator" target="_blank" rel="noopener">TensorFlow_iris_tfrecord_estimator</a></h3><blockquote>
+<p>This resource takes iris data set as an example to explain how to  producte tfrecord files and use  them in the customize Estimator!</p>
+</blockquote>
+<h2 id="Tensorflow-Seq2Seq使用"><a href="#Tensorflow-Seq2Seq使用" class="headerlink" title="Tensorflow Seq2Seq使用"></a>Tensorflow Seq2Seq使用</h2><h3 id="Medium-Park-Chansung-blog"><a href="#Medium-Park-Chansung-blog" class="headerlink" title="Medium Park Chansung blog"></a>Medium <a href="https://towardsdatascience.com/@parkchansung" target="_blank" rel="noopener">Park Chansung</a> blog</h3><blockquote>
+<p>基于TensorFlow框架的Seq2Seq英法机器翻译模型</p>
+</blockquote>
+<ul>
+<li>代码 <a href="https://github.com/deep-diver/EN-FR-MLT-tensorflow" target="_blank" rel="noopener">EN-FR-MLT-tensorflow</a></li>
+<li>讲解 <a href="https://towardsdatascience.com/seq2seq-model-in-tensorflow-ec0c557e560f" target="_blank" rel="noopener">Seq2Seq model in TensorFlow</a></li>
+</ul>
+<p>部分摘录 <a href="https://github.com/deep-diver/EN-FR-MLT-tensorflow" target="_blank" rel="noopener">EN-FR-MLT-tensorflow/README.md/Build model</a><br>In short, this section will show how to <code>define the Seq2Seq model in TensorFlow</code>. The below steps (implementation) will be covered.</p>
+<ul>
+<li><strong>(1)</strong> define input parameters to the encoder model<ul>
+<li><code>enc_dec_model_inputs</code></li>
+</ul>
+</li>
+<li><strong>(2)</strong> build encoder model<ul>
+<li><code>encoding_layer</code></li>
+</ul>
+</li>
+<li><strong>(3)</strong> define input parameters to the decoder model<ul>
+<li><code>enc_dec_model_inputs</code>, <code>process_decoder_input</code>, <code>decoding_layer</code></li>
+</ul>
+</li>
+<li><strong>(4)</strong> build decoder model for training<ul>
+<li><code>decoding_layer_train</code></li>
+</ul>
+</li>
+<li><strong>(5)</strong> build decoder model for inference<ul>
+<li><code>decoding_layer_infer</code></li>
+</ul>
+</li>
+<li><strong>(6)</strong> put (4) and (5) together<ul>
+<li><code>decoding_layer</code></li>
+</ul>
+</li>
+<li><strong>(7)</strong> connect encoder and decoder models<ul>
+<li><code>seq2seq_model</code></li>
+</ul>
+</li>
+<li><strong>(8)</strong> train and estimate loss and accuracy</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/deep-diver/EN-FR-MLT-tensorflow/master/decoder_shift.png" alt=""></p>
+<h3 id="知乎-天雨粟-的博客"><a href="#知乎-天雨粟-的博客" class="headerlink" title="知乎 天雨粟 的博客"></a>知乎 <a href="https://www.zhihu.com/people/zhao-xie-yu-30/activities" target="_blank" rel="noopener">天雨粟</a> 的博客</h3><blockquote>
+<p>与 <a href="https://towardsdatascience.com/@parkchansung" target="_blank" rel="noopener">Park Chansung</a> 内容基本一致，不过使用中文进行讲解。</p>
+<ul>
+<li>讲解 <a href="https://zhuanlan.zhihu.com/p/37148308" target="_blank" rel="noopener">基于TensorFlow框架的Seq2Seq英法机器翻译模型</a></li>
+<li>代码 <a href="https://github.com/NELSONZHAO/zhihu/tree/master/machine_translation_seq2seq" target="_blank" rel="noopener">machine_translation_seq2seq</a></li>
+<li>我改写后的 <a href="https://github.com/yuanxiaosc/Seq2Seq-English-French-Machine-Translation-Model" target="_blank" rel="noopener">代码</a></li>
+</ul>
+</blockquote>
 
     </div>
 
@@ -1228,7 +610,7 @@ array([[[0, 0, 0, 0],
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow-语言学习"><span class="nav-number">1.</span> <span class="nav-text">TensorFlow 语言学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TensorFlow-张量的常用操作"><span class="nav-number">2.</span> <span class="nav-text">TensorFlow 张量的常用操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据类型"><span class="nav-number">2.1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值类型"><span class="nav-number">2.1.1.</span> <span class="nav-text">数值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串类型"><span class="nav-number">2.1.2.</span> <span class="nav-text">字符串类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#布尔类型"><span class="nav-number">2.1.3.</span> <span class="nav-text">布尔类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建张量"><span class="nav-number">2.2.</span> <span class="nav-text">创建张量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引与切片"><span class="nav-number">2.3.</span> <span class="nav-text">索引与切片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#维度变换"><span class="nav-number">2.4.</span> <span class="nav-text">维度变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reshape"><span class="nav-number">2.4.1.</span> <span class="nav-text">Reshape</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增删维度"><span class="nav-number">2.4.2.</span> <span class="nav-text">增删维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transpose"><span class="nav-number">2.4.3.</span> <span class="nav-text">Transpose</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据复制"><span class="nav-number">2.4.4.</span> <span class="nav-text">数据复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tile"><span class="nav-number">2.4.5.</span> <span class="nav-text">tile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#broadcast-to"><span class="nav-number">2.4.6.</span> <span class="nav-text">broadcast_to</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学运算"><span class="nav-number">2.5.</span> <span class="nav-text">数学运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵相乘"><span class="nav-number">2.5.1.</span> <span class="nav-text">矩阵相乘</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并与分割"><span class="nav-number">2.6.</span> <span class="nav-text">合并与分割</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#合并-拼接"><span class="nav-number">2.6.1.</span> <span class="nav-text">合并-拼接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并-堆叠"><span class="nav-number">2.6.2.</span> <span class="nav-text">合并-堆叠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分割"><span class="nav-number">2.6.3.</span> <span class="nav-text">分割</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#统计量"><span class="nav-number">2.7.</span> <span class="nav-text">统计量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量比较"><span class="nav-number">2.8.</span> <span class="nav-text">张量比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#填充与复制"><span class="nav-number">2.9.</span> <span class="nav-text">填充与复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据限幅"><span class="nav-number">2.10.</span> <span class="nav-text">数据限幅</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据收集"><span class="nav-number">2.11.</span> <span class="nav-text">数据收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tf-gather"><span class="nav-number">2.11.1.</span> <span class="nav-text">tf.gather</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tf-gather-nd"><span class="nav-number">2.11.2.</span> <span class="nav-text">tf.gather_nd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#掩码"><span class="nav-number">2.12.</span> <span class="nav-text">掩码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件"><span class="nav-number">2.13.</span> <span class="nav-text">条件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提取张量中所有正数的数据和索引"><span class="nav-number">2.13.1.</span> <span class="nav-text">提取张量中所有正数的数据和索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据刷新"><span class="nav-number">2.14.</span> <span class="nav-text">数据刷新</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#向量数据刷新"><span class="nav-number">2.14.1.</span> <span class="nav-text">向量数据刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#矩阵数据刷新"><span class="nav-number">2.14.2.</span> <span class="nav-text">矩阵数据刷新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3维张量数据刷新"><span class="nav-number">2.14.3.</span> <span class="nav-text">3维张量数据刷新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#采样"><span class="nav-number">2.15.</span> <span class="nav-text">采样</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow-语言学习"><span class="nav-number">1.</span> <span class="nav-text">TensorFlow 语言学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow-张量的常用操作"><span class="nav-number">2.</span> <span class="nav-text">TensorFlow 张量的常用操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow-Hub使用"><span class="nav-number">3.</span> <span class="nav-text">TensorFlow Hub使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow-Estimator使用"><span class="nav-number">4.</span> <span class="nav-text">TensorFlow Estimator使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#My-Code-TensorFlow-iris-tfrecord-estimator"><span class="nav-number">4.1.</span> <span class="nav-text">My Code TensorFlow_iris_tfrecord_estimator</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensorflow-Seq2Seq使用"><span class="nav-number">5.</span> <span class="nav-text">Tensorflow Seq2Seq使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Medium-Park-Chansung-blog"><span class="nav-number">5.1.</span> <span class="nav-text">Medium Park Chansung blog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知乎-天雨粟-的博客"><span class="nav-number">5.2.</span> <span class="nav-text">知乎 天雨粟 的博客</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -1247,7 +629,7 @@ array([[[0, 0, 0, 0],
         
           <a href="/archives">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1260,7 +642,7 @@ array([[[0, 0, 0, 0],
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1273,7 +655,7 @@ array([[[0, 0, 0, 0],
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1337,7 +719,7 @@ array([[[0, 0, 0, 0],
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 388.8k 字</span>
+  <span class="post-count">全站共 382.5k 字</span>
 </div>
 
         

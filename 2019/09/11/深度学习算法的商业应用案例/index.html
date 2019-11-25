@@ -60,21 +60,23 @@
   };
 </script>
 
-  <meta name="description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵知乎 推荐算法知乎CTO李大海：知识内容平台 AI 技术应用思考 | 李大海 | 20190430 这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息">
+  <meta name="description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵导言：模型（算法）仅仅是5%的代码量 更多内容参见 Production-Level-Deep-Learning">
 <meta name="keywords" content="TensorFlow,分类">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习算法的商业应用案例">
 <meta property="og:url" content="https://yuanxiaosc.github.io/2019/09/11/深度学习算法的商业应用案例/index.html">
 <meta property="og:site_name" content="望江人工智库">
-<meta property="og:description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵知乎 推荐算法知乎CTO李大海：知识内容平台 AI 技术应用思考 | 李大海 | 20190430 这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息">
+<meta property="og:description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵导言：模型（算法）仅仅是5%的代码量 更多内容参见 Production-Level-Deep-Learning">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/alirezadir/Production-Level-Deep-Learning/master/images/components.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/alirezadir/Production-Level-Deep-Learning/master/images/infra_tooling.png">
 <meta property="og:image" content="https://static001.infoq.cn/resource/image/4f/e1/4f37f8350b34355266e5cce64ad281e1.png">
 <meta property="og:image" content="https://static001.infoq.cn/resource/image/84/f5/84e0b1b26f52480479044c4417a99ff5.png">
-<meta property="og:updated_time" content="2019-10-29T08:27:42.350Z">
+<meta property="og:updated_time" content="2019-11-25T03:31:00.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习算法的商业应用案例">
-<meta name="twitter:description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵知乎 推荐算法知乎CTO李大海：知识内容平台 AI 技术应用思考 | 李大海 | 20190430 这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息">
-<meta name="twitter:image" content="https://static001.infoq.cn/resource/image/4f/e1/4f37f8350b34355266e5cce64ad281e1.png">
+<meta name="twitter:description" content="本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。编者：袁宵导言：模型（算法）仅仅是5%的代码量 更多内容参见 Production-Level-Deep-Learning">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/alirezadir/Production-Level-Deep-Learning/master/images/components.png">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/09/11/深度学习算法的商业应用案例/">
 
 
@@ -307,7 +309,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-29 16:27:42" itemprop="dateModified" datetime="2019-10-29T16:27:42+08:00">2019-10-29</time>
+                <time title="修改时间：2019-11-25 11:31:00" itemprop="dateModified" datetime="2019-11-25T11:31:00+08:00">2019-11-25</time>
               </span>
             
           
@@ -317,14 +319,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TF/" itemprop="url" rel="index"><span itemprop="name">TF</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TF/商业应用案例/" itemprop="url" rel="index"><span itemprop="name">商业应用案例</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Artificial-Intelligence-商业实践/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence 商业实践</span></a></span>
 
                 
                 
@@ -343,11 +338,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。<br>编者：袁宵</p><h2 id="知乎-推荐算法"><a href="#知乎-推荐算法" class="headerlink" title="知乎 推荐算法"></a><a href="https://www.zhihu.com/" target="_blank" rel="noopener">知乎</a> 推荐算法</h2><p><a href="https://zhuanlan.zhihu.com/p/64341876" target="_blank" rel="noopener">知乎CTO李大海：知识内容平台 AI 技术应用思考</a> | 李大海 | 20190430</p><blockquote>
-<p>这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息过载问题。第二，是用户的内容消费升级。</p>
+        <p>本文宗旨：持续追踪深度学习算法在商业的实际应用，提升对算法的理解和算法的商业应用能力。<br>编者：袁宵</p><h2 id="导言：模型（算法）仅仅是5-的代码量"><a href="#导言：模型（算法）仅仅是5-的代码量" class="headerlink" title="导言：模型（算法）仅仅是5%的代码量"></a>导言：模型（算法）仅仅是5%的代码量</h2><blockquote>
+<p>更多内容参见 <a href="https://github.com/alirezadir/Production-Level-Deep-Learning" target="_blank" rel="noopener">Production-Level-Deep-Learning</a></p>
 </blockquote><a id="more"></a>
 
-
+<p>模型在一个生产级深度学习系统中的位置和重要性比例如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/alirezadir/Production-Level-Deep-Learning/master/images/components.png" alt=""></p>
+<p>下图是生产级深度学习系统中不同组件的高级概述：</p>
+<p><img src="https://raw.githubusercontent.com/alirezadir/Production-Level-Deep-Learning/master/images/infra_tooling.png" alt=""></p>
+<p>由上可知模型（算法）只是深度学习系统或者说产品中的一个重要组成部分，但我们不能过度关注模型而忽视了其它组成部分，后文便是从模型（算法）到商业产品的具体案例，望能启发读者。</p>
+<h2 id="知乎-推荐算法"><a href="#知乎-推荐算法" class="headerlink" title="知乎 推荐算法"></a><a href="https://www.zhihu.com/" target="_blank" rel="noopener">知乎</a> 推荐算法</h2><p><a href="https://zhuanlan.zhihu.com/p/64341876" target="_blank" rel="noopener">知乎CTO李大海：知识内容平台 AI 技术应用思考</a> | 李大海 | 20190430</p>
+<blockquote>
+<p>这几年随着移动互联网的发展，内容平台迎来了黄金时代。但也不可避免的，出现了很多问题和挑战。知乎合伙人、CTO 李大海在 ArchSummit 架构师峰会上演讲，并总结这些问题主要体现在两个方面：第一，信息过载问题。第二，是用户的内容消费升级。</p>
+</blockquote>
 <p>该文主要内容：</p>
 <p>一、内容市场背景介绍：<br>1、信息过载<br>2、用户内容需求升级<br>3、知乎的使命</p>
 <p>二、知乎如何连接「人与内容」：</p>
@@ -524,7 +527,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#知乎-推荐算法"><span class="nav-number">1.</span> <span class="nav-text">知乎 推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAVER-商品分类算法"><span class="nav-number">2.</span> <span class="nav-text">NAVER 商品分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爱奇艺、快手-、美图-短视频分类算法"><span class="nav-number">3.</span> <span class="nav-text">爱奇艺、快手 、美图 短视频分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#美图-推荐算法"><span class="nav-number">4.</span> <span class="nav-text">美图 推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#百度-百度机器学习课程"><span class="nav-number">5.</span> <span class="nav-text">百度 百度机器学习课程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#华为-文本情感分类算法"><span class="nav-number">6.</span> <span class="nav-text">华为 文本情感分类算法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#导言：模型（算法）仅仅是5-的代码量"><span class="nav-number">1.</span> <span class="nav-text">导言：模型（算法）仅仅是5%的代码量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#知乎-推荐算法"><span class="nav-number">2.</span> <span class="nav-text">知乎 推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NAVER-商品分类算法"><span class="nav-number">3.</span> <span class="nav-text">NAVER 商品分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#爱奇艺、快手-、美图-短视频分类算法"><span class="nav-number">4.</span> <span class="nav-text">爱奇艺、快手 、美图 短视频分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#美图-推荐算法"><span class="nav-number">5.</span> <span class="nav-text">美图 推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#百度-百度机器学习课程"><span class="nav-number">6.</span> <span class="nav-text">百度 百度机器学习课程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#华为-文本情感分类算法"><span class="nav-number">7.</span> <span class="nav-text">华为 文本情感分类算法</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -543,7 +546,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -556,7 +559,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -569,7 +572,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -633,7 +636,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 388.8k 字</span>
+  <span class="post-count">全站共 382.5k 字</span>
 </div>
 
         

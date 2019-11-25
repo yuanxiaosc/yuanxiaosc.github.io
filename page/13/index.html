@@ -261,545 +261,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/08/26/主成成分分析、自编码器和变分自编码器解析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/08/26/主成成分分析、自编码器和变分自编码器解析/" class="post-title-link" itemprop="url">主成成分分析、自编码器和变分自编码器解析</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-26 20:39:42" itemprop="dateCreated datePublished" datetime="2018-08-26T20:39:42+08:00">2018-08-26</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-12 17:15:35" itemprop="dateModified" datetime="2019-07-12T17:15:35+08:00">2019-07-12</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/变分自编码器/" itemprop="url" rel="index"><span itemprop="name">变分自编码器</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>主成分分析（PCA）和自编码器（AutoEncoders, AE）是无监督学习中的两种代表性方法。 </p><p>PCA 的地位不必多说，只要是讲到降维的书，一定会把 PCA 放到最前面，它与 LDA 同为机器学习中最基础的线性降维算法，SVM/Logistic Regression、PCA/LDA 也是最常被拿来作比较的两组算法。 </p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2018/08/26/主成成分分析、自编码器和变分自编码器解析/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/08/26/变分自编码器/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/08/26/变分自编码器/" class="post-title-link" itemprop="url">变分自编码器（Variational Auto-Encoder，VAE）</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-26 17:07:42" itemprop="dateCreated datePublished" datetime="2018-08-26T17:07:42+08:00">2018-08-26</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-18 23:39:07" itemprop="dateModified" datetime="2019-10-18T23:39:07+08:00">2019-10-18</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/变分自编码器/" itemprop="url" rel="index"><span itemprop="name">变分自编码器</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="为什么要发明变分自编码器"><a href="#为什么要发明变分自编码器" class="headerlink" title="为什么要发明变分自编码器"></a>为什么要发明变分自编码器</h2><p><strong>什么是变分自编码机？</strong></p><p>要理解变分自编码机(VAE)，我们要先从一个简单的网络开始，一步一步添加部件。</p><p>描述神经网络的常见方法，是把它解释成我们想要建模的功能的某种近似。然而，它们还能被理解为储存信息的某种数据结构。</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2018/08/26/变分自编码器/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/08/24/胶囊网络/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/08/24/胶囊网络/" class="post-title-link" itemprop="url">胶囊网络（Capsule Network）</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-24 15:10:15" itemprop="dateCreated datePublished" datetime="2018-08-24T15:10:15+08:00">2018-08-24</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-10 19:39:14" itemprop="dateModified" datetime="2019-10-10T19:39:14+08:00">2019-10-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>胶囊网络的革命在于：它提出了一种新的“vector in vector out”的传递方案，并且这种方案在很大程度上是可解释的。</p><h2 id="Hinton大神的胶囊网络"><a href="#Hinton大神的胶囊网络" class="headerlink" title="Hinton大神的胶囊网络"></a><a href="http://www.sohu.com/a/226611009_633698" target="_blank" rel="noopener">Hinton大神的胶囊网络</a></h2><h3 id="理解胶囊网络基本计算公式"><a href="#理解胶囊网络基本计算公式" class="headerlink" title="理解胶囊网络基本计算公式"></a>理解胶囊网络基本计算公式</h3><p>将 Capsule 称作向量神经元 (vector neuron, VN)，而普通的人工神经元叫做标量神经元 (scalar neuron, SN)，下表总结了 VN 和 SN 之间的差异：</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2018/08/24/胶囊网络/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/" class="post-title-link" itemprop="url">Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-09 11:15:00" itemprop="dateCreated datePublished" datetime="2018-08-09T11:15:00+08:00">2018-08-09</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-09-10 16:58:15" itemprop="dateModified" datetime="2018-09-10T16:58:15+08:00">2018-09-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Beginning-Application-Development-with-TensorFlow-and-Keras（路易斯卡佩罗）/" itemprop="url" rel="index"><span itemprop="name">Beginning Application Development with TensorFlow and Keras（路易斯卡佩罗）</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>阅读和下载地址</strong><br><a href="https://github.com/yuanxiaosc/Machine_Learning/blob/master/book/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89.pdf" target="_blank" rel="noopener">PDF</a></p><p><strong>书籍配套代码</strong><br><a href="https://github.com/PacktPublishing/Beginning-Application-Development-with-TensorFlow-and-Keras" target="_blank" rel="noopener">GitHub</a></p><p><strong>代码整理</strong><br><a href="http://nbviewer.jupyter.org/github/yuanxiaosc/Machine_Learning/tree/master/Book%20corresponding%20code/Beginning%20Application%20Development%20with%20TensorFlow%20and%20Keras%EF%BC%88%E8%B7%AF%E6%98%93%E6%96%AF%E5%8D%A1%E4%BD%A9%E7%BD%97%EF%BC%89/" target="_blank" rel="noopener">Jupyter nbviewer</a></p><p><strong>购买地址</strong><br><a href="https://www.packtpub.com/application-development/beginning-application-development-tensorflow-and-keras" target="_blank" rel="noopener">《Beginning Application Development with TensorFlow and Keras》| Luis Capelo | May 2018 | Packt</a></p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2018/08/09/Beginning_Application_Development_with_TensorFlow_and_Keras/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="袁宵">
-      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="望江人工智库">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/" class="post-title-link" itemprop="url">hands-on-ml-with-sklearn-and-tf(Aurelien Geron) 课后习题解答</a>
-          
-        </h2>
-
-        <div class="post-meta">
-		  	  
-			  
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-			   
-
-              
-                
-              
-
-              <time title="创建时间：2018-08-01 19:31:15" itemprop="dateCreated datePublished" datetime="2018-08-01T19:31:15+08:00">2018-08-01</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-11-24 15:29:52" itemprop="dateModified" datetime="2018-11-24T15:29:52+08:00">2018-11-24</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>本文是 <a href="https://github.com/ageron/handson-ml" target="_blank" rel="noopener">《Hands-on Machine Learning with Scikit-Learn and TensorFlow 》</a>的课后习题解答！</p>
-<p>把练习和答案分开是为了督促学习和思考，提倡独立思考，主动学习，而不是背答案！文章前半段中文翻译有问题的地方欢迎评论指正，英文原文在后面。</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2018/08/01/Hands-on Machine Learning with Scikit-Learn and TensorFlow 习题解答/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/07/09/四川大学研究生软件项目管理期末考试分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1336,11 +797,558 @@
   
 
     
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/26/卷积神经网络的反向传播算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/26/卷积神经网络的反向传播算法/" class="post-title-link" itemprop="url">卷积神经网络的反向传播算法</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-26 08:22:42 / 修改时间：09:45:38" itemprop="dateCreated datePublished" datetime="2018-06-26T08:22:42+08:00">2018-06-26</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>阅读本篇前，最好先阅读多层感知机的<a href="https://yuanxiaosc.github.io/2018/06/21/反向传播算法">反向传播算法</a>。反向传播的基础知识和符号定义都在该文章中。</p><h2 id="卷积神经网络：前向传播算法"><a href="#卷积神经网络：前向传播算法" class="headerlink" title="卷积神经网络：前向传播算法"></a>卷积神经网络：前向传播算法</h2><h3 id="CNN输入层前向传播到卷积层"><a href="#CNN输入层前向传播到卷积层" class="headerlink" title="CNN输入层前向传播到卷积层"></a>CNN输入层前向传播到卷积层</h3><p>输入层的前向传播是CNN前向传播算法的第一步。一般输入层对应的都是卷积层。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/26/卷积神经网络的反向传播算法/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——正则化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/24/改进神经网络的学习方法——正则化/" class="post-title-link" itemprop="url">改进神经网络的学习方法——正则化</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-24 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-24T19:31:15+08:00">2018-06-24</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-04 22:29:09" itemprop="dateModified" datetime="2019-08-04T22:29:09+08:00">2019-08-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote><h2 id="产生过度拟合和正则化的原因"><a href="#产生过度拟合和正则化的原因" class="headerlink" title="产生过度拟合和正则化的原因"></a>产生过度拟合和正则化的原因</h2><p>拥有大量的自由参数的模型能够描述特别神奇的现象。即使这样的模型能够很好的拟合已有的数据，但并不表示是一个好模型。因为这可能只是因为模型中足够的自由度使得它可以描述几乎所有给定大小的数据集，而不需要真正洞察现象的本质。所以发生这种情形时，模型对已有的数据会表现的很好，但是对新的数据很难泛化。对一个模型真正的测验就是它对没有见过的场景的预测能力。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/24/改进神经网络的学习方法——正则化/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/24/改进神经网络的学习方法——弃权/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/24/改进神经网络的学习方法——弃权/" class="post-title-link" itemprop="url">改进神经网络的学习方法——弃权</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-24 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-24T19:31:15+08:00">2018-06-24</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-04 22:17:22" itemprop="dateModified" datetime="2019-08-04T22:17:22+08:00">2019-08-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 2 Improving the way neural networks learn</a></p>
+</blockquote><h2 id="弃权（Dropout）的过程"><a href="#弃权（Dropout）的过程" class="headerlink" title="弃权（Dropout）的过程"></a>弃权（Dropout）的过程</h2><blockquote>
+<p>Dropout 的比例可以自己指定，以下仅为例子说明 Dropout率为0.5</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/24/改进神经网络的学习方法——弃权/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/22/改进神经网络的学习方法——Softmax/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/22/改进神经网络的学习方法——Softmax/" class="post-title-link" itemprop="url">改进神经网络的学习方法——Softmax</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-22 19:31:15" itemprop="dateCreated datePublished" datetime="2018-06-22T19:31:15+08:00">2018-06-22</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-04 22:00:10" itemprop="dateModified" datetime="2019-08-04T22:00:10+08:00">2019-08-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>原文链接：<a href="http://neuralnetworksanddeeplearning.com/chap3.html" target="_blank" rel="noopener">CHAPTER 3 Improving the way neural networks learn</a></p>
+</blockquote><h2 id="Softmax-前言"><a href="#Softmax-前言" class="headerlink" title="Softmax 前言"></a>Softmax 前言</h2><p>我们大多数情况会使用交叉熵来解决学习缓慢的问题。但是，我希望简要介绍一下另一种解决这个问题的方法，基于 softmax 神经元层。在人工神经网络（ANN）中，softmax 通常被用作输出层的激活函数。这不仅是因为它的效果好，而且因为它使得 ANN 的输出值更易于理解。同时，softmax 配合 log 似然代价函数，其训练效果也要比采用二次代价函数的方式好。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/22/改进神经网络的学习方法——Softmax/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2018/06/21/改进神经网络的学习方法——交叉熵/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+            
+            <a href="/2018/06/21/改进神经网络的学习方法——交叉熵/" class="post-title-link" itemprop="url">改进神经网络的学习方法——交叉熵</a>
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-21 19:30:07" itemprop="dateCreated datePublished" datetime="2018-06-21T19:30:07+08:00">2018-06-21</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-04 18:23:18" itemprop="dateModified" datetime="2019-08-04T18:23:18+08:00">2019-08-04</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/深度学习/Neural-Networks-and-Deep-Learning-Michael-Nielsen/" itemprop="url" rel="index"><span itemprop="name">Neural Networks and Deep Learning (Michael Nielsen)</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h2><p><a href="https://baike.baidu.com/item/交叉熵/8983241" target="_blank" rel="noopener">交叉熵 百度百科</a></p><p>交叉熵（Cross Entropy）是Shannon信息论中一个重要概念，主要用于度量两个概率分布间的差异性信息。</p><p>交叉熵的定义<br><img src="/2018/06/21/改进神经网络的学习方法——交叉熵/交叉熵定义.png" alt=""></p><p>交叉熵的应用</p><ul>
+<li>交叉熵可在神经网络(机器学习)中作为损失函数，p表示真实标记的分布，q则为训练后的模型的预测标记分布，交叉熵损失函数可以衡量p与q的相似性。交叉熵作为损失函数还有一个好处是使用sigmoid函数在梯度下降时能避免均方误差损失函数学习速率降低的问题，因为学习速率可以被输出的误差所控制。</li>
+<li>在特征工程中，可以用来衡量两个随机变量之间的相似度。</li>
+<li>在语言模型中（NLP）中，由于真实的分布p是未知的，在语言模型中，模型是通过训练集得到的，交叉熵就是衡量这个模型在测试集上的正确率。</li>
+</ul>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2018/06/21/改进神经网络的学习方法——交叉熵/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
   </div>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1388,7 +1396,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1401,7 +1409,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -1414,7 +1422,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1478,7 +1486,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 388.8k 字</span>
+  <span class="post-count">全站共 382.5k 字</span>
 </div>
 
         

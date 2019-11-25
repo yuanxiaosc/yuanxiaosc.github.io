@@ -73,7 +73,7 @@
 <meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfd9e00b31.png?imageView2/2/w/740">
 <meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfda672cae.png?imageView2/2/w/740">
 <meta property="og:image" content="https://static.leiphone.com/uploads/new/images/20181128/5bfdfdaa9b90d.png?imageView2/2/w/740">
-<meta property="og:updated_time" content="2019-07-16T08:50:38.775Z">
+<meta property="og:updated_time" content="2019-11-25T03:15:03.807Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="短视频分类技术">
 <meta name="twitter:description" content="视频分类理论和实践研究    标题 内容 时间     基于视觉的视频分类入门  20180408   爱奇艺“多模态视频人物识别”课程分享学习总结  20181005   Five video classification methods implemented in Keras and TensorFlow 对应的代码 five-video-classification-methods 201">
@@ -310,7 +310,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-16 16:50:38" itemprop="dateModified" datetime="2019-07-16T16:50:38+08:00">2019-07-16</time>
+                <time title="修改时间：2019-11-25 11:15:03" itemprop="dateModified" datetime="2019-11-25T11:15:03+08:00">2019-11-25</time>
               </span>
             
           
@@ -320,14 +320,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TF/" itemprop="url" rel="index"><span itemprop="name">TF</span></a></span>
-
-                
-                
-                  ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/TF/商业应用案例/" itemprop="url" rel="index"><span itemprop="name">商业应用案例</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Artificial-Intelligence-商业实践/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence 商业实践</span></a></span>
 
                 
                 
@@ -386,16 +379,16 @@
 <h3 id="技术难点"><a href="#技术难点" class="headerlink" title="技术难点"></a>技术难点</h3><p>分类体系复杂。短视频分类体系是一棵人工精心制定的层次结构，体系和规则都比较复杂：层级最少有3级，最多有5级，总计近800个有效类别，类别间有互斥和共同出现的需求。</p>
 <p><img src="/2019/07/11/短视频分类技术/2019_aiqiyi_1.png" alt=""><br>需要文本、图像、生态信息等多模态特征综合判断。短视频具有标题、描述、封面图、视频、音频等媒体信息。同时，一个短视频也不一定是独立存在的，它可能来自一个影视、综艺片段，它的上传者可能是一个垂直领域的内容贡献者，所以，关联正片、视频来源、上传者等信息对分类也可能有帮助。</p>
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>短视频分类可以分为特征表示(Feature Representation) 和层次分类(Hierarchical Classification) 两个模块，前者基于多模态特征建模短视频的整体表达（在我们的模型中通过Feature Representation和Representation Fusion两个子网络级联建模完成），后者基于前者完成分类任务。我们模型的整体结构如下图：<br><img src="/2019/07/11/短视频分类技术/2019_aiqiyi_2.png" alt=""></p>
-<h2 id="PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><a href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍" class="headerlink" title="PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍"></a><a href="https://www.leiphone.com/news/201811/yhkoD7Ty8WRaCBqe.html" target="_blank" rel="noopener">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</a></h2><h4 id="视频解码"><a href="#视频解码" class="headerlink" title="视频解码"></a>视频解码</h4><p>因为时间是一个很重要的因素，而视频解码又是一个很费时间的过程，所以如何设计解码模块是本次竞赛中的一个关键。我们采用了多线程软解提取关键帧的方法。</p>
+<h2 id="PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><a href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍" class="headerlink" title="PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍"></a><a href="https://www.leiphone.com/news/201811/yhkoD7Ty8WRaCBqe.html" target="_blank" rel="noopener">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</a></h2><h3 id="视频解码"><a href="#视频解码" class="headerlink" title="视频解码"></a>视频解码</h3><p>因为时间是一个很重要的因素，而视频解码又是一个很费时间的过程，所以如何设计解码模块是本次竞赛中的一个关键。我们采用了多线程软解提取关键帧的方法。</p>
 <p>主流的视频编码方式中，每个视频主要包含三种图片帧，分别叫做：Intra-coded frame（I 帧），Predictive frame（P 帧）和 Bi-Predictive frame（B 帧）。其中 I 帧是一张完整的图片。P 帧记录了与之前的帧的差别，所以在解码 P 帧时必须要参考之前的图片帧。而 B 帧不仅需要参考之前的图片帧，还需要参考之后的图片帧才能完整解码。图片 4 阐明了这三个概念 [2]。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfd9e00b31.png?imageView2/2/w/740" alt=""><br>显而易见，P 帧和 B 帧的解码是相对较慢的，而直接解码 I 帧则可以获得更快的速度。同时，由于我们需要解码不止一帧，所以我们采用了多线程的方式，每一个线程负责解码一个关键帧。整个解码过程使用 FFmpeg 实现。</p>
 <h3 id="模型设计"><a href="#模型设计" class="headerlink" title="模型设计"></a>模型设计</h3><p>解决了解码问题后，接下来的问题在于如何用所得的多帧来进行分类。</p>
-<h4 id="主流方法"><a href="#主流方法" class="headerlink" title="主流方法"></a>主流方法</h4><p>目前主流的视频分类的方法有三大类：基于 LSTM 的方法，基于 3D 卷积的方法和基于双流的方法。图片 5 展示了这三种框架的大体结构 [3]。</p>
+<h3 id="主流方法"><a href="#主流方法" class="headerlink" title="主流方法"></a>主流方法</h3><p>目前主流的视频分类的方法有三大类：基于 LSTM 的方法，基于 3D 卷积的方法和基于双流的方法。图片 5 展示了这三种框架的大体结构 [3]。</p>
 <ol>
 <li>基于 LSTM 的方法将视频的每一帧用卷积网络提取出每一帧的特征，然后将每一个特征作为一个时间点，依次输入到 LSTM 中。由于 LSTM 并不限制序列的长度，所以这种方法可以处理任意长度的视频。但同时，因为 LSTM 本身有梯度消失和爆炸的问题，往往难以训练出令人满意的效果。而且，由于 LSTM 需要一帧一帧得进行输入，所以速度也比不上其他的方法。</li>
 <li>基于 3D 卷积的方法将原始的 2D 卷积核扩展到 3D。类似于 2D 卷积在空间维度的作用方式，它可以在时间维度自底向上地提取特征。基于 3D 卷积的方法往往能得到不错的分类精度。但是，由于卷积核由 2D 扩展到了 3D，其参数量也成倍得增加了，所以网络的速度也会相应下降。</li>
 <li>基于双流网络的方法会将网络分成两支。其中一支使用 2D 卷积网络来对稀疏采样的图片帧进行分类，另一支会提取采样点周围帧的光流场信息，然后使用一个光流网络来对其进行分类。两支网络的结果会进行融合从而得到最终的类标。基于双流的方法可以很好地利用已有的 2D 卷积网络来进行预训练，同时光流又可以建模运动信息，所以精度往往也很高。但是由于光流的提取过程很慢，所以整体上制约了这一方法的速度。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfda672cae.png?imageView2/2/w/740" alt=""><br>综上所述，主流的方法都不太适用于短视频实时分类的任务，所以我们特别设计了一个适用于短视频实时分类的框架。</li>
 </ol>
-<h4 id="我们的方法"><a href="#我们的方法" class="headerlink" title="我们的方法"></a>我们的方法</h4><p>图片 4 展示了我们的解决方案的整体框架：给定一个视频，我们首先会从中稀疏采样固定数量的图片帧，然后将这些帧组成一个 batch，送入到一个 BaseNet 中。这个 BaseNet 是在已有的 2D 卷积网络基础上优化改进得到的，具有较强的特征提取能力。BaseNet 输出的高层的特征往往具有很强的语义信息，但是却没有时间上的融合。所以我们特别设计了一个基于帧间注意力机制的融合模型，将 BaseNet 提取的不同帧的特征作为一个输入送入融合模型中，最终由融合模型得到预测的结果。由于融合模型比较小，推理速度很快，而且参数量较少，也比较容易训练。整个模型在 mxnet 上进行构建和训练。基于这样的设计，我们的模型可以得到很快的推理速度，同时又不会损失太多精度。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfdaa9b90d.png?imageView2/2/w/740" alt=""></p>
+<h3 id="我们的方法"><a href="#我们的方法" class="headerlink" title="我们的方法"></a>我们的方法</h3><p>图片 4 展示了我们的解决方案的整体框架：给定一个视频，我们首先会从中稀疏采样固定数量的图片帧，然后将这些帧组成一个 batch，送入到一个 BaseNet 中。这个 BaseNet 是在已有的 2D 卷积网络基础上优化改进得到的，具有较强的特征提取能力。BaseNet 输出的高层的特征往往具有很强的语义信息，但是却没有时间上的融合。所以我们特别设计了一个基于帧间注意力机制的融合模型，将 BaseNet 提取的不同帧的特征作为一个输入送入融合模型中，最终由融合模型得到预测的结果。由于融合模型比较小，推理速度很快，而且参数量较少，也比较容易训练。整个模型在 mxnet 上进行构建和训练。基于这样的设计，我们的模型可以得到很快的推理速度，同时又不会损失太多精度。<br><img src="https://static.leiphone.com/uploads/new/images/20181128/5bfdfdaa9b90d.png?imageView2/2/w/740" alt=""></p>
 <h2 id="2019-重新认识快手：人工智能的从-0-到-1"><a href="#2019-重新认识快手：人工智能的从-0-到-1" class="headerlink" title="2019 重新认识快手：人工智能的从 0 到 1"></a><a href="https://www.jiqizhixin.com/articles/2019-07-09-6" target="_blank" rel="noopener">2019 重新认识快手：人工智能的从 0 到 1</a></h2><h3 id="多模态理解的挑战"><a href="#多模态理解的挑战" class="headerlink" title="多模态理解的挑战"></a>多模态理解的挑战</h3><p>过去几年，单模态内容理解能力在学术界还不够成熟，加上学术界对视频理解没有强烈的研究需求，导致始终没有形成一套针对视频理解的求解方案。在工业界，即使是全球最大的视频平台 YouTube，也因为其视频带有丰富的文本信息—标题、简介、标签，可以一定程度上绕开视频理解。</p>
 <p>但快手不同。作为一款移动互联网时代兴起的短视频应用，快手给用户提供轻便新颖的拍视频体验，用户喜欢拍完就传，不爱文字编辑，描述视频的文字信息严重缺失。快手又需要理解内容来做推荐算法，视频理解成了一个绕不开的坎。李岩说，快手是较早对视频内容分析产生强烈刚需的公司。</p>
 <p>复杂的应用场景和多元的用户分布给 MMU 带来了另一个维度的挑战。负责视频理解方向的朝旭是 MMU 组的老员工，他给机器之心举了一个例子：快手上有很多景色的视频内容，有些景色很美、有空灵感的画面犹如「仙境」，那么快手的标签里就需要描述「仙境」这类景色；但是在学术界的数据集里面，你是不会看到这种「诡异」的标签。</p>
@@ -528,7 +521,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#视频分类理论和实践研究"><span class="nav-number">1.</span> <span class="nav-text">视频分类理论和实践研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文和数据集资源"><span class="nav-number">2.</span> <span class="nav-text">论文和数据集资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-爱奇艺短视频分类技术解析"><span class="nav-number">3.</span> <span class="nav-text">2019 爱奇艺短视频分类技术解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术难点"><span class="nav-number">3.2.</span> <span class="nav-text">技术难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">3.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><span class="nav-number">4.</span> <span class="nav-text">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#视频解码"><span class="nav-number">4.0.1.</span> <span class="nav-text">视频解码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型设计"><span class="nav-number">4.1.</span> <span class="nav-text">模型设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#主流方法"><span class="nav-number">4.1.1.</span> <span class="nav-text">主流方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#我们的方法"><span class="nav-number">4.1.2.</span> <span class="nav-text">我们的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-重新认识快手：人工智能的从-0-到-1"><span class="nav-number">5.</span> <span class="nav-text">2019 重新认识快手：人工智能的从 0 到 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多模态理解的挑战"><span class="nav-number">5.1.</span> <span class="nav-text">多模态理解的挑战</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#视频分类理论和实践研究"><span class="nav-number">1.</span> <span class="nav-text">视频分类理论和实践研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#论文和数据集资源"><span class="nav-number">2.</span> <span class="nav-text">论文和数据集资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-爱奇艺短视频分类技术解析"><span class="nav-number">3.</span> <span class="nav-text">2019 爱奇艺短视频分类技术解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术难点"><span class="nav-number">3.2.</span> <span class="nav-text">技术难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">3.3.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PRCV2018-美图短视频实时分类挑战赛第一名解决方案介绍"><span class="nav-number">4.</span> <span class="nav-text">PRCV2018 美图短视频实时分类挑战赛第一名解决方案介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#视频解码"><span class="nav-number">4.1.</span> <span class="nav-text">视频解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型设计"><span class="nav-number">4.2.</span> <span class="nav-text">模型设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主流方法"><span class="nav-number">4.3.</span> <span class="nav-text">主流方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我们的方法"><span class="nav-number">4.4.</span> <span class="nav-text">我们的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2019-重新认识快手：人工智能的从-0-到-1"><span class="nav-number">5.</span> <span class="nav-text">2019 重新认识快手：人工智能的从 0 到 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多模态理解的挑战"><span class="nav-number">5.1.</span> <span class="nav-text">多模态理解的挑战</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -547,7 +540,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">142</span>
+          <span class="site-state-item-count">137</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -560,7 +553,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -573,7 +566,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">126</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -637,7 +630,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 388.8k 字</span>
+  <span class="post-count">全站共 382.5k 字</span>
 </div>
 
         
