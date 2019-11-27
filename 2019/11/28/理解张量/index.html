@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="eYmWT0dEmt">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。">
+<meta name="keywords" content="张量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解张量">
+<meta property="og:url" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量示意图.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量是存储实例上的视图.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量偏移、大小和步长.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量的转置操作.png">
+<meta property="og:updated_time" content="2019-11-27T13:56:22.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解张量">
+<meta name="twitter:description" content="神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量示意图.png">
+  <link rel="canonical" href="https://yuanxiaosc.github.io/2019/11/28/理解张量/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>理解张量 | 望江人工智库</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?359fbde2215e8ede98cdd58478ab2c53";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">TF-KMP</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/yuanxiaosc" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/11/28/理解张量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">理解张量
+
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-28 08:00:00" itemprop="dateCreated datePublished" datetime="2019-11-28T08:00:00+08:00">2019-11-28</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-27 21:56:22" itemprop="dateModified" datetime="2019-11-27T21:56:22+08:00">2019-11-27</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数学/" itemprop="url" rel="index"><span itemprop="name">数学</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数学/张量/" itemprop="url" rel="index"><span itemprop="name">张量</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。</p><a id="more"></a>
+<h2 id="张量的定义"><a href="#张量的定义" class="headerlink" title="张量的定义"></a>张量的定义</h2><p>张量（tensor）是一个多维数组（multidimensional arrays），即一种存储数字集合的数据结构，这些数字可通过索引（index）单独访问，并可通过多个索引进行索引。</p>
+<p>张量是将向量和矩阵推广到任意维数。如下图所示，一个张量的维数与张量中用来表示标量值的索引的数量一致。</p>
+<p><img src="/2019/11/28/理解张量/张量示意图.png" alt=""></p>
+<script type="math/tex; mode=display">张量示意图</script><p>新张量 = 张量[索引]</p>
+<h2 id="张量的视图与存储"><a href="#张量的视图与存储" class="headerlink" title="张量的视图与存储"></a>张量的视图与存储</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/张量的存储.ipynb" target="_blank" rel="noopener">张量的存储.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<ul>
+<li>张量，PyTorch中的基本数据结构</li>
+<li>索引并在PyTorch张量上进行操作以探索和处理数据</li>
+<li>与NumPy多维数组互操作</li>
+<li>将计算移至GPU以提高速度</li>
+</ul>
+<h3 id="张量的视图与存储的定义"><a href="#张量的视图与存储的定义" class="headerlink" title="张量的视图与存储的定义"></a>张量的视图与存储的定义</h3><p>存储（Storage）是一维的数字数据数组，例如包含给定类型的数字(可能是float或int32)的连续内存块。张量是这样一个存储的视图，它能够通过使用偏移量（offset）和每一维度的步长（per-dimension strides）索引（index）到该存储中。存储的布局总是一维的，而与可能涉及到它的任何张量的维数无关。</p>
+<p>多个张量可以对相同的存储进行索引，即使它们对数据的索引是不同的。但是，底层内存只分配一次，因此不管存储实例管理的数据有多大，都可以快速地创建数据上的替代张量视图。</p>
+<p><img src="/2019/11/28/理解张量/张量是存储实例上的视图.png" alt=""></p>
+<script type="math/tex; mode=display">张量是存储实例上的视图</script><h3 id="张量视图的多维性意义"><a href="#张量视图的多维性意义" class="headerlink" title="张量视图的多维性意义"></a>张量视图的多维性意义</h3><p>张量的视图就是我们理解张量的方式，比如 shape 为[2,4,4,3]的张量 A，我们从逻辑上可以理解 为 2 张图片，每张图片 4 行 4 列，每个位置有 RGB 3 个通道的数据；张量的存储体现在张 量在内存上保存为一段连续的内存区域，对于同样的存储，我们可以有不同的理解方式， 比如上述 A，我们可以在不改变张量的存储下，将张量 A 理解为 2 个样本，每个样本的特征为长度 48 的向量。这就是存储与视图的关系。</p>
+<h3 id="张量存储的一维性"><a href="#张量存储的一维性" class="headerlink" title="张量存储的一维性"></a>张量存储的一维性</h3><p>在存储数据时，内存并不支持这个维度层级概念，只能以平铺方式按序写入内存，因此这 种层级关系需要人为管理，也就是说，每个张量的存储顺序需要人为跟踪。为了方便表达，我们把张量 shape 中相对靠左侧的维度叫做大维度，shape 中相对靠右侧的维度叫做小维度，比如[2,4,4,3]的张量中，图片数量维度与通道数量相比，图片数量叫做大维度，通道 数叫做小维度。在优先写入小维度的设定下，形状（2, 3）张量的内存布局为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Tensor: shape=(<span class="number">3</span>, <span class="number">2</span>), dtype=float32, numpy=</span><br><span class="line">array([[<span class="number">1.</span>, <span class="number">4.</span>],</span><br><span class="line">       [<span class="number">2.</span>, <span class="number">1.</span>],</span><br><span class="line">       [<span class="number">3.</span>, <span class="number">5.</span>]], dtype=float32)&gt;</span><br><span class="line"></span><br><span class="line">[<span class="number">1.</span>, <span class="number">4.</span>, <span class="number">2.</span>, <span class="number">1.</span>, <span class="number">3.</span>, <span class="number">5.</span>]</span><br></pre></td></tr></table></figure>
+<p>数据在创建时按着初始的维度顺序写入，改变张量的视图仅仅是改变了张量的理解方 式，并不会改变张量的存储顺序，这在一定程度上是从计算效率考虑的，大量数据的写入 操作会消耗较多的计算资源。</p>
+<h3 id="张量存储的形状（大小）、存储偏移量和步长"><a href="#张量存储的形状（大小）、存储偏移量和步长" class="headerlink" title="张量存储的形状（大小）、存储偏移量和步长"></a>张量存储的形状（大小）、存储偏移量和步长</h3><p>为了索引到存储中，张量依赖于一些信息，这些信息连同它们的存储一起明确地定义了它们：大小、存储偏移量和步长（下图）。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>形状</td>
+<td>shape</td>
+<td>是一个元组，表示张量表示的每个维度上有多少个元素。注意张量的形状（shape）与存储的大小（size）等价。</td>
+</tr>
+<tr>
+<td>步长</td>
+<td>stride</td>
+<td>是一个元组，表示当索引在每个维度上增加1时，必须跳过的存储中的元素数量。</td>
+</tr>
+<tr>
+<td>存储偏移量</td>
+<td>storage offset</td>
+<td>存储中对应于张量中第一个元素的index。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="/2019/11/28/理解张量/张量偏移、大小和步长.png" alt=""></p>
+<script type="math/tex; mode=display">张量偏移、形状（大小）和步长</script><p>上图例子中，在二维张量中访问元素$(i, j)$的结果是访问存储中的$storage_offset + stride[0] <em> i + stride[1] </em> j$元素。</p>
+<script type="math/tex; mode=display">index((i, j)) = storage\_offset + stride[0] * i + stride[1] * j</script><p>更加广义的：对于形状为$shape(d1, d2,.., dn)$的张量的视图中的元素$E(e1, e2,…,en)$，如果该张量的存储的步长为 $stride(s1, s2,…,sn)$ 、存储偏移量为 $storage \ offset$，那么元素$E$的存储位置$index$是：</p>
+<script type="math/tex; mode=display">index(E(e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>由此我们得出了张量视图的计算式子：</p>
+<p>张量视图 = 张量存储 + 张量形状 + 张量步长 + 张量偏移</p>
+<h3 id="张量存储对张量操作的影响"><a href="#张量存储对张量操作的影响" class="headerlink" title="张量存储对张量操作的影响"></a>张量存储对张量操作的影响</h3><p>这种张量和存储之间的间接性导致了一些操作，比如转置一个张量或者提取一个次张量，这些操作是便宜的，因为它们不会导致内存的重新分配；而是，它们包括分配一个新的张量对象，这个张量对象的形状、存储偏移量或步长有不同的值。</p>
+<p>子张量的维数变少，而索引的存储空间仍然和原来的点张量一样。改变子张量会对原张量产生副作用（对子张量的修改会影响原张量）。但是这种效果可能并不总是存在，因为可以把子张量克隆成一个新的张量。</p>
+<p>没有分配新的内存：只有通过创建一个新的张量实例来获得转置（transpose），这个张量实例的步长与原来的张量不同。可以通过张量的重新布局函数，比如PyTorch中的contiguous()函数，来强制拷贝一份张量，让它的布局和从新创建的张量一样。</p>
+<p><img src="/2019/11/28/理解张量/张量的转置操作.png" alt=""></p>
+<script type="math/tex; mode=display">张量的转置操作</script><h3 id="张量的视图与存储的区别与联系"><a href="#张量的视图与存储的区别与联系" class="headerlink" title="张量的视图与存储的区别与联系"></a>张量的视图与存储的区别与联系</h3><p><strong>联系</strong></p>
+<p>对于形状 shape 为(d1, d2,.., dn)的张量的视图中的元素E(e1, e2,…,en)，如果该张量的存储的步长为 stride 为 (s1, s2,…,sn) 、存储偏移量storage offset 为 s_o，那么元素E的存储位置index是：</p>
+<script type="math/tex; mode=display">index((e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>张量视图 = 张量存储 + 张量形状 + 张量步长 + 张量偏移</p>
+<p><strong>区别</strong></p>
+<ul>
+<li>相同存储可以有不同的视图：tensor_B.storage() 与 tensor_B_transpose.storage() 相同，但是 tensor_B 与 tensor_B_transpose 不同。</li>
+<li>相同的视图可以有不同的存储：tensor_A 与 tensor_B_transpose 相同，但是 tensor_A.storage() 与 tensor_B_transpose.storage() 不同。</li>
+</ul>
+<p>总结：张量的视图与存储通过索引来建立关系，它们之间没有必然性，即相同存储可以有不同的视图，相同的视图可以有不同的存储。</p>
+<h2 id="张量的操作"><a href="#张量的操作" class="headerlink" title="张量的操作"></a>张量的操作</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/06/19/TensorFlow手册/TensorFlow张量的常用操作.ipynb" target="_blank" rel="noopener">TensorFlow张量的常用操作.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<ul>
+<li>数据类型：<code>dtype=int32, float32, string, bool</code></li>
+<li>创建张量：<code>tf.convert_to_tensor, tf.constant, tf.zeros, tf.ones, tf.zeros_like, tf.fill, tf.random.normal, tf.random.uniform, tf.range</code></li>
+<li>索引与切片：<code>A[1][2][1], A[1, 2, 1], A[ :, :, 0:3:2], A[..., 0:3:2]</code></li>
+<li>维度变换：<code>tf.reshape, tf.expand_dims, tf.squeeze, tf.transpose</code></li>
+<li>数据复制：<code>tf.tile</code></li>
+<li>数学运算：<code>+, -, *, /, //, %, **, tf.pow, tf.square, tf.sqrt, tf.math.log, tf.matmul, @</code></li>
+<li>合并与分割：<code>tf.concat, tf.stack, tf.split, tf.unstack</code></li>
+<li>统计量：<code>tf.norm, tf.reduce_max min mean sum, tf.argmax, tf.argmin</code></li>
+<li>张量比较：<code>tf.equal</code></li>
+<li>填充与复制：<code>tf.pad, tf.keras.preprocessing.sequence.pad_sequences, tf.tile</code></li>
+<li>数据限幅：<code>tf.maximum, tf.minimum, tf.clip_by_value</code></li>
+<li>数据收集：<code>tf.gather, tf.gather_nd</code></li>
+<li>掩码：<code>tf.boolean_mask</code></li>
+<li>条件：<code>tf.where</code></li>
+<li>数据刷新：<code>tf.scatter_nd</code></li>
+<li>采样：<code>tf.meshgrid</code></li>
+</ul>
+<p>TODO：增加PyTorch版本张量的操作</p>
+<h2 id="张量操作的意义"><a href="#张量操作的意义" class="headerlink" title="张量操作的意义"></a>张量操作的意义</h2><p>TODO：丰富内容</p>
+<p><a href="https://www.zhihu.com/question/20666664" target="_blank" rel="noopener">仿射变换</a><br><a href="https://blog.csdn.net/csxiaoshui/article/details/65446125" target="_blank" rel="noopener">旋转变换（一）旋转矩阵</a></p>
+<h2 id="张量与现实数据的转换"><a href="#张量与现实数据的转换" class="headerlink" title="张量与现实数据的转换"></a>张量与现实数据的转换</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/用张量来表示现实世界的数据.ipynb" target="_blank" rel="noopener">用张量来表示现实世界的数据.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<ul>
+<li>将不同类型的实际数据表示为PyTorch张量</li>
+<li>处理各种数据类型，包括电子表格、时间序列、文本、图像、医疗成像、视频、音频</li>
+<li>从文件中加载数据</li>
+<li>将数据转换为张量</li>
+<li>对张量进行整形（shaping），使其可以用作神经网络模型的输入</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>本站所有文章和源码均免费开放，如您喜欢，可以请我喝杯咖啡</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="袁宵 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="袁宵 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>袁宵</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanxiaosc.github.io/2019/11/28/理解张量/" title="理解张量">https://yuanxiaosc.github.io/2019/11/28/理解张量/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/张量/" rel="tag"># 张量</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/13/科学上网与内网穿透/" rel="next" title="科学上网与内网穿透">
+                  <i class="fa fa-chevron-left"></i> 科学上网与内网穿透
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的定义"><span class="nav-number">1.</span> <span class="nav-text">张量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的视图与存储"><span class="nav-number">2.</span> <span class="nav-text">张量的视图与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的定义"><span class="nav-number">2.1.</span> <span class="nav-text">张量的视图与存储的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量视图的多维性意义"><span class="nav-number">2.2.</span> <span class="nav-text">张量视图的多维性意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的一维性"><span class="nav-number">2.3.</span> <span class="nav-text">张量存储的一维性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的形状（大小）、存储偏移量和步长"><span class="nav-number">2.4.</span> <span class="nav-text">张量存储的形状（大小）、存储偏移量和步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储对张量操作的影响"><span class="nav-number">2.5.</span> <span class="nav-text">张量存储对张量操作的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的区别与联系"><span class="nav-number">2.6.</span> <span class="nav-text">张量的视图与存储的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的操作"><span class="nav-number">3.</span> <span class="nav-text">张量的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量操作的意义"><span class="nav-number">4.</span> <span class="nav-text">张量操作的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量与现实数据的转换"><span class="nav-number">5.</span> <span class="nav-text">张量与现实数据的转换</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.png"
+      alt="袁宵">
+  <p class="site-author-name" itemprop="name">袁宵</p>
+  <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yuanxiaoSC" title="GitHub &rarr; https://github.com/yuanxiaoSC" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wangzichaochaochao@gmail.com" title="E-Mail &rarr; mailto:wangzichaochaochao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">袁宵</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 384.7k 字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+  <script src="//code.tidio.co/ohblyq9gicnjwqem8o1hfoymk3calgui.js"></script>
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

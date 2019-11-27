@@ -69,7 +69,7 @@
 <meta property="og:description" content="Git手册使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/04/Git手册/分支管理策略示意图.png">
-<meta property="og:updated_time" content="2019-11-19T02:19:58.592Z">
+<meta property="og:updated_time" content="2019-11-27T07:30:39.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git手册">
 <meta name="twitter:description" content="Git手册使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-19 10:19:58" itemprop="dateModified" datetime="2019-11-19T10:19:58+08:00">2019-11-19</time>
+                <time title="修改时间：2019-11-27 15:30:39" itemprop="dateModified" datetime="2019-11-27T15:30:39+08:00">2019-11-27</time>
               </span>
             
           
@@ -425,7 +425,7 @@
 <li>创建证书登录：收集所有需要登录的用户的公钥，就是他们自己的id_rsa.pub文件，把所有公钥导入到 <code>/home/git/.ssh/authorized_keys</code> 文件里，一行一个。</li>
 <li>初始化Git仓库：先选定一个目录作为Git仓库，假定是 <code>/srv/sample.git</code>，在/srv目录下输入命令：<code>sudo git init --bare sample.git</code> Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以.git结尾。然后，把owner改为git：<code>sudo chown -R git:git sample.git</code></li>
 <li>禁用shell登录：出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑/etc/passwd文件完成。找到类似下面的一行：<code>git:x:1001:1001:,,,:/home/git:/bin/bash</code> 改为：<code>git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell</code> 这样，git用户可以正常通过ssh使用git，但无法登录shell，因为我们为git用户指定的git-shell每次一登录就自动退出。</li>
-<li>克隆远程仓库：现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：<code>git clone git@server:/srv/sample.git</code> 。我们的ssh端口可能不是22，那么在填写url的时候就要做出一定的改变的：<code>ssh://用户名@主机IP(或域名):端口号/git目录地址</code></li>
+<li>克隆远程仓库：现在，可以通过git clone命令克隆远程仓库了，在各自的电脑上运行：<code>git clone git@server:/srv/sample.git</code> 。我们的ssh端口可能不是22，那么在填写url的时候就要做出一定的改变的：<code>git clone ssh://用户名@主机IP(或域名):端口号/git目录地址</code></li>
 </ol>
 <p>管理公钥：如果团队很小，把每个人的公钥收集起来放到服务器的 <code>/home/git/.ssh/authorized_keys</code> 文件里就是可行的。如果团队有几百号人，这时，可以用Gitosis来管理公钥。</p>
 <p>管理权限：可以在服务器端编写一系列脚本来控制提交等操作，达到权限控制的目的。Gitolite就是这个工具。</p>
@@ -573,7 +573,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">137</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -599,7 +599,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">126</span>
+        <span class="site-state-item-count">127</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -663,7 +663,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 382.5k 字</span>
+  <span class="post-count">全站共 384.7k 字</span>
 </div>
 
         
