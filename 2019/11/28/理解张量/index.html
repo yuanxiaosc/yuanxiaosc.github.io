@@ -72,7 +72,7 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量是存储实例上的视图.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量偏移、大小和步长.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量的转置操作.png">
-<meta property="og:updated_time" content="2019-11-27T13:56:22.674Z">
+<meta property="og:updated_time" content="2019-11-28T01:59:28.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解张量">
 <meta name="twitter:description" content="神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。">
@@ -298,19 +298,11 @@
                 
               
 
-              <time title="创建时间：2019-11-28 08:00:00" itemprop="dateCreated datePublished" datetime="2019-11-28T08:00:00+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 08:00:00 / 修改时间：09:59:28" itemprop="dateCreated datePublished" datetime="2019-11-28T08:00:00+08:00">2019-11-28</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 21:56:22" itemprop="dateModified" datetime="2019-11-27T21:56:22+08:00">2019-11-27</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -350,7 +342,7 @@
 <p>张量是将向量和矩阵推广到任意维数。如下图所示，一个张量的维数与张量中用来表示标量值的索引的数量一致。</p>
 <p><img src="/2019/11/28/理解张量/张量示意图.png" alt=""></p>
 <script type="math/tex; mode=display">张量示意图</script><p>新张量 = 张量[索引]</p>
-<h2 id="张量的视图与存储"><a href="#张量的视图与存储" class="headerlink" title="张量的视图与存储"></a>张量的视图与存储</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/张量的存储.ipynb" target="_blank" rel="noopener">张量的存储.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<h2 id="张量的视图与存储"><a href="#张量的视图与存储" class="headerlink" title="张量的视图与存储"></a>张量的视图与存储</h2><p>结合该文件理解以下内容：<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/张量的存储.ipynb" target="_blank" rel="noopener">张量的存储.ipynb</a> ，下面是该文件的主要内容：</p>
 <ul>
 <li>张量，PyTorch中的基本数据结构</li>
 <li>索引并在PyTorch张量上进行操作以探索和处理数据</li>
@@ -360,7 +352,7 @@
 <h3 id="张量的视图与存储的定义"><a href="#张量的视图与存储的定义" class="headerlink" title="张量的视图与存储的定义"></a>张量的视图与存储的定义</h3><p>存储（Storage）是一维的数字数据数组，例如包含给定类型的数字(可能是float或int32)的连续内存块。张量是这样一个存储的视图，它能够通过使用偏移量（offset）和每一维度的步长（per-dimension strides）索引（index）到该存储中。存储的布局总是一维的，而与可能涉及到它的任何张量的维数无关。</p>
 <p>多个张量可以对相同的存储进行索引，即使它们对数据的索引是不同的。但是，底层内存只分配一次，因此不管存储实例管理的数据有多大，都可以快速地创建数据上的替代张量视图。</p>
 <p><img src="/2019/11/28/理解张量/张量是存储实例上的视图.png" alt=""></p>
-<script type="math/tex; mode=display">张量是存储实例上的视图</script><h3 id="张量视图的多维性意义"><a href="#张量视图的多维性意义" class="headerlink" title="张量视图的多维性意义"></a>张量视图的多维性意义</h3><p>张量的视图就是我们理解张量的方式，比如 shape 为[2,4,4,3]的张量 A，我们从逻辑上可以理解 为 2 张图片，每张图片 4 行 4 列，每个位置有 RGB 3 个通道的数据；张量的存储体现在张 量在内存上保存为一段连续的内存区域，对于同样的存储，我们可以有不同的理解方式， 比如上述 A，我们可以在不改变张量的存储下，将张量 A 理解为 2 个样本，每个样本的特征为长度 48 的向量。这就是存储与视图的关系。</p>
+<script type="math/tex; mode=display">张量是存储实例上的视图</script><h3 id="张量视图的多维性意义"><a href="#张量视图的多维性意义" class="headerlink" title="张量视图的多维性意义"></a>张量视图的多维性意义</h3><p>张量的视图就是我们理解张量的方式，比如 shape 为[2,4,4,3]的张量 A，我们从逻辑上可以理解 为 2 张图片，每张图片 4 行 4 列，每个位置有 RGB 3 个通道的数据；张量的存储体现在张 量在内存上保存为一段连续的内存区域，对于同样的存储，我们可以有不同的理解方式， 比如上述 A，我们可以在不改变张量的存储下，将张量 A 理解为 2 个样本，每个样本的特征为长度 48 的向量。</p>
 <h3 id="张量存储的一维性"><a href="#张量存储的一维性" class="headerlink" title="张量存储的一维性"></a>张量存储的一维性</h3><p>在存储数据时，内存并不支持这个维度层级概念，只能以平铺方式按序写入内存，因此这 种层级关系需要人为管理，也就是说，每个张量的存储顺序需要人为跟踪。为了方便表达，我们把张量 shape 中相对靠左侧的维度叫做大维度，shape 中相对靠右侧的维度叫做小维度，比如[2,4,4,3]的张量中，图片数量维度与通道数量相比，图片数量叫做大维度，通道 数叫做小维度。在优先写入小维度的设定下，形状（2, 3）张量的内存布局为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;Tensor: shape=(<span class="number">3</span>, <span class="number">2</span>), dtype=float32, numpy=</span><br><span class="line">array([[<span class="number">1.</span>, <span class="number">4.</span>],</span><br><span class="line">       [<span class="number">2.</span>, <span class="number">1.</span>],</span><br><span class="line">       [<span class="number">3.</span>, <span class="number">5.</span>]], dtype=float32)&gt;</span><br><span class="line"></span><br><span class="line">[<span class="number">1.</span>, <span class="number">4.</span>, <span class="number">2.</span>, <span class="number">1.</span>, <span class="number">3.</span>, <span class="number">5.</span>]</span><br></pre></td></tr></table></figure>
 <p>数据在创建时按着初始的维度顺序写入，改变张量的视图仅仅是改变了张量的理解方 式，并不会改变张量的存储顺序，这在一定程度上是从计算效率考虑的，大量数据的写入 操作会消耗较多的计算资源。</p>
@@ -394,24 +386,23 @@
 </table>
 </div>
 <p><img src="/2019/11/28/理解张量/张量偏移、大小和步长.png" alt=""></p>
-<script type="math/tex; mode=display">张量偏移、形状（大小）和步长</script><p>上图例子中，在二维张量中访问元素$(i, j)$的结果是访问存储中的$storage_offset + stride[0] <em> i + stride[1] </em> j$元素。</p>
-<script type="math/tex; mode=display">index((i, j)) = storage\_offset + stride[0] * i + stride[1] * j</script><p>更加广义的：对于形状为$shape(d1, d2,.., dn)$的张量的视图中的元素$E(e1, e2,…,en)$，如果该张量的存储的步长为 $stride(s1, s2,…,sn)$ 、存储偏移量为 $storage \ offset$，那么元素$E$的存储位置$index$是：</p>
-<script type="math/tex; mode=display">index(E(e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>由此我们得出了张量视图的计算式子：</p>
-<p>张量视图 = 张量存储 + 张量形状 + 张量步长 + 张量偏移</p>
-<h3 id="张量存储对张量操作的影响"><a href="#张量存储对张量操作的影响" class="headerlink" title="张量存储对张量操作的影响"></a>张量存储对张量操作的影响</h3><p>这种张量和存储之间的间接性导致了一些操作，比如转置一个张量或者提取一个次张量，这些操作是便宜的，因为它们不会导致内存的重新分配；而是，它们包括分配一个新的张量对象，这个张量对象的形状、存储偏移量或步长有不同的值。</p>
+<script type="math/tex; mode=display">张量偏移、形状（大小）和步长</script><p>上图例子中，在二维张量中访问元素$(i, j)$的结果是访问存储中元素的索引如下计算：</p>
+<script type="math/tex; mode=display">index((i, j)) = storage\_offset + stride[0] * i + stride[1] * j</script><p>更加广义的：对于形状为$shape(d1, d2,.., dn)$的张量的视图中的元素$E(e1, e2,…,en)$，如果该张量的存储的步长为 $stride(s1, s2,…,sn)$ 、存储偏移量为 $s_o$，那么元素$E$的存储位置$index$是：</p>
+<script type="math/tex; mode=display">index(E(e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>由此我们看出张量视图中的元素由受以下因素影响：</p>
+<script type="math/tex; mode=display">张量视图 = f(张量存储, 张量形状, 张量步长, 张量偏移)</script><h3 id="张量存储对张量操作的影响"><a href="#张量存储对张量操作的影响" class="headerlink" title="张量存储对张量操作的影响"></a>张量存储对张量操作的影响</h3><p>这种张量和存储之间的间接性导致了一些操作，比如转置一个张量或者提取一个次张量，这些操作是便宜的（消耗很少资源），因为它们不会导致内存的重新分配；而是，它们包括分配一个新的张量对象，这个张量对象的形状、存储偏移量或步长有不同的值。</p>
 <p>子张量的维数变少，而索引的存储空间仍然和原来的点张量一样。改变子张量会对原张量产生副作用（对子张量的修改会影响原张量）。但是这种效果可能并不总是存在，因为可以把子张量克隆成一个新的张量。</p>
 <p>没有分配新的内存：只有通过创建一个新的张量实例来获得转置（transpose），这个张量实例的步长与原来的张量不同。可以通过张量的重新布局函数，比如PyTorch中的contiguous()函数，来强制拷贝一份张量，让它的布局和从新创建的张量一样。</p>
 <p><img src="/2019/11/28/理解张量/张量的转置操作.png" alt=""></p>
 <script type="math/tex; mode=display">张量的转置操作</script><h3 id="张量的视图与存储的区别与联系"><a href="#张量的视图与存储的区别与联系" class="headerlink" title="张量的视图与存储的区别与联系"></a>张量的视图与存储的区别与联系</h3><p><strong>联系</strong></p>
-<p>对于形状 shape 为(d1, d2,.., dn)的张量的视图中的元素E(e1, e2,…,en)，如果该张量的存储的步长为 stride 为 (s1, s2,…,sn) 、存储偏移量storage offset 为 s_o，那么元素E的存储位置index是：</p>
-<script type="math/tex; mode=display">index((e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>张量视图 = 张量存储 + 张量形状 + 张量步长 + 张量偏移</p>
-<p><strong>区别</strong></p>
+<p>对于形状为$shape(d1, d2,.., dn)$的张量的视图中的元素$E(e1, e2,…,en)$，如果该张量的存储的步长为 $stride(s1, s2,…,sn)$ 、存储偏移量为 $s_o$，那么元素$E$的存储位置$index$是：</p>
+<script type="math/tex; mode=display">index(E(e1, e2,...,en)) = s\_o + s1 * e1 + s2 * e2 + ... + sn *en</script><p>张量视图中的元素由受以下因素影响：</p>
+<script type="math/tex; mode=display">张量视图 = f(张量存储, 张量形状, 张量步长, 张量偏移)</script><p><strong>区别</strong></p>
 <ul>
 <li>相同存储可以有不同的视图：tensor_B.storage() 与 tensor_B_transpose.storage() 相同，但是 tensor_B 与 tensor_B_transpose 不同。</li>
 <li>相同的视图可以有不同的存储：tensor_A 与 tensor_B_transpose 相同，但是 tensor_A.storage() 与 tensor_B_transpose.storage() 不同。</li>
 </ul>
 <p>总结：张量的视图与存储通过索引来建立关系，它们之间没有必然性，即相同存储可以有不同的视图，相同的视图可以有不同的存储。</p>
-<h2 id="张量的操作"><a href="#张量的操作" class="headerlink" title="张量的操作"></a>张量的操作</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/06/19/TensorFlow手册/TensorFlow张量的常用操作.ipynb" target="_blank" rel="noopener">TensorFlow张量的常用操作.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<h2 id="张量的数据类型和操作"><a href="#张量的数据类型和操作" class="headerlink" title="张量的数据类型和操作"></a>张量的数据类型和操作</h2><p>结合该文件理解以下内容：<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/06/19/TensorFlow手册/TensorFlow张量的常用操作.ipynb" target="_blank" rel="noopener">TensorFlow张量的常用操作.ipynb</a> ，下面是该文件的主要内容：</p>
 <ul>
 <li>数据类型：<code>dtype=int32, float32, string, bool</code></li>
 <li>创建张量：<code>tf.convert_to_tensor, tf.constant, tf.zeros, tf.ones, tf.zeros_like, tf.fill, tf.random.normal, tf.random.uniform, tf.range</code></li>
@@ -431,9 +422,15 @@
 <li>采样：<code>tf.meshgrid</code></li>
 </ul>
 <p>TODO：增加PyTorch版本张量的操作</p>
+<h3 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h3><ol>
+<li>标量，0维张量，主要用于模型损失和各种测量指标的表示，比如准确率、精度等；</li>
+<li>向量，1维张量，主要用于表示模型权重中的偏置b；</li>
+<li>矩阵，2维张量，主要用于表示线性模型Dense中的权重矩阵W；</li>
+<li>张量，3维张量主要用于序列数据，它的格式是 <code>[batch_size, sequence length, feature length]</code>，比如自然语言处理中句子的嵌入表示 <code>[批量大小，句子长度，词嵌入维度]</code>。4维张量主要用于图像数据，它的格式是 <code>[batch_size, length, width, channel]</code>。更高维度张量较少使用。</li>
+</ol>
 <h2 id="张量操作的意义"><a href="#张量操作的意义" class="headerlink" title="张量操作的意义"></a>张量操作的意义</h2><p>TODO：丰富内容</p>
 <p><a href="https://www.zhihu.com/question/20666664" target="_blank" rel="noopener">仿射变换</a><br><a href="https://blog.csdn.net/csxiaoshui/article/details/65446125" target="_blank" rel="noopener">旋转变换（一）旋转矩阵</a></p>
-<h2 id="张量与现实数据的转换"><a href="#张量与现实数据的转换" class="headerlink" title="张量与现实数据的转换"></a>张量与现实数据的转换</h2><p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/用张量来表示现实世界的数据.ipynb" target="_blank" rel="noopener">用张量来表示现实世界的数据.ipynb</a> 深入学习，下面是该文件的主要内容：</p>
+<h2 id="张量与现实数据的转换"><a href="#张量与现实数据的转换" class="headerlink" title="张量与现实数据的转换"></a>张量与现实数据的转换</h2><p>结合该文件理解以下内容：<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/用张量来表示现实世界的数据.ipynb" target="_blank" rel="noopener">用张量来表示现实世界的数据.ipynb</a>，下面是该文件的主要内容：</p>
 <ul>
 <li>将不同类型的实际数据表示为PyTorch张量</li>
 <li>处理各种数据类型，包括电子表格、时间序列、文本、图像、医疗成像、视频、音频</li>
@@ -559,7 +556,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的定义"><span class="nav-number">1.</span> <span class="nav-text">张量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的视图与存储"><span class="nav-number">2.</span> <span class="nav-text">张量的视图与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的定义"><span class="nav-number">2.1.</span> <span class="nav-text">张量的视图与存储的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量视图的多维性意义"><span class="nav-number">2.2.</span> <span class="nav-text">张量视图的多维性意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的一维性"><span class="nav-number">2.3.</span> <span class="nav-text">张量存储的一维性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的形状（大小）、存储偏移量和步长"><span class="nav-number">2.4.</span> <span class="nav-text">张量存储的形状（大小）、存储偏移量和步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储对张量操作的影响"><span class="nav-number">2.5.</span> <span class="nav-text">张量存储对张量操作的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的区别与联系"><span class="nav-number">2.6.</span> <span class="nav-text">张量的视图与存储的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的操作"><span class="nav-number">3.</span> <span class="nav-text">张量的操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量操作的意义"><span class="nav-number">4.</span> <span class="nav-text">张量操作的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量与现实数据的转换"><span class="nav-number">5.</span> <span class="nav-text">张量与现实数据的转换</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的定义"><span class="nav-number">1.</span> <span class="nav-text">张量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的视图与存储"><span class="nav-number">2.</span> <span class="nav-text">张量的视图与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的定义"><span class="nav-number">2.1.</span> <span class="nav-text">张量的视图与存储的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量视图的多维性意义"><span class="nav-number">2.2.</span> <span class="nav-text">张量视图的多维性意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的一维性"><span class="nav-number">2.3.</span> <span class="nav-text">张量存储的一维性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的形状（大小）、存储偏移量和步长"><span class="nav-number">2.4.</span> <span class="nav-text">张量存储的形状（大小）、存储偏移量和步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储对张量操作的影响"><span class="nav-number">2.5.</span> <span class="nav-text">张量存储对张量操作的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的区别与联系"><span class="nav-number">2.6.</span> <span class="nav-text">张量的视图与存储的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的数据类型和操作"><span class="nav-number">3.</span> <span class="nav-text">张量的数据类型和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值类型"><span class="nav-number">3.1.</span> <span class="nav-text">数值类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量操作的意义"><span class="nav-number">4.</span> <span class="nav-text">张量操作的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量与现实数据的转换"><span class="nav-number">5.</span> <span class="nav-text">张量与现实数据的转换</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -668,7 +665,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 384.7k 字</span>
+  <span class="post-count">全站共 385.1k 字</span>
 </div>
 
         
