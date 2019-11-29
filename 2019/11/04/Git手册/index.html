@@ -69,7 +69,7 @@
 <meta property="og:description" content="Git手册使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/04/Git手册/分支管理策略示意图.png">
-<meta property="og:updated_time" content="2019-11-27T07:30:39.687Z">
+<meta property="og:updated_time" content="2019-11-29T01:37:49.216Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git手册">
 <meta name="twitter:description" content="Git手册使用方法： 首先速览本文第一章和第二章内容； 跟着廖雪峰 Git教程操作一遍，然后再仔细阅读本文内容； 如果已经熟悉，直接看阅读更多中的内容即可。 第一章创建版本库初始化一个Git仓库，使用git init命令。">
@@ -306,7 +306,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-27 15:30:39" itemprop="dateModified" datetime="2019-11-27T15:30:39+08:00">2019-11-27</time>
+                <time title="修改时间：2019-11-29 09:37:49" itemprop="dateModified" datetime="2019-11-29T09:37:49+08:00">2019-11-29</time>
               </span>
             
           
@@ -357,7 +357,7 @@
 <h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><p>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令 <code>git reset --hard commit_id</code> 。</p>
 <p>穿梭前，用 <code>git log</code> 可以查看提交历史，以便确定要回退到哪个版本。</p>
 <p>要重返未来，用 <code>git reflog</code> 查看命令历史，以便确定要回到未来的哪个版本。</p>
-<h3 id="撤销更改"><a href="#撤销更改" class="headerlink" title="撤销更改"></a>撤销更改</h3><p><strong>场景1</strong>：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令 <code>git checkout -- readme.txt</code> 意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况：</p>
+<h3 id="撤销更改"><a href="#撤销更改" class="headerlink" title="撤销更改"></a>撤销更改</h3><p><strong>场景1</strong>：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令 <code>git checkout -- readme.txt</code> 意思就是，把readme.txt文件在工作区的修改全部撤销，这里有两种情况（<code>git checkout .</code> 本地所有修改的。没有的提交的，都返回到原来的状态）：</p>
 <ul>
 <li>一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</li>
 <li>一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。</li>
@@ -573,7 +573,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -599,7 +599,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">130</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -663,7 +663,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 385.1k 字</span>
+  <span class="post-count">全站共 387.7k 字</span>
 </div>
 
         

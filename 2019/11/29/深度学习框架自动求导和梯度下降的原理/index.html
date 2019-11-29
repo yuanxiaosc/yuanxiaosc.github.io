@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="eYmWT0dEmt">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（PyTorch和TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是： 手动反向传播求导、手动梯度下降 自动求导，手动梯度下降 自动求导，自动梯度下降">
+<meta name="keywords" content="自动求导,反向传播,梯度下降">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习框架自动求导和梯度下降的原理">
+<meta property="og:url" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（PyTorch和TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是： 手动反向传播求导、手动梯度下降 自动求导，手动梯度下降 自动求导，自动梯度下降">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_16_1.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_20_1.png">
+<meta property="og:updated_time" content="2019-11-29T08:38:22.646Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度学习框架自动求导和梯度下降的原理">
+<meta name="twitter:description" content="本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（PyTorch和TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是： 手动反向传播求导、手动梯度下降 自动求导，手动梯度下降 自动求导，自动梯度下降">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_16_1.png">
+  <link rel="canonical" href="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>深度学习框架自动求导和梯度下降的原理 | 望江人工智库</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?359fbde2215e8ede98cdd58478ab2c53";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">TF-KMP</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/yuanxiaosc" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">深度学习框架自动求导和梯度下降的原理
+
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2019-11-29 16:00:00 / 修改时间：16:38:22" itemprop="dateCreated datePublished" datetime="2019-11-29T16:00:00+08:00">2019-11-29</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Artificial-Intelligence-Navigation/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence Navigation</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（PyTorch和TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是：</p><ol>
+<li>手动反向传播求导、手动梯度下降</li>
+<li>自动求导，手动梯度下降</li>
+<li>自动求导，自动梯度下降</li>
+</ol><a id="more"></a>
+
+<h2 id="PyTorch自动求导和梯度下降原理"><a href="#PyTorch自动求导和梯度下降原理" class="headerlink" title="PyTorch自动求导和梯度下降原理"></a>PyTorch自动求导和梯度下降原理</h2><blockquote>
+<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/理解深度学习框架自动求导和梯度下降的原理/PyTorch自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">PyTorch自动求导和梯度下降原理.ipynb</a> 动手学习</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">torch.set_printoptions(edgeitems=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据</span></span><br><span class="line">Y = [<span class="number">0.5</span>,  <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">28.0</span>, <span class="number">11.0</span>,  <span class="number">8.0</span>,  <span class="number">3.0</span>, <span class="number">-4.0</span>,  <span class="number">6.0</span>, <span class="number">13.0</span>, <span class="number">21.0</span>] <span class="comment"># 摄氏度 Celsius</span></span><br><span class="line">X = [<span class="number">35.7</span>, <span class="number">55.9</span>, <span class="number">58.2</span>, <span class="number">81.9</span>, <span class="number">56.3</span>, <span class="number">48.9</span>, <span class="number">33.9</span>, <span class="number">21.8</span>, <span class="number">48.4</span>, <span class="number">60.4</span>, <span class="number">68.4</span>] <span class="comment"># 华氏度 Fahrenheit</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 转化成张量</span></span><br><span class="line">Y = torch.tensor(Y, requires_grad=<span class="keyword">False</span>)</span><br><span class="line">X = torch.tensor(X, requires_grad=<span class="keyword">False</span>)</span><br><span class="line">X, Y</span><br></pre></td></tr></table></figure>
+<pre><code>(tensor([35.7000, 55.9000, 58.2000, 81.9000, 56.3000, 48.9000, 33.9000, 21.8000,
+         48.4000, 60.4000, 68.4000]),
+ tensor([ 0.5000, 14.0000, 15.0000, 28.0000, 11.0000,  8.0000,  3.0000, -4.0000,
+          6.0000, 13.0000, 21.0000]))
+</code></pre><p>模型与损失函数。这里使用最简单的一元线性回归模型和均方根损失函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> w * X + b</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span><span class="params">(Y_hat, Y)</span>:</span></span><br><span class="line">    squared_diffs = (Y_hat - Y)**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> squared_diffs.mean()</span><br></pre></td></tr></table></figure>
+<h3 id="手动反向传播求导、手动梯度下降"><a href="#手动反向传播求导、手动梯度下降" class="headerlink" title="手动反向传播求导、手动梯度下降"></a>手动反向传播求导、手动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型参数</span></span><br><span class="line">w = torch.ones(<span class="number">1</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型预测输出</span></span><br><span class="line">Y_hat = model(X, w, b)</span><br><span class="line">Y_hat</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([35.7000, 55.9000, 58.2000, 81.9000, 56.3000, 48.9000, 33.9000, 21.8000,
+        48.4000, 60.4000, 68.4000])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型损失</span></span><br><span class="line">loss = loss_fn(Y_hat, Y)</span><br><span class="line">loss</span><br></pre></td></tr></table></figure>
+<pre><code>tensor(1763.8846)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 手动编写反向传播算法求解模型损失对模型参数的梯度</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dloss_fn</span><span class="params">(Y_hat, Y)</span>:</span></span><br><span class="line">    dsq_diffs = <span class="number">2</span> * (Y_hat - Y)</span><br><span class="line">    <span class="keyword">return</span> dsq_diffs</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dmodel_dw</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> X</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dmodel_db</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">grad_fn</span><span class="params">(X, Y, Y_hat, w, b)</span>:</span></span><br><span class="line">    dloss_dw = dloss_fn(Y_hat, Y) * dmodel_dw(X, w, b)</span><br><span class="line">    dloss_db = dloss_fn(Y_hat, Y) * dmodel_db(X, w, b)</span><br><span class="line">    <span class="keyword">return</span> torch.stack([dloss_dw.mean(), dloss_db.mean()])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, learning_rate, params, X, Y, print_params=True)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        w, b = params</span><br><span class="line"></span><br><span class="line">        Y_hat = model(X, w, b)  <span class="comment"># &lt;1&gt;</span></span><br><span class="line">        loss = loss_fn(Y_hat, Y)</span><br><span class="line">        grad = grad_fn(X, Y, Y_hat, w, b)  <span class="comment"># &lt;2&gt;</span></span><br><span class="line"></span><br><span class="line">        params = params - learning_rate * grad <span class="comment"># 手动梯度下降</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:  <span class="comment"># &lt;3&gt;</span></span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line">            <span class="keyword">if</span> print_params:</span><br><span class="line">                print(<span class="string">'    Params:'</span>, params)</span><br><span class="line">                print(<span class="string">'    Grad:  '</span>, grad)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> torch.isfinite(loss).all():</span><br><span class="line">            <span class="keyword">break</span>  <span class="comment"># &lt;3&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">params = training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    learning_rate = <span class="number">1e-4</span>,</span><br><span class="line">    params = torch.tensor([<span class="number">1.00</span>, <span class="number">0.01</span>]),</span><br><span class="line">    X = X,</span><br><span class="line">    Y = Y,</span><br><span class="line">    print_params = <span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">params</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048903
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+tensor([  0.5358, -17.2503])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型预测。根据训练后的参数进行模型预测。</span></span><br><span class="line">Y_hat = model(X, *params)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 比较预测结果（直线）与标准答案（圆点）</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">plt.xlabel(<span class="string">"X"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Y"</span>)</span><br><span class="line">plt.plot(X.numpy(), Y_hat.detach().numpy()) <span class="comment"># &lt;2&gt;</span></span><br><span class="line">plt.plot(X.numpy(), Y.numpy(), <span class="string">'o'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fd51c48c490&gt;]
+</code></pre><p><img src="/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_16_1.png" alt="png"></p>
+<h3 id="自动求导，手动梯度下降"><a href="#自动求导，手动梯度下降" class="headerlink" title="自动求导，手动梯度下降"></a>自动求导，手动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型参数</span></span><br><span class="line">params = torch.tensor([<span class="number">1.0</span>, <span class="number">0.0</span>], requires_grad=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型参数没有梯度这个属性</span></span><br><span class="line">params.grad <span class="keyword">is</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure>
+<pre><code>True
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正向传播，求出模型预测和损失值</span></span><br><span class="line">Y_hat = model(X, *params)</span><br><span class="line">loss = loss_fn(Y_hat, Y)</span><br><span class="line">Y_hat, loss</span><br></pre></td></tr></table></figure>
+<pre><code>(tensor([35.7000, 55.9000, 58.2000, 81.9000, 56.3000, 48.9000, 33.9000, 21.8000,
+         48.4000, 60.4000, 68.4000], grad_fn=&lt;AddBackward0&gt;),
+ tensor(1763.8846, grad_fn=&lt;MeanBackward0&gt;))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动反向传播求导</span></span><br><span class="line">loss.backward()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看导数值</span></span><br><span class="line">params.grad</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([4517.2969,   82.6000])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将上一次的梯度记录清空（导数值恢复初始状态）</span></span><br><span class="line"><span class="keyword">if</span> params.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">    params.grad.zero_()</span><br><span class="line"></span><br><span class="line">params.grad</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([0., 0.])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, learning_rate, params, X, Y)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> params.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  <span class="comment"># &lt;1&gt;</span></span><br><span class="line">            params.grad.zero_()</span><br><span class="line"></span><br><span class="line">        Y_hat = model(X, *params)</span><br><span class="line">        loss = loss_fn(Y_hat, Y)</span><br><span class="line">        loss.backward()</span><br><span class="line"></span><br><span class="line">        params = (params - learning_rate * params.grad).detach().requires_grad_()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    learning_rate = <span class="number">1e-4</span>,</span><br><span class="line">    params = torch.tensor([<span class="number">1.00</span>, <span class="number">0.01</span>], requires_grad=<span class="keyword">True</span>), <span class="comment"># &lt;1&gt;</span></span><br><span class="line">    X = X, <span class="comment"># &lt;2&gt;</span></span><br><span class="line">    Y = Y)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048903
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+tensor([  0.5358, -17.2503], requires_grad=True)
+</code></pre><h3 id="自动求导，自动梯度下降"><a href="#自动求导，自动梯度下降" class="headerlink" title="自动求导，自动梯度下降"></a>自动求导，自动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型参数</span></span><br><span class="line">params = torch.tensor([<span class="number">1.00</span>, <span class="number">0.01</span>], requires_grad=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型优化器</span></span><br><span class="line">optimizer = optim.SGD([params], lr=<span class="number">1e-4</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正向传播，求出模型预测和损失值</span></span><br><span class="line">Y_hat = model(X, *params)</span><br><span class="line">loss = loss_fn(Y_hat, Y)</span><br><span class="line">Y_hat, loss</span><br></pre></td></tr></table></figure>
+<pre><code>(tensor([35.7100, 55.9100, 58.2100, 81.9100, 56.3100, 48.9100, 33.9100, 21.8100,
+         48.4100, 60.4100, 68.4100], grad_fn=&lt;AddBackward0&gt;),
+ tensor(1764.7108, grad_fn=&lt;MeanBackward0&gt;))
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动反向传播求导</span></span><br><span class="line">loss.backward()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">params.grad</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([4518.3325,   82.6200])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动梯度下降</span></span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 更新后的参数值</span></span><br><span class="line">params</span><br></pre></td></tr></table></figure>
+<pre><code>tensor([0.5482, 0.0017], requires_grad=True)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, optimizer, params, X, Y)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        Y_hat = model(X, *params)</span><br><span class="line">        loss = loss_fn(Y_hat, Y)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">params = torch.tensor([<span class="number">1.0</span>, <span class="number">0.01</span>], requires_grad=<span class="keyword">True</span>)</span><br><span class="line">learning_rate = <span class="number">1e-4</span></span><br><span class="line">optimizer = optim.SGD([params], lr=learning_rate) <span class="comment"># &lt;1&gt;</span></span><br><span class="line"></span><br><span class="line">training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    optimizer = optimizer,</span><br><span class="line">    params = params, <span class="comment"># &lt;1&gt;</span></span><br><span class="line">    X = X,</span><br><span class="line">    Y = Y)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048905
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+tensor([  0.5358, -17.2503], requires_grad=True)
+</code></pre><hr>
+<h2 id="TensorFlow自动求导和梯度下降原理"><a href="#TensorFlow自动求导和梯度下降原理" class="headerlink" title="TensorFlow自动求导和梯度下降原理"></a>TensorFlow自动求导和梯度下降原理</h2><blockquote>
+<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/理解深度学习框架自动求导和梯度下降的原理/TensorFlow自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">TensorFlow自动求导和梯度下降原理.ipynb</a> 动手学习</p>
+</blockquote>
+<p>本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是：</p>
+<ol>
+<li>手动反向传播求导、手动梯度下降</li>
+<li>自动求导，手动梯度下降</li>
+<li>自动求导，自动梯度下降</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据</span></span><br><span class="line">Y = [<span class="number">0.5</span>,  <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">28.0</span>, <span class="number">11.0</span>,  <span class="number">8.0</span>,  <span class="number">3.0</span>, <span class="number">-4.0</span>,  <span class="number">6.0</span>, <span class="number">13.0</span>, <span class="number">21.0</span>] <span class="comment"># 摄氏度 Celsius</span></span><br><span class="line">X = [<span class="number">35.7</span>, <span class="number">55.9</span>, <span class="number">58.2</span>, <span class="number">81.9</span>, <span class="number">56.3</span>, <span class="number">48.9</span>, <span class="number">33.9</span>, <span class="number">21.8</span>, <span class="number">48.4</span>, <span class="number">60.4</span>, <span class="number">68.4</span>] <span class="comment"># 华氏度 Fahrenheit</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 转化成张量</span></span><br><span class="line">Y = tf.constant(Y)</span><br><span class="line">X = tf.constant(X)</span><br><span class="line">X, Y</span><br></pre></td></tr></table></figure>
+<pre><code>(&lt;tf.Tensor: shape=(11,), dtype=float32, numpy=
+ array([35.7, 55.9, 58.2, 81.9, 56.3, 48.9, 33.9, 21.8, 48.4, 60.4, 68.4],
+       dtype=float32)&gt;, &lt;tf.Tensor: shape=(11,), dtype=float32, numpy=
+ array([ 0.5, 14. , 15. , 28. , 11. ,  8. ,  3. , -4. ,  6. , 13. , 21. ],
+       dtype=float32)&gt;)
+</code></pre><p>模型与损失函数。这里使用最简单的一元线性回归模型和均方根损失函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> w * X + b</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span><span class="params">(Y_hat, Y)</span>:</span></span><br><span class="line">    squared_diffs = (Y_hat - Y)**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> tf.reduce_mean(squared_diffs)</span><br></pre></td></tr></table></figure>
+<h3 id="动反向传播求导、手动梯度下降"><a href="#动反向传播求导、手动梯度下降" class="headerlink" title="动反向传播求导、手动梯度下降"></a>动反向传播求导、手动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型参数</span></span><br><span class="line">w = tf.ones(<span class="number">1</span>)</span><br><span class="line">b = tf.zeros(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型预测输出</span></span><br><span class="line">Y_hat = model(X, w, b)</span><br><span class="line">Y_hat</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor: shape=(11,), dtype=float32, numpy=
+array([35.7, 55.9, 58.2, 81.9, 56.3, 48.9, 33.9, 21.8, 48.4, 60.4, 68.4],
+      dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型损失</span></span><br><span class="line">loss = loss_fn(Y_hat, Y)</span><br><span class="line">loss</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor: shape=(), dtype=float32, numpy=1763.8848&gt;
+</code></pre><h3 id="手动反向传播求导"><a href="#手动反向传播求导" class="headerlink" title="手动反向传播求导"></a>手动反向传播求导</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dloss_fn</span><span class="params">(Y_hat, Y)</span>:</span></span><br><span class="line">    dsq_diffs = <span class="number">2</span> * (Y_hat - Y)</span><br><span class="line">    <span class="keyword">return</span> dsq_diffs</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dmodel_dw</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> X</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dmodel_db</span><span class="params">(X, w, b)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">grad_fn</span><span class="params">(X, Y, Y_hat, w, b)</span>:</span></span><br><span class="line">    dloss_dw = dloss_fn(Y_hat, Y) * dmodel_dw(X, w, b)</span><br><span class="line">    dloss_db = dloss_fn(Y_hat, Y) * dmodel_db(X, w, b)</span><br><span class="line">    <span class="keyword">return</span> tf.stack([tf.reduce_mean(dloss_dw), tf.reduce_mean(dloss_db)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, learning_rate, params, X, Y, print_params=True)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        w, b = params</span><br><span class="line"></span><br><span class="line">        Y_hat = model(X, w, b)  <span class="comment"># &lt;1&gt;</span></span><br><span class="line">        loss = loss_fn(Y_hat, Y)</span><br><span class="line">        grad = grad_fn(X, Y, Y_hat, w, b)  <span class="comment"># &lt;2&gt;</span></span><br><span class="line"></span><br><span class="line">        params = params - learning_rate * grad <span class="comment"># 手动梯度下降</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:  <span class="comment"># &lt;3&gt;</span></span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line">            <span class="keyword">if</span> print_params:</span><br><span class="line">                print(<span class="string">'    Params:'</span>, params)</span><br><span class="line">                print(<span class="string">'    Grad:  '</span>, grad)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> tf.math.is_inf(loss):</span><br><span class="line">            <span class="keyword">break</span>  <span class="comment"># &lt;3&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">params = training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    learning_rate = <span class="number">1e-4</span>,</span><br><span class="line">    params = tf.constant([<span class="number">1.00</span>, <span class="number">0.01</span>]),</span><br><span class="line">    X = X,</span><br><span class="line">    Y = Y,</span><br><span class="line">    print_params = <span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">params</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048903
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([  0.5358124, -17.250313 ], dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模型预测。根据训练后的参数进行模型预测。</span></span><br><span class="line">Y_hat = model(X, *params)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 比较预测结果（直线）与标准答案（圆点）</span></span><br><span class="line">fig = plt.figure()</span><br><span class="line">plt.xlabel(<span class="string">"X"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"Y"</span>)</span><br><span class="line">plt.plot(X.numpy(), Y_hat.numpy()) <span class="comment"># &lt;2&gt;</span></span><br><span class="line">plt.plot(X.numpy(), Y.numpy(), <span class="string">'o'</span>)</span><br></pre></td></tr></table></figure>
+<pre><code>[&lt;matplotlib.lines.Line2D at 0x7fc38cc7dfd0&gt;]
+</code></pre><p><img src="/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_20_1.png" alt="png"></p>
+<h3 id="自动求导，手动梯度下降-1"><a href="#自动求导，手动梯度下降-1" class="headerlink" title="自动求导，手动梯度下降"></a>自动求导，手动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型参数</span></span><br><span class="line">params = tf.constant([<span class="number">1.00</span>, <span class="number">0.01</span>])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型损失函数</span></span><br><span class="line">loss_object = tf.keras.losses.MeanSquaredError()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    tape.watch(params) <span class="comment"># 指定要求导的对象</span></span><br><span class="line">    Y_hat = model(X, *params)</span><br><span class="line">    loss = loss_object(Y_hat, Y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动反向传播求导</span></span><br><span class="line">gradients = tape.gradient(loss, params)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看导数值</span></span><br><span class="line">gradients</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([4518.333,   82.62 ], dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, learning_rate, params, X, Y)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">            tape.watch(params)</span><br><span class="line">            Y_hat = model(X, *params)</span><br><span class="line">            loss = loss_object(Y_hat, Y)</span><br><span class="line">        gradients = tape.gradient(loss, params)</span><br><span class="line">        params = params - learning_rate * gradients</span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    learning_rate = <span class="number">1e-4</span>,</span><br><span class="line">    params = tf.constant([<span class="number">1.00</span>, <span class="number">0.01</span>]),</span><br><span class="line">    X = X,</span><br><span class="line">    Y = Y)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048903
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([  0.5358124, -17.250313 ], dtype=float32)&gt;
+</code></pre><h3 id="自动求导，自动梯度下降-1"><a href="#自动求导，自动梯度下降-1" class="headerlink" title="自动求导，自动梯度下降"></a>自动求导，自动梯度下降</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model</span><span class="params">(X, params)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> params[<span class="number">0</span>] * X + params[<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loss_fn</span><span class="params">(Y_hat, Y)</span>:</span></span><br><span class="line">    squared_diffs = (Y_hat - Y)**<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> tf.reduce_mean(squared_diffs)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义模型参数、损失函数、优化器</span></span><br><span class="line">params = tf.Variable([<span class="number">1.00</span>, <span class="number">0.01</span>])</span><br><span class="line">loss_object = tf.keras.losses.MeanSquaredError()</span><br><span class="line">optimizer = tf.keras.optimizers.SGD(learning_rate=<span class="number">1e-4</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">    tape.watch(params)</span><br><span class="line">    Y_hat = model(X, params)</span><br><span class="line">    loss = loss_object(Y_hat, Y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动反向传播求导</span></span><br><span class="line">gradients = tape.gradient(loss, params)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看导数值</span></span><br><span class="line">gradients</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Tensor: shape=(2,), dtype=float32, numpy=array([4518.333,   82.62 ], dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看参数值</span></span><br><span class="line">params</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Variable &#39;Variable:0&#39; shape=(2,) dtype=float32, numpy=array([1.  , 0.01], dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 自动梯度下降</span></span><br><span class="line">optimizer.apply_gradients(zip([gradients], [params]))</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Variable &#39;UnreadVariable&#39; shape=() dtype=int64, numpy=1&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看自动梯度下降后的参数值</span></span><br><span class="line">params</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;tf.Variable &#39;Variable:0&#39; shape=(2,) dtype=float32, numpy=array([0.54816675, 0.001738  ], dtype=float32)&gt;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">training_loop</span><span class="params">(n_epochs, params, X, Y)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">1</span>, n_epochs + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">with</span> tf.GradientTape() <span class="keyword">as</span> tape:</span><br><span class="line">            tape.watch(params)</span><br><span class="line">            Y_hat = model(X, params)</span><br><span class="line">            loss = loss_object(Y_hat, Y)</span><br><span class="line">        gradients = tape.gradient(loss, params)</span><br><span class="line">        optimizer.apply_gradients(zip([gradients], [params]))</span><br><span class="line">        <span class="keyword">if</span> epoch % <span class="number">30000</span> == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">'Epoch %d, Loss %f'</span> % (epoch, float(loss)))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> params</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">training_loop(</span><br><span class="line">    n_epochs = <span class="number">330000</span>,</span><br><span class="line">    params = tf.Variable([<span class="number">1.00</span>, <span class="number">0.01</span>]),</span><br><span class="line">    X = X,</span><br><span class="line">    Y = Y)</span><br></pre></td></tr></table></figure>
+<pre><code>Epoch 30000, Loss 12.095908
+Epoch 60000, Loss 6.133891
+Epoch 90000, Loss 4.048903
+Epoch 120000, Loss 3.319792
+Epoch 150000, Loss 3.064586
+Epoch 180000, Loss 2.975681
+Epoch 210000, Loss 2.944574
+Epoch 240000, Loss 2.933552
+Epoch 270000, Loss 2.929731
+Epoch 300000, Loss 2.928472
+Epoch 330000, Loss 2.927906
+
+
+
+
+
+&lt;tf.Variable &#39;Variable:0&#39; shape=(2,) dtype=float32, numpy=array([  0.5358124, -17.250313 ], dtype=float32)&gt;
+</code></pre>
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>本站所有文章和源码均免费开放，如您喜欢，可以请我喝杯咖啡</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="袁宵 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="袁宵 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>袁宵</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/" title="深度学习框架自动求导和梯度下降的原理">https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/自动求导/" rel="tag"># 自动求导</a>
+            
+              <a href="/tags/反向传播/" rel="tag"># 反向传播</a>
+            
+              <a href="/tags/梯度下降/" rel="tag"># 梯度下降</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/11/28/理解张量/" rel="next" title="理解张量">
+                  <i class="fa fa-chevron-left"></i> 理解张量
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PyTorch自动求导和梯度下降原理"><span class="nav-number">1.</span> <span class="nav-text">PyTorch自动求导和梯度下降原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#手动反向传播求导、手动梯度下降"><span class="nav-number">1.1.</span> <span class="nav-text">手动反向传播求导、手动梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动求导，手动梯度下降"><span class="nav-number">1.2.</span> <span class="nav-text">自动求导，手动梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动求导，自动梯度下降"><span class="nav-number">1.3.</span> <span class="nav-text">自动求导，自动梯度下降</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TensorFlow自动求导和梯度下降原理"><span class="nav-number">2.</span> <span class="nav-text">TensorFlow自动求导和梯度下降原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#动反向传播求导、手动梯度下降"><span class="nav-number">2.1.</span> <span class="nav-text">动反向传播求导、手动梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#手动反向传播求导"><span class="nav-number">2.2.</span> <span class="nav-text">手动反向传播求导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动求导，手动梯度下降-1"><span class="nav-number">2.3.</span> <span class="nav-text">自动求导，手动梯度下降</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动求导，自动梯度下降-1"><span class="nav-number">2.4.</span> <span class="nav-text">自动求导，自动梯度下降</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.png"
+      alt="袁宵">
+  <p class="site-author-name" itemprop="name">袁宵</p>
+  <div class="site-description" itemprop="description">专注于机器学习前沿论文（技术）研究和应用，欢迎邮件交流。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">130</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yuanxiaoSC" title="GitHub &rarr; https://github.com/yuanxiaoSC" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wangzichaochaochao@gmail.com" title="E-Mail &rarr; mailto:wangzichaochaochao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">袁宵</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 387.7k 字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+  <script src="//code.tidio.co/ohblyq9gicnjwqem8o1hfoymk3calgui.js"></script>
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>

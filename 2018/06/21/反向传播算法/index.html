@@ -78,7 +78,7 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/21/反向传播算法/one_4.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/21/反向传播算法/one_6.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2018/06/21/反向传播算法/one_7.png">
-<meta property="og:updated_time" content="2019-10-29T08:28:21.207Z">
+<meta property="og:updated_time" content="2019-11-29T08:15:21.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反向传播算法">
 <meta name="twitter:description" content="反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失">
@@ -319,7 +319,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-29 16:28:21" itemprop="dateModified" datetime="2019-10-29T16:28:21+08:00">2019-10-29</time>
+                <time title="修改时间：2019-11-29 16:15:21" itemprop="dateModified" datetime="2019-11-29T16:15:21+08:00">2019-11-29</time>
               </span>
             
           
@@ -356,7 +356,11 @@
 
       
         <p>反向传播（英语：Backpropagation，缩写为BP）是“误差反向传播”的简称，是一种与最优化方法（如梯度下降法）结合使用的，用来训练人工神经网络的常见方法。该方法计算对网络中所有权重计算损失函数的梯度。这个梯度会反馈给最优化方法，用来更新权值以最小化损失函数。 在神经网络上执行梯度下降法的主要算法。该算法会先按前向传播方式计算（并缓存）每个节点的输出值，然后再按反向传播遍历图的方式计算损失函数值相对于每个参数的偏导数。</p><a id="more"></a>
-<p>喜欢研究代码的朋友可以查看我的GitHub <a href="https://github.com/yuanxiaosc/Theoretical-Proof-of-Neural-Network-Model-and-Implementation-Based-on-Numpy/blob/master/Code/DNN/hans_on_feedforward_neural_network.py" target="_blank" rel="noopener">基于Numpy的反向传播算法代码实现</a></p>
+<p>相关资源：</p>
+<ol>
+<li>喜欢研究代码的朋友可以查看我的GitHub <a href="https://github.com/yuanxiaosc/Theoretical-Proof-of-Neural-Network-Model-and-Implementation-Based-on-Numpy/blob/master/Code/DNN/hans_on_feedforward_neural_network.py" target="_blank" rel="noopener">基于Numpy的反向传播算法代码实现</a></li>
+<li><a href="https://yuanxiaosc.github.io/2019/11/29/理解深度学习框架自动求导和梯度下降的原理/">深度学习框架自动求导和梯度下降的原理</a></li>
+</ol>
 <h2 id="反向传播概述"><a href="#反向传播概述" class="headerlink" title="反向传播概述"></a>反向传播概述</h2><p>反向传播算法最初在 1970 年代被提及，但是人们直到 David Rumelhart、Geoffrey Hinton 和 Ronald Williams 的著名的 1986 年的论文中才认识到这个算法的重要性。</p>
 <p>反向传播的核心是一个对代价函数 $C$ 关于任何权重 $w$ 和 偏置 $b$ 的偏导数 $\partial{C}/\partial{w}$ 的表达式。</p>
 <p>这个表达式告诉我们在改变权重和偏置时，代价函数变化的快慢。</p>
@@ -876,7 +880,7 @@
         
           <a href="/archives">
         
-          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -902,7 +906,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">127</span>
+        <span class="site-state-item-count">130</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -966,7 +970,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 385.1k 字</span>
+  <span class="post-count">全站共 387.7k 字</span>
 </div>
 
         
