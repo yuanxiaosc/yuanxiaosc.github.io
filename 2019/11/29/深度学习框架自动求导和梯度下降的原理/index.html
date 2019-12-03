@@ -70,7 +70,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_16_1.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/output_20_1.png">
-<meta property="og:updated_time" content="2019-11-29T08:41:20.274Z">
+<meta property="og:updated_time" content="2019-12-02T01:35:55.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习框架自动求导和梯度下降的原理">
 <meta name="twitter:description" content="本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（PyTorch和TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是： 手动反向传播求导、手动梯度下降 自动求导，手动梯度下降 自动求导，自动梯度下降">
@@ -296,11 +296,19 @@
                 
               
 
-              <time title="创建时间：2019-11-29 16:00:00 / 修改时间：16:41:20" itemprop="dateCreated datePublished" datetime="2019-11-29T16:00:00+08:00">2019-11-29</time>
+              <time title="创建时间：2019-11-29 16:00:00" itemprop="dateCreated datePublished" datetime="2019-11-29T16:00:00+08:00">2019-11-29</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-02 09:35:55" itemprop="dateModified" datetime="2019-12-02T09:35:55+08:00">2019-12-02</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -335,7 +343,7 @@
 </ol><a id="more"></a>
 
 <h2 id="PyTorch自动求导和梯度下降原理"><a href="#PyTorch自动求导和梯度下降原理" class="headerlink" title="PyTorch自动求导和梯度下降原理"></a>PyTorch自动求导和梯度下降原理</h2><blockquote>
-<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/理解深度学习框架自动求导和梯度下降的原理/PyTorch自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">PyTorch自动求导和梯度下降原理.ipynb</a> 动手学习</p>
+<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/PyTorch自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">PyTorch自动求导和梯度下降原理.ipynb</a> 动手学习</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> pyplot <span class="keyword">as</span> plt</span><br><span class="line">torch.set_printoptions(edgeitems=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据</span></span><br><span class="line">Y = [<span class="number">0.5</span>,  <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">28.0</span>, <span class="number">11.0</span>,  <span class="number">8.0</span>,  <span class="number">3.0</span>, <span class="number">-4.0</span>,  <span class="number">6.0</span>, <span class="number">13.0</span>, <span class="number">21.0</span>] <span class="comment"># 摄氏度 Celsius</span></span><br><span class="line">X = [<span class="number">35.7</span>, <span class="number">55.9</span>, <span class="number">58.2</span>, <span class="number">81.9</span>, <span class="number">56.3</span>, <span class="number">48.9</span>, <span class="number">33.9</span>, <span class="number">21.8</span>, <span class="number">48.4</span>, <span class="number">60.4</span>, <span class="number">68.4</span>] <span class="comment"># 华氏度 Fahrenheit</span></span><br></pre></td></tr></table></figure>
@@ -441,7 +449,7 @@ Epoch 330000, Loss 2.927906
 tensor([  0.5358, -17.2503], requires_grad=True)
 </code></pre><hr>
 <h2 id="TensorFlow自动求导和梯度下降原理"><a href="#TensorFlow自动求导和梯度下降原理" class="headerlink" title="TensorFlow自动求导和梯度下降原理"></a>TensorFlow自动求导和梯度下降原理</h2><blockquote>
-<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/理解深度学习框架自动求导和梯度下降的原理/TensorFlow自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">TensorFlow自动求导和梯度下降原理.ipynb</a> 动手学习</p>
+<p>点击<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/29/深度学习框架自动求导和梯度下降的原理/TensorFlow自动求导和梯度下降原理.ipynb" target="_blank" rel="noopener">TensorFlow自动求导和梯度下降原理.ipynb</a> 动手学习</p>
 </blockquote>
 <p>本文以华氏温度转换为摄氏温度（一元线性回归模型）为例子，讲解了深度学习框架（TensorFlow）自动求导和梯度下降的原理。文章内容分为三节，层层递进，分别是：</p>
 <ol>
@@ -629,10 +637,6 @@ Epoch 330000, Loss 2.927906
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/11/29/抱歉，我已经拼尽全力了/" rel="prev" title="抱歉，我已经拼尽全力了">
-                  抱歉，我已经拼尽全力了 <i class="fa fa-chevron-right"></i>
-                </a>
-              
             </div>
           </div>
         
@@ -696,7 +700,7 @@ Epoch 330000, Loss 2.927906
         
           <a href="/archives">
         
-          <span class="site-state-item-count">140</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -786,7 +790,7 @@ Epoch 330000, Loss 2.927906
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 387.8k 字</span>
+  <span class="post-count">全站共 387.7k 字</span>
 </div>
 
         
