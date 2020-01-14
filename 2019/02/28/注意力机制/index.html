@@ -68,23 +68,21 @@
 <meta property="og:site_name" content="望江人工智库">
 <meta property="og:description" content="Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/b1.jpg">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/b2.jpg">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/c3.png">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/c2.png">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/attention.png">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/attention_code.png">
-<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/e1.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/Attention机制中的打分函数.jpeg">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/a1.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/a2.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/d1.jpg">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/a3.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/a4.png">
-<meta property="og:updated_time" content="2019-02-28T03:05:30.580Z">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/b1.jpg">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/b2.jpg">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/c3.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/c2.png">
+<meta property="og:updated_time" content="2020-01-08T06:40:41.373Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="注意力机制">
 <meta name="twitter:description" content="Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在">
-<meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/b1.jpg">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2019/02/28/注意力机制/Attention机制中的打分函数.jpeg">
   <link rel="canonical" href="https://yuanxiaosc.github.io/2019/02/28/注意力机制/">
 
 
@@ -306,11 +304,19 @@
                 
               
 
-              <time title="创建时间：2019-02-28 16:12:10 / 修改时间：11:05:30" itemprop="dateCreated datePublished" datetime="2019-02-28T16:12:10+08:00">2019-02-28</time>
+              <time title="创建时间：2019-02-28 16:12:10" itemprop="dateCreated datePublished" datetime="2019-02-28T16:12:10+08:00">2019-02-28</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-08 14:40:41" itemprop="dateModified" datetime="2020-01-08T14:40:41+08:00">2020-01-08</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -340,7 +346,8 @@
       
         <p>Attention是一种用于提升基于RNN（LSTM或GRU）的Encoder + Decoder模型的效果的的机制（Mechanism），一般称为Attention Mechanism。Attention Mechanism目前非常流行，广泛应用于机器翻译、语音识别、图像标注（Image Caption）等很多领域，之所以它这么受欢迎，是因为Attention给模型赋予了区分辨别的能力，例如，在机器翻译、语音识别应用中，为句子中的每个词赋予不同的权重，使神经网络模型的学习变得更加灵活（soft），同时Attention本身可以做为一种对齐关系，解释翻译输入/输出句子之间的对齐关系，解释模型到底学到了什么知识，为我们打开深度学习的黑箱，提供了一个窗口。</p><a id="more"></a>
 <p><strong>注意，随着研究的深入，注意力的概念已经发生了变化，上述内容只是注意力中的一种而已。</strong></p>
-<div class="table-container">
+<h2 id="Attention机制中的打分函数"><a href="#Attention机制中的打分函数" class="headerlink" title="Attention机制中的打分函数"></a>Attention机制中的打分函数</h2><p><img src="/2019/02/28/注意力机制/Attention机制中的打分函数.jpeg" alt=""></p>
+<h2 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -350,6 +357,11 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><a href="https://www.leiphone.com/news/201902/wTJvPKZE55w0Eq8N.html" target="_blank" rel="noopener">注意力的动画解析（以机器翻译为例）</a></td>
+<td>原文<a href="https://towardsdatascience.com/attn-illustrated-attention-5ec4ad276ee3" target="_blank" rel="noopener">Attn: Illustrated Attention</a></td>
+<td>20190208</td>
+</tr>
 <tr>
 <td><a href="https://zhuanlan.zhihu.com/p/31547842" target="_blank" rel="noopener">模型汇总24 - 深度学习中Attention Mechanism详细介绍：原理、分类及应用</a></td>
 <td>首推 知乎</td>
@@ -393,89 +405,7 @@
 </tbody>
 </table>
 </div>
-<h1 id="以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><a href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉" class="headerlink" title="以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉"></a>以<a href="https://arxiv.org/abs/1406.1078" target="_blank" rel="noopener">2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》</a>抛砖引玉</h1><p>要介绍Attention Mechanism结构和原理，首先需要介绍下Seq2Seq模型的结构。基于RNN的Seq2Seq模型主要由两篇论文介绍，只是采用了不同的RNN模型。Ilya Sutskever等人与2014年在论文<a href="http://cn.arxiv.org/abs/1409.3215" target="_blank" rel="noopener">《Sequence to Sequence Learning with Neural Networks》</a>中使用LSTM来搭建Seq2Seq模型。随后，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》提出了基于GRU的Seq2Seq模型。两篇文章所提出的Seq2Seq模型，想要解决的主要问题是，如何把机器翻译中，变长的输入X映射到一个变长输出Y的问题，其主要结构如图所示。</p>
-<p><img src="/2019/02/28/注意力机制/b1.jpg" alt=""><br><strong>传统的Seq2Seq结构</strong></p>
-<p>其中，Encoder把一个变成的输入序列x1，x2，x3….xt编码成一个固定长度隐向量（背景向量，或上下文向量context）c，c有两个作用：1、做为初始向量初始化Decoder的模型，做为decoder模型预测y1的初始向量。2、做为背景向量，指导y序列中每一个step的y的产出。Decoder主要基于背景向量c和上一步的输出yt-1解码得到该时刻t的输出yt，直到碰到结束标志（$<eos>$）为止。</eos></p>
-<p>如上文所述，传统的Seq2Seq模型对输入序列X缺乏区分度，因此，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》中，引入了Attention Mechanism来解决这个问题，他们提出的模型结构如图所示。</p>
-<p><img src="/2019/02/28/注意力机制/b2.jpg" alt=""><br><strong>Attention Mechanism模块图解</strong></p>
-<p><img src="/2019/02/28/注意力机制/c3.png" alt=""><br><img src="/2019/02/28/注意力机制/c2.png" alt=""></p>
-<h1 id="以Attention-Network-With-Keras-为例讲解一种Attention实现代码"><a href="#以Attention-Network-With-Keras-为例讲解一种Attention实现代码" class="headerlink" title="以Attention_Network_With_Keras 为例讲解一种Attention实现代码"></a>以<a href="https://github.com/Choco31415/Attention_Network_With_Keras" target="_blank" rel="noopener">Attention_Network_With_Keras</a> 为例讲解一种Attention实现代码</h1><h2 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Tx = <span class="number">50</span> <span class="comment"># Max x sequence length</span></span><br><span class="line">Ty = <span class="number">5</span> <span class="comment"># y sequence length</span></span><br><span class="line">X, Y, Xoh, Yoh = preprocess_data(dataset, human_vocab, machine_vocab, Tx, Ty)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Split data 80-20 between training and test</span></span><br><span class="line">train_size = int(<span class="number">0.8</span>*m)</span><br><span class="line">Xoh_train = Xoh[:train_size]</span><br><span class="line">Yoh_train = Yoh[:train_size]</span><br><span class="line">Xoh_test = Xoh[train_size:]</span><br><span class="line">Yoh_test = Yoh[train_size:]</span><br></pre></td></tr></table></figure>
-<p>To be careful, let’s check that the code works:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">i = <span class="number">5</span></span><br><span class="line">print(<span class="string">"Input data point "</span> + str(i) + <span class="string">"."</span>)</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The data input is: "</span> + str(dataset[i][<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">"The data output is: "</span> + str(dataset[i][<span class="number">1</span>]))</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The tokenized input is:"</span> + str(X[i]))</span><br><span class="line">print(<span class="string">"The tokenized output is: "</span> + str(Y[i]))</span><br><span class="line">print(<span class="string">""</span>)</span><br><span class="line">print(<span class="string">"The one-hot input is:"</span>, Xoh[i])</span><br><span class="line">print(<span class="string">"The one-hot output is:"</span>, Yoh[i])</span><br></pre></td></tr></table></figure>
-<pre><code>Input data point 5.
-
-The data input is: 23 min after 20 p.m.
-The data output is: 20:23
-
-The tokenized input is:[ 5  6  0 25 22 26  0 14 19 32 18 30  0  5  3  0 28  2 25  2 40 40 40 40
- 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
- 40 40]
-The tokenized output is: [ 2  0 10  2  3]
-
-The one-hot input is: [[0. 0. 0. ... 0. 0. 0.]
- [0. 0. 0. ... 0. 0. 0.]
- [1. 0. 0. ... 0. 0. 0.]
- ...
- [0. 0. 0. ... 0. 0. 1.]
- [0. 0. 0. ... 0. 0. 1.]
- [0. 0. 0. ... 0. 0. 1.]]
-The one-hot output is: [[0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
- [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
- [0. 0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
- [0. 0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
- [0. 0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]]
-</code></pre><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><p>Our next goal is to define our model. The important part will be defining the attention mechanism and then making sure to apply that correctly.</p>
-<p>Define some model metadata:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">layer1_size = <span class="number">32</span></span><br><span class="line">layer2_size = <span class="number">128</span> <span class="comment"># Attention layer</span></span><br></pre></td></tr></table></figure>
-<p>The next two code snippets defined the attention mechanism. This is split into two arcs:</p>
-<ul>
-<li>Calculating context</li>
-<li>Creating an attention layer</li>
-</ul>
-<p>As a refresher, an attention network pays attention to certain parts of the input at each output time step. _attention_ denotes which inputs are most relevant to the current output step. An input step will have attention weight ~1 if it is relevant, and ~0 otherwise. The _context_ is the “summary of the input”.</p>
-<p>The requirements are thus. The attention matrix should have shape $(T_x)$ and sum to 1. Additionally, the context should be calculated in the same manner for each time step. Beyond that, there is some flexibility. This notebook calculates both this way:</p>
-<script type="math/tex; mode=display">
-attention = Softmax(Dense(Dense(x, y_{t-1})))</script><p><br></p>
-<script type="math/tex; mode=display">
-context = \sum_{i=1}^{m} ( attention_i * x_i )</script><p>For safety, $y_0$ is defined as $\vec{0}$.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Define part of the attention layer gloablly so as to</span></span><br><span class="line"><span class="comment"># share the same layers for each attention step.</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">softmax</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> K.softmax(x, axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">at_repeat = RepeatVector(Tx)</span><br><span class="line">at_concatenate = Concatenate(axis=<span class="number">-1</span>)</span><br><span class="line">at_dense1 = Dense(<span class="number">8</span>, activation=<span class="string">"tanh"</span>)</span><br><span class="line">at_dense2 = Dense(<span class="number">1</span>, activation=<span class="string">"relu"</span>)</span><br><span class="line">at_softmax = Activation(softmax, name=<span class="string">'attention_weights'</span>)</span><br><span class="line">at_dot = Dot(axes=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">one_step_of_attention</span><span class="params">(h_prev, a)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Get the context.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Input:</span></span><br><span class="line"><span class="string">    h_prev - Previous hidden state of a RNN layer (m, n_h)</span></span><br><span class="line"><span class="string">    a - Input data, possibly processed (m, Tx, n_a)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    context - Current context (m, Tx, n_a)</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Repeat vector to match a's dimensions</span></span><br><span class="line">    h_repeat = at_repeat(h_prev)</span><br><span class="line">    <span class="comment"># Calculate attention weights</span></span><br><span class="line">    i = at_concatenate([a, h_repeat])</span><br><span class="line">    i = at_dense1(i)</span><br><span class="line">    i = at_dense2(i)</span><br><span class="line">    attention = at_softmax(i)</span><br><span class="line">    <span class="comment"># Calculate the context</span></span><br><span class="line">    context = at_dot([attention, a])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> context</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">attention_layer</span><span class="params">(X, n_h, Ty)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Creates an attention layer.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Input:</span></span><br><span class="line"><span class="string">    X - Layer input (m, Tx, x_vocab_size)</span></span><br><span class="line"><span class="string">    n_h - Size of LSTM hidden layer</span></span><br><span class="line"><span class="string">    Ty - Timesteps in output sequence</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    output - The output of the attention layer (m, Tx, n_h)</span></span><br><span class="line"><span class="string">    """</span>    </span><br><span class="line">    <span class="comment"># Define the default state for the LSTM layer</span></span><br><span class="line">    h = Lambda(<span class="keyword">lambda</span> X: K.zeros(shape=(K.shape(X)[<span class="number">0</span>], n_h)), name=<span class="string">'h_attention_layer'</span>)(X)</span><br><span class="line">    c = Lambda(<span class="keyword">lambda</span> X: K.zeros(shape=(K.shape(X)[<span class="number">0</span>], n_h)), name=<span class="string">'c_attention_layer'</span>)(X)</span><br><span class="line">    <span class="comment"># Messy, but the alternative is using more Input()</span></span><br><span class="line"></span><br><span class="line">    at_LSTM = LSTM(n_h, return_state=<span class="keyword">True</span>, name=<span class="string">'at_LSTM_attention_layer'</span>)</span><br><span class="line"></span><br><span class="line">    output = []</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Run attention step and RNN for each output time step</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(Ty):</span><br><span class="line">        context = one_step_of_attention(h, X)</span><br><span class="line"></span><br><span class="line">        h, _, c = at_LSTM(context, initial_state=[h, c])</span><br><span class="line"></span><br><span class="line">        output.append(h)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
-<p>The sample model is organized as follows:</p>
-<ol>
-<li>BiLSTM</li>
-<li>Attention Layer<ul>
-<li>Outputs Ty lists of activations.</li>
-</ul>
-</li>
-<li>Dense<ul>
-<li>Necessary to convert attention layer’s output to the correct y dimensions</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">layer3 = Dense(machine_vocab_size, activation=softmax)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_model</span><span class="params">(Tx, Ty, layer1_size, layer2_size, x_vocab_size, y_vocab_size)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Creates a model.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    input:</span></span><br><span class="line"><span class="string">    Tx - Number of x timesteps</span></span><br><span class="line"><span class="string">    Ty - Number of y timesteps</span></span><br><span class="line"><span class="string">    size_layer1 - Number of neurons in BiLSTM</span></span><br><span class="line"><span class="string">    size_layer2 - Number of neurons in attention LSTM hidden layer</span></span><br><span class="line"><span class="string">    x_vocab_size - Number of possible token types for x</span></span><br><span class="line"><span class="string">    y_vocab_size - Number of possible token types for y</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Output:</span></span><br><span class="line"><span class="string">    model - A Keras Model.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create layers one by one</span></span><br><span class="line">    X = Input(shape=(Tx, x_vocab_size), name=<span class="string">'X_Input'</span>)</span><br><span class="line"></span><br><span class="line">    a1 = Bidirectional(LSTM(layer1_size, return_sequences=<span class="keyword">True</span>), merge_mode=<span class="string">'concat'</span>, name=<span class="string">'Bid_LSTM'</span>)(X)</span><br><span class="line"></span><br><span class="line">    a2 = attention_layer(a1, layer2_size, Ty)</span><br><span class="line"></span><br><span class="line">    a3 = [layer3(timestep) <span class="keyword">for</span> timestep <span class="keyword">in</span> a2]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Create Keras model</span></span><br><span class="line">    model = Model(inputs=[X], outputs=a3)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
-<p>The steps from here on out are for creating the model and training it. Simple as that.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Obtain a model instance</span></span><br><span class="line">model = get_model(Tx, Ty, layer1_size, layer2_size, human_vocab_size, machine_vocab_size)</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot_model(model, to_file=<span class="string">'Attention_tutorial_model_copy.png'</span>, show_shapes=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="模型结构及说明"><a href="#模型结构及说明" class="headerlink" title="模型结构及说明"></a>模型结构及说明</h2><p><img src="/2019/02/28/注意力机制/attention.png" alt=""></p>
-<p><img src="/2019/02/28/注意力机制/attention_code.png" alt=""></p>
-<h2 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h2><h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>The final training loss should be in the range of 0.02 to 0.5</p>
-<p>The test loss should be at a similar level.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Evaluate the test performance</span></span><br><span class="line">outputs_test = list(Yoh_test.swapaxes(<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line">score = model.evaluate(Xoh_test, outputs_test)</span><br><span class="line">print(<span class="string">'Test loss: '</span>, score[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
-<pre><code>2000/2000 [==============================] - 2s 1ms/step
-Test loss:  0.4966005325317383
-</code></pre><p>Now that we’ve created this beautiful model, let’s see how it does in action.</p>
-<p>The below code finds a random example and runs it through our model.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Let's visually check model output.</span></span><br><span class="line"><span class="keyword">import</span> random <span class="keyword">as</span> random</span><br><span class="line"></span><br><span class="line">i = random.randint(<span class="number">0</span>, m)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_prediction</span><span class="params">(model, x)</span>:</span></span><br><span class="line">    prediction = model.predict(x)</span><br><span class="line">    max_prediction = [y.argmax() <span class="keyword">for</span> y <span class="keyword">in</span> prediction]</span><br><span class="line">    str_prediction = <span class="string">""</span>.join(ids_to_keys(max_prediction, machine_vocab))</span><br><span class="line">    <span class="keyword">return</span> (max_prediction, str_prediction)</span><br><span class="line"></span><br><span class="line">max_prediction, str_prediction = get_prediction(model, Xoh[i:i+<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Input: "</span> + str(dataset[i][<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">"Tokenized: "</span> + str(X[i]))</span><br><span class="line">print(<span class="string">"Prediction: "</span> + str(max_prediction))</span><br><span class="line">print(<span class="string">"Prediction text: "</span> + str(str_prediction))</span><br></pre></td></tr></table></figure>
-<pre><code>Input: 13.09
-Tokenized: [ 4  6  2  3 12 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
- 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40
- 40 40]
-Prediction: [1, 3, 10, 0, 9]
-Prediction text: 13:09
-</code></pre><p>Last but not least, all introductions to Attention networks require a little tour.</p>
-<p>The below graph shows what inputs the model was focusing on when writing each individual letter.</p>
-<h2 id="注意力机制图"><a href="#注意力机制图" class="headerlink" title="注意力机制图"></a>注意力机制图</h2><p><img src="/2019/02/28/注意力机制/e1.png" alt=""></p>
-<h1 id="注意力机制精要"><a href="#注意力机制精要" class="headerlink" title="注意力机制精要"></a>注意力机制精要</h1><p><img src="/2019/02/28/注意力机制/a1.png" alt=""><br><strong>全局注意力机制</strong></p>
+<h2 id="注意力机制分类"><a href="#注意力机制分类" class="headerlink" title="注意力机制分类"></a>注意力机制分类</h2><p><img src="/2019/02/28/注意力机制/a1.png" alt=""><br><strong>全局注意力机制</strong></p>
 <p><img src="/2019/02/28/注意力机制/a2.png" alt=""><br><strong>局部注意力机制</strong></p>
 <p><img src="/2019/02/28/注意力机制/d1.jpg" alt=""><br><strong>自注意力机制</strong><br><img src="/2019/02/28/注意力机制/a3.png" alt=""></p>
 <p>隐藏向量 $h_t$ 首先会传递到全连接层。然后校准系数 $a_t$ 会对比全连接层的输出 $u_t$ 和可训练上下文向量 u（随机初始化），并通过 Softmax 归一化而得出。注意力向量 s 最后可以为所有隐藏向量的加权和。上下文向量可以解释为在平均上表征的最优单词。但模型面临新的样本时，它会使用这一知识以决定哪一个词需要更加注意。在训练中，模型会通过反向传播更新上下文向量，即它会调整内部表征以确定最优词是什么。</p>
@@ -484,7 +414,18 @@ Prediction text: 13:09
 </blockquote>
 <p><img src="/2019/02/28/注意力机制/a4.png" alt=""><br><strong>层级注意力机制</strong></p>
 <p>在该架构中，自注意力机制共使用了两次：在词层面与在句子层面。该方法因为两个原因而非常重要，首先是它匹配文档的自然层级结构（词——句子——文档）。其次在计算文档编码的过程中，它允许模型首先确定哪些单词在句子中是非常重要的，然后再确定哪个句子在文档中是非常重要的。</p>
-<h1 id="可视化神经机器翻译模型"><a href="#可视化神经机器翻译模型" class="headerlink" title="可视化神经机器翻译模型"></a>可视化神经机器翻译模型</h1><p><a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/" target="_blank" rel="noopener">Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)</a></p>
+<h2 id="相关论文"><a href="#相关论文" class="headerlink" title="相关论文"></a>相关论文</h2><h3 id="以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><a href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉" class="headerlink" title="以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉"></a>以<a href="https://arxiv.org/abs/1406.1078" target="_blank" rel="noopener">2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》</a>抛砖引玉</h3><p>要介绍Attention Mechanism结构和原理，首先需要介绍下Seq2Seq模型的结构。基于RNN的Seq2Seq模型主要由两篇论文介绍，只是采用了不同的RNN模型。Ilya Sutskever等人与2014年在论文<a href="http://cn.arxiv.org/abs/1409.3215" target="_blank" rel="noopener">《Sequence to Sequence Learning with Neural Networks》</a>中使用LSTM来搭建Seq2Seq模型。随后，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》提出了基于GRU的Seq2Seq模型。两篇文章所提出的Seq2Seq模型，想要解决的主要问题是，如何把机器翻译中，变长的输入X映射到一个变长输出Y的问题，其主要结构如图所示。</p>
+<p><img src="/2019/02/28/注意力机制/b1.jpg" alt=""><br><strong>传统的Seq2Seq结构</strong></p>
+<p>其中，Encoder把一个变成的输入序列x1，x2，x3….xt编码成一个固定长度隐向量（背景向量，或上下文向量context）c，c有两个作用：1、做为初始向量初始化Decoder的模型，做为decoder模型预测y1的初始向量。2、做为背景向量，指导y序列中每一个step的y的产出。Decoder主要基于背景向量c和上一步的输出yt-1解码得到该时刻t的输出yt，直到碰到结束标志（$<eos>$）为止。</eos></p>
+<p>如上文所述，传统的Seq2Seq模型对输入序列X缺乏区分度，因此，2015年，Kyunghyun Cho等人在论文《Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation》中，引入了Attention Mechanism来解决这个问题，他们提出的模型结构如图所示。</p>
+<p><img src="/2019/02/28/注意力机制/b2.jpg" alt=""><br><strong>Attention Mechanism模块图解</strong></p>
+<p><img src="/2019/02/28/注意力机制/c3.png" alt=""><br><img src="/2019/02/28/注意力机制/c2.png" alt=""></p>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener">Neural Machine Translation by Jointly Learning to Align and Translate</a></li>
+<li><a href="https://arxiv.org/abs/1508.04025" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/38205832" target="_blank" rel="noopener">Effective Approaches to Attention-based Neural Machine Translation 中英文对照翻译</a></li>
+</ul>
+<h3 id="可视化神经机器翻译模型"><a href="#可视化神经机器翻译模型" class="headerlink" title="可视化神经机器翻译模型"></a>可视化神经机器翻译模型</h3><p><a href="https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/" target="_blank" rel="noopener">Visualizing A Neural Machine Translation Model (Mechanics of Seq2seq Models With Attention)</a></p>
 
     </div>
 
@@ -609,7 +550,7 @@ Prediction text: 13:09
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><span class="nav-number">1.</span> <span class="nav-text">以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以Attention-Network-With-Keras-为例讲解一种Attention实现代码"><span class="nav-number">2.</span> <span class="nav-text">以Attention_Network_With_Keras 为例讲解一种Attention实现代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分代码"><span class="nav-number">2.1.</span> <span class="nav-text">部分代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.2.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型结构及说明"><span class="nav-number">2.3.</span> <span class="nav-text">模型结构及说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型评估"><span class="nav-number">2.4.</span> <span class="nav-text">模型评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evaluation"><span class="nav-number">2.5.</span> <span class="nav-text">Evaluation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力机制图"><span class="nav-number">2.6.</span> <span class="nav-text">注意力机制图</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意力机制精要"><span class="nav-number">3.</span> <span class="nav-text">注意力机制精要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#可视化神经机器翻译模型"><span class="nav-number">4.</span> <span class="nav-text">可视化神经机器翻译模型</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attention机制中的打分函数"><span class="nav-number">1.</span> <span class="nav-text">Attention机制中的打分函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关资源"><span class="nav-number">2.</span> <span class="nav-text">相关资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意力机制分类"><span class="nav-number">3.</span> <span class="nav-text">注意力机制分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关论文"><span class="nav-number">4.</span> <span class="nav-text">相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#以2014《Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation》抛砖引玉"><span class="nav-number">4.1.</span> <span class="nav-text">以2014《Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation》抛砖引玉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可视化神经机器翻译模型"><span class="nav-number">4.2.</span> <span class="nav-text">可视化神经机器翻译模型</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -718,7 +659,7 @@ Prediction text: 13:09
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 393.4k 字</span>
+  <span class="post-count">全站共 393.3k 字</span>
 </div>
 
         
