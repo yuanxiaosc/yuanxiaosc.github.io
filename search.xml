@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[C++编程语言基础（思维导图）]]></title>
+    <title><![CDATA[C++编程语言基础（C++知识树）]]></title>
     <url>%2F2020%2F05%2F31%2FCPlusPlus%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%2F</url>
-    <content type="text"><![CDATA[耗时半年精心绘制的《CPlusPlus编程语言基础》思维导图，吸收了C++编程语言巨著《C++ Primer》和《C++ Primer Plus》精华，用图的方式整理编辑五千余条C++知识点，该资源学习高效、各式丰富、内容权威并且在不断维护，希望此资源能帮助C++初学者入门和C++技术人员参考。 CPlusPlus编程语言基础注释： C++是在C语言基础上开发的一种集面向对象编程、泛型编程和过程化编程于一体的编程语言，是C语言的超集。 若读者发现该作品的错误或者有自己的建议，欢迎联系作者袁宵 wangzichaochaochao@gmail.com 资源阅读/下载 本资源已经同步至GitHub，资源名：CPlusPlus-Programming-Language-Foundation，方便打包下载，欢迎Star和Fork。 在线阅读 下载 CPlusPlus编程语言基础.emmx 下载思维导图版 CPlusPlus编程语言基础.svg 下载svg图片版 CPlusPlus编程语言基础其它格式： 下载word版 下载PDF版 下载PPT版 下载Excel版 资源特色 学习高效。相比于书本以线性章节的形式，以二维图形结构式的思维导图的方式展示C++的知识更加生动形象，使用者更容易把握C++基础知识的宏观结构和内容，更加容易理解不同C++知识的联系和区别，更加方便使用者学习、理解和记忆C++知识。 格式丰富。《CPlusPlus编程语言基础》资源以CPlusPlus编程语言基础思维导图为核心，还辅以了相应的PDF、word、PPT和Excel版本的内容，适应于不同的使用方式。 内容权威。本资源内容主要来自C++经典入门巨著C++ Primer Plus 第六版（使用C++11标准），其它参考和引用的内容都标注有出处。 资源展示思维导图版截图 word版截图 PDF版截图 PPT版截图 Excel版截图 更多资源 《C++ Primer Plus英文版（第六版）》 《CPlusPlus入门》思维导图 浏览 | 下载]]></content>
+    <content type="text"><![CDATA[《CPlusPlus编程语言基础》又称为“C加加知识树”、“C++知识树”，在吸收C++编程语言巨著《C++ Primer》和《C++ Primer Plus》的精华后，用树状思维导图的形式展现C++的基础知识（六千余条知识点）。该资源具有学习高效、格式丰富和内容权威的优点，供C++初学者入门和C++技术人员参考。 CPlusPlus编程语言基础（C加加知识树）注释： C++是在C语言基础上开发的一种集面向对象编程、泛型编程和过程化编程于一体的编程语言，是C语言的超集。 若读者发现该作品的错误或者有自己的建议，欢迎联系作者袁宵 wangzichaochaochao@gmail.com 资源阅读/下载 本资源已经同步至GitHub，资源名：CPlusPlus-Programming-Language-Foundation，方便打包下载，欢迎Star和Fork。 在线阅读 下载 CPlusPlus编程语言基础.emmx 下载思维导图版 CPlusPlus编程语言基础.svg 下载svg图片版 CPlusPlus编程语言基础其它格式： 下载word版 下载PDF版 下载PPT版 下载Excel版 资源特色 学习高效。相比于书本以线性章节的形式，以二维图形结构式的树状思维导图的方式展示C++的知识更加生动形象，使用者更容易把握C++基础知识的宏观结构和内容，更加容易理解不同C++知识的联系和区别，更加方便使用者学习、理解和记忆C++知识。 格式丰富。《CPlusPlus编程语言基础》资源以CPlusPlus编程语言基础思维导图为核心，还辅以了相应的PDF、word、PPT和Excel版本的内容，适应于不同的使用方式。 内容权威。本资源内容主要来自C++经典入门巨著《C++ Primer》和《C++ Primer Plus》，其它参考和引用的内容都标注有出处。 资源展示思维导图版截图 word版截图 PDF版截图 PPT版截图 Excel版截图 更多资源 《C++ Primer Plus英文版（第六版）》 《CPlusPlus入门》思维导图 浏览 | 下载]]></content>
       <categories>
         <category>编程语言</category>
         <category>C++</category>
