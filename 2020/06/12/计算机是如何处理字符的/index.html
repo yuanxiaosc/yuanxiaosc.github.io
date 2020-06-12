@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="baidu-site-verification" content="eYmWT0dEmt">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":-1,"unescape":true,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="对于计算机是如何字符的理解难度主要来源于不同文献对字符编码概念的混淆，本文就是为了厘清字符相关概念，解决困扰程序员的字符编码、解码和乱码问题。 上图展示计算机中字符和字节的转换过程，字符在计算中有符号对应的形状、符号对应的整数值和符号对应的字节形式三种表示方法。本文讲述计算机是如何处理字符的问题，即符号这三种表示的转换过程，特别是字符的编码问题。">
+<meta name="keywords" content="字符,编码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="程序员必知：计算机是如何处理字符的？">
+<meta property="og:url" content="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/index.html">
+<meta property="og:site_name" content="望江人工智库">
+<meta property="og:description" content="对于计算机是如何字符的理解难度主要来源于不同文献对字符编码概念的混淆，本文就是为了厘清字符相关概念，解决困扰程序员的字符编码、解码和乱码问题。 上图展示计算机中字符和字节的转换过程，字符在计算中有符号对应的形状、符号对应的整数值和符号对应的字节形式三种表示方法。本文讲述计算机是如何处理字符的问题，即符号这三种表示的转换过程，特别是字符的编码问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/编码解码和乱码问题.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/编码字符表和代码点.png">
+<meta property="og:image" content="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/计算机处理字符的过程.png">
+<meta property="og:updated_time" content="2020-06-12T09:09:30.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="程序员必知：计算机是如何处理字符的？">
+<meta name="twitter:description" content="对于计算机是如何字符的理解难度主要来源于不同文献对字符编码概念的混淆，本文就是为了厘清字符相关概念，解决困扰程序员的字符编码、解码和乱码问题。 上图展示计算机中字符和字节的转换过程，字符在计算中有符号对应的形状、符号对应的整数值和符号对应的字节形式三种表示方法。本文讲述计算机是如何处理字符的问题，即符号这三种表示的转换过程，特别是字符的编码问题。">
+<meta name="twitter:image" content="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/编码解码和乱码问题.png">
+  <link rel="canonical" href="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>程序员必知：计算机是如何处理字符的？ | 望江人工智库</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?359fbde2215e8ede98cdd58478ab2c53";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">望江人工智库</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">TF-KMP</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="fa fa-search fa-fw"></i>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/yuanxiaosc" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="袁宵">
+      <meta itemprop="description" content="专注于人工智能领域研究，特别是自然语言处理。">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="望江人工智库">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">程序员必知：计算机是如何处理字符的？
+
+          
+        </h2>
+
+        <div class="post-meta">
+		  	  
+			  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+			   
+
+              
+                
+              
+
+              <time title="创建时间：2020-06-12 12:50:00 / 修改时间：17:09:30" itemprop="dateCreated datePublished" datetime="2020-06-12T12:50:00+08:00">2020-06-12</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程语言/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>对于计算机是如何字符的理解难度主要来源于不同文献对字符编码概念的混淆，本文就是为了厘清字符相关概念，解决困扰程序员的字符编码、解码和乱码问题。</p>
+</blockquote><p><img src="/2020/06/12/计算机是如何处理字符的/编码解码和乱码问题.png" alt=""></p><p>上图展示计算机中字符和字节的转换过程，字符在计算中有符号对应的形状、符号对应的整数值和符号对应的字节形式三种表示方法。本文讲述计算机是如何处理字符的问题，即符号这三种表示的转换过程，特别是字符的编码问题。</p><a id="more"></a>
+
+
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>字符、字符表、和编码字符表以及代码点的概念如下：</p>
+<ul>
+<li>字符（Character）是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</li>
+<li>字符表（character repertoire），也称为字符集、字符库和字符列表等等，是由一个或多个确定的字符所构成的整体，即字符的集合。</li>
+<li><a href="https://baike.baidu.com/item/%E5%AD%97%E7%AC%A6%E9%9B%86/946585" target="_blank" rel="noopener">【编码】字符集</a>（Character set）是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、 GB18030字符集、Unicode字符集等。其实准确的应该称这些字符集为编码字符集（coded character set），因为这些字符集给其包含的每一个字符都对应了唯一确定的一个整数值，这个整数值称为代码点（code point）。</li>
+</ul>
+<p>这些概念示意图如下所示：</p>
+<p><img src="/2020/06/12/计算机是如何处理字符的/编码字符表和代码点.png" alt=""></p>
+<p>到此你可能产生疑问，如果有了编码字符表，那么每个字符都有对应的代码点（整数值），那么计算机直接把这个代码点存起来不就行了（整数如何在计算机中存储不是本文讨论的话题），为什么还要讨论字符编码问题。原因如下：</p>
+<ol>
+<li>历史遗留问题。伴随着计算机的发展不同的编码字符集相继被推出，同时期不同的国家往往产生了互不兼容的编码字符表，比如对同一个字符不同的编码字符表的代码点不一样，那么根据这些不兼容编码字符表存储的文件信息不能交互；不同时期的编码字符表虽然会考虑兼容性问题，甚至如今有了统一全世界所有符号的编码字符表Unicode，但实际使用过程中会发现每个国家真正用的上的字符相对整个编码字符表来说比例非常低，所以至今仍然有许多编码字符表在广泛的使用中，我们需要考虑不同编码表的转换问题。</li>
+<li>如何存储代码点问题。如今全球统一的编码字符表Unicode用数字 0x0~0x10FFFF（这是整数的十六进制表示） 表示所有字符，所以最多可以容纳1114112个字符。即使有了全球统一的编码字符表，也要考虑用多少字节来存储每一个字符对应的代码点，比如为了让存储的效率更高（显然让常用字符对应的代码点小，这样用少量的字节就能存储该字符，参见<a href="https://baike.baidu.com/item/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1719730" target="_blank" rel="noopener">哈夫曼编码</a>），当然还有其它的编码方式，所以目前编码字符表Unicode中的字符对应的代码点有UTF-8，UTF-16和UTF-32三种不同的存储代码点的方法。</li>
+</ol>
+<h3 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h3><blockquote>
+<p>对于字符编码理解的难度主要来源于不同文献对字符编码概念的混淆。</p>
+</blockquote>
+<p>首先来看百度百科对字符编码的定义：<br><a href="https://baike.baidu.com/item/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/8446880" target="_blank" rel="noopener">字符编码</a>（Character encoding）也称字集码，是把字符集中的字符编码为指定集合中某一对象（例如：比特模式、自然数序列、8位组或者电脉冲），以便文本在计算机中存储和通过通信网络的传递。常见的例子包括将拉丁字母表编码成摩斯电码和ASCII。其中，ASCII将字母、数字和其它符号编号，并用7比特的二进制来表示这个整数。通常会额外使用一个扩充的比特，以便于以1个字节的方式存储。</p>
+<p>根据以上字符编码的定义，就可以认为编码字符集已经对字符进行了编码（广义的编码，从编码字符表的名字也可以看出），因为每一个字符都被编码字符表编码为了唯一的整数值——代码点。而实际上我们需要解决的问题是，代码点如何转换成字节的编码问题，所以提出一个新的概念——字符编码方式（character encoding form）也称为字符编码方案（Character encoding schema），它是指将字符对应代码点转换成字节的方式或方案。很多文献将字符编码方式（character encoding form）或字符编码方案（Character encoding schema）简称为“编码”，这里的“编码”是狭义的编码。</p>
+<p>注意：<strong>有的文献中字符集概念是指编码字符集概念，有的文件中编码字符集概念包含了字符编码方式的概念，需要根据上下文来理解，也正是这些概念的相互指代，以及混乱的简称，提高了程序员的理解难度！</strong></p>
+<h3 id="计算机处理字符的原理"><a href="#计算机处理字符的原理" class="headerlink" title="计算机处理字符的原理"></a>计算机处理字符的原理</h3><p><img src="/2020/06/12/计算机是如何处理字符的/计算机处理字符的过程.png" alt=""></p>
+<p>上图展示了计算机处理字符的基本原理：</p>
+<ol>
+<li>通过输入设备比如键盘可以将字符输入到电脑的内存中，比如输入字符C，那么通过编码字符表其实在内存中存的就是该字符对应的代码点；</li>
+<li>内存中的字符可以通过编码字符表转换成对应的字符，然后再根据字体库输出格式化的字符（比如调整字符的大小和颜色等）；</li>
+<li>一般本文献中所谓的字符的编码和解码其实就是指内存中的代码点与文本文件交互时的两个过程，可以按照某种编码方式把代码点编码成对应的字节也可以反过来把字节解码成对应的代码点。如果字符解码和编码的方式不兼容，那么就可能会出现乱码问题。</li>
+</ol>
+<p>注意：</p>
+<ol>
+<li>编码字符表的每种编码方式的具体实现都有其对应的解码方式，只要使用了兼容（放宽了要求，不一定要一一对应，因为有些编码字符表是兼容的）的编码和解码方式就可以保证代码点和字节的转换是正确的。</li>
+<li>在不知道文件的编码方式的情况下可以通过一些字符编码检测器（比如<a href="https://github.com/chardet/chardet" target="_blank" rel="noopener">chardet</a>）来检测文件的文件的编码方式，进而使用其对应的解码方式正确来解码文件。</li>
+</ol>
+<h2 id="常见字符集与编码方式"><a href="#常见字符集与编码方式" class="headerlink" title="常见字符集与编码方式"></a>常见字符集与编码方式</h2><blockquote>
+<p>常见字符集：ASCII字符集、GB2312字符集、BIG5字符集、 GB18030字符集、Unicode字符集等。Utf-8、Utf-16等Unicode字符集的编码方式。</p>
+</blockquote>
+<p><a href="https://www.cnblogs.com/notbecoder/p/4840783.html" target="_blank" rel="noopener">具体了解上述的字符集和字符编码</a></p>
+<h2 id="针对不同编程语言的字符编码问题"><a href="#针对不同编程语言的字符编码问题" class="headerlink" title="针对不同编程语言的字符编码问题"></a>针对不同编程语言的字符编码问题</h2><blockquote>
+<p>对于代码源文件本身也要考虑字符编码问题，比如Python可以选择Unicode字符存储为UCS-2还是UCS-4。</p>
+</blockquote>
+<ul>
+<li>Java: <a href="https://zhuanlan.zhihu.com/p/25435644" target="_blank" rel="noopener">Java字符的编码解码与乱码问题</a></li>
+<li>C++: <a href="http://www.xiaoguyin.com/wiki/001518793008149c2a6c34c70d44d60bc3cb34948cd02ea000/0015194854557247b7b8715601b463a85e259f5b0007514000" target="_blank" rel="noopener">C++ 编码、字符和字符串</a></li>
+<li>Python: <a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017075323632896" target="_blank" rel="noopener">Python字符串和编码</a></li>
+</ul>
+<h2 id="杂项问题"><a href="#杂项问题" class="headerlink" title="杂项问题"></a>杂项问题</h2><h3 id="Unicode字符集问题"><a href="#Unicode字符集问题" class="headerlink" title="Unicode字符集问题"></a>Unicode字符集问题</h3><ul>
+<li><a href="https://home.unicode.org/" target="_blank" rel="noopener">Unicode官网</a></li>
+<li><a href="https://blog.csdn.net/imxiangzi/article/details/77371228" target="_blank" rel="noopener">UCS-2和UCS-4</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div>本站所有文章和源码均免费开放，如您喜欢，可以请我喝杯咖啡</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="袁宵 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="袁宵 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>袁宵</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/" title="程序员必知：计算机是如何处理字符的？">https://yuanxiaosc.github.io/2020/06/12/计算机是如何处理字符的/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/字符/" rel="tag"># 字符</a>
+            
+              <a href="/tags/编码/" rel="tag"># 编码</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/05/31/CPlusPlus编程语言基础/" rel="next" title="C++编程语言基础（C++知识树）">
+                  <i class="fa fa-chevron-left"></i> C++编程语言基础（C++知识树）
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">1.</span> <span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符编码"><span class="nav-number">1.1.</span> <span class="nav-text">字符编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算机处理字符的原理"><span class="nav-number">1.2.</span> <span class="nav-text">计算机处理字符的原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见字符集与编码方式"><span class="nav-number">2.</span> <span class="nav-text">常见字符集与编码方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#针对不同编程语言的字符编码问题"><span class="nav-number">3.</span> <span class="nav-text">针对不同编程语言的字符编码问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#杂项问题"><span class="nav-number">4.</span> <span class="nav-text">杂项问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unicode字符集问题"><span class="nav-number">4.1.</span> <span class="nav-text">Unicode字符集问题</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.png"
+      alt="袁宵">
+  <p class="site-author-name" itemprop="name">袁宵</p>
+  <div class="site-description" itemprop="description">专注于人工智能领域研究，特别是自然语言处理。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">133</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/yuanxiaoSC" title="GitHub &rarr; https://github.com/yuanxiaoSC" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wangzichaochaochao@gmail.com" title="E-Mail &rarr; mailto:wangzichaochaochao@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">袁宵</span>
+</div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d9c4b1ac4deb418" async="async"></script>
+  </div>
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共 396.5k 字</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/pisces.js?v=7.4.1"></script>
+
+<script src="/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.1"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>
