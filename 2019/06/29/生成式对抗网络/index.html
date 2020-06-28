@@ -72,9 +72,10 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/生成式对抗网络/gan2.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/生成式对抗网络/dcgan.gif">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/生成式对抗网络/生成对抗网络演进图谱2020.png">
+<meta property="og:image" content="https://images.gitads.io/DeepNude-an-Image-to-Image-technology">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/生成式对抗网络/a2.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/06/29/生成式对抗网络/a1.png">
-<meta property="og:updated_time" content="2020-06-07T13:20:29.493Z">
+<meta property="og:updated_time" content="2020-06-28T11:17:58.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="生成式对抗网络 Generative Adversarial Network (GAN)">
 <meta name="twitter:description" content="生成式对抗网络基础知识生成式对抗网络定义生成式对抗网络（GAN, Generative Adversarial Networks ）是一种深度学习模型，是近年来复杂分布上无监督学习最具前景的方法之一。模型通过框架中（至少）两个模块：生成模型（Generative Model）和判别模型（Discriminative Model）的互相博弈学习产生相当好的输出。原始 GAN 理论中，并不要求 G 和">
@@ -311,7 +312,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-07 21:20:29" itemprop="dateModified" datetime="2020-06-07T21:20:29+08:00">2020-06-07</time>
+                <time title="修改时间：2020-06-28 19:17:58" itemprop="dateModified" datetime="2020-06-28T19:17:58+08:00">2020-06-28</time>
               </span>
             
           
@@ -364,6 +365,10 @@
 <li>该图内容参考了<a href="https://zhuanlan.zhihu.com/p/70033932" target="_blank" rel="noopener">《一文看懂GAN演进图谱》</a></li>
 <li>如果你想先动手尝试一下使用GAN来生成图片，可以查看GitHub项目<a href="https://github.com/yuanxiaosc/DeepNude-an-Image-to-Image-technology" target="_blank" rel="noopener">DeepNude-an-Image-to-Image-technology</a></li>
 </ul>
+<h2 id="支持本文研究"><a href="#支持本文研究" class="headerlink" title="支持本文研究"></a>支持本文研究</h2><blockquote>
+<p>您对下面广告的每一次点击都是对本文研究的大力支持，谢谢！</p>
+</blockquote>
+<p><a href="https://tracking.gitads.io/?repo=DeepNude-an-Image-to-Image-technology" target="_blank" rel="noopener"><img src="https://images.gitads.io/DeepNude-an-Image-to-Image-technology" alt="GitAds"></a></p>
 <h2 id="生成式对抗网络经典论文"><a href="#生成式对抗网络经典论文" class="headerlink" title="生成式对抗网络经典论文"></a>生成式对抗网络经典论文</h2><h3 id="2014-GAN《Generative-Adversarial-Networks》"><a href="#2014-GAN《Generative-Adversarial-Networks》" class="headerlink" title="2014 GAN《Generative Adversarial Networks》"></a><a href="https://arxiv.org/abs/1406.2661" target="_blank" rel="noopener">2014 GAN《Generative Adversarial Networks》</a></h3><p>Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, Yoshua Bengio</p>
 <blockquote>
 <p>We propose a new framework for estimating generative models via an adversarial process, in which we simultaneously train two models: a generative model G that captures the data distribution, and a discriminative model D that estimates the probability that a sample came from the training data rather than G. The training procedure for G is to maximize the probability of D making a mistake. This framework corresponds to a minimax two-player game. In the space of arbitrary functions G and D, a unique solution exists, with G recovering the training data distribution and D equal to 1/2 everywhere. In the case where G and D are defined by multilayer perceptrons, the entire system can be trained with backpropagation. There is no need for any Markov chains or unrolled approximate inference networks during either training or generation of samples. Experiments demonstrate the potential of the framework through qualitative and quantitative evaluation of the generated samples.</p>
@@ -508,7 +513,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成式对抗网络基础知识"><span class="nav-number">1.</span> <span class="nav-text">生成式对抗网络基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成式对抗网络定义"><span class="nav-number">1.1.</span> <span class="nav-text">生成式对抗网络定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是生成对抗网络GAN"><span class="nav-number">1.2.</span> <span class="nav-text">什么是生成对抗网络GAN?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成对抗网络的演进图谱"><span class="nav-number">2.</span> <span class="nav-text">生成对抗网络的演进图谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成式对抗网络经典论文"><span class="nav-number">3.</span> <span class="nav-text">生成式对抗网络经典论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2014-GAN《Generative-Adversarial-Networks》"><span class="nav-number">3.1.</span> <span class="nav-text">2014 GAN《Generative Adversarial Networks》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GAN-极大极小博弈精髓"><span class="nav-number">3.2.</span> <span class="nav-text">GAN 极大极小博弈精髓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2016《NIPS-2016-Tutorial-Generative-Adversarial-Networks》"><span class="nav-number">3.3.</span> <span class="nav-text">2016《NIPS 2016 Tutorial: Generative Adversarial Networks》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2016-ACGAN-《Conditional-Image-Synthesis-With-Auxiliary-Classifier-GANs》"><span class="nav-number">3.4.</span> <span class="nav-text">2016 ACGAN 《Conditional Image Synthesis With Auxiliary Classifier GANs》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2019-BigGAN-《LARGE-SCALE-GAN-TRAINING-FOR-HIGH-FIDELITY-NATURAL-IMAGE-SYNTHESIS》"><span class="nav-number">3.5.</span> <span class="nav-text">2019 BigGAN 《LARGE SCALE GAN TRAINING FOR HIGH FIDELITY NATURAL IMAGE SYNTHESIS》 </span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成式对抗网络基础知识"><span class="nav-number">1.</span> <span class="nav-text">生成式对抗网络基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#生成式对抗网络定义"><span class="nav-number">1.1.</span> <span class="nav-text">生成式对抗网络定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是生成对抗网络GAN"><span class="nav-number">1.2.</span> <span class="nav-text">什么是生成对抗网络GAN?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成对抗网络的演进图谱"><span class="nav-number">2.</span> <span class="nav-text">生成对抗网络的演进图谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#支持本文研究"><span class="nav-number">3.</span> <span class="nav-text">支持本文研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成式对抗网络经典论文"><span class="nav-number">4.</span> <span class="nav-text">生成式对抗网络经典论文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2014-GAN《Generative-Adversarial-Networks》"><span class="nav-number">4.1.</span> <span class="nav-text">2014 GAN《Generative Adversarial Networks》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GAN-极大极小博弈精髓"><span class="nav-number">4.2.</span> <span class="nav-text">GAN 极大极小博弈精髓</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2016《NIPS-2016-Tutorial-Generative-Adversarial-Networks》"><span class="nav-number">4.3.</span> <span class="nav-text">2016《NIPS 2016 Tutorial: Generative Adversarial Networks》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2016-ACGAN-《Conditional-Image-Synthesis-With-Auxiliary-Classifier-GANs》"><span class="nav-number">4.4.</span> <span class="nav-text">2016 ACGAN 《Conditional Image Synthesis With Auxiliary Classifier GANs》</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2019-BigGAN-《LARGE-SCALE-GAN-TRAINING-FOR-HIGH-FIDELITY-NATURAL-IMAGE-SYNTHESIS》"><span class="nav-number">4.5.</span> <span class="nav-text">2019 BigGAN 《LARGE SCALE GAN TRAINING FOR HIGH FIDELITY NATURAL IMAGE SYNTHESIS》 </span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -617,7 +622,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 396.5k 字</span>
+  <span class="post-count">全站共 396.6k 字</span>
 </div>
 
         
