@@ -72,7 +72,7 @@
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量是存储实例上的视图.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量偏移、大小和步长.png">
 <meta property="og:image" content="https://yuanxiaosc.github.io/2019/11/28/理解张量/张量的转置操作.png">
-<meta property="og:updated_time" content="2019-11-28T01:59:28.902Z">
+<meta property="og:updated_time" content="2020-07-05T11:34:55.021Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解张量">
 <meta name="twitter:description" content="神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。">
@@ -298,11 +298,19 @@
                 
               
 
-              <time title="创建时间：2019-11-28 08:00:00 / 修改时间：09:59:28" itemprop="dateCreated datePublished" datetime="2019-11-28T08:00:00+08:00">2019-11-28</time>
+              <time title="创建时间：2019-11-28 08:00:00" itemprop="dateCreated datePublished" datetime="2019-11-28T08:00:00+08:00">2019-11-28</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 19:34:55" itemprop="dateModified" datetime="2020-07-05T19:34:55+08:00">2020-07-05</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -338,6 +346,9 @@
 
       
         <p>神经网络的输入、输出、权重都是张量，神经网络中的各种计算和变换就是对张量操作，张量这种数据结构是神经网络的基石，可以说没有理解张量就没有真正理解神经网络和人工智能。本文由浅入深地详细讲解分析张量，望能给予读者启发——袁宵。</p><a id="more"></a>
+<h2 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h2><p>连续值、有序值和分类值<br>在尝试理解数据时，应注意三种数值。</p>
+<p>第一种是连续值。当以数字表示时，这些值是最直观的。它们是严格排序的，各个值之间的差异具有严格的含义。说明包装A比包装B重2公斤，或者包装B比包装A远100英里，这是有固定含义的，无论包装A重3公斤还是10公斤，或者包装B是从200英里还是2,000公斤。如果您要以单位进行计数或测量，则该值可能是连续值。<br>接下来是有序值。连续值的严格排序仍然保留，但是值之间的固定关系不再适用。一个很好的例子是订购小，中或大型饮料，将小号映射为值1，将中号映射为2，将大号映射为3。大号饮料大于中号，相同的方式是3大于2。但它并没有告诉您有关尺寸的任何信息。如果要将1、2和3转换为实际体积（例如8、12和24液体盎司），则这些值将切换为间隔值。重要的是要记住，除了对值进行排序外，您无法对它们进行数学运算；尝试平均大= 3和小= 1不会导致喝中杯！<br>最后，分类值既没有顺序也没有数字含义。这些值通常是可能性的枚举，并分配有任意数字。将水分配给1，将咖啡分配给2，将苏打分配给3，将牛奶分配给4是一个很好的例子。首先放水，最后放牛奶没有逻辑。您只需要不同的值就可以区分它们。您可以将咖啡分配给10，将牛奶分配给–3，而没有明显变化（尽管分配值的范围是0..N-1在稍后讨论一键编码时会很有优势）。</p>
+<p><strong>总结：连续值严格排序，各个值之间的差异具有严格的含义，可以进行数学运算；有序值严格排序，不可以进行数学运算；分类值仅有逻辑上的区别，排序和数学运算都没有意义。</strong></p>
 <h2 id="张量的定义"><a href="#张量的定义" class="headerlink" title="张量的定义"></a>张量的定义</h2><p>张量（tensor）是一个多维数组（multidimensional arrays），即一种存储数字集合的数据结构，这些数字可通过索引（index）单独访问，并可通过多个索引进行索引。</p>
 <p>张量是将向量和矩阵推广到任意维数。如下图所示，一个张量的维数与张量中用来表示标量值的索引的数量一致。</p>
 <p><img src="/2019/11/28/理解张量/张量示意图.png" alt=""></p>
@@ -428,8 +439,10 @@
 <li>矩阵，2维张量，主要用于表示线性模型Dense中的权重矩阵W；</li>
 <li>张量，3维张量主要用于序列数据，它的格式是 <code>[batch_size, sequence length, feature length]</code>，比如自然语言处理中句子的嵌入表示 <code>[批量大小，句子长度，词嵌入维度]</code>。4维张量主要用于图像数据，它的格式是 <code>[batch_size, length, width, channel]</code>。更高维度张量较少使用。</li>
 </ol>
-<h2 id="张量操作的意义"><a href="#张量操作的意义" class="headerlink" title="张量操作的意义"></a>张量操作的意义</h2><p>TODO：丰富内容</p>
-<p><a href="https://www.zhihu.com/question/20666664" target="_blank" rel="noopener">仿射变换</a><br><a href="https://blog.csdn.net/csxiaoshui/article/details/65446125" target="_blank" rel="noopener">旋转变换（一）旋转矩阵</a></p>
+<h2 id="张量操作的意义"><a href="#张量操作的意义" class="headerlink" title="张量操作的意义"></a>张量操作的意义</h2><p><a href="https://www.zhihu.com/question/20666664" target="_blank" rel="noopener">仿射变换</a><br><a href="https://blog.csdn.net/csxiaoshui/article/details/65446125" target="_blank" rel="noopener">旋转变换（一）旋转矩阵</a></p>
+<h3 id="内积（点积、数量积）"><a href="#内积（点积、数量积）" class="headerlink" title="内积（点积、数量积）"></a>内积（点积、数量积）</h3><p><a href="https://baike.baidu.com/item/%E7%82%B9%E7%A7%AF/9648528?fromtitle=%E5%86%85%E7%A7%AF" target="_blank" rel="noopener">内积-百度百科</a><br>点积在数学中，又称数量积（dot product; scalar product），是指接受在实数R上的两个向量并返回一个实数值标量的二元运算。它是欧几里得空间的标准内积。<br>两个向量$a = [a_1, a_2,…, a_n]$和$b = [b_1, b_2,…, b_n]$的点积定义为：<br>$a \cdot b = a_1b_1 + a_2b_2 + … + a_nb_n$。<br>使用矩阵乘法并把（纵列）向量当作n×1 矩阵，点积还可以写为：<br>$a \cdot b = (a^T) * b$，这里的$a^T$指示矩阵a的转置。</p>
+<h3 id="外积（向量积）"><a href="#外积（向量积）" class="headerlink" title="外积（向量积）"></a>外积（向量积）</h3><p><a href="https://baike.baidu.com/item/%E5%A4%96%E7%A7%AF/4743897" target="_blank" rel="noopener">外积-百度百科</a>外积一般指两个向量的向量积；或在几何代数中，指有类似势的运算如楔积。这些运算的势是笛卡尔积的势。这个名字与内积相对，它是有相反次序的积。这里写的是外积，但是下面的写的是矢量积。</p>
+<p>定义<br>把向量外积定义为：<br>符号表示：$a \times b$<br>大小：$|a|·|b|·sin<a,b>$.<br>方向：右手定则：若坐标系是满足右手定则的，设 $z=x \times y, |z|=|x||y| * sin<x,y>$；则x,y,z构成右手系，伸开右手手掌，四个手指从x轴正方向方向转到y轴正方面，则大拇指方向即为z正轴方向。<br>外积的坐标表示：<br>$(x_1,y_1,z_1) \times (x_2,y_2,z_2)=(y_1z_2-y_2z_1,z_1x_2-z_2x_1,x_1y_2-x_2y_1)$</x,y></a,b></p>
 <h2 id="张量与现实数据的转换"><a href="#张量与现实数据的转换" class="headerlink" title="张量与现实数据的转换"></a>张量与现实数据的转换</h2><p>结合该文件理解以下内容：<a href="https://nbviewer.jupyter.org/urls/yuanxiaosc.github.io/2019/11/28/理解张量/用张量来表示现实世界的数据.ipynb" target="_blank" rel="noopener">用张量来表示现实世界的数据.ipynb</a>，下面是该文件的主要内容：</p>
 <ul>
 <li>将不同类型的实际数据表示为PyTorch张量</li>
@@ -560,7 +573,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的定义"><span class="nav-number">1.</span> <span class="nav-text">张量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的视图与存储"><span class="nav-number">2.</span> <span class="nav-text">张量的视图与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的定义"><span class="nav-number">2.1.</span> <span class="nav-text">张量的视图与存储的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量视图的多维性意义"><span class="nav-number">2.2.</span> <span class="nav-text">张量视图的多维性意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的一维性"><span class="nav-number">2.3.</span> <span class="nav-text">张量存储的一维性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的形状（大小）、存储偏移量和步长"><span class="nav-number">2.4.</span> <span class="nav-text">张量存储的形状（大小）、存储偏移量和步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储对张量操作的影响"><span class="nav-number">2.5.</span> <span class="nav-text">张量存储对张量操作的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的区别与联系"><span class="nav-number">2.6.</span> <span class="nav-text">张量的视图与存储的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的数据类型和操作"><span class="nav-number">3.</span> <span class="nav-text">张量的数据类型和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值类型"><span class="nav-number">3.1.</span> <span class="nav-text">数值类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量操作的意义"><span class="nav-number">4.</span> <span class="nav-text">张量操作的意义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量与现实数据的转换"><span class="nav-number">5.</span> <span class="nav-text">张量与现实数据的转换</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景知识"><span class="nav-number">1.</span> <span class="nav-text">背景知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的定义"><span class="nav-number">2.</span> <span class="nav-text">张量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的视图与存储"><span class="nav-number">3.</span> <span class="nav-text">张量的视图与存储</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的定义"><span class="nav-number">3.1.</span> <span class="nav-text">张量的视图与存储的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量视图的多维性意义"><span class="nav-number">3.2.</span> <span class="nav-text">张量视图的多维性意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的一维性"><span class="nav-number">3.3.</span> <span class="nav-text">张量存储的一维性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储的形状（大小）、存储偏移量和步长"><span class="nav-number">3.4.</span> <span class="nav-text">张量存储的形状（大小）、存储偏移量和步长</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量存储对张量操作的影响"><span class="nav-number">3.5.</span> <span class="nav-text">张量存储对张量操作的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量的视图与存储的区别与联系"><span class="nav-number">3.6.</span> <span class="nav-text">张量的视图与存储的区别与联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量的数据类型和操作"><span class="nav-number">4.</span> <span class="nav-text">张量的数据类型和操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数值类型"><span class="nav-number">4.1.</span> <span class="nav-text">数值类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量操作的意义"><span class="nav-number">5.</span> <span class="nav-text">张量操作的意义</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内积（点积、数量积）"><span class="nav-number">5.1.</span> <span class="nav-text">内积（点积、数量积）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外积（向量积）"><span class="nav-number">5.2.</span> <span class="nav-text">外积（向量积）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#张量与现实数据的转换"><span class="nav-number">6.</span> <span class="nav-text">张量与现实数据的转换</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -669,7 +682,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共 398.4k 字</span>
+  <span class="post-count">全站共 399.5k 字</span>
 </div>
 
         
